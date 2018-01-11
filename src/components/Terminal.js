@@ -8,7 +8,8 @@ import AddMenuItemForm from './AddMenuItemForm'
 
 function mapStateToProps(state) {
 	const { token } = state.authReducer
-	return { token }
+	const { menuItems } = state.menuItemsReducer 
+	return { token, menuItems }
 
 }
 
@@ -25,9 +26,37 @@ class Terminal extends Component {
 		console.log(token)
 		dispatch(fetchMenuItems(token));
 	}
+	/*
+	iterateThruObject() {
+		const { menuItems } = this.props // Object of Arrays of Objects
+		for (var key in menuItems) {
+			console.log(menuItems[key])  // Array [{...}] (Array of Objects)
+			menuItems[key].map(item => console.log(item)) // Object {_id: "a231" itemName: "apple"}, Object {_id: "2afd" itemName: "Pear"}, ...
+			menuItems[key].map(item => console.log(item.itemName)) // Strings Apple, Pear ...
+			return menuItems[key].map(item => <div>{item.itemName}</div>) // No Render
+			
+		}
+	}
+	*/
+
+	handleClicktoFetch(id) {
+		console.log("_id of Clicked Element is: ", id);
+
+	}
+
+	iterateThruObject() {
+		const { menuItems } = this.props
+
+		return Object.keys(menuItems).map((k) => {
+			console.log(k);
+  			return menuItems[k].map(item => <div key={item._id} onClick={this.handleClicktoFetch.bind(this, item._id)}>{item.itemName}</div>)
+		})
+	}
+
+
 	// We will need a Socket.io component in componentDidMount() listening for ticket updates
 	render() {
-		const { match, token } = this.props;
+		const { match, token, menuItems } = this.props;
 		return(
 			<div className="Page-Wrapper">
 			 	<header className="Logo-Time-Header">
@@ -54,6 +83,9 @@ class Terminal extends Component {
 					<button> Settings </button> 
 				</footer>
 				<Route path={`${match.url}/addItem`} component={AddMenuItemForm} />
+				{/*{menuItems && Object.entries(menuItems).map(uniqueObject => uniqueObject.map(item => console.log(item)))}
+				{menuItems && console.log(Object.entries(menuItems))}*/}
+				{menuItems && this.iterateThruObject()}
 			</div>
 		)
 	}
