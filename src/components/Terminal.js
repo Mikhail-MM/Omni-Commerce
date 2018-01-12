@@ -26,18 +26,18 @@ class Terminal extends Component {
 		console.log(token)
 		dispatch(fetchMenuItems(token));
 	}
-	/*
-	iterateThruObject() {
-		const { menuItems } = this.props // Object of Arrays of Objects
-		for (var key in menuItems) {
-			console.log(menuItems[key])  // Array [{...}] (Array of Objects)
-			menuItems[key].map(item => console.log(item)) // Object {_id: "a231" itemName: "apple"}, Object {_id: "2afd" itemName: "Pear"}, ...
-			menuItems[key].map(item => console.log(item.itemName)) // Strings Apple, Pear ...
-			return menuItems[key].map(item => <div>{item.itemName}</div>) // No Render
-			
-		}
+	
+	iterateThruCategories() {
+		const { menuItems } = this.props
+		return Object.keys(menuItems).map(f => <div className={f}>{this.iterateThruObject(f)}</div>) 
 	}
-	*/
+
+	iterateThruObject(currentKey) {
+		const { menuItems } = this.props
+		const selector = currentKey
+  			
+  			return menuItems[selector].map(item => <div className={selector} key={item._id} onClick={this.handleClicktoFetch.bind(this, item._id)}>{item.itemName}</div>)
+	}
 
 	handleClicktoFetch(id) {
 		console.log("_id of Clicked Element is: ", id);
@@ -49,7 +49,7 @@ class Terminal extends Component {
 
 		return Object.keys(menuItems).map((k) => {
 			console.log(k);
-  			return menuItems[k].map(item => <div key={item._id} onClick={this.handleClicktoFetch.bind(this, item._id)}>{item.itemName}</div>)
+  			return menuItems[k].map(item => <div className={k} key={item._id} onClick={this.handleClicktoFetch.bind(this, item._id)}>{item.itemName}</div>)
 		})
 	}
 
@@ -92,3 +92,37 @@ class Terminal extends Component {
 }
 
 export default connect(mapStateToProps)(Terminal);
+
+/* Previously Attempted Iterator Functions
+
+		handleClicktoFetch(id) {
+		console.log("_id of Clicked Element is: ", id);
+
+	}
+
+	iterateThruObject() {
+		const { menuItems } = this.props
+
+		return Object.keys(menuItems).map((k) => {
+			console.log(k);
+  			return menuItems[k].map(item => <div className={k} key={item._id} onClick={this.handleClicktoFetch.bind(this, item._id)}>{item.itemName}</div>)
+		})
+	}
+
+Current
+
+	iterateThruCategories() {
+		const { menuItems } = this.props
+		return Object.keys(menuItems).map(f => <div className={f}>{this.iterateThruObject(f)}</div>) 
+	}
+
+	iterateThruObject(currentKey) {
+		const { menuItems } = this.props
+		const selector = currentKey
+  			
+  			return menuItems[selector].map(item => <div className={selector} key={item._id} onClick={this.handleClicktoFetch.bind(this, item._id)}>{item.itemName}</div>)
+	}
+
+
+
+*/
