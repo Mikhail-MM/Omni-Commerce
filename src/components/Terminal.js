@@ -100,7 +100,7 @@ class Terminal extends Component {
 		const { selectUser } = this.state
 		return(
 			<div className="Page-Wrapper">
-			{!isAuthenticated && <Redirect to='/' />}
+			{!isAuthenticated && <Redirect to='/login' />}
 			 	<header className="Logo-Time-Header">
 			 	<p> This could be a component</p>
 			 	</header>

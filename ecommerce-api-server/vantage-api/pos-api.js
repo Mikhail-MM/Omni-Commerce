@@ -21,6 +21,7 @@ const transactions = require('./controllers/transactions');
 const authorize = require('./controllers/authorize');
 const timesheets = require('./controllers/timeSheets')
 const register = require('./controllers/registration');
+const storeConfig = require('./controllers/storeConfig')
 /* Depreciated Controllers 
 
 const customers = require('./controllers/customers');
@@ -104,9 +105,9 @@ router.route('/transactions/:id')
 	.delete(authorize.routeEmployeeToMongoCollection, transactions.deleteTransactionById);
 // Should merge under single roof
 router.route('/timesheets/ci')
-	.post(authorize.routeEmployeeToMongoCollection, timesheets.checkForMissedTimesheets, timesheets.createNewTimesheet);
+	.post(authorize.routeEmployeeToMongoCollection, timesheets.checkForMissedTimesheets, timesheets.createNewTimesheet, storeConfig.pushLoggedUser);
 router.route('/timesheets/co')
-	.put(authorize.routeEmployeeToMongoCollection, timesheets.clockOutEmployee);
+	.put(authorize.routeEmployeeToMongoCollection, timesheets.clockOutEmployee, storeConfig.pullLoggedUser);
 router.route('/authorize')
 	.post(authorize.login);
 app.use('/', router);

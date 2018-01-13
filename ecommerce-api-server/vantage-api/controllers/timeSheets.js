@@ -10,9 +10,15 @@ module.exports.createNewTimesheet = function(req, res, next) {
 
 	Client.findOne({
 		$and:[{clockInNumber: req.body.clockInNumber },
-		{ mongoCollectionKey: req.headers['x-mongo-key'] }], }, '_id', function(err, client) {
+		{ mongoCollectionKey: req.headers['x-mongo-key'] }], }, function(err, client) {
 		console.log("Found Client For Second Timesheet Function")
 		console.log(client)
+		req.body.name = client.firstName;
+		console.log("Attaching Client name from client.firstName")
+		console.log(client.firstName)
+		console.log("...to req.body.name:")
+		console.log(req.body.name)
+		console.log("This should be passed to our logged in storeConfig function")
 		return client;
 		}).then((client) => {
 			const TimeSheet = mongoose.model('TimeSheet', TimeSheetSchema, req.headers['x-mongo-key'] + '_TimeSheets')
@@ -25,7 +31,8 @@ module.exports.createNewTimesheet = function(req, res, next) {
 			const newTimeSheet = new TimeSheet(data);
 			newTimeSheet.save(function(err, timeSheet) {
 				if (err) return next(err)
-				res.send(timeSheet);
+				req.body.timeSheet = timeSheet
+				next()
 			})
 
 
@@ -58,9 +65,15 @@ module.exports.clockOutEmployee = function(req, res, next) {
 	console.log(req.body.clockInNumber)
 	Client.findOne({
 		$and:[{clockInNumber: req.body.clockInNumber },
-		{ mongoCollectionKey: req.headers['x-mongo-key'] }], }, '_id', function(err, client) {
+		{ mongoCollectionKey: req.headers['x-mongo-key'] }], }, function(err, client) {
 		console.log("Found Client for Clock Out")
 		console.log(client)
+		console.log("Attaching Client name from client.firstName")
+		console.log(client.firstName)
+		req.body.name = client.firstName;
+		console.log("...to req.body.name:")
+		console.log(req.body.name)
+		console.log("This should be passed to our logged in storeConfig function")
 		return client;
 		}).then((client) => {
 		const TimeSheet = mongoose.model('TimeSheet', TimeSheetSchema, req.headers['x-mongo-key'] + '_TimeSheets')
@@ -68,7 +81,8 @@ module.exports.clockOutEmployee = function(req, res, next) {
 			if (!closedTimeSheet) console.log("Could not find clocked-in Timesheet to update")
 			if (err) next(err)
 			console.log("closedTimeSheet- Logged")
-			console.log(closedTimeSheet)
+			console.log(closedTimeSheet);
+			req.body.timeSheet = closedTimeSheet;
 			next();
 		})
 	})

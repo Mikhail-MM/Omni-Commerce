@@ -1,5 +1,7 @@
 import fetch from 'cross-fetch'
 
+function throwError(err) { throw err }
+
 function authSuccess (userInfo) {
 	console.log(userInfo)
 	return {
@@ -32,7 +34,7 @@ export function attemptLogIn(credentials) {
 		mode: 'cors', 
 		body: JSON.stringify(credentials)
 		})
-		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(response => response.ok ? response.json() : throwError("Error"))
 		.then(json => dispatch(authSuccess(json)))
 		.catch(err => dispatch(authFail()))
 	}

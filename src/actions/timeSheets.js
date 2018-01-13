@@ -1,13 +1,13 @@
 export function clockEmployeeOut(token, employeeNumber) {
-	const data = {employeeNumber: employeeNumber}
+	const data = {clockInNumber: employeeNumber}
 	return dispatch => {
-		return fetch('http://localhost:3001/timesheets/clockout', {
+		return fetch('http://localhost:3001/timesheets/co', {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token
 			},
 			body: JSON.stringify(data),
-			method: 'POST',
+			method: 'PUT',
 			mode: 'cors',
 		})
 		.then(response => response.ok ? response.json() : new Error(response.statusText))

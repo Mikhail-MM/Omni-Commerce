@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { clockEmployeeIn } from '../actions/timeSheets'
+import { clockEmployeeIn, clockEmployeeOut } from '../actions/timeSheets'
 
 
 function mapStateToProps(state) {
@@ -16,7 +16,7 @@ class ClockInOutForm extends Component {
 		}
 	this.handleChange = this.handleChange.bind(this);
 	this.handleClockIn = this.handleClockIn.bind(this);
-	//this.handleclockOut = this.handleClockOut.bind(this)
+	this.handleClockOut = this.handleClockOut.bind(this)
 	
 	}
 
@@ -35,13 +35,13 @@ class ClockInOutForm extends Component {
 		dispatch(clockEmployeeIn(token, this.state.employeeNumber))
 
 	}
-	/*
+	
 	handleClockOut(event) {
 		const { dispatch, token } = this.props
 		event.preventDefault();
-		dispatch()
+		dispatch(clockEmployeeOut(token, this.state.employeeNumber))
 	}
-	*/
+	
 	render() {
 		const { option } = this.props
 		const ClockIn = (option == "Clock In")
@@ -56,7 +56,6 @@ class ClockInOutForm extends Component {
 				</label> 
 				<input type="submit" value="submit"/>
 			</form> }
-		{/*}
 		{ ClockOut && 
 			<form onSubmit={this.handleClockOut}>
 				<label>
@@ -64,8 +63,9 @@ class ClockInOutForm extends Component {
 					<input type='text' value={this.state.employeeNumber} onChange={this.handleChange} />
 				</label> 
 				<input type="submit" value="submit"/>
-			</form> }
-		*/}
+			</form> 
+		}
+		
 		</div>
 		)
 	}
