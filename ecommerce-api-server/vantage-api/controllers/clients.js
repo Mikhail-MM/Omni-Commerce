@@ -16,7 +16,9 @@ module.exports.createClient = function(req, res, next) {
 		isMaster: req.body.isMaster,
 		isAdmin: req.body.isAdmin,
 		mongoCollectionKey: req.body.mongoCollectionKey, 
-		organizationName: req.body.organizationName
+		organizationName: req.body.organizationName,
+		clockInNumber: req.body.clockInNumber,
+		accountType: req.body.accountType,
 	};
 
 
@@ -72,8 +74,8 @@ module.exports.autoCompleteClientOrgName = function (req, res, next) {
 		
 }
 
-//READ
-
+// Move to TimeSheet controls?
+// Need Middleware to find client
 module.exports.getAllClients = function(req, res, next) {
 	Client.find({}, function(err, clients) {
 		if (err) return next(err);

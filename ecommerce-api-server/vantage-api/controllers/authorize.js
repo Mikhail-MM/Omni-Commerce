@@ -88,6 +88,8 @@ exports.superAdminRequired = function(req, res, next) {
 	validateToken(req, res, next, { superAdminRequired: true });
 };
 
+
+
 exports.routeEmployeeToMongoCollection = function(req, res, next) {
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
 	console.log("Routing Employee to Appropriate Mongo Collection")
@@ -120,3 +122,4 @@ exports.routeEmployeeToMongoCollection = function(req, res, next) {
 	});
 
 };
+

@@ -40,7 +40,7 @@ function organizeTicketsByStatus(ArrayOfAllTicketObjects) {
 		categorizedTicketsByStatus
 	}
 }
-function fetchTickets(token) {
+export function fetchTickets(token) {
 	return dispatch => {
 		return fetch('http://localhost:3001/transactions', {
 			headers:{
@@ -53,5 +53,12 @@ function fetchTickets(token) {
 		.then(response => response.ok ? response.json() : new Error(response.statusText))
 		.then(json => dispatch(organizeTicketsByStatus(json)))
 		.catch(err => console.log(err))
+	}
+}
+
+export function setVisibleCategory(category) {
+	return {
+		type: 'SET_VISIBLE_CATEGORY',
+		visibleCategory: category
 	}
 }

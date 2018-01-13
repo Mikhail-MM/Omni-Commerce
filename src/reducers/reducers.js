@@ -40,6 +40,10 @@ const menuItemsReducer = (state = {isInvalidated: false, isFetching: false}, act
 			isFetching: false,
 			menuItems: action.categorizedMenuItems
 		})
+	case('SET_VISIBLE_CATEGORY'):
+		return Object.assign({}, state, {
+			visibleCategory: action.visibleCategory
+		})
 	default:
 		return state
 	}	

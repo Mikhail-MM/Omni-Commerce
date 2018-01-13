@@ -19,6 +19,7 @@ const clients = require('./controllers/clients');
 const menus = require('./controllers/menus');
 const transactions = require('./controllers/transactions');
 const authorize = require('./controllers/authorize');
+const timesheets = require('./controllers/timeSheets')
 const register = require('./controllers/registration');
 /* Depreciated Controllers 
 
@@ -57,10 +58,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( {extended: false }));
 
 
-app.use(function(req, res, next) {
+app.use('/*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, x-access-token, X-Requested-With, Content-Type, Accept");
-  res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+  res.header("Access-Control-Allow-Headers", "Origin, x-access-token, x-mongo-key, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
   next();
 });
 
@@ -80,7 +81,7 @@ app.use(function(req, res, next) {
 //.all can create a log entry in a manifest
 // Create function to return ALL DB ITEMS??
 router.route('/clients/lookup')
-	.post(clients.autoCompleteClientOrgName)
+	.post(clients.autoCompleteClientOrgName);
 router.route('/clients')
 	.get(clients.getAllClients)
 	.post(register.configureNewUser, clients.createClient);
@@ -101,9 +102,13 @@ router.route('/transactions/:id')
 	.get(authorize.routeEmployeeToMongoCollection, transactions.getTransactionById)
 	.put(authorize.routeEmployeeToMongoCollection, transactions.updatePushTransactionById) //SO FAR only does a PUSH
 	.delete(authorize.routeEmployeeToMongoCollection, transactions.deleteTransactionById);
+// Should merge under single roof
+router.route('/timesheets/ci')
+	.post(authorize.routeEmployeeToMongoCollection, timesheets.checkForMissedTimesheets, timesheets.createNewTimesheet);
+router.route('/timesheets/co')
+	.put(authorize.routeEmployeeToMongoCollection, timesheets.clockOutEmployee);
 router.route('/authorize')
 	.post(authorize.login);
-
 app.use('/', router);
 
 //app.route('/clients')

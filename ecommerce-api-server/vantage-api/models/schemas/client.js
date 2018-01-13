@@ -9,15 +9,19 @@ var clientSchema = new Schema({
 	email: {type: String, required: true, unique: true },
 	address: String,
 	isMaster: { type: Boolean, required: true },
+	employeeCounter: Number,
 	masterLookupIdentifier: String, // This might just be Organization name to make it easier. Think about scale
 	organizationName: String, // Used in the autocomplete to point Employees to the right way
 	rosterJob: String,
 	ownedBy: String,
-	mongoCollectionKey: { type: String, required: true }, // use in req.params for POST to route users to proper MongoDB instance
+	mongoCollectionKey: { type: String, required: true, unique: true }, // use in req.params for POST to route users to proper MongoDB instance
 	isAdmin: { type: Boolean, index: true },
 	hash: { type:String, required: true },
 	token: String,
+	clockInNumber: String,
+	accountType: String, // Master, Employee, Manager, Terminal
 	status: String // PendingApproval[Pending] - Registered
+
 //	hasChildren: Boolean,
 //	children: [ this ]
 	},
