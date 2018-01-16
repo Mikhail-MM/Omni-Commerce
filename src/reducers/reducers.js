@@ -27,11 +27,18 @@ const authReducer = (state = initialState, action) => {
 	case ('LOG_OUT'): { 
 		return initialState 
 	}
+	case ('RECEIVE_LOGGED_USERS'): {
+		return Object.assign({}, state, {
+			loggedInUsers: action.loggedUsers.loggedInUsers
+			}
+		)
+	}
 	default:
 			return state
 	}
 }
-
+// We are getting some kind of Undefined array under menuItems in MenuItems reducer
+// For some reason we are having MENUS return a StoreConfig Item
 const menuItemsReducer = (state = {isInvalidated: false, isFetching: false}, action) => {
 	switch (action.type){
 	case('RECEIVE_MENU_ITEMS'):
@@ -56,6 +63,10 @@ const ticketTrackingReducer = (state = {isInvalidated: false, isFetching: false}
 			isInvalidated: false,
 			isFetching: false,
 			tickets: action.categorizedTicketsByStatus
+		})
+	case('RECEIVE_CURRENT_TICKET'):
+		return Object.assign({}, state, {
+			activeTicket: action.ticket
 		})
 	default:
 		return state

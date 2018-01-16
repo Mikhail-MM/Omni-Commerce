@@ -1,17 +1,17 @@
 import React, { Component } from 'react'
 import { Route, Switch, Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetchMenuItems, fetchTickets, setVisibleCategory } from '../actions/menu-items'
-import { logOut } from '../actions/auth-login'
+import { fetchMenuItems, fetchTickets, createNewTicket, setVisibleCategory } from '../actions/menu-items'
+import { logOut,  fetchLoggedUsers } from '../actions/auth-login'
 // import { connect } from 'react-redux'
 // import { withRouter } from 'react-router-dom'
 import AddMenuItemForm from './AddMenuItemForm'
 import ClockInOutForm from './ClockInOutForm'
 
 function mapStateToProps(state) {
-	const { token, isAuthenticated } = state.authReducer
+	const { token, isAuthenticated, loggedInUsers } = state.authReducer
 	const { menuItems, tickets, visibleCategory } = state.menuItemsReducer 
-	return { token, menuItems, tickets, visibleCategory, isAuthenticated }
+	return { token, menuItems, tickets, visibleCategory, isAuthenticated, loggedInUsers }
 
 }
 
@@ -36,6 +36,7 @@ class Terminal extends Component {
 		console.log(token)
 		dispatch(fetchMenuItems(token));
 		dispatch(fetchTickets(token));
+		dispatch(fetchLoggedUsers(token));
 	}
 	handleLogOut() {
 		const { dispatch } = this.props
@@ -54,7 +55,8 @@ class Terminal extends Component {
 			Object.assign({}, ...this.state, {selectUser: true}))
 	}
 	generateWaiterCallScreen() {
-		return this.state.currentlyLoggedIn.map(server => <div key={server} onClick={this.handleServerFetch.bind(this, server)}>{server}</div>)
+		const { token, loggedInUsers, dispatch } = this.props
+		return loggedInUsers.map(server => <div key={server} onClick={this.handleServerFetch.bind(this, token, server, dispatch)}>{server}</div>)
 	}
 
 	// We need to make a set of buttons that updates the state of this component. This will determine which Divs to show, and which Divs to hide.
@@ -90,8 +92,10 @@ class Terminal extends Component {
 
 	}
 
-	handleServerFetch(name){
-		console.log(name + " wants to put in an order")
+	handleServerFetch(token, name, dispatch){
+		console.log("handleServerFetch firing (this bound in generateWaiterCallScreen function)")
+
+		dispatch(createNewTicket(token, name))	
 	}
 
 	// We will need a Socket.io component in componentDidMount() listening for ticket updates

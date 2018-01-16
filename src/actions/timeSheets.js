@@ -14,7 +14,7 @@ export function clockEmployeeOut(token, employeeNumber) {
 		.then(json => console.log(json)) // Dispatch action to Redux Store informing Client of array of currently clocked in users to enter orders. Analyze Populated Query
 	}
 }
-
+// To Avoid multiple fetches to Request Logged Users - we need to go into the middleware chain and return an OBJECT containing the New Timesheet AND the array of logged in users - both of which are constructed in the middleware chain which fires when we insert a Clock In/Out Request. From there, this should dispatch receive logged users AND maybe a display timesheet thing
 export function clockEmployeeIn(token, employeeNumber) {
 	console.log("Clock-In Action Dispatched. Sending Credentials")
 	console.log("Token: ")

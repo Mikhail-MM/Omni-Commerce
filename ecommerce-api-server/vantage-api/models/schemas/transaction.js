@@ -8,10 +8,11 @@ var menuItemSchema = new Schema({
 })
 
 var ticketSchema = new Schema ({
-	createdBy: { type: Schema.ObjectId, ref: 'Client'},
-	customer: { type: Schema.ObjectId, ref: 'Customer'},
+	createdBy: String,
+	createdAt: Date,
+	customer: String,
 	items: [menuItemSchema],
-	status: String // Open, Void, Paid
+	status: String // Open, Fired, Delivered, Void, Paid
 
 });
 

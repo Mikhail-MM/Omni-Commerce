@@ -98,7 +98,7 @@ router.route('/menus/:id')
 	.delete(authorize.routeEmployeeToMongoCollection, menus.deleteMenuItemById);
 router.route('/transactions')
 	.get(authorize.routeEmployeeToMongoCollection, transactions.getAllTransactions)
-	.post(authorize.routeEmployeeToMongoCollection, transactions.createNewTransactionAndPopulate);
+	.post(authorize.routeEmployeeToMongoCollection, transactions.createNewTransaction);
 router.route('/transactions/:id')
 	.get(authorize.routeEmployeeToMongoCollection, transactions.getTransactionById)
 	.put(authorize.routeEmployeeToMongoCollection, transactions.updatePushTransactionById) //SO FAR only does a PUSH
@@ -108,6 +108,8 @@ router.route('/timesheets/ci')
 	.post(authorize.routeEmployeeToMongoCollection, timesheets.checkForMissedTimesheets, timesheets.createNewTimesheet, storeConfig.pushLoggedUser);
 router.route('/timesheets/co')
 	.put(authorize.routeEmployeeToMongoCollection, timesheets.clockOutEmployee, storeConfig.pullLoggedUser);
+router.route('/storeconfig')
+	.get(authorize.routeEmployeeToMongoCollection, storeConfig.getLoggedUsers);
 router.route('/authorize')
 	.post(authorize.login);
 app.use('/', router);

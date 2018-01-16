@@ -3,6 +3,8 @@ const Schemas = require('../models/schemas/transaction')
 const TicketTransaction = Schemas.ticketSchema
 
 //May need exception for creating new transaction
+/*
+We were using Populate to fill in CreatedBy and Customer by ObjectID reference - switching to simple string identifier and decoupling from Populate Logic
 module.exports.createNewTransactionAndPopulate = function(req, res, next) {
 	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
 	var newTransaction = new Transaction(req.body);
@@ -24,7 +26,16 @@ module.exports.createNewTransactionAndPopulate = function(req, res, next) {
 		         // TODO: Need to send Client _id on transaction creation when clicking "New Transaction" button. Use localStorage Access token -> Decryption? Requires an extra auth route, but this is OK! 
 });
 }
+*/
 
+module.exports.createNewTransaction = function(req, res, next) {
+	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
+	const newTransaction = new Transaction(req.body);
+	newTransaction.save(function(err, transaction) {
+		if (err) return next(err);
+		res.json(transaction);
+	})	
+}
 module.exports.getTransactionById = function (req, res, next) {
 	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
 	Transaction.findOne({_id: req.params.id}, function(err, transaction) {

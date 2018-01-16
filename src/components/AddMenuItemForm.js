@@ -40,6 +40,7 @@ class AddMenuItemForm extends Component {
 	}
 
 	handleSubmit(event) {
+		// Add to Redux?
 		event.preventDefault()
 		console.log(this.state);
 		console.log(JSON.stringify(this.state));

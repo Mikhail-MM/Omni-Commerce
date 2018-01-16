@@ -56,6 +56,31 @@ export function fetchTickets(token) {
 	}
 }
 
+export function createNewTicket(token, createdBy) {
+	const data = { createdBy: createdBy, createdAt: Date.now(), status: "Open"}
+	return dispatch => {
+		return fetch('http://localhost:3001/transactions', {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': token
+			},
+			method: 'POST',
+			mode: 'cors',
+			body: JSON.stringify(data),
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => dispatch(receiveCurrentTicket(json)))
+		.catch(err => console.log(err))
+	}
+}
+
+export function receiveCurrentTicket(ticket) {
+	return {
+		type: 'RECEIVE_CURRENT_TICKET',
+		ticket
+	}
+}
+
 export function setVisibleCategory(category) {
 	return {
 		type: 'SET_VISIBLE_CATEGORY',
