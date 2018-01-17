@@ -74,6 +74,53 @@ export function createNewTicket(token, createdBy) {
 	}
 }
 
+export function updateTransactionWithMenuItem(token, menuItem_Id, currentTransaction_Id) {
+	const url = 'http://localhost:3001/menus/' + menuItem_Id;
+	return dispatch => {
+		return fetch(url, {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': token,
+			},
+			method: 'GET',
+			mode: 'cors',
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => {
+			const url = 'http://localhost:3001/transactions/' + currentTransaction_Id;
+			return fetch(url, {
+				headers:{
+					'Content-Type': 'application/json',
+					'x-access-token': token,
+				},
+				method: 'PUT',
+				mode: 'cors',
+				body: JSON.stringify(json),
+			})
+			.then(response => response.ok ? response.json() : new Error(response.statusText))
+			.then(json => dispatch(receiveCurrentTicket(json)))
+		})
+		.catch(err => console.log(err))
+	}
+}
+
+export function fetchCurrentTicketDetails(token, ticket_Id) {
+	const url = 'http://localhost:3001/transactions/' + ticket_Id;
+	return dispatch => {
+		return fetch(url, {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': token,
+			},
+			method: 'GET',
+			mode: 'cors',
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => dispatch(receiveCurrentTicket(json)))
+		.catch(err => console.log(err))
+	}
+}
+
 export function receiveCurrentTicket(ticket) {
 	return {
 		type: 'RECEIVE_CURRENT_TICKET',

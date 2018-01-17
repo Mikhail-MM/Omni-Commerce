@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Route, Switch, Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetchMenuItems, fetchTickets, createNewTicket, setVisibleCategory } from '../actions/menu-items'
+import { fetchMenuItems, fetchTickets, createNewTicket, setVisibleCategory, updateTransactionWithMenuItem, fetchCurrentTicketDetails } from '../actions/menu-items'
 import { logOut,  fetchLoggedUsers } from '../actions/auth-login'
 // import { connect } from 'react-redux'
 // import { withRouter } from 'react-router-dom'
@@ -10,8 +10,9 @@ import ClockInOutForm from './ClockInOutForm'
 
 function mapStateToProps(state) {
 	const { token, isAuthenticated, loggedInUsers } = state.authReducer
-	const { menuItems, tickets, visibleCategory } = state.menuItemsReducer 
-	return { token, menuItems, tickets, visibleCategory, isAuthenticated, loggedInUsers }
+	const { menuItems, visibleCategory } = state.menuItemsReducer 
+	const { tickets, activeTicket } = state.ticketTrackingReducer
+	return { token, menuItems, tickets, visibleCategory, isAuthenticated, loggedInUsers, activeTicket }
 
 }
 
@@ -29,6 +30,7 @@ class Terminal extends Component {
 		this.showClockInScreen = this.showClockInScreen.bind(this)
 		this.showClockOutScreen = this.showClockOutScreen.bind(this)
 		this.handleLogOut = this.handleLogOut.bind(this)
+		this.iterateThruTicketStatusCategories = this.iterateThruTicketStatusCategories.bind(this)
 	}
 	componentDidMount() {
 		const { dispatch, token } = this.props
@@ -73,7 +75,25 @@ class Terminal extends Component {
 		dispatch(setVisibleCategory(category))
 	}
 	
+	iterateThruTicketStatusCategories() {
+		const { tickets } = this.props;
+		return Object.keys(tickets).map(ticketKey => {
+			return <div key={ticketKey} className="TODOClassCheck">{this.iterateThruTicketsByStatus(ticketKey)}</div>
+		})
+	}
+
+	iterateThruTicketsByStatus(ticketKey) {
+		const { token, tickets, dispatch } = this.props
+		const selector = ticketKey
+			return tickets[selector].map(ticket => <div className={selector} key={ticket._id} onClick={this.loadActiveTicket.bind(this, token, ticket._id, dispatch)}>{ticket.status} Ticket {ticket._id}</div>)
+	}
+
+	loadActiveTicket(token, ticket_Id, dispatch) {
+		dispatch(fetchCurrentTicketDetails(token, ticket_Id))
+	}
+
 	iterateThruCategories() {
+		console.log("iterateThruCategories() firing")
 		const { menuItems, visibleCategory } = this.props
 		return Object.keys(menuItems).map(f => {
 			const classCheck = visibleCategory == f ? "Show" : "Hide"
@@ -81,15 +101,18 @@ class Terminal extends Component {
 	
 	// Bind the onClick function to each item - allowing us to retrieve its _id
 	iterateThruObject(currentKey) {
-		const { menuItems } = this.props
+		console.log("iterateThruObject() firing for key")
+		console.log(currentKey)
+		const { menuItems, token, activeTicket, dispatch } = this.props
 		const selector = currentKey
   			
-  			return menuItems[selector].map(item => <div className={selector} key={item._id} onClick={this.handleClicktoFetch.bind(this, item._id)}>{item.itemName}</div>)
+  			return menuItems[selector].map(item => <div className={selector} key={item._id} onClick={this.handleClicktoFetch.bind(this, token, item._id, activeTicket._id, dispatch)}>{item.itemName}</div>)
 	}
 
-	handleClicktoFetch(id) { 
-		console.log("_id of Clicked Element is: ", id);
-
+	handleClicktoFetch(token, menuItem_Id, currentTransaction_Id, dispatch) { 
+		console.log("_id of Clicked Element is: ", menuItem_Id);
+		console.log("_id of Current Transaction is: ", currentTransaction_Id); 
+		dispatch(updateTransactionWithMenuItem(token, menuItem_Id, currentTransaction_Id))
 	}
 
 	handleServerFetch(token, name, dispatch){
@@ -100,7 +123,7 @@ class Terminal extends Component {
 
 	// We will need a Socket.io component in componentDidMount() listening for ticket updates
 	render() {
-		const { match, token, menuItems, isAuthenticated } = this.props;
+		const { match, token, menuItems, isAuthenticated, tickets, activeTicket } = this.props;
 		const { selectUser } = this.state
 		return(
 			<div className="Page-Wrapper">
@@ -134,10 +157,11 @@ class Terminal extends Component {
 					<button> Settings </button> 
 				</footer>
 				<Route path={`${match.url}/addItem`} component={AddMenuItemForm} />
+				{tickets && this.iterateThruTicketStatusCategories()}
 				{menuItems && this.buildMenuCategorySelection()}
 				{/*{menuItems && Object.entries(menuItems).map(uniqueObject => uniqueObject.map(item => console.log(item)))}
 				{menuItems && console.log(Object.entries(menuItems))}*/}
-				{menuItems && this.iterateThruCategories()}
+				{menuItems && activeTicket && this.iterateThruCategories()}
 			</div>
 		)
 	}

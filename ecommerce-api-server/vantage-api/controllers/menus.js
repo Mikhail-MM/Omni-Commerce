@@ -23,7 +23,7 @@ module.exports.getAllMenuItems = function (req, res, next) {
 
 module.exports.getMenuItemById = function(req, res, next) {
 	const MenuItem = mongoose.model('MenuItem', menuSchema, req.headers['x-mongo-key'] + '_MenuItems')
-	MenuItem.find({_id: req.params.id}, function(err, menuItem) {
+	MenuItem.findOne({_id: req.params.id}, function(err, menuItem) {
 		if(err) return next(err);
 		if(!menuItem) res.status(404).send("Could not find Menu item with that ID");
 		return res.json(menuItem);

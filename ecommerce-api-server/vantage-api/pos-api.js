@@ -101,7 +101,7 @@ router.route('/transactions')
 	.post(authorize.routeEmployeeToMongoCollection, transactions.createNewTransaction);
 router.route('/transactions/:id')
 	.get(authorize.routeEmployeeToMongoCollection, transactions.getTransactionById)
-	.put(authorize.routeEmployeeToMongoCollection, transactions.updatePushTransactionById) //SO FAR only does a PUSH
+	.put(authorize.routeEmployeeToMongoCollection, transactions.updatePushTransactionById, transactions.calculatePricing) //SO FAR only does a PUSH
 	.delete(authorize.routeEmployeeToMongoCollection, transactions.deleteTransactionById);
 // Should merge under single roof
 router.route('/timesheets/ci')
