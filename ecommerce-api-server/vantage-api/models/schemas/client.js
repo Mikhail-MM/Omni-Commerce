@@ -20,7 +20,8 @@ var clientSchema = new Schema({
 	token: String,
 	clockInNumber: String,
 	accountType: String, // Master, Employee, Manager, Terminal
-	status: String // PendingApproval[Pending] - Registered
+	status: String, // PendingApproval[Pending] - Registered
+	master_id: Schema.Types.ObjectId
 
 //	hasChildren: Boolean,
 //	children: [ this ]

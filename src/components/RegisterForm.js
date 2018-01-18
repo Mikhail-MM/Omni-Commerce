@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import { push } from 'react-router-redux'
 import LoginForm from './LoginForm'
 import AutoCompleteSuggestionsBox from './AutoCompleteSuggestionsBox'
 import fetch from 'cross-fetch'
@@ -38,7 +39,7 @@ class RegisterForm extends Component {
 
 	constructor(props) {
 		super(props)
-		this.state = { 
+		this.initialState = { 
 			firstName: 'First Name',
 			lastName: 'Last Name',
 			phoneNumber: 'Phone Number',
@@ -51,6 +52,9 @@ class RegisterForm extends Component {
 			organizationName:'',
 			autoCompleteArray: []
 		}
+
+		this.state = this.initialState 
+		
 		this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
 		this.handleLastNameChange = this.handleLastNameChange.bind(this);
 		this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -132,10 +136,11 @@ class RegisterForm extends Component {
 	}
 
 	finishAutoComplete(arrayOfOrganizations) {
-
+ 	// Why is this DELETED and MISSING? OMG?
 	}
 
 	handleSubmit(event) {
+		const { dispatch } = this.props
 		event.preventDefault();
 		// verify that password matches
 		// send POST request to server to /Clients route
@@ -147,14 +152,19 @@ class RegisterForm extends Component {
 				throw new Error("Failed Password Validation!")
 			}
 		
-		return fetch('http://localhost:3001/clients', {
+		fetch('http://localhost:3001/clients', {
 		headers:{
 			'Content-Type': 'application/json'
 		},
 		method: 'POST',
 		mode: 'cors', 
 		body: JSON.stringify(this.state) // beware adding other stuff to state, will have to give it to its own object
-			}).then((res) => console.log(res))
+			}).then((res) => console.log(res)).then(() => this.setState(this.initialState))
+		console.log(this.state)
+		console.log(this.initialState)
+		// The dispatch push might actually just unmount the component so calling set state on an unmounted component is basically unnecessary. 
+		dispatch(push('/login'))
+		// Should really be a Route - an intermediary step that tells you "Success! You've been registered! (But only if we have a successful action... so maybe putting this entire thing in a Redux action to handle the dispatching is better"
 	}
 
 	render() {

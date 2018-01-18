@@ -38,8 +38,10 @@ module.exports.calculatePricing = function(req, res, next) {
 	console.log(subTotal)
 	console.log("typeOf subtotal:")
 	console.log(typeof(subTotal))
-	console.log("Coverting to String")
+	console.log("Coverting to Number")
 	console.log(subTotal.toNumber())
+	// Do Some TAX Baby!
+	
 }	
 
 

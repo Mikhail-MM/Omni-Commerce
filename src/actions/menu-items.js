@@ -11,6 +11,22 @@ function organizeItemsToCategories(ArrayOfAllMenuItemObjects) {
 	}
 
 }
+export function createNewMenuItem(token, data) {
+	return dispatch => {
+		return fetch('http://localhost:3001/menus', {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': token
+			},
+				method: 'POST',
+				mode: 'cors',
+				body: data,
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => dispatch(fetchMenuItems(token)))
+		.catch(err => console.log(err))
+	}
+}
 // Need to pass in a TOKEN!
 export function fetchMenuItems(token) {
 	console.log("Looking for Employee Token within fetchMenuItems action")
@@ -69,7 +85,11 @@ export function createNewTicket(token, createdBy) {
 			body: JSON.stringify(data),
 		})
 		.then(response => response.ok ? response.json() : new Error(response.statusText))
-		.then(json => dispatch(receiveCurrentTicket(json)))
+		.then(json => {
+			dispatch(fetchTickets(token))
+			return dispatch(receiveCurrentTicket(json)) 			
+			}
+		)
 		.catch(err => console.log(err))
 	}
 }

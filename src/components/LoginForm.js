@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { attemptLogIn } from '../actions/auth-login'
-import { Redirect, Link, Route, Switch, withRouter } from 'react-router-dom'
-import RegisterForm from './RegisterForm'
+import { Redirect, Link, withRouter } from 'react-router-dom'
 
 
 class LoginForm extends Component {
@@ -41,13 +40,9 @@ class LoginForm extends Component {
 
 	render() {
 
-		const { match } = this.props;
 		const { isAuthenticated } = this.props; // You must pull this into the render method, or else the thing will crash saying that isAuthenticated is undefined (it is, within the render scope)
 		return (
 			<div>
-			{"true"}
-			{ this.props.email && <p> How does it go again </p> }
-			{ this.props.isAuthenticated && <p> How does it go again? </p>}
 		{/* Best to turn this login thing into a dispatch Push action */}
 			{ this.props.isAuthenticated && <Redirect to="/terminal" /> }
 			<form onSubmit={this.handleSubmit}>

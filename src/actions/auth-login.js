@@ -47,6 +47,7 @@ export function attemptLogIn(credentials) {
 
 }
 
+// Error Upon Initial Start with New StoreConfig - When there is not a storeConfig yet, as nobody has started, we get a null return. We should create an empty storeConfig when the Master is Created
 export function fetchLoggedUsers(token) {
 	return dispatch => {
 		return fetch('http://localhost:3001/storeconfig', {

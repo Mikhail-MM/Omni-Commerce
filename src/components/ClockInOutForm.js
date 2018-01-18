@@ -44,8 +44,8 @@ class ClockInOutForm extends Component {
 	
 	render() {
 		const { option } = this.props
-		const ClockIn = (option == "Clock In")
-		const ClockOut = (option =="Clock Out")
+		const ClockIn = (option === "Clock In")
+		const ClockOut = (option === "Clock Out")
 		return(
 		<div>
 		{ ClockIn && 

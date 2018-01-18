@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 module.exports.createClient = function(req, res, next) {
 	console.log("req.body recieved by CREATE CLIENT Function:")
 	console.log(req.body)
+
 // Object assign data from req.data - assign some registration middleware to alter the request
 	var data = {
 		firstName: req.body.firstName,
@@ -15,10 +16,12 @@ module.exports.createClient = function(req, res, next) {
 		email: req.body.email,
 		isMaster: req.body.isMaster,
 		isAdmin: req.body.isAdmin,
-		mongoCollectionKey: req.body.mongoCollectionKey, 
+		mongoCollectionKey: req.body.mongoCollectionKey,
+		employeeCounter: req.body.employeeCounter, 
 		organizationName: req.body.organizationName,
 		clockInNumber: req.body.clockInNumber,
 		accountType: req.body.accountType,
+		master_id: req.body.master_id,
 	};
 
 

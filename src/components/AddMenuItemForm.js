@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { createNewMenuItem } from '../actions/menu-items'
 import { connect } from 'react-redux'
 
 function mapStateToProps(state) {
@@ -41,24 +42,14 @@ class AddMenuItemForm extends Component {
 
 	handleSubmit(event) {
 		// Add to Redux?
+		const { token, dispatch } = this.props
 		event.preventDefault()
 		console.log(this.state);
-		console.log(JSON.stringify(this.state));
-		return fetch('http://localhost:3001/menus', {
-			headers:{
-				'Content-Type': 'application/json',
-				'x-access-token': this.props.token
-			},
-				method: 'POST',
-				mode: 'cors',
-				body: JSON.stringify(this.state)
-		})
-		.then(res => res.json())
-		.then(responseJSON => console.log(responseJSON));
+		const data = JSON.stringify(this.state)
+		dispatch(createNewMenuItem(token, data))
 	}
 
 	render() {
-		const { token } = this.props
 		return(
 		<form onSubmit={this.handleSubmit}>
 			<label>

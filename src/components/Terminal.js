@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Switch, Redirect, Link } from 'react-router-dom'
+import { Route, Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchMenuItems, fetchTickets, createNewTicket, setVisibleCategory, updateTransactionWithMenuItem, fetchCurrentTicketDetails } from '../actions/menu-items'
 import { logOut,  fetchLoggedUsers } from '../actions/auth-login'
@@ -123,7 +123,7 @@ class Terminal extends Component {
 
 	// We will need a Socket.io component in componentDidMount() listening for ticket updates
 	render() {
-		const { match, token, menuItems, isAuthenticated, tickets, activeTicket } = this.props;
+		const { match, menuItems, isAuthenticated, tickets, activeTicket } = this.props;
 		const { selectUser } = this.state
 		return(
 			<div className="Page-Wrapper">
