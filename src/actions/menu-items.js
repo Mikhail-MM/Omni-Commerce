@@ -214,6 +214,22 @@ export function fetchCurrentTicketDetails(token, ticket_Id) {
 	}
 }
 
+export function updateTicketStatus(token, ticket_Id, status) {
+	const url = 'http://localhost:3001/transactions/' + ticket_Id
+	const data = { status: status }
+	return dispatch => {
+		return fetch(url, {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': token,
+			},
+			method: 'GET',
+			mode: 'cors',
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => dispatch(receiveCurrentTicket(json)))
+	}
+}
 export function receiveCurrentTicket(ticket) {
 	return {
 		type: 'RECEIVE_CURRENT_TICKET',

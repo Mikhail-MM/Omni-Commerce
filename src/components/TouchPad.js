@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { setVisibleCategory, updateTransactionWithMenuItem } from '../actions/menu-items'
+import { setVisibleCategory, updateTransactionWithMenuItem, updateTicketStatus } from '../actions/menu-items'
 
 function mapStateToProps(state) {
 	const { token, isAuthenticated } = state.authReducer
@@ -44,19 +44,22 @@ class TouchPad extends Component {
 		dispatch(updateTransactionWithMenuItem(token, menuItem_Id, currentTransaction_Id))
 	}
 
+	handleTicketStatusUpdate(token, currentTransaction_Id, status) {
+		const { dispatch } = this.props
+		dispatch(updateTicketStatus(token, currentTransaction_Id, status))
+	}
+
 	render() {
-		const { menuItems, activeTicket } = this.props
+		const { token, menuItems, activeTicket } = this.props
 		return(
 		<div className="TouchPad-Component-Wrapper">
 			 
 			{menuItems && this.buildMenuCategorySelection()}
 			{menuItems && activeTicket && this.iterateThruCategories()}
-	
-		 <footer className="Pagination-Navigation-Container">
-		  <nav> 
-		   {"Pagination Circles Here"}
-		  </nav>
-		 </footer>
+			<button onClick={this.handleTicketStatusUpdate.bind(this, token, activeTicket._id, 'Fired')}>Fire Ticket</button>
+			<button onClick={this.handleTicketStatusUpdate.bind(this, token, activeTicket._id, 'Void')}>Void Ticket</button>
+			<button onClick={this.handleTicketStatusUpdate.bind(this, token, activeTicket._id, 'Delivered')}>Order Delivered</button>
+			<button onClick={console.log("TODO! OOPESI")}>Pay Up Sucka!</button>
 	
 		</div>
 		)
