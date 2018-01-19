@@ -32,17 +32,20 @@ module.exports.createNewTransactionAndPopulate = function(req, res, next) {
 
 module.exports.calculatePricing = function(req, res, next) {
 	const arrayOfBigNumberMenuItemPrices = req.body.menuItemSubdocs.map(subdoc => new BigNumber(subdoc.itemPrice))
-	console.log("Array of (BigNumber) Menu Item Prices:")
-	console.log(arrayOfBigNumberMenuItemPrices)
-	const subTotal = arrayOfBigNumberMenuItemPrices.reduce( (acc, curr) => acc.plus(curr))
-	console.log("SubTotal price of Transaction:") 
-	console.log(subTotal)
-	console.log("typeOf subtotal:")
-	console.log(typeof(subTotal))
-	console.log("Coverting to Number")
-	console.log(subTotal.toNumber())
-	// Do Some TAX Baby!
-	
+	const subTotalBigNumber = arrayOfBigNumberMenuItemPrices.reduce( (acc, curr) => acc.plus(curr))
+	const taxRate = new BigNumber(0.075)
+	const subTotal = subTotalBigNumber.toNumber()
+	const totalTax = (subTotalBigNumber.times(taxRate)).toNumber()
+	const total = (subTotalBigNumber.plus(totalTax)).toNumber()
+	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
+	Transaction.findOneAndUpdate({_id: req.params.id }, 
+		{ subTotal: subtotal,
+		  tax: totalTax,
+		  total: total }, {new: true}, function(err, transaction){
+		  	if(err) next(err)
+		  	if(!transaction) res.status(404).send("No transaction item with that ID!")
+		  	res.json(transaction)
+	});
 }	
 
 
@@ -53,6 +56,49 @@ module.exports.createNewTransaction = function(req, res, next) {
 		if (err) return next(err);
 		res.json(transaction);
 	})	
+}
+
+module.exports.updatePushTransactionById = async function(req, res, next) {
+	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
+	try {
+		const updatedTransactionWithNewSubdoc = await Transaction.findOneAndUpdate(
+		{_id: req.params.id}, { $push: { items: req.body } }, { new: true });
+			if (!updatedTransactionWithNewSubdoc) return res.status(404).send("No transaction item with that ID!")
+		
+		req.body.menuItemSubdocs = updatedTransactionWithNewSubdoc.items;		
+		next();
+
+	} catch(err) { next(err) }
+}
+
+module.exports.pullItemFromArray = async function(req, res, next) {
+	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
+	console.log("Client requesting subdoc removal")
+	console.log("MenuItem _id should be contents of req.body - may need JSON parse")
+	console.log(req.body)
+	console.log(req.body.subdoc_id)
+	try {
+		const updatedTransactionWithPulledSubdoc = await Transaction.findOneAndUpdate(
+			{_id: req.params.id}, { $pull: { items: { _id: req.body.subdoc_Id } } }, { new: true }); 
+			if (!updatedTransactionWithPulledSubdoc) return res.status(404).send("No transaction item with that ID!")
+		
+		req.body.menuItemSubdocs = updatedTransactionWithPulledSubdoc.items;
+		next()
+	
+	} catch(err) { next(err) }
+}
+
+module.exports.pushCustomerAddon = async function(req, res, next) {
+	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
+	try{
+		const updatedTransactionWithNewAddonSubdoc = await Transaction.findOneAndUpdate(
+			{_id: req.params.id}, { $push: { items:addOn } }, { new: true });
+			if (!updatedTransactionWithNewAddonSubdoc) return res.status(404).send("No transaction item with that ID!")
+		
+		req.body.menuItemSubdocs = updatedTransactionWithNewAddonSubdoc.items
+		next()
+
+	} catch(err) { next(err) }
 }
 module.exports.getTransactionById = function (req, res, next) {
 	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
@@ -83,6 +129,7 @@ module.exports.updateTransactionById = function (req, res, next) {
 	});
 }
 
+/* Deprecated in favor of async await + Next() to price calculation 
 module.exports.updatePushTransactionById = function (req, res, next) {
 	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
 	console.log(req.body);
@@ -114,6 +161,7 @@ module.exports.pullItemFromArray = function (req, res, next) {
 		})
 }
 
+
 module.exports.pushCustomerAddon = function(req, res, next) {
 	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
 	const MenuItem = mongoose.model('MenuItem', MenuSchema, req.headers['x-mongo-key'] + '_MenuItems');
@@ -124,6 +172,8 @@ module.exports.pushCustomerAddon = function(req, res, next) {
 			if (!transaction) return res.status(404).send("No transaction item with that ID!")
 			return res.status(200).send(transaction)
 		})
+
+*/
 
 // TODO Push it
 }

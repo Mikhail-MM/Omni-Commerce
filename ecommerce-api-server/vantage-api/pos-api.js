@@ -100,11 +100,11 @@ router.route('/menus/:id')
 	.put(authorize.routeEmployeeToMongoCollection, menus.updateMenuItemById)
 	.delete(authorize.routeEmployeeToMongoCollection, menus.deleteMenuItemById);
 router.route('/transactions/addItem/:id')	
-	.put(authorize.routeEmployeeToMongoCollection, transactions.updatePushTransactionById) //SO FAR only does a PUSH
+	.put(authorize.routeEmployeeToMongoCollection, transactions.updatePushTransactionById, transactions.calculatePricing) 
 router.route('/transactions/removeItem/:id')
-	.put(authorize.routeEmployeeToMongoCollection, transactions.pullItemFromArray)
+	.put(authorize.routeEmployeeToMongoCollection, transactions.pullItemFromArray, transactions.calculatePricing)
 router.route('/transactions/requestAddon/:id')
-	.put(authorize.routeEmployeeToMongoCollection, transactions.pushCustomerAddon)
+	.put(authorize.routeEmployeeToMongoCollection, transactions.pushCustomerAddon, transactions.calculatePricing)
 router.route('/transactions')
 	.get(authorize.routeEmployeeToMongoCollection, transactions.getAllTransactions)
 	.post(authorize.routeEmployeeToMongoCollection, transactions.createNewTransaction);

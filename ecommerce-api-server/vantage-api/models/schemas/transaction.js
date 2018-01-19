@@ -12,6 +12,10 @@ var ticketSchema = new Schema ({
 	createdAt: Date,
 	customer: String,
 	items: [menuItemSchema],
+	subTotal: Number,
+	tax: Number,
+	discount: Number,
+	total: Number,
 	status: String // Open, Fired, Delivered, Void, Paid
 
 });
