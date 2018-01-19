@@ -12,6 +12,19 @@ module.exports.createNewMenuItem = function(req, res, next) {
 	});
 }
 
+module.exports.getMenuItemByIdNoReturnId = function (req, res, next) {
+	const MenuItem = mongoose.model('MenuItem', menuSchema, req.headers['x-mongo-key'] + '_MenuItems')
+	MenuItem.findOne({_id: req.params.id}, '-_id', function(err, menuItem) {
+		if(err) return next(err);
+		if(!menuItem) res.status(404).send("Could not find Menu item with that ID");
+		console.log("Returning Menu Item WITHOUT ID:")
+		console.log(menuItem)
+		return res.json(menuItem);
+	})
+}
+
+
+
 module.exports.getAllMenuItems = function (req, res, next) {
 	const MenuItem = mongoose.model('MenuItem', menuSchema, req.headers['x-mongo-key'] + '_MenuItems')
 	MenuItem.find({}, function(err, menuItems) {

@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Redirect, Link } from 'react-router-dom'
 import TicketLedger from './TicketLedger'
 import TouchPad from './TouchPad'
+
+function mapStateToProps(state) {
+	const { isAuthenticated } = state.authReducer
+	return { isAuthenticated } 
+}
 
 class TicketActionScreen extends Component {
 	constructor (props) {
@@ -14,8 +20,10 @@ class TicketActionScreen extends Component {
 
 
 	render() {
+		const { isAuthenticated } = this.props
 		return (
 			<div className="Page-Wrapper">
+			 {!isAuthenticated && <Redirect to='/login' />} 
 			 	<header className="Logo-Time-Header">
 			 	<p> This could be a component</p>
 			 	</header>
@@ -32,7 +40,7 @@ class TicketActionScreen extends Component {
 				  </div>
 				</div>
 
-
+				<Link to='/terminal'>Back</Link>
 				<footer className="Useless Footer"> Useless Footer </footer>
 			</div>
 
@@ -40,4 +48,4 @@ class TicketActionScreen extends Component {
 	}
 }
 
-export default connect()(TicketActionScreen)
+export default connect(mapStateToProps)(TicketActionScreen)

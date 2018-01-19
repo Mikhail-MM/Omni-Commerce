@@ -22,6 +22,7 @@ const authorize = require('./controllers/authorize');
 const timesheets = require('./controllers/timeSheets')
 const register = require('./controllers/registration');
 const storeConfig = require('./controllers/storeConfig')
+const salesReports = require('./controllers/salesReports')
 /* Depreciated Controllers 
 
 const customers = require('./controllers/customers');
@@ -89,6 +90,8 @@ router.route('/clients')
 router.route('/clients/:id')
 	.put(clients.updateClient)
 	.delete(clients.deleteClientById);
+router.route('/menus/noIDhack/:id')
+	.get(authorize.routeEmployeeToMongoCollection, menus.getMenuItemByIdNoReturnId)
 router.route('/menus')
 	.get(authorize.routeEmployeeToMongoCollection, menus.getAllMenuItems)
 	.post(authorize.routeEmployeeToMongoCollection, menus.createNewMenuItem);
@@ -96,18 +99,26 @@ router.route('/menus/:id')
 	.get(authorize.routeEmployeeToMongoCollection, menus.getMenuItemById)
 	.put(authorize.routeEmployeeToMongoCollection, menus.updateMenuItemById)
 	.delete(authorize.routeEmployeeToMongoCollection, menus.deleteMenuItemById);
+router.route('/transactions/addItem/:id')	
+	.put(authorize.routeEmployeeToMongoCollection, transactions.updatePushTransactionById) //SO FAR only does a PUSH
+router.route('/transactions/removeItem/:id')
+	.put(authorize.routeEmployeeToMongoCollection, transactions.pullItemFromArray)
+router.route('/transactions/requestAddon/:id')
+	.put(authorize.routeEmployeeToMongoCollection, transactions.pushCustomerAddon)
 router.route('/transactions')
 	.get(authorize.routeEmployeeToMongoCollection, transactions.getAllTransactions)
 	.post(authorize.routeEmployeeToMongoCollection, transactions.createNewTransaction);
 router.route('/transactions/:id')
 	.get(authorize.routeEmployeeToMongoCollection, transactions.getTransactionById)
-	.put(authorize.routeEmployeeToMongoCollection, transactions.updatePushTransactionById, transactions.calculatePricing) //SO FAR only does a PUSH
+	.put(authorize.routeEmployeeToMongoCollection, transactions.updateTransactionById) //SO FAR only does a PUSH
 	.delete(authorize.routeEmployeeToMongoCollection, transactions.deleteTransactionById);
 // Should merge under single roof
 router.route('/timesheets/ci')
 	.post(authorize.routeEmployeeToMongoCollection, timesheets.checkForMissedTimesheets, timesheets.createNewTimesheet, storeConfig.pushLoggedUser);
 router.route('/timesheets/co')
 	.put(authorize.routeEmployeeToMongoCollection, timesheets.clockOutEmployee, storeConfig.pullLoggedUser);
+router.route('/salesReports')
+	.post(authorize.routeEmployeeToMongoCollection, salesReports.aggregateSalesData)
 router.route('/storeconfig')
 	.get(authorize.routeEmployeeToMongoCollection, storeConfig.getLoggedUsers);
 router.route('/authorize')

@@ -1,4 +1,5 @@
 import fetch from 'cross-fetch'
+import { push } from 'react-router-redux'
 import { groupBy } from 'underscore'
 
 function organizeItemsToCategories(ArrayOfAllMenuItemObjects) {
@@ -47,6 +48,7 @@ export function fetchMenuItems(token) {
 	}
 }
 
+// We can abstract out the organizing part from the action - note that we have repeated code between fetchTickets and fetchAllTicketsAndGenerateSalesReport
 function organizeTicketsByStatus(ArrayOfAllTicketObjects) {
 
 	const categorizedTicketsByStatus = groupBy(ArrayOfAllTicketObjects, 'status');
@@ -72,6 +74,39 @@ export function fetchTickets(token) {
 	}
 }
 
+export function fetchAllTicketsAndGenerateSalesReport(token) {
+	return dispatch => {
+		return fetch('http://localhost:3001/transactions', {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': token
+			},
+			method: 'GET',
+			mode: 'cors'
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => {
+			const data = {
+				arrayOfAllTickets: json,
+				arrayOfAllTicketsByStatus: groupBy(json, 'status'),
+			}
+			console.log("Sending Aggregate and Sorted Transactions to Server:")
+			console.log(data)
+			return fetch('http://localhost:3001/salesReports', {
+				headers:{
+					'Content-Type': 'application/json',
+					'x-access-token': token
+				},
+				method: 'POST',
+				mode: 'cors',
+				body:JSON.stringify(data)
+			})
+		})
+		.catch(err => console.log(err))
+	}
+}
+
+
 export function createNewTicket(token, createdBy) {
 	const data = { createdBy: createdBy, createdAt: Date.now(), status: "Open"}
 	return dispatch => {
@@ -87,7 +122,8 @@ export function createNewTicket(token, createdBy) {
 		.then(response => response.ok ? response.json() : new Error(response.statusText))
 		.then(json => {
 			dispatch(fetchTickets(token))
-			return dispatch(receiveCurrentTicket(json)) 			
+			dispatch(receiveCurrentTicket(json))
+			dispatch(push('/ticket')) 			
 			}
 		)
 		.catch(err => console.log(err))
@@ -95,7 +131,7 @@ export function createNewTicket(token, createdBy) {
 }
 
 export function updateTransactionWithMenuItem(token, menuItem_Id, currentTransaction_Id) {
-	const url = 'http://localhost:3001/menus/' + menuItem_Id;
+	const url = 'http://localhost:3001/menus/noIDhack/' + menuItem_Id;
 	return dispatch => {
 		return fetch(url, {
 			headers:{
@@ -107,7 +143,7 @@ export function updateTransactionWithMenuItem(token, menuItem_Id, currentTransac
 		})
 		.then(response => response.ok ? response.json() : new Error(response.statusText))
 		.then(json => {
-			const url = 'http://localhost:3001/transactions/' + currentTransaction_Id;
+			const url = 'http://localhost:3001/transactions/addItem/' + currentTransaction_Id;
 			return fetch(url, {
 				headers:{
 					'Content-Type': 'application/json',
@@ -124,6 +160,42 @@ export function updateTransactionWithMenuItem(token, menuItem_Id, currentTransac
 	}
 }
 
+export function updateTransactionWithSubdocRemoval(token, subdoc_Id, currentTransaction_Id) {
+	const url = 'http://localhost:3001/transactions/removeItem/' + currentTransaction_Id
+	const data = { subdoc_Id: subdoc_Id }
+	return dispatch => {
+		return fetch(url, {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': token,
+			},
+			method: 'PUT',
+			mode: 'cors',
+			body: JSON.stringify(data),
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => dispatch(receiveCurrentTicket(json)))
+		.catch(err => console.log(err))
+	}
+}
+
+export function updateTransactionWithRequestedAddon(token, currentTransaction_Id, addOn) {
+	const url = 'http://localhost:3001/transactions/requestAddon/' + currentTransaction_Id
+	return dispatch => {
+		return fetch(url, {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': token,
+			},
+			method: 'PUT',
+			mode: 'cors',
+			body: addOn,
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => dispatch(receiveCurrentTicket(json)))
+		.catch(err => console.log(err))
+	}
+}
 export function fetchCurrentTicketDetails(token, ticket_Id) {
 	const url = 'http://localhost:3001/transactions/' + ticket_Id;
 	return dispatch => {
@@ -137,6 +209,7 @@ export function fetchCurrentTicketDetails(token, ticket_Id) {
 		})
 		.then(response => response.ok ? response.json() : new Error(response.statusText))
 		.then(json => dispatch(receiveCurrentTicket(json)))
+		.then(() => dispatch(push('/ticket')))
 		.catch(err => console.log(err))
 	}
 }

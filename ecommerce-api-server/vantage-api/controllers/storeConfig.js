@@ -7,6 +7,9 @@ const  storeConfigSchema = Schemas.storeConfigSchema;
 //NEED TO UPDATE AND UPSERT
 //Need Error handlers for unchecked employee numbers being sent in as "Undefined" // Return Out of previous Middleware
 
+
+
+// WE NEED TO CREATE A NEW STORE CONFIG WHEN A MASTER IS CREATED SO THAT WE DON'T HAVE A NULL CRASH THE APP WHEN GENERATE.WAITER.CALL.SCREEN() RUNS ON TERMINAL COMPONENT - WE ARE MAPPING THROUGH A NULL VALUE AND CAUSING A CRITICAL CRASH
 module.exports.getLoggedUsers = function(req, res, next){
 	const StoreConfig = mongoose.model('StoreConfig', storeConfigSchema, req.headers['x-mongo-key'] + '_StoreConfig');
 	StoreConfig.findOne({mongoKey: req.headers['x-mongo-key']}, function (err, storeConfig) {

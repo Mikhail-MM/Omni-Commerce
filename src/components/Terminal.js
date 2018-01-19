@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Route, Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetchMenuItems, fetchTickets, createNewTicket, setVisibleCategory, updateTransactionWithMenuItem, fetchCurrentTicketDetails } from '../actions/menu-items'
+import { fetchMenuItems, fetchTickets, createNewTicket, setVisibleCategory, fetchAllTicketsAndGenerateSalesReport, updateTransactionWithMenuItem, fetchCurrentTicketDetails } from '../actions/menu-items'
 import { logOut,  fetchLoggedUsers } from '../actions/auth-login'
 // import { connect } from 'react-redux'
 // import { withRouter } from 'react-router-dom'
@@ -31,6 +31,7 @@ class Terminal extends Component {
 		this.showClockOutScreen = this.showClockOutScreen.bind(this)
 		this.handleLogOut = this.handleLogOut.bind(this)
 		this.iterateThruTicketStatusCategories = this.iterateThruTicketStatusCategories.bind(this)
+		this.generateSalesReport = this.generateSalesReport.bind(this)
 	}
 	componentDidMount() {
 		const { dispatch, token } = this.props
@@ -47,7 +48,7 @@ class Terminal extends Component {
 	showClockInScreen() {
 		this.setState(
 			Object.assign({}, ...this.state, {selectClockInScreen: true}))
-	}
+	}	
 	showClockOutScreen() {
 		this.setState(
 			Object.assign({}, ...this.state, {selectClockOutScreen: true}))
@@ -56,25 +57,60 @@ class Terminal extends Component {
 		this.setState(
 			Object.assign({}, ...this.state, {selectUser: true}))
 	}
+	
 	generateWaiterCallScreen() {
 		const { token, loggedInUsers, dispatch } = this.props
-		return loggedInUsers.map(server => <div key={server} onClick={this.handleServerFetch.bind(this, token, server, dispatch)}>{server}</div>)
+		return loggedInUsers.map(server => <div key={server} onClick={this.postNewTicketByServerName.bind(this, token, server, dispatch)}>{server}</div>)
 	}
-
-	// We need to make a set of buttons that updates the state of this component. This will determine which Divs to show, and which Divs to hide.
-	// Create a new DIV for each Key - Each Key is a Category for our items - from menuItems
-	// Within each div, map through each array of items in that category key
+	postNewTicketByServerName(token, name, dispatch){
+		dispatch(createNewTicket(token, name))	
+	}
+	generateSalesReport() {
+		const { token, dispatch } = this.props
+		dispatch(fetchAllTicketsAndGenerateSalesReport(token))
+	}
+	////////////////////////////////////////////////////////////////////////////////  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  ////////////////////////////////////////////////////////////////////////////////
+	// Moved
+	
 	buildMenuCategorySelection() {
 		const { menuItems } = this.props
 		return Object.keys(menuItems).map(j => {
 			return <button className="category-selection" onClick = {this.sendCategorySelectionDispatch.bind(this, j)}>{j}</button>
 		})
 	}
+	
 	sendCategorySelectionDispatch(category){
 		const { dispatch } = this.props;
 		dispatch(setVisibleCategory(category))
 	}
 	
+	iterateThruCategories() {
+		const { menuItems, visibleCategory } = this.props
+		return Object.keys(menuItems).map(f => {
+			const classCheck = visibleCategory == f ? "Show" : "Hide"
+			return <div key={f} className={classCheck + " " + f}>{this.iterateThruObject(f)}</div>})}
+
+	iterateThruObject(currentKey) {
+		console.log(currentKey)
+		const { menuItems, token, activeTicket, dispatch } = this.props
+		const selector = currentKey
+  			
+  			return menuItems[selector].map(item => <div className={selector} key={item._id} onClick={this.handleClicktoFetch.bind(this, token, item._id, activeTicket._id, dispatch)}>{item.itemName}</div>)
+	}
+
+	handleClicktoFetch(token, menuItem_Id, currentTransaction_Id, dispatch) { 
+		console.log("_id of Clicked Element is: ", menuItem_Id);
+		console.log("_id of Current Transaction is: ", currentTransaction_Id); 
+		dispatch(updateTransactionWithMenuItem(token, menuItem_Id, currentTransaction_Id))
+	}
+	
+	// End Moved
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  ////////////////////////////////////////////////////////////////////////////////
+
+	////////////////////////////////////////////////////////////////////////////////  ////////////////////////////////////////////////////////////////////////////////
+	
+
+	// TODO: Componentize
 	iterateThruTicketStatusCategories() {
 		const { tickets } = this.props;
 		return Object.keys(tickets).map(ticketKey => {
@@ -88,42 +124,15 @@ class Terminal extends Component {
 			return tickets[selector].map(ticket => <div className={selector} key={ticket._id} onClick={this.loadActiveTicket.bind(this, token, ticket._id, dispatch)}>{ticket.status} Ticket {ticket._id}</div>)
 	}
 
+
 	loadActiveTicket(token, ticket_Id, dispatch) {
 		dispatch(fetchCurrentTicketDetails(token, ticket_Id))
 	}
 
-	iterateThruCategories() {
-		console.log("iterateThruCategories() firing")
-		const { menuItems, visibleCategory } = this.props
-		return Object.keys(menuItems).map(f => {
-			const classCheck = visibleCategory == f ? "Show" : "Hide"
-			return <div key={f} className={classCheck + " " + f}>{this.iterateThruObject(f)}</div>})}
-	
-	// Bind the onClick function to each item - allowing us to retrieve its _id
-	iterateThruObject(currentKey) {
-		console.log("iterateThruObject() firing for key")
-		console.log(currentKey)
-		const { menuItems, token, activeTicket, dispatch } = this.props
-		const selector = currentKey
-  			
-  			return menuItems[selector].map(item => <div className={selector} key={item._id} onClick={this.handleClicktoFetch.bind(this, token, item._id, activeTicket._id, dispatch)}>{item.itemName}</div>)
-	}
-
-	handleClicktoFetch(token, menuItem_Id, currentTransaction_Id, dispatch) { 
-		console.log("_id of Clicked Element is: ", menuItem_Id);
-		console.log("_id of Current Transaction is: ", currentTransaction_Id); 
-		dispatch(updateTransactionWithMenuItem(token, menuItem_Id, currentTransaction_Id))
-	}
-
-	handleServerFetch(token, name, dispatch){
-		console.log("handleServerFetch firing (this bound in generateWaiterCallScreen function)")
-
-		dispatch(createNewTicket(token, name))	
-	}
 
 	// We will need a Socket.io component in componentDidMount() listening for ticket updates
 	render() {
-		const { match, menuItems, isAuthenticated, tickets, activeTicket } = this.props;
+		const { match, menuItems, isAuthenticated, tickets, activeTicket, token } = this.props;
 		const { selectUser } = this.state
 		return(
 			<div className="Page-Wrapper">
@@ -148,7 +157,7 @@ class Terminal extends Component {
 			 	  	{this.state.selectClockInScreen && <ClockInOutForm option="Clock In"/> }
 			 	  	<button onClick={this.showClockOutScreen}>Clock Out</button>
 			 	  	{this.state.selectClockOutScreen && <ClockInOutForm option="Clock Out" />}
-			 	  	<button> Close Out </button>
+			 	  	<button onClick={this.generateSalesReport}> Close Out </button>
 			 	  </div>
 				</div>
 
@@ -157,8 +166,8 @@ class Terminal extends Component {
 					<button> Settings </button> 
 				</footer>
 				<Route path={`${match.url}/addItem`} component={AddMenuItemForm} />
-				{tickets && this.iterateThruTicketStatusCategories()}
-				{menuItems && this.buildMenuCategorySelection()}
+				{tickets && this.iterateThruTicketStatusCategories()} 
+				{menuItems && this.buildMenuCategorySelection()} {/* Comment All Below Out */}
 				{/*{menuItems && Object.entries(menuItems).map(uniqueObject => uniqueObject.map(item => console.log(item)))}
 				{menuItems && console.log(Object.entries(menuItems))}*/}
 				{menuItems && activeTicket && this.iterateThruCategories()}

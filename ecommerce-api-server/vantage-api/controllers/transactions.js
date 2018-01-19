@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schemas = require('../models/schemas/transaction')
 const TicketTransaction = Schemas.ticketSchema
+const MenuSchema = Schemas.menuSchema
 const BigNumber = require('bignumber.js');
 
 //May need exception for creating new transaction
@@ -94,11 +95,38 @@ module.exports.updatePushTransactionById = function (req, res, next) {
 		req.body.menuItemSubdocs = transaction.items
 		console.log("Loading array of menu items from transaction body into req.body.menuItemSubdocs for payment processing")
 		console.log(req.body.menuItemSubdocs);
-		next()
-		// MOVE TO TOP return res.status(200).send(transaction);
+		// For Going to Price Calc: next()
+		return res.status(200).send(transaction);
 	});
 }
 
+module.exports.pullItemFromArray = function (req, res, next) {
+	console.log("Client requesting subdoc removal")
+	console.log("MenuItem _id should be contents of req.body - may need JSON parse")
+	console.log(req.body)
+	console.log(req.body.subdoc_id)
+	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
+	Transaction.findOneAndUpdate({_id: req.params.id}, { $pull: { items: { _id: req.body.subdoc_Id } } }, { new: true }, 
+		function(err, transaction) {
+			if(err) return next(err)
+			if (!transaction) return res.status(404).send("No transaction item with that ID!")
+			return res.status(200).send(transaction)
+		})
+}
+
+module.exports.pushCustomerAddon = function(req, res, next) {
+	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
+	const MenuItem = mongoose.model('MenuItem', MenuSchema, req.headers['x-mongo-key'] + '_MenuItems');
+	const addOn = new MenuItem(req.body)
+	Transaction.findOneAndUpdate({_id: req.params.id}, { $push: { items:addOn } }, { new: true }, 
+		function(err, transaction) {
+			if(err) next(err)
+			if (!transaction) return res.status(404).send("No transaction item with that ID!")
+			return res.status(200).send(transaction)
+		})
+
+// TODO Push it
+}
 module.exports.deleteTransactionById = function (req, res, next) {
 	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
 	Transaction.findOneAndRemove({_id: req.params.id}, function(err, transaction) {

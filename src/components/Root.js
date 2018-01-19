@@ -38,7 +38,7 @@ export default class Root extends Component {
 					<Route path="/splash" render={() => <div> Marketing Splash </div> } />
 					<Route exact path="/login" component={LoginForm} />
 					<Route path="/terminal" component={Terminal} />
-					<Route exact path="/tickets" component={TicketActionScreen} />
+					<Route exact path="/ticket" component={TicketActionScreen} />
 					<Route path="/login/register" component={RegisterForm}/>
 
 			</Switch>
