@@ -33,13 +33,13 @@ module.exports.createNewTransactionAndPopulate = function(req, res, next) {
 module.exports.calculatePricing = function(req, res, next) {
 	const arrayOfBigNumberMenuItemPrices = req.body.menuItemSubdocs.map(subdoc => new BigNumber(subdoc.itemPrice))
 	const subTotalBigNumber = arrayOfBigNumberMenuItemPrices.reduce( (acc, curr) => acc.plus(curr))
-	const taxRate = new BigNumber(0.075)
+	const taxRate = new BigNumber(0.07)
 	const subTotal = subTotalBigNumber.toNumber()
 	const totalTax = (subTotalBigNumber.times(taxRate)).toNumber()
 	const total = (subTotalBigNumber.plus(totalTax)).toNumber()
 	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
 	Transaction.findOneAndUpdate({_id: req.params.id }, 
-		{ subTotal: subtotal,
+		{ subTotal: subTotal,
 		  tax: totalTax,
 		  total: total }, {new: true}, function(err, transaction){
 		  	if(err) next(err)
@@ -90,6 +90,8 @@ module.exports.pullItemFromArray = async function(req, res, next) {
 
 module.exports.pushCustomerAddon = async function(req, res, next) {
 	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
+	const MenuItem = mongoose.model('MenuItem', MenuSchema, req.headers['x-mongo-key'] + '_MenuItems');
+	const addOn = new MenuItem(req.body)
 	try{
 		const updatedTransactionWithNewAddonSubdoc = await Transaction.findOneAndUpdate(
 			{_id: req.params.id}, { $push: { items:addOn } }, { new: true });
@@ -173,10 +175,12 @@ module.exports.pushCustomerAddon = function(req, res, next) {
 			return res.status(200).send(transaction)
 		})
 
-*/
 
 // TODO Push it
 }
+
+*/
+
 module.exports.deleteTransactionById = function (req, res, next) {
 	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
 	Transaction.findOneAndRemove({_id: req.params.id}, function(err, transaction) {

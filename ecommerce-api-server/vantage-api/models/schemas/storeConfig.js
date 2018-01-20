@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 var storeConfigSchema = new Schema({
 	mongoKey: String,
-	loggedInUsers: [String]
+	loggedInUsers: {type: [String], default: []}
 })
 
 module.exports.storeConfigSchema = storeConfigSchema;

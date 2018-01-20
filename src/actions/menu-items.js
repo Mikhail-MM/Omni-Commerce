@@ -86,12 +86,8 @@ export function fetchAllTicketsAndGenerateSalesReport(token) {
 		})
 		.then(response => response.ok ? response.json() : new Error(response.statusText))
 		.then(json => {
-			const data = {
-				arrayOfAllTickets: json,
-				arrayOfAllTicketsByStatus: groupBy(json, 'status'),
-			}
-			console.log("Sending Aggregate and Sorted Transactions to Server:")
-			console.log(data)
+			console.log("Sending Aggregate Transactions to Server:")
+			console.log(json)
 			return fetch('http://localhost:3001/salesReports', {
 				headers:{
 					'Content-Type': 'application/json',
@@ -99,8 +95,10 @@ export function fetchAllTicketsAndGenerateSalesReport(token) {
 				},
 				method: 'POST',
 				mode: 'cors',
-				body:JSON.stringify(data)
+				body:JSON.stringify(json)
 			})
+			.then(response => response.ok ? response.json() : new Error(response.statusText))
+			.then(json => console.log(json))
 		})
 		.catch(err => console.log(err))
 	}
@@ -214,17 +212,20 @@ export function fetchCurrentTicketDetails(token, ticket_Id) {
 	}
 }
 
-export function updateTicketStatus(token, ticket_Id, status) {
+export function updateTicketStatus(token, ticket_Id, ticketStatus) {
 	const url = 'http://localhost:3001/transactions/' + ticket_Id
-	const data = { status: status }
+	const data = { status: ticketStatus }
+	console.log(data)
+	console.log(ticketStatus)
 	return dispatch => {
 		return fetch(url, {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token,
 			},
-			method: 'GET',
+			method: 'PUT',
 			mode: 'cors',
+			body: JSON.stringify(data),
 		})
 		.then(response => response.ok ? response.json() : new Error(response.statusText))
 		.then(json => dispatch(receiveCurrentTicket(json)))

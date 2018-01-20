@@ -12,10 +12,11 @@ var ticketSchema = new Schema ({
 	createdAt: Date,
 	customer: String,
 	items: [menuItemSchema],
-	subTotal: Number,
-	tax: Number,
-	discount: Number,
-	total: Number,
+	subTotal:{type: Number, default: 0.00 },
+	tax: { type:Number, default: 0.00 },
+	discount: { type: Number, default: 0.00 },
+	total: { type: Number, default: 0.00 },
+
 	status: String // Open, Fired, Delivered, Void, Paid
 
 });

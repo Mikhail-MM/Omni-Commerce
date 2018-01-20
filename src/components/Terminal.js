@@ -69,46 +69,6 @@ class Terminal extends Component {
 		const { token, dispatch } = this.props
 		dispatch(fetchAllTicketsAndGenerateSalesReport(token))
 	}
-	////////////////////////////////////////////////////////////////////////////////  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  ////////////////////////////////////////////////////////////////////////////////
-	// Moved
-	
-	buildMenuCategorySelection() {
-		const { menuItems } = this.props
-		return Object.keys(menuItems).map(j => {
-			return <button className="category-selection" onClick = {this.sendCategorySelectionDispatch.bind(this, j)}>{j}</button>
-		})
-	}
-	
-	sendCategorySelectionDispatch(category){
-		const { dispatch } = this.props;
-		dispatch(setVisibleCategory(category))
-	}
-	
-	iterateThruCategories() {
-		const { menuItems, visibleCategory } = this.props
-		return Object.keys(menuItems).map(f => {
-			const classCheck = visibleCategory == f ? "Show" : "Hide"
-			return <div key={f} className={classCheck + " " + f}>{this.iterateThruObject(f)}</div>})}
-
-	iterateThruObject(currentKey) {
-		console.log(currentKey)
-		const { menuItems, token, activeTicket, dispatch } = this.props
-		const selector = currentKey
-  			
-  			return menuItems[selector].map(item => <div className={selector} key={item._id} onClick={this.handleClicktoFetch.bind(this, token, item._id, activeTicket._id, dispatch)}>{item.itemName}</div>)
-	}
-
-	handleClicktoFetch(token, menuItem_Id, currentTransaction_Id, dispatch) { 
-		console.log("_id of Clicked Element is: ", menuItem_Id);
-		console.log("_id of Current Transaction is: ", currentTransaction_Id); 
-		dispatch(updateTransactionWithMenuItem(token, menuItem_Id, currentTransaction_Id))
-	}
-	
-	// End Moved
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  ////////////////////////////////////////////////////////////////////////////////
-
-	////////////////////////////////////////////////////////////////////////////////  ////////////////////////////////////////////////////////////////////////////////
-	
 
 	// TODO: Componentize
 	iterateThruTicketStatusCategories() {
@@ -167,10 +127,6 @@ class Terminal extends Component {
 				</footer>
 				<Route path={`${match.url}/addItem`} component={AddMenuItemForm} />
 				{tickets && this.iterateThruTicketStatusCategories()} 
-				{menuItems && this.buildMenuCategorySelection()} {/* Comment All Below Out */}
-				{/*{menuItems && Object.entries(menuItems).map(uniqueObject => uniqueObject.map(item => console.log(item)))}
-				{menuItems && console.log(Object.entries(menuItems))}*/}
-				{menuItems && activeTicket && this.iterateThruCategories()}
 			</div>
 		)
 	}

@@ -35,8 +35,6 @@ class TicketLedger extends Component {
 		const { activeTicket, token } = this.props
 		// Add unique option to only return Addon button on LAST element of the array
 		return activeTicket.items.map((item, index, array) => {
-			console.log(array)
-			console.log(index)
 			if (index == array.length - 1) {
 				return (
 					<tr key={item._id}>
@@ -58,7 +56,27 @@ class TicketLedger extends Component {
 		})
 	}
 	displayPricingFromActiveTicket() {
-
+		const { activeTicket } = this.props
+		return(
+		 <tfoot> 
+		  <tr>
+		   <td colSpan="3">SubTotal</td>
+		   <td>${activeTicket.subTotal}</td>
+		  </tr>
+		  <tr>
+		   <td colSpan="3">Tax</td>
+		   <td>${activeTicket.tax}</td>
+		  </tr>
+		  <tr>
+		   <td colSpan="3">Total</td>
+		   <td>${activeTicket.total}</td>
+		  </tr>
+		  <tr>
+		   <td colSpan="3">Discount</td>
+		   <td>$0.00</td>
+		  </tr>
+		  </tfoot>
+		  )
 	}
 
 	render() {
@@ -78,24 +96,7 @@ class TicketLedger extends Component {
 		 <tbody>
 			{activeTicket && this.generateLedgerFromActiveTicket()}		 
 		 </tbody>
-		 <tfoot>
-		  <tr>
-		   <td colSpan="3">SubTotal</td>
-		   <td>$12.34 </td>
-		  </tr>
-		  <tr>
-		   <td colSpan="3">Tax</td>
-		   <td>$1.46</td>
-		  </tr>
-		  <tr>
-		   <td colSpan="3">Discount</td>
-		   <td>$-2.00</td>
-		  </tr>
-		  <tr>
-		   <td colSpan="3">Total</td>
-		   <td>$623.49</td>
-		  </tr>
-		 </tfoot>
+			{activeTicket && this.displayPricingFromActiveTicket()}
 		</table>
 		{this.state.showAddonScreen && <AddCustomAddonForm/>}
 		</div>

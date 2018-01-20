@@ -44,22 +44,26 @@ class TouchPad extends Component {
 		dispatch(updateTransactionWithMenuItem(token, menuItem_Id, currentTransaction_Id))
 	}
 
-	handleTicketStatusUpdate(token, currentTransaction_Id, status) {
-		const { dispatch } = this.props
-		dispatch(updateTicketStatus(token, currentTransaction_Id, status))
+	handleTicketStatusUpdate(token, status) {
+		const { dispatch, activeTicket } = this.props
+		console.log(status)
+		dispatch(updateTicketStatus(token, activeTicket._id, status))
 	}
 
 	render() {
 		const { token, menuItems, activeTicket } = this.props
+		const fired = "Fired"
+		const cancelled = "Void"
+		const delivered = "Delivered"
 		return(
 		<div className="TouchPad-Component-Wrapper">
 			 
 			{menuItems && this.buildMenuCategorySelection()}
 			{menuItems && activeTicket && this.iterateThruCategories()}
-			<button onClick={this.handleTicketStatusUpdate.bind(this, token, activeTicket._id, 'Fired')}>Fire Ticket</button>
-			<button onClick={this.handleTicketStatusUpdate.bind(this, token, activeTicket._id, 'Void')}>Void Ticket</button>
-			<button onClick={this.handleTicketStatusUpdate.bind(this, token, activeTicket._id, 'Delivered')}>Order Delivered</button>
-			<button onClick={console.log("TODO! OOPESI")}>Pay Up Sucka!</button>
+			<button onClick={this.handleTicketStatusUpdate.bind(this, token, "Fired")}>Fire Ticket</button>
+			<button onClick={this.handleTicketStatusUpdate.bind(this, token, "Void")}>Void Ticket</button>
+			<button onClick={this.handleTicketStatusUpdate.bind(this, token, "Delivered")}>Order Delivered</button>
+			<button onClick={this.handleTicketStatusUpdate.bind(this, token, "Paid")}>Pay Up Sucka!</button>
 	
 		</div>
 		)

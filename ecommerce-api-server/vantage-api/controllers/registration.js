@@ -4,39 +4,7 @@ const Client = require('../models/schemas/client');
 
 
 
-findMasterAndTagChild = async function(req, res, next) {
-	try {
-		const boss = await Client.findOne({
-			isMaster: true,
-			organizationName: req.body.employerLookup
-		});
-		console.log("Found Master:")
-		console.log(boss)
-		console.log("Master's Mongo Key:")
-		console.log(boss.mongoCollectionKey)
-				req.body.mongoCollectionKey = boss.mongoCollectionKey;
-				req.body.organizationName = boss.organizationName;
-				req.body.master_id = boss._id;
 
-				req.body.clockInNumber = boss.employeeCounter; 
-		console.log("Updating new user's Clock-In Number")
-		console.log("Boss' old employeeCounter is: ")
-		console.log(boss.employeeCounter)
-		console.log("Appending this to the new employee: ")
-		console.log(req.body.clockInNumber)
-				req.body.newEmployeeCount = boss.employeeCounter + 1
-		console.log("Incrementing new counter: ")
-		console.log(req.body.newEmployeeCount)
-		console.log("Running findByIdAndUpdate...")
-				updateEmployerEmployeeCount(req, res, next);
-			console.log("New req.body:")
-			console.log(req.body)
-			next();
-	}
-	catch (err) {
-		next(err)
-	}
-}
 /* Deprecated - Incorrect Usage of Promises + Callbacks Together
 findMasterAndTagChild = function(req, res, next) {
 	console.log("looking for Master")
@@ -82,6 +50,28 @@ updateEmployerEmployeeCount = function(req, res, next) {
 			})
 }
 
+
+module.exports.configureNewUser = function(req, res, next) {
+	if (req.body.isBusinessOwner) {
+		req.body.isMaster = true;
+		req.body.isAdmin = true;
+		req.body.employeeCounter = 0;
+		req.body.accountType = "Master";
+		// Generate unique identifier for Organization
+			const mongoCollectionKey = uuid4().slice(0, 7);
+			req.body.mongoCollectionKey = mongoCollectionKey;
+			// Create Point Of Sale Bot
+			createTerminalAccount(req, res, next)
+			next();
+	}
+
+	if (req.body.isEmployee) {
+		req.body.isMaster = false;
+		req.body.accountType = "Employee"
+		findMasterAndTagChild(req, res, next)		
+	}
+}
+
 createTerminalAccount = function(req, res, next) {
 	data = {
 		email: req.body.mongoCollectionKey + '@terminal.com',
@@ -114,23 +104,36 @@ createTerminalAccount = function(req, res, next) {
 
 }
 
-module.exports.configureNewUser = function(req, res, next) {
-	if (req.body.isBusinessOwner) {
-		req.body.isMaster = true;
-		req.body.isAdmin = true;
-		req.body.employeeCounter = 0;
-		req.body.accountType = "Master";
-		// Generate unique identifier for Organization
-			const mongoCollectionKey = uuid4().slice(0, 7);
-			req.body.mongoCollectionKey = mongoCollectionKey;
-			// Create Point Of Sale Bot
-			createTerminalAccount(req, res, next)
+findMasterAndTagChild = async function(req, res, next) {
+	try {
+		const boss = await Client.findOne({
+			isMaster: true,
+			organizationName: req.body.employerLookup
+		});
+		console.log("Found Master:")
+		console.log(boss)
+		console.log("Master's Mongo Key:")
+		console.log(boss.mongoCollectionKey)
+				req.body.mongoCollectionKey = boss.mongoCollectionKey;
+				req.body.organizationName = boss.organizationName;
+				req.body.master_id = boss._id;
+
+				req.body.clockInNumber = boss.employeeCounter; 
+		console.log("Updating new user's Clock-In Number")
+		console.log("Boss' old employeeCounter is: ")
+		console.log(boss.employeeCounter)
+		console.log("Appending this to the new employee: ")
+		console.log(req.body.clockInNumber)
+				req.body.newEmployeeCount = boss.employeeCounter + 1
+		console.log("Incrementing new counter: ")
+		console.log(req.body.newEmployeeCount)
+		console.log("Running findByIdAndUpdate...")
+				updateEmployerEmployeeCount(req, res, next);
+			console.log("New req.body:")
+			console.log(req.body)
 			next();
 	}
-
-	if (req.body.isEmployee) {
-		req.body.isMaster = false;
-		req.body.accountType = "Employee"
-		findMasterAndTagChild(req, res, next)		
+	catch (err) {
+		next(err)
 	}
 }
