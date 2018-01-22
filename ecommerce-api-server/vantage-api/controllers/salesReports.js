@@ -9,21 +9,24 @@ module.exports.aggregateSalesData = async function(req, res, next) {
 
 		console.log("Concatenating ALL menuItem arrays to get array of all menu items ordered")
 
-		const AllTicketsBySession = await Transaction.find({});
+		const allTicketsBySession = await Transaction.find({});
 		console.log(AllTicketsBySession)
-		const AllTicketsByCategory = _.groupBy(AllTicketsBySession, 'status')
-		const AllMenuItemsSold = AllTicketsBySession
+		const allTicketsByCategory = _.groupBy(allTicketsBySession, 'status')
+		const allTicketsByServer = _.groupBy(allTicketsBySession, 'createdBy')
+		const allMenuItemsSold = allTicketsBySession
 									.map(ticket => ticket.items)
 									.reduce((acc, cur) => acc.concat(cur))
-		const AllMenuItemsSoldByItem = _.groupBy(AllMenuItemsSold, 'itemName')
-		const AllMenuItemsSoldByCategory = _.groupBy(AllMenuItemsSold, 'category')
+		const allMenuItemsSoldByItem = _.groupBy(allMenuItemsSold, 'itemName')
+		const allMenuItemsSoldByCategory = _.groupBy(allMenuItemsSold, 'category')
+
 
 		const data = {
-			all_tickets: AllTicketsBySession,
-			all_tix_by_category: AllTicketsByCategory,
-			all_menu_items_sold: AllMenuItemsSold,
-			all_menu_items_sold_by_item: AllMenuItemsSoldByItem,
-			all_menu_items_sold_by_category: AllMenuItemsSoldByCategory,
+			all_tickets: allTicketsBySession,
+			all_tix_by_category: allTicketsByCategory,
+			all_tix_by_server: allTicketsByServer,
+			all_menu_items_sold: allMenuItemsSold,
+			all_menu_items_sold_by_item: allMenuItemsSoldByItem,
+			all_menu_items_sold_by_category: allMenuItemsSoldByCategory,
 		}
 		res.json(data)
 		/*
