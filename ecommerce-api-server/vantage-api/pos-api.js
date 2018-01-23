@@ -6,11 +6,14 @@
 //				Dependencies					  //
 ////////////////////////////////////////////////////
 
+
 const express = require('express');
 const mongoose = require('mongoose');
+
 const path = require('path');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+
 
 
 const config = require('./models/config');
@@ -23,6 +26,7 @@ const timesheets = require('./controllers/timeSheets')
 const register = require('./controllers/registration');
 const storeConfig = require('./controllers/storeConfig')
 const salesReports = require('./controllers/salesReports')
+const payments = require('./controllers/payments')
 /* Depreciated Controllers 
 
 const customers = require('./controllers/customers');
@@ -123,6 +127,8 @@ router.route('/storeconfig')
 	.get(authorize.routeEmployeeToMongoCollection, storeConfig.getLoggedUsers);
 router.route('/authorize')
 	.post(authorize.login);
+router.route('/payments')
+	.post(payments.createStripeCharge);
 app.use('/', router);
 
 //app.route('/clients')

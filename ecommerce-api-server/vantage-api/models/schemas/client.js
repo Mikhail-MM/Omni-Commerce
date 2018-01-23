@@ -14,9 +14,9 @@ var clientSchema = new Schema({
 	organizationName: String, // Used in the autocomplete to point Employees to the right way
 	rosterJob: String,
 	ownedBy: String,
-	mongoCollectionKey: { type: String, required: true, unique: true }, // use in req.params for POST to route users to proper MongoDB instance
+	mongoCollectionKey: { type: String, required: true }, // use in req.params for POST to route users to proper MongoDB instance
 	isAdmin: { type: Boolean, index: true },
-	hash: { type:String, required: true },
+	hash: { type: String, required: true },
 	token: String,
 	clockInNumber: String,
 	accountType: String, // Master, Employee, Manager, Terminal

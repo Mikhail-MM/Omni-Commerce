@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { setVisibleCategory, updateTransactionWithMenuItem, updateTicketStatus } from '../actions/menu-items'
 
+import Checkout from './Checkout'
+
 function mapStateToProps(state) {
 	const { token, isAuthenticated } = state.authReducer
 	const { menuItems, visibleCategory } = state.menuItemsReducer 
@@ -13,9 +15,11 @@ function mapStateToProps(state) {
 class TouchPad extends Component {
 	constructor(props) {
 		super(props)
-		this.state = { }
+		this.state = { showPaymentForm: false } // We may have to move this to Redux so that we can dispatch a hide event from the Stripe Payment Button
+	this.togglePaymentFormUI = this.togglePaymentFormUI.bind(this)
 	}
 	
+
 	buildMenuCategorySelection() {
 		const { menuItems } = this.props
 			return Object.keys(menuItems).map(j => {
@@ -32,6 +36,12 @@ class TouchPad extends Component {
 		return Object.keys(menuItems).map(f => {
 			const classCheck = visibleCategory == f ? "Show" : "Hide"
 				return <div key={f} className={classCheck + " " + f}>{this.iterateThruObject(f)}</div>})
+	}
+
+	togglePaymentFormUI(event) {
+		event.preventDefault();
+		this.setState({ showPaymentForm: true })
+		console.log(this.state)
 	}
 
 	iterateThruObject(currentKey) {
@@ -55,6 +65,8 @@ class TouchPad extends Component {
 		const fired = "Fired"
 		const cancelled = "Void"
 		const delivered = "Delivered"
+		const { showPaymentForm } = this.state
+		console.log(showPaymentForm)
 		return(
 		<div className="TouchPad-Component-Wrapper">
 			 
@@ -63,7 +75,8 @@ class TouchPad extends Component {
 			<button onClick={this.handleTicketStatusUpdate.bind(this, token, "Fired")}>Fire Ticket</button>
 			<button onClick={this.handleTicketStatusUpdate.bind(this, token, "Void")}>Void Ticket</button>
 			<button onClick={this.handleTicketStatusUpdate.bind(this, token, "Delivered")}>Order Delivered</button>
-			<button onClick={this.handleTicketStatusUpdate.bind(this, token, "Paid")}>Pay Up Sucka!</button>
+			<button onClick={this.togglePaymentFormUI}>Pay With Stripe</button>
+			{showPaymentForm && <Checkout />}
 	
 		</div>
 		)

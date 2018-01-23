@@ -9,6 +9,7 @@ import { ConnectedRouter, routerMiddleware, push } from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory'
 import rootReducer from '../reducers/reducers'
 
+
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
 import Terminal from './Terminal'
@@ -16,6 +17,7 @@ import TicketActionScreen from './TicketActionScreen'
 
 const loggerMiddleware = createLogger()
 const history = createHistory()
+
 
 const store = createStore(
 	rootReducer,
@@ -33,15 +35,15 @@ export default class Root extends Component {
 		return (
 		<Provider store={store}>
 			<ConnectedRouter history={history}>
-			<Switch>
-					<Redirect exact="true" from="/" to="/login"/>
-					<Route path="/splash" render={() => <div> Marketing Splash </div> } />
-					<Route exact path="/login" component={LoginForm} />
-					<Route path="/terminal" component={Terminal} />
-					<Route exact path="/ticket" component={TicketActionScreen} />
-					<Route path="/login/register" component={RegisterForm}/>
+				<Switch>
+						<Redirect exact="true" from="/" to="/login"/>
+						<Route path="/splash" render={() => <div> Marketing Splash </div> } />
+						<Route exact path="/login" component={LoginForm} />
+						<Route path="/terminal" component={Terminal} />
+						<Route exact path="/ticket" component={TicketActionScreen} />
+						<Route path="/login/register" component={RegisterForm}/>
 
-			</Switch>
+				</Switch>
 			</ConnectedRouter>
 		</Provider>
 		)

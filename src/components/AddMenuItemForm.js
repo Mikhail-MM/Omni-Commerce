@@ -11,11 +11,14 @@ function mapStateToProps(state) {
 class AddMenuItemForm extends Component {
 	constructor(props){
 		super(props)
-		this.state = {
+		this.initialState = {
 			itemName: '',
 			itemPrice: '',
 			category: ''
 		}
+
+		this.state = this.initialState
+
 		this.handleItemNameChange = this.handleItemNameChange.bind(this);
 		this.handleItemPriceChange = this.handleItemPriceChange.bind(this);
 		this.handleCategoryChange = this.handleCategoryChange.bind(this);
@@ -47,6 +50,7 @@ class AddMenuItemForm extends Component {
 		console.log(this.state);
 		const data = JSON.stringify(this.state)
 		dispatch(createNewMenuItem(token, data))
+		this.setState(this.initialState)
 	}
 
 	render() {

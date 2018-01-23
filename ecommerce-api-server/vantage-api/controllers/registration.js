@@ -58,11 +58,10 @@ module.exports.configureNewUser = function(req, res, next) {
 		req.body.employeeCounter = 0;
 		req.body.accountType = "Master";
 		// Generate unique identifier for Organization
-			const mongoCollectionKey = uuid4().slice(0, 7);
+			const mongoCollectionKey = uuid4().slice(0, 13);
 			req.body.mongoCollectionKey = mongoCollectionKey;
 			// Create Point Of Sale Bot
 			createTerminalAccount(req, res, next)
-			next();
 	}
 
 	if (req.body.isEmployee) {
@@ -96,6 +95,7 @@ createTerminalAccount = function(req, res, next) {
 					if (err) return next(err);
 					console.log("New Terminal Account Created:")
 					console.log(client)
+					next();
 				});
 			}).catch(function(error){
 				console.log("Unexpected Error: " + error);

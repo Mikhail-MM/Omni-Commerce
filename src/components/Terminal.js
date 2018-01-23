@@ -60,7 +60,8 @@ class Terminal extends Component {
 	
 	generateWaiterCallScreen() {
 		const { token, loggedInUsers, dispatch } = this.props
-		return loggedInUsers.map(server => <div key={server} onClick={this.postNewTicketByServerName.bind(this, token, server, dispatch)}>{server}</div>)
+		if (loggedInUsers) return loggedInUsers.map(server => <div key={server} onClick={this.postNewTicketByServerName.bind(this, token, server, dispatch)}>{server}</div>)
+		else return console.log("There are no logged-in users! Consider allowing a catch-all general order call-in")
 	}
 	postNewTicketByServerName(token, name, dispatch){
 		dispatch(createNewTicket(token, name))	
