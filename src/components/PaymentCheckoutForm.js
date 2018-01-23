@@ -8,7 +8,8 @@ import CardSection from './CardSection'
 
 function mapStateToProps(state) {
 	const authToken = state.authReducer.token;
-	return { authToken }
+	const { activeTicket } = state.ticketTrackingReducer
+	return { authToken, activeTicket }
 }
 
 class PaymentCheckoutForm extends Component {
@@ -18,11 +19,9 @@ class PaymentCheckoutForm extends Component {
 	}
 	handleSubmit = (event) => {
 		event.preventDefault()
-		const { authToken, dispatch } = this.props
+		const { authToken, activeTicket, dispatch } = this.props
 		this.props.stripe.createToken({name: 'Random Customer'}).then(({token}) => {
-			console.log('Received Stripe token:', token);
-			console.log('Received Omni-Commerce User Authorization Token from Redux Store:', authToken);
-			dispatch(sendStripeTokenToApi(authToken, token))
+			dispatch(sendStripeTokenToApi(authToken, token, activeTicket._id))
 		
 		}); 
 	}

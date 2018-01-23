@@ -16,5 +16,4 @@ class Checkout extends React.Component {
 	}
 }
 
-console.log(Checkout)
 export default Checkout;

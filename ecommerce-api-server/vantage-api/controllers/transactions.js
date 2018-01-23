@@ -35,13 +35,19 @@ module.exports.calculatePricing = function(req, res, next) {
 	const subTotalBigNumber = arrayOfBigNumberMenuItemPrices.reduce( (acc, curr) => acc.plus(curr))
 	const taxRate = new BigNumber(0.07)
 	const subTotal = subTotalBigNumber.toNumber()
+	const subTotalDisplay = subTotalBigNumber.round(2).toNumber()
 	const totalTax = (subTotalBigNumber.times(taxRate)).toNumber()
+	const totalTaxDisplay = (subTotalBigNumber.times(taxRate)).round(2).toNumber()
 	const total = (subTotalBigNumber.plus(totalTax)).toNumber()
+	const totalDisplay = (subTotalBigNumber.plus(totalTax)).round(2).toNumber()
 	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
 	Transaction.findOneAndUpdate({_id: req.params.id }, 
-		{ subTotal: subTotal,
-		  tax: totalTax,
-		  total: total }, {new: true}, function(err, transaction){
+		{ subTotalReal: subTotal,
+		  subTotal: subTotalDisplay,
+		  taxReal: totalTax,
+		  tax: totalTaxDisplay,
+		  totalReal: total,
+		  total: totalDisplay, }, {new: true}, function(err, transaction){
 		  	if(err) next(err)
 		  	if(!transaction) res.status(404).send("No transaction item with that ID!")
 		  	res.json(transaction)
