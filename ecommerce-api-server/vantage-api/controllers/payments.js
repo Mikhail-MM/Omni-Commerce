@@ -1,13 +1,25 @@
 require('dotenv').config()
-console.log(process.env.SECRET_KEY)
 const stripe = require('stripe')(process.env.SECRET_KEY);
+const BigNumber = require('bignumber.js');
 
+
+module.exports.createCashCharge = function(req, res, next) {
+  console.log("Creating Cash Charge")
+  // Needs error handling to ensure that customer didn't over/underpay due to cached redux values that didn't update for whatever reason
+  req.params._id = req.body.parentTransaction._id;
+  const totalBalance = new BigNumber(req.body.parentTransaction.totalReal).round(2)
+  const customerPaid = new BigNumber(req.body.payment.cashTenderedByCustomer).round(2)
+
+  req.body.payment.refund = customerPaid.minus(totalBalance).toNumber()
+  res.json(req.body)
+}
 
 module.exports.createStripeCharge = function(req, res, next) {
-	const token = req.body.id // stripe token id
-	console.log("This is a sample charge - static charge amount")
+	const token = req.body.stripeToken.id // stripe token id
+  const stripeAmount = new BigNumber(req.body.chargeTotal).times(100).round().toNumber()
+  console.log(stripeAmount)
 	stripe.charges.create({
-		amount: 1000,
+		amount: stripeAmount,
 		currency: "usd",
 		description: "A sample charge",
 		source: token
@@ -15,6 +27,7 @@ module.exports.createStripeCharge = function(req, res, next) {
 		if (err) return next(err)
 		res.json(charge)
 	});
+  
 
 }
 

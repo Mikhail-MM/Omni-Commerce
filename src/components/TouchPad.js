@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { setVisibleCategory, updateTransactionWithMenuItem, updateTicketStatus } from '../actions/menu-items'
 
 import Checkout from './Checkout'
+import CashPaymentForm from './CashPaymentForm'
 
 function mapStateToProps(state) {
 	const { token, isAuthenticated } = state.authReducer
@@ -15,8 +16,12 @@ function mapStateToProps(state) {
 class TouchPad extends Component {
 	constructor(props) {
 		super(props)
-		this.state = { showPaymentForm: false } // We may have to move this to Redux so that we can dispatch a hide event from the Stripe Payment Button
-	this.togglePaymentFormUI = this.togglePaymentFormUI.bind(this)
+		this.state = { 
+			showCardPaymentForm: false, 
+			showCashPaymentForm: false,
+		 } // We may have to move this to Redux so that we can dispatch a hide event from the Stripe Payment Button
+	this.toggleCardPaymentFormUI = this.toggleCardPaymentFormUI.bind(this);
+	this.toggleCashPaymentFormUI = this.toggleCashPaymentFormUI.bind(this);
 	}
 	
 
@@ -38,10 +43,16 @@ class TouchPad extends Component {
 				return <div key={f} className={classCheck + " " + f}>{this.iterateThruObject(f)}</div>})
 	}
 
-	togglePaymentFormUI(event) {
+	toggleCardPaymentFormUI(event) {
 		event.preventDefault();
-		this.setState({ showPaymentForm: true })
-		console.log(this.state)
+		this.setState({ showCardPaymentForm: true });
+		console.log(this.state);
+	}
+
+	toggleCashPaymentFormUI(event) {
+		event.preventDefault();
+		this.setState({ showCashPaymentForm: true });
+		console.log(this.state);
 	}
 
 	iterateThruObject(currentKey) {
@@ -65,8 +76,7 @@ class TouchPad extends Component {
 		const fired = "Fired"
 		const cancelled = "Void"
 		const delivered = "Delivered"
-		const { showPaymentForm } = this.state
-		console.log(showPaymentForm)
+		const { showCardPaymentForm, showCashPaymentForm } = this.state
 		return(
 		<div className="TouchPad-Component-Wrapper">
 			 
@@ -75,8 +85,10 @@ class TouchPad extends Component {
 			<button onClick={this.handleTicketStatusUpdate.bind(this, token, "Fired")}>Fire Ticket</button>
 			<button onClick={this.handleTicketStatusUpdate.bind(this, token, "Void")}>Void Ticket</button>
 			<button onClick={this.handleTicketStatusUpdate.bind(this, token, "Delivered")}>Order Delivered</button>
-			<button onClick={this.togglePaymentFormUI}>Pay With Stripe</button>
-			{showPaymentForm && <Checkout />}
+			<button onClick={this.toggleCashPaymentFormUI}>Pay With Cash</button>
+			<button onClick={this.toggleCardPaymentFormUI}>Pay With Stripe</button>
+			{showCardPaymentForm && <Checkout />}
+			{showCashPaymentForm && <CashPaymentForm />}
 	
 		</div>
 		)

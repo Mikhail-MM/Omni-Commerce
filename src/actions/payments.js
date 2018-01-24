@@ -1,24 +1,106 @@
 import fetch from 'cross-fetch'
 
 export function sendStripeTokenToApi(authToken, stripeToken, transaction_id) {
+	// Need to ask API for price of the damn thang
+	const url = 'http://localhost:3001/transactions/' + transaction_id
+	const data = {}
 	return dispatch => {
-		return fetch('http://localhost:3001/payments', {
+		fetch(url, {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': authToken,
+			},
+			method: 'GET',
+			mode:'cors'
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => {
+			const data = {
+				chargeTotal: json.totalReal,
+				stripeToken: stripeToken,
+			}
+
+			return fetch('http://localhost:3001/payments/stripe', {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': authToken
 			},
 			method: 'POST',
 			mode: 'cors',
-			body: JSON.stringify(stripeToken)
-		})
-		.then(response => response.ok ? response.json() : new Error(response.statusText))
-		.then(json => {
-			console.log("Receiving Stripe Charge from API")
-			console.log(json)
-			dispatch(updateTransactionWithStripePaymentDetails(authToken, transaction_id, json))
+			body: JSON.stringify(data)
+			})
+			.then(response => response.ok ? response.json() : new Error(response.statusText))
+			.then(json => {
+				console.log("Receiving Stripe Charge from API")
+				console.log(json)
+				dispatch(updateTransactionWithStripePaymentDetails(authToken, transaction_id, json))
+			})
+			.catch(err => console.log(err))
 		})
 		.catch(err => console.log(err))
 	}
+}
+
+// need to calculate change
+export function sendCashPaymentToApi(authToken, cashTendered, transaction_id) {
+	const url = 'http://localhost:3001/transactions/' + transaction_id
+	const data = {
+		payment: {
+			paymentType: "Cash",
+			cashTenderedByCustomer: cashTendered,
+		},
+	}
+	return dispatch => {
+		fetch(url, {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': authToken,
+			},
+			method: 'GET',
+			mode: 'cors',
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => {
+			data.parentTransaction = json;
+			return fetch('http://localhost:3001/payments/cash', {
+				headers:{
+					'Content-Type': 'application/json',
+					'x-access-token': authToken
+				},
+				method: 'POST',
+				mode: 'cors',
+				body: JSON.stringify(data),
+			})
+			.then(response => response.ok ? response.json() : new Error(response.statusText))
+			.then(json => {
+				const data = { 
+					payment: json.payment,
+					status: "Paid"
+				}
+			console.log(json)
+			console.log(data)
+			}) // Dispatch an event for the Cashier - Cash Register Screen
+			.catch(err => console.log(err))
+		})
+		.catch(err => console.log(err))
+	}
+/*
+	return dispatch =>  {
+		return fetch(url, {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': authToken
+			},
+			method: 'PUT',
+			mode: 'cors',
+			body: JSON.stringify(data),
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => console.log(json))
+		.catch(err => console.log(err))
+	}
+
+*/
 }
 
 function updateTransactionWithStripePaymentDetails(authToken, transaction_id, paymentJson) {

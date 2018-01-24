@@ -10,7 +10,7 @@ module.exports.aggregateSalesData = async function(req, res, next) {
 		console.log("Concatenating ALL menuItem arrays to get array of all menu items ordered")
 
 		const allTicketsBySession = await Transaction.find({});
-		console.log(AllTicketsBySession)
+		console.log(allTicketsBySession)
 		const allTicketsByCategory = _.groupBy(allTicketsBySession, 'status')
 		const allTicketsByServer = _.groupBy(allTicketsBySession, 'createdBy')
 		const allMenuItemsSold = allTicketsBySession

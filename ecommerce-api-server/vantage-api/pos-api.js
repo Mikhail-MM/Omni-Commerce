@@ -127,8 +127,10 @@ router.route('/storeconfig')
 	.get(authorize.routeEmployeeToMongoCollection, storeConfig.getLoggedUsers);
 router.route('/authorize')
 	.post(authorize.login);
-router.route('/payments')
+router.route('/payments/stripe')
 	.post(payments.createStripeCharge);
+router.route('/payments/cash')
+	.post(authorize.routeEmployeeToMongoCollection, payments.createCashCharge, transactions.updateTransactionById);
 app.use('/', router);
 
 //app.route('/clients')

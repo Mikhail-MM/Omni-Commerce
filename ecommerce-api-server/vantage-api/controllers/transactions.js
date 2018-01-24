@@ -127,6 +127,7 @@ module.exports.getAllTransactions = function (req, res, next) {
 }
 
 module.exports.updateTransactionById = function (req, res, next) {
+	console.log("Updating Transaction BY ID!")
 	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
 	Transaction.findOneAndUpdate({_id: req.params.id}, req.body, 
 		{ new: true }, function(err, transaction) {
