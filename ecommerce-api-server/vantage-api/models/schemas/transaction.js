@@ -21,7 +21,7 @@ var ticketSchema = new Schema ({
 	totalReal: Number,
 	payment: {
 		paymentType: String, // Cash, Stripe - Card
-		cashTenderedByCustomer: Number,
+		cashTenderedByCustomer: String,
 		refund: Number,
 		stripeAmountInCents: Number,
 		captured: Boolean,

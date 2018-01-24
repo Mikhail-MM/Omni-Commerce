@@ -62,7 +62,7 @@ export function sendCashPaymentToApi(authToken, cashTendered, transaction_id) {
 		.then(response => response.ok ? response.json() : new Error(response.statusText))
 		.then(json => {
 			data.parentTransaction = json;
-			return fetch('http://localhost:3001/payments/cash', {
+			fetch('http://localhost:3001/payments/cash', {
 				headers:{
 					'Content-Type': 'application/json',
 					'x-access-token': authToken
@@ -77,8 +77,18 @@ export function sendCashPaymentToApi(authToken, cashTendered, transaction_id) {
 					payment: json.payment,
 					status: "Paid"
 				}
-			console.log(json)
-			console.log(data)
+				return fetch(url, {
+					headers:{
+						'Content-Type': 'application/json',
+						'x-access-token': authToken,
+					},
+					method: 'PUT',
+					mode: 'cors',
+					body: JSON.stringify(data),
+				})
+				.then(response => response.ok ? response.json() : new Error(response.statusText))
+				.then(json => console.log(json))
+				.catch(err => console.log(err))
 			}) // Dispatch an event for the Cashier - Cash Register Screen
 			.catch(err => console.log(err))
 		})

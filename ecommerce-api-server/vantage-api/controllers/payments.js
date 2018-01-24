@@ -27,8 +27,6 @@ module.exports.createStripeCharge = function(req, res, next) {
 		if (err) return next(err)
 		res.json(charge)
 	});
-  
-
 }
 
 /* Example of what a Stripe Token Object sent as req.body looks like:
