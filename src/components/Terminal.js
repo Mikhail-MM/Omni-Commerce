@@ -8,11 +8,14 @@ import { logOut,  fetchLoggedUsers } from '../actions/auth-login'
 import AddMenuItemForm from './AddMenuItemForm'
 import ClockInOutForm from './ClockInOutForm'
 
+// Recharts
+import {BarChart, Bar, XAxis, YAxis, Legend, CartesianGrid, Tooltip} from 'recharts'
 function mapStateToProps(state) {
 	const { token, isAuthenticated, loggedInUsers } = state.authReducer
 	const { menuItems, visibleCategory } = state.menuItemsReducer 
 	const { tickets, activeTicket } = state.ticketTrackingReducer
-	return { token, menuItems, tickets, visibleCategory, isAuthenticated, loggedInUsers, activeTicket }
+	const { activeSalesReport } = state.salesReportReducer
+	return { token, menuItems, tickets, visibleCategory, isAuthenticated, loggedInUsers, activeTicket, activeSalesReport }
 
 }
 
@@ -93,7 +96,7 @@ class Terminal extends Component {
 
 	// We will need a Socket.io component in componentDidMount() listening for ticket updates
 	render() {
-		const { match, menuItems, isAuthenticated, tickets, activeTicket, token } = this.props;
+		const { match, menuItems, isAuthenticated, tickets, activeTicket, token, activeSalesReport } = this.props;
 		const { selectUser } = this.state
 		return(
 			<div className="Page-Wrapper">
@@ -128,6 +131,14 @@ class Terminal extends Component {
 				</footer>
 				<Route path={`${match.url}/addItem`} component={AddMenuItemForm} />
 				{tickets && this.iterateThruTicketStatusCategories()} 
+				{activeSalesReport && 
+					<BarChart width={400} height={400} data={activeSalesReport.grossByMenuItem}>
+						<XAxis dataKey="dataKey" angle={-45} textAnchor="end"/>
+						<YAxis />
+						<Tooltip />
+						<Bar dataKey = "dataValue" />
+					</BarChart >
+				}
 			</div>
 		)
 	}

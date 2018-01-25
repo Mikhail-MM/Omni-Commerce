@@ -72,10 +72,23 @@ const ticketTrackingReducer = (state = {isInvalidated: false, isFetching: false}
 		return state
 	}
 }
+
+const salesReportReducer = (state = {}, action) => {
+	switch(action.type){
+		case('RECEIVE_SALES_REPORT'):
+			return Object.assign({}, state, {
+				activeSalesReport: action.salesReport
+			})
+		default: 
+			return state
+	}
+}
+
 const rootReducer = combineReducers({
 	authReducer,
 	menuItemsReducer,
 	ticketTrackingReducer,
+	salesReportReducer,
 	routerReducer
 })
 

@@ -98,7 +98,7 @@ export function fetchAllTicketsAndGenerateSalesReport(token) {
 				body:JSON.stringify(json)
 			})
 			.then(response => response.ok ? response.json() : new Error(response.statusText))
-			.then(json => console.log(json))
+			.then(json => dispatch(receiveSalesReport(json)))
 		})
 		.catch(err => console.log(err))
 	}
@@ -231,6 +231,14 @@ export function updateTicketStatus(token, ticket_Id, ticketStatus) {
 		.then(json => dispatch(receiveCurrentTicket(json)))
 	}
 }
+
+export function receiveSalesReport(salesReport) {
+	return {
+		type: 'RECEIVE_SALES_REPORT',
+		salesReport
+	}
+}
+
 export function receiveCurrentTicket(ticket) {
 	return {
 		type: 'RECEIVE_CURRENT_TICKET',
