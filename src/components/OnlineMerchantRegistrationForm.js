@@ -16,8 +16,8 @@ class OnlineMerchantRegistrationForm extends Component {
 			address_city: 'City',
 			address_zip: 'Zip Code',
 			address_state: 'State (NY, CA, AR...)',
-			shopName: 'Select a display name for your online store',
-			userName: 'Select your display name',
+			shopName: 'Store Name',
+			userName: 'Display Name',
 			isOnlineMerchat: true,
 		}
 	this.handleSubmit = this.handleSubmit.bind(this)
