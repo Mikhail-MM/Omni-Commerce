@@ -64,6 +64,13 @@ var ticketSchema = new Schema ({
 	status: String, // Open, Fired, Delivered, Void, Paid
 });
 
+var salesReportSchema = new Schema ({
+	tickets: [ticketSchema],
+	beginDate: Date,
+	endDate: Date,
+});
+
 module.exports.menuSchema = menuItemSchema;
 module.exports.ticketSchema = ticketSchema;
+module.exports.salesReportSchema = salesReportSchema
 

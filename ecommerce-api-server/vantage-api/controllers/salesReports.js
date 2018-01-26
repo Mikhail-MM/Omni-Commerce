@@ -1,14 +1,28 @@
 const mongoose = require('mongoose');
 const Schemas = require('../models/schemas/transaction')
 const TicketTransaction = Schemas.ticketSchema
+const SalesReportSchema = Schemas.salesReportSchema
 const BigNumber = require('bignumber.js')
 const _ = require('underscore')
 
-module.exports.aggregateSalesData = async function(req, res, next) {
+// Create + Lookup In One Function (Need To Separate)
+module.exports.aggregateSalesData = async function(req, res, next) { // This will work for a DAILY sales report
 	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
+	const DailySalesReport = mongoose.model('SalesReport', SalesReportSchema, req.headers['x-mongo-key'] + '_SalesReports') 
 	try {
 
 		const allTicketsBySession = await Transaction.find({});
+		const beginDate = new Date(allTicketsBySession[0].createdAt)
+		const endDate = new Date(allTicketsBySession[allTicketsBySession.length - 1].createdAt)
+		console.log(beginDate)
+		console.log(endDate)
+		const newDailySalesReport = new DailySalesReport({
+			tickets: allTicketsBySession,
+			beginDate: beginDate,
+			endDate: endDate
+		})
+		
+		const salesNow = await newDailySalesReport.save()
 
 		const allTicketsByCategory = _.groupBy(allTicketsBySession, 'status')
 
@@ -51,8 +65,22 @@ module.exports.aggregateSalesData = async function(req, res, next) {
 										.reduce((acc, cur) => acc.plus(cur)).toNumber()
 										return({"dataKey":key, "dataValue":grossSalesByMenuItemCategory[key]})
 								})
-
-
+		
+const timeSeriesData = allPaidTickets
+.map(ticket => {
+	const currentTicketSale = new BigNumber(ticket.totalReal)
+		return({"time": ticket.createdAt, "sales": currentTicketSale})
+})
+const finalGross = timeSeriesData
+.map(object => object["sales"])
+.reduce((acc, cur, index) => {
+	timeSeriesData[index]["sales"] = acc.toNumber()
+	if ( index === 1 ) timeSeriesData[0].sales = cur.toNumber() 
+	return acc.plus(cur);
+	}).toNumber() 
+	
+timeSeriesData[timeSeriesData.length - 1].sales = finalGross
+											
 		const grossSales = allPaidTickets
 						   	.map(ticket => new BigNumber(ticket.totalReal))
 						   	.reduce((acc, cur) => acc.plus(cur)).toNumber()
@@ -72,9 +100,20 @@ module.exports.aggregateSalesData = async function(req, res, next) {
 			grossByServer: serverTallyGross,
 			grossByCategory: menuItemCategoryGross,
 			grossSales: grossSales,
+			salesOverTime: timeSeriesData,
 
 
 		}
+		const savedData = {
+
+		}
+		console.log(salesNow)
 		res.json(data)
 	} catch(err) { next(err) }
 } 
+
+// Read
+
+/*
+How can I access a key of an object using bracket notation within an array - i.e.  does this work: `array[3]["key"]`, or do i have to do const 
+*/

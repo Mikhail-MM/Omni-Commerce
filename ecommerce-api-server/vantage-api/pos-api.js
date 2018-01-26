@@ -27,6 +27,7 @@ const register = require('./controllers/registration');
 const storeConfig = require('./controllers/storeConfig')
 const salesReports = require('./controllers/salesReports')
 const payments = require('./controllers/payments')
+
 /* Depreciated Controllers 
 
 const customers = require('./controllers/customers');
