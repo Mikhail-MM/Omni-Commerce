@@ -25,9 +25,6 @@ class LoginForm extends Component {
 		this.setState({password: event.target.value})
 	}
 
-	componentWillReceiveProps(nextProps) {
-
-	}
 
 	handleSubmit(event) { 
 		event.preventDefault();
@@ -57,7 +54,8 @@ class LoginForm extends Component {
 				<input type="submit" value="Log In"/>
 				<div>
 				Don't have an account? Register now!
-				<Link to="/login/register">  Register </Link>
+				<Link to="/login/registerPOS">  Register for a Point of Sale Terminal account</Link>
+				<Link to="/login/registerMerchant"> Register for an online merchant account </Link>
 				</div> 
 			</form>
 			</div>

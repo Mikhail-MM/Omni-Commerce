@@ -12,8 +12,10 @@ import rootReducer from '../reducers/reducers'
 
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
+import OnlineMerchantRegistrationForm from './OnlineMerchantRegistrationForm'
 import Terminal from './Terminal'
 import TicketActionScreen from './TicketActionScreen'
+
 
 const loggerMiddleware = createLogger()
 const history = createHistory()
@@ -41,7 +43,8 @@ export default class Root extends Component {
 						<Route exact path="/login" component={LoginForm} />
 						<Route path="/terminal" component={Terminal} />
 						<Route exact path="/ticket" component={TicketActionScreen} />
-						<Route path="/login/register" component={RegisterForm}/>
+						<Route path="/login/registerPOS" component={RegisterForm}/>
+						<Route path="/login/registerMerchant" component={OnlineMerchantRegistrationForm} />
 
 				</Switch>
 			</ConnectedRouter>

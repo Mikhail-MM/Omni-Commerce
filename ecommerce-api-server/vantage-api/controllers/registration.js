@@ -64,6 +64,10 @@ module.exports.configureNewUser = function(req, res, next) {
 			createTerminalAccount(req, res, next)
 	}
 
+	if (req.body.isOnlineMerchant) {
+		// Create Client Entry and 
+	}
+
 	if (req.body.isEmployee) {
 		req.body.isMaster = false;
 		req.body.accountType = "Employee"
