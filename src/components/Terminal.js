@@ -7,6 +7,7 @@ import { logOut,  fetchLoggedUsers } from '../actions/auth-login'
 // import { withRouter } from 'react-router-dom'
 import AddMenuItemForm from './AddMenuItemForm'
 import ClockInOutForm from './ClockInOutForm'
+import SalesAnalytics from './SalesAnalytics'
 
 // Recharts
 import {BarChart, Bar, XAxis, YAxis, Legend, CartesianGrid, Tooltip} from 'recharts'
@@ -139,6 +140,7 @@ class Terminal extends Component {
 						<Bar dataKey = "dataValue" />
 					</BarChart >
 				}
+				<SalesAnalytics/>
 			</div>
 		)
 	}

@@ -122,8 +122,13 @@ router.route('/timesheets/ci')
 	.post(authorize.routeEmployeeToMongoCollection, timesheets.checkForMissedTimesheets, timesheets.createNewTimesheet, storeConfig.pushLoggedUser);
 router.route('/timesheets/co')
 	.put(authorize.routeEmployeeToMongoCollection, timesheets.clockOutEmployee, storeConfig.pullLoggedUser);
+router.route('/salesReports/aggregate')
+	.post(authorize.routeEmployeeToMongoCollection, salesReports.lookupByTimestamp);
 router.route('/salesReports')
-	.post(authorize.routeEmployeeToMongoCollection, salesReports.aggregateSalesData)
+	.get(authorize.routeEmployeeToMongoCollection, salesReports.getAllSalesReports)
+	.post(authorize.routeEmployeeToMongoCollection, salesReports.tabulateDailyTicketSales);
+router.route('/salesReports/:id')
+	.get(authorize.routeEmployeeToMongoCollection, salesReports.getSalesReportById);
 router.route('/storeconfig')
 	.get(authorize.routeEmployeeToMongoCollection, storeConfig.getLoggedUsers);
 router.route('/authorize')

@@ -6,9 +6,10 @@ const BigNumber = require('bignumber.js')
 const _ = require('underscore')
 
 // Create + Lookup In One Function (Need To Separate)
-module.exports.aggregateSalesData = async function(req, res, next) { // This will work for a DAILY sales report
+
+module.exports.tabulateDailyTicketSales = async function(req, res, next) {
 	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
-	const DailySalesReport = mongoose.model('SalesReport', SalesReportSchema, req.headers['x-mongo-key'] + '_SalesReports') 
+	const DailySalesReports = mongoose.model('SalesReport', SalesReportSchema, req.headers['x-mongo-key'] + '_SalesReports') 
 	try {
 
 		const allTicketsBySession = await Transaction.find({});
@@ -16,13 +17,31 @@ module.exports.aggregateSalesData = async function(req, res, next) { // This wil
 		const endDate = new Date(allTicketsBySession[allTicketsBySession.length - 1].createdAt)
 		console.log(beginDate)
 		console.log(endDate)
-		const newDailySalesReport = new DailySalesReport({
+		const newDailySalesReport = new DailySalesReports({
 			tickets: allTicketsBySession,
 			beginDate: beginDate,
 			endDate: endDate
 		})
-		
+
 		const salesNow = await newDailySalesReport.save()
+
+		res.json(salesNow)
+
+	} catch(err) { next(err) }
+}
+
+module.exports.lookupByTimestamp = async function(req, res, next) {
+	const DailySalesReports = mongoose.model('SalesReport', SalesReportSchema, req.headers['x-mongo-key'] + '_SalesReports')
+	try {
+		console.log("Looking For Sales Reports - Listing Start and End Date : ")
+		console.log(req.body.beginDate);
+		console.log(req.body.endDate);
+		const arrayOfSalesReports = await DailySalesReports.find({ $and: [ {beginDate: {$gte: req.body.beginDate }}, {endDate: {$lte: req.body.endDate}} ] })
+		
+		//TODO: Abstract This Out To Accept An {ARRAY OF ARRAYS OF TICKET OBJECTS or A SINGLE ARRAY OF TICKET OBJECTS - Handle CONCAT conditionally}
+		// Get array of all menuItems
+		const allTicketsBySession = arrayOfSalesReports.map(salesReportData => salesReportData.tickets).reduce((acc, cur) => acc.concat(cur))
+
 
 		const allTicketsByCategory = _.groupBy(allTicketsBySession, 'status')
 
@@ -30,7 +49,6 @@ module.exports.aggregateSalesData = async function(req, res, next) { // This wil
 		const numPaidTickets = allTicketsByCategory["Paid"].length
 		const numVoidTickets = allTicketsByCategory["Void"].length // Create exception handle for 0 or undefined
 	
-		// Need to tally all waste thru voids
 		
 		const allTicketsByServer = _.groupBy(allPaidTickets, 'createdBy')
 		const allMenuItemsSoldAndPaidFor = allPaidTickets
@@ -104,16 +122,23 @@ timeSeriesData[timeSeriesData.length - 1].sales = finalGross
 
 
 		}
-		const savedData = {
 
-		}
-		console.log(salesNow)
 		res.json(data)
 	} catch(err) { next(err) }
-} 
+}
 
-// Read
+module.exports.getSalesReportById = async function(req, res, next) {
+	const DailySalesReports = mongoose.model('SalesReport', SalesReportSchema, req.headers['x-mongo-key'] + '_SalesReports')
+	try {
+		const salesReport = await DailySalesReports.findOne({_id: req.body})
+		res.json(salesReport)
+	} catch(err) { next(err) }
+}
 
-/*
-How can I access a key of an object using bracket notation within an array - i.e.  does this work: `array[3]["key"]`, or do i have to do const 
-*/
+module.exports.getAllSalesReports = async function(req, res, next) {
+	const DailySalesReports = mongoose.model('SalesReport', SalesReportSchema, req.headers['x-mongo-key'] + '_SalesReports')
+	try {
+		const salesReports = await DailySalesReports.find({})
+		res.json(salesReports)
+	} catch(err) { next(err) }
+}
