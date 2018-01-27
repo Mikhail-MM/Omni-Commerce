@@ -10,7 +10,6 @@ import ClockInOutForm from './ClockInOutForm'
 import SalesAnalytics from './SalesAnalytics'
 
 // Recharts
-import {BarChart, Bar, XAxis, YAxis, Legend, CartesianGrid, Tooltip} from 'recharts'
 function mapStateToProps(state) {
 	const { token, isAuthenticated, loggedInUsers } = state.authReducer
 	const { menuItems, visibleCategory } = state.menuItemsReducer 
@@ -132,14 +131,6 @@ class Terminal extends Component {
 				</footer>
 				<Route path={`${match.url}/addItem`} component={AddMenuItemForm} />
 				{tickets && this.iterateThruTicketStatusCategories()} 
-				{activeSalesReport && 
-					<BarChart width={400} height={400} data={activeSalesReport.grossByMenuItem}>
-						<XAxis dataKey="dataKey" angle={-45} textAnchor="end"/>
-						<YAxis />
-						<Tooltip />
-						<Bar dataKey = "dataValue" />
-					</BarChart >
-				}
 				<SalesAnalytics/>
 			</div>
 		)

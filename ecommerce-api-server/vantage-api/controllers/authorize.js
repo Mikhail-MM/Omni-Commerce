@@ -28,7 +28,8 @@ exports.login = function(req, res, next) {
 
 			//export secret to config!!
 
-			var payload = client;
+			var payload = client; 
+			// Payload should just be clientID WITHOUT hashed PW!!!!
 
 			//Is there an advantage to  doing
 			// var token = jwt.encode(payload, config.secret);
