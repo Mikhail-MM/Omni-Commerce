@@ -44,7 +44,7 @@ class SalesAnalytics extends Component {
 	}
 
 	dateFormat = (time) => {
-	return moment(time).format('MM:DD:HH:mm');
+	return moment(time).format('HH:mm');
 	};
 
 	getTicks = (data) => {
