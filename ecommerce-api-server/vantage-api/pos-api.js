@@ -27,6 +27,8 @@ const register = require('./controllers/registration');
 const storeConfig = require('./controllers/storeConfig')
 const salesReports = require('./controllers/salesReports')
 const payments = require('./controllers/payments')
+const marketplaces = require('./controllers/marketplaces')
+const storeItems = require('./controllers/storeItems')
 
 /* Depreciated Controllers 
 
@@ -127,6 +129,18 @@ router.route('/salesReports/aggregate')
 router.route('/salesReports')
 	.get(authorize.routeEmployeeToMongoCollection, salesReports.getAllSalesReports)
 	.post(authorize.routeEmployeeToMongoCollection, salesReports.tabulateDailyTicketSales);
+router.route('/marketplace/:id')
+	.get(authorize.routeEmployeeToMongoCollection, marketplaces.getMarketplaceById)
+	.put(authorize.routeEmployeeToMongoCollection, marketplaces.updateMarketplaceById)
+router.route('/marketplace')
+	.get(authorize.routeEmployeeToMongoCollection, marketplaces.getAllMarketplaces)
+	.post(authorize.routeEmployeeToMongoCollection, marketplaces.createNewMarketplace);
+router.route('/storeItem/:id')
+	.get(authorize.routeEmployeeToMongoCollection, storeItems.createNewStoreItem)
+	.put(authorize.routeEmployeeToMongoCollection, storeItems.getAllStoreItems)
+router.route('/storeItem')
+	.get(authorize.routeEmployeeToMongoCollection, storeItems.getStoreItemById)
+	.post(authorize.routeEmployeeToMongoCollection, storeItems.updateStoreItemById)
 router.route('/salesReports/:id')
 	.get(authorize.routeEmployeeToMongoCollection, salesReports.getSalesReportById);
 router.route('/storeconfig')

@@ -7,3 +7,5 @@ var marketplaceSchema = new Schema({
 	tags: [String],
 
 });
+
+module.exports.marketplaceSchema = marketplaceSchema;

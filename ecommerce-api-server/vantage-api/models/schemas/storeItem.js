@@ -10,6 +10,6 @@ var storeItemSchema = new Schema({
 	tags: [String],
 	inStock: Number,
 	inStockBool: Boolean,
-
-
 })
+
+module.exports.storeItemSchema = storeItemSchema;
