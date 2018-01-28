@@ -115,12 +115,25 @@ const errorNotificationsReducer = (state = { hasError: false }, action) => {
 			return state
 	}
 }
+
+const employeeManagementReducer = (state = {}, action) => {
+	switch(action.type) {
+		case('RECEIVE_EMPLOYEES'):
+			return Object.assign({}, state, {
+				employees: action.employees
+			})
+		default:
+			return state
+	}
+}
 const rootReducer = combineReducers({
 	authReducer,
 	menuItemsReducer,
 	ticketTrackingReducer,
 	salesReportReducer,
 	loadingSpinnerReducer,
+	errorNotificationsReducer,
+	employeeManagementReducer,
 	routerReducer
 })
 

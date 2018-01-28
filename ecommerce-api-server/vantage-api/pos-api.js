@@ -89,6 +89,8 @@ app.use('/*', function(req, res, next) {
 
 //.all can create a log entry in a manifest
 // Create function to return ALL DB ITEMS??
+router.route('clients/lookupEmployees')
+	.get(authorize.adminRequired, clients.findAllEmployees)
 router.route('/clients/lookup')
 	.post(clients.autoCompleteClientOrgName);
 router.route('/clients')

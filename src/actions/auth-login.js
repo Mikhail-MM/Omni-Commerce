@@ -1,4 +1,5 @@
 import fetch from 'cross-fetch'
+import { showError } from './errors'
 
 function throwError(err) { throw err }
 
@@ -63,3 +64,4 @@ export function fetchLoggedUsers(token) {
 		.catch(err => console.log(err))
 	}
 }
+

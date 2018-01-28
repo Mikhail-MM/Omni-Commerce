@@ -119,3 +119,8 @@ module.exports.deleteClientById = function(req, res, next) {
 	});
 }
 
+module.exports.findAllEmployees = function(req, res, next) {
+	// Should use req.body.client and find the employees using the adminClient's orgname
+	console.log(req.body.client)
+	res.json({TODO: "YOU GOTTA FINISH EMPLOYEE LOOKUP METHOD"})
+}
