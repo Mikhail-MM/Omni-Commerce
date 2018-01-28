@@ -8,4 +8,29 @@ var marketplaceSchema = new Schema({
 
 });
 
+
+var purchaseOrderSchema = new Schema({
+
+	//buyer: Client Subdoc
+	//seller: Client Subdoc
+	// Basically populate this with subdocs alongside Shipping and Billing info of receiver
+	
+});
+
+var storeItemSchema = new Schema({
+	itemName: String,
+	itemPrice: Number,
+	imageURL: String,
+	category: String,
+	options: [String],
+	tags: [String],
+	inStock: Number,
+	inStockBool: Boolean,
+})
+
+var shoppingCart = new Schema({
+	[storeItemSchema]
+})
+
+
 module.exports.marketplaceSchema = marketplaceSchema;

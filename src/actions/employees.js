@@ -1,5 +1,7 @@
+import {startLoading, stopLoading} from './loading'
 export function fetchAllEmployees() {
 	return dispatch => {
+		dispatch(startLoading())
 		return fetch('http://localhost:3001/clients/lookupEmployees', {
 			headers:{
 				'Content-Type': 'application/json',
@@ -9,7 +11,10 @@ export function fetchAllEmployees() {
 			mode: 'cors'
 		})
 		.then(response => response.ok ? response.json() : dispatch(showError(response.statusText)))
-		.then(json => dispatch(receiveEmployees(employees)))
+		.then(json => {
+			dispatch(receiveEmployees(employees))
+			return dispatch(stopLoading())
+		})
 		.catch(err => dispatch(showError(err)))
 	}
 }

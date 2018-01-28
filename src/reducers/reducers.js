@@ -126,6 +126,21 @@ const employeeManagementReducer = (state = {}, action) => {
 			return state
 	}
 }
+
+const marketplaceBrowserReducer = (state = {}, action) => {
+	switch(action.type) {
+		case('RECEIVE_ALL_MARKETPLACES'):
+			return Object.assign({}, state, {
+				allMarketplaces: action.allMarketplaces
+			})
+		case('RECEIVE_CURRENT_MARKETPLACE'):
+			return Object.assign({}, state, {
+				currentMarketplace: action.currentMarketplace
+			})
+		default:
+			return state
+	}
+}
 const rootReducer = combineReducers({
 	authReducer,
 	menuItemsReducer,
@@ -134,6 +149,7 @@ const rootReducer = combineReducers({
 	loadingSpinnerReducer,
 	errorNotificationsReducer,
 	employeeManagementReducer,
+	marketplaceBrowserReducer,
 	routerReducer
 })
 
