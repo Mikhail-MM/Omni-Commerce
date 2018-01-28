@@ -18,8 +18,8 @@ class ShoppingCart extends Component {
 		// dispatch an action to retrieve customer's shopping cart!
 	}
 
-	generateItemsWithButtonsToRemove() {
-		
+	generateItemsWithButtonsToRemoveAndPay() {
+
 	}
 
 	render() {

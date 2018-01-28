@@ -42,3 +42,26 @@ function receiveCurrentMarketplace(currentMarketplace) {
 		currentMarketplace
 	}
 }
+
+export function retreiveItemsFromMarketplace(marketplaceMongoKey) {
+	return dispatch => {	
+		return fetch('http://localhost:3001/storeItem', {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-mongo-key': marketplaceMongoKey,
+			},
+			method: 'GET',
+			mode: 'cors'
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => dispatch(receiveItems(json)))
+		.catch(err => console.log(err))
+	}
+}
+
+function receiveItems(items) {
+	return {
+		type: 'RECEIVE_MARKETPLACE_GOODS'
+		items
+	}
+}

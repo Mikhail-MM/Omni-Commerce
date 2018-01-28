@@ -141,6 +141,21 @@ const marketplaceBrowserReducer = (state = {}, action) => {
 			return state
 	}
 }
+
+const marketplaceItemsReducer = (state = {}, action) => {
+	switch(action.type) {
+		case('RECEIVE_MARKETPLACE_GOODS'):
+			return Object.assign({}, state, {
+				marketplaceItems: action.marketplaceItems
+			})
+		default: 
+			return state
+	}
+}
+
+const shoppingCartReducer = (state = {}, action) => {
+
+}
 const rootReducer = combineReducers({
 	authReducer,
 	menuItemsReducer,

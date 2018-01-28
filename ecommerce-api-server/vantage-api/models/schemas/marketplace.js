@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 var marketplaceSchema = new Schema({
 	storeName: String,
 	ownerName: String,
+	mongoKey: String,
 	tags: [String],
 
 });
