@@ -84,11 +84,43 @@ const salesReportReducer = (state = {}, action) => {
 	}
 }
 
+const loadingSpinnerReducer = (state = { isLoading: false }, action ) => {
+	switch(action.type) {
+		case('DISPATCH_LOADING_SPINNER'):
+			return Object.assign({}, state, {
+				isLoading: true
+			})
+		case('FINISH_LOADING'):
+			return Object.assign({}, {
+				isLoading: false
+			})
+		default:
+			return state
+	}
+}
+
+const errorNotificationsReducer = (state = { hasError: false }, action) => {
+	switch(action.type) {
+		case('NOTIFY_CLIENT_ERROR_PRESENT'):
+			return Object.assign({}, state, {
+				hasError: true,
+				errorText: action.errorText
+			})
+		case('CLEAR_ERROR'):
+			return Object.assign({}, state, {
+				hasError: false,
+				errorText: ""
+			})
+		default: 
+			return state
+	}
+}
 const rootReducer = combineReducers({
 	authReducer,
 	menuItemsReducer,
 	ticketTrackingReducer,
 	salesReportReducer,
+	loadingSpinnerReducer,
 	routerReducer
 })
 
