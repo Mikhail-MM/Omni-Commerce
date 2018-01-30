@@ -47,6 +47,9 @@ class DynamicStuff extends Component {
         /* I need to use this.setState({showModal: true})
               But I can't because { this } 
          is no longer bound to the parent component 
+	
+	Should I simply create a popModal() function which is bound to the component and can then use this.setState - can I simply call popModal() from communicateWithDatabase(), or is it still out of scope on account to being .bind()ed to the <button> element?
+
      }
 
 
