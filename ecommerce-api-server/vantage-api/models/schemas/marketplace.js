@@ -27,11 +27,11 @@ var storeItemSchema = new Schema({
 	tags: [String],
 	inStock: Number,
 	inStockBool: Boolean,
-})
+});
 
 var shoppingCart = new Schema({
-	[storeItemSchema]
-})
+	itemsBought: [storeItemSchema]
+});
 
 
 module.exports.marketplaceSchema = marketplaceSchema;

@@ -7,7 +7,7 @@ const StoreItem = Schemas.marketplaceSchema
 module.exports.createNewStoreItem = async function(req, res, next) { 
 	const StoreItemModel = mongoose.model('StoreItem', StoreItem, req.headers['x-mongo-key'] + '_StoreItems')
 		try {
-			const newStoreItem = new StoreItemModel({ req.body })
+			const newStoreItem = new StoreItemModel(req.body)
 			const savedModel = await newStoreItem.save()
 				res.json(savedModel)
 		} catch(err) { next(err) }

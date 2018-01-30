@@ -9,7 +9,7 @@ const MODAL_COMPONENTS = {
 }
 
 
-function mapStateToProps(state) = {
+function mapStateToProps(state) {
 	const { modalType, modalProps } = state.modalReducer
 	return { modalType, modalProps}
 }

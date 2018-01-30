@@ -162,7 +162,7 @@ const initialModalState = {
 	modalProps: {}
 }
 
-modalReducer = (state = initialModalState, action) => {
+const modalReducer = (state = initialModalState, action) => {
 	switch(action.type){
 		case('SHOW_MODAL'):
 			return {

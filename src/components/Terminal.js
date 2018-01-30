@@ -5,6 +5,8 @@ import { fetchMenuItems, fetchTickets, createNewTicket, setVisibleCategory, fetc
 import { logOut,  fetchLoggedUsers } from '../actions/auth-login'
 import { showModal } from '../actions/modals'
 
+import ModalRoot from './ModalRoot'
+
 // import { connect } from 'react-redux'
 // import { withRouter } from 'react-router-dom'
 import AddMenuItemForm from './AddMenuItemForm'
@@ -37,6 +39,7 @@ class Terminal extends Component {
 		this.handleLogOut = this.handleLogOut.bind(this)
 		this.iterateThruTicketStatusCategories = this.iterateThruTicketStatusCategories.bind(this)
 		this.generateSalesReport = this.generateSalesReport.bind(this)
+		this.showExampleModal = this.showExampleModal.bind(this)
 	}
 	componentDidMount() {
 		const { dispatch, token } = this.props
@@ -106,6 +109,7 @@ class Terminal extends Component {
 		const { selectUser } = this.state
 		return(
 			<div className="Page-Wrapper">
+			<ModalRoot />
 			{!isAuthenticated && <Redirect to='/login' />}
 			 	<header className="Logo-Time-Header">
 			 	<p> This could be a component</p>

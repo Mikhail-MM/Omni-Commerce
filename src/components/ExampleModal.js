@@ -14,7 +14,7 @@ const customStyles = {
 	}
 };
 
-function mapStateToProps(state) = {
+function mapStateToProps(state) {
 	const { modalType } = state.modalReducer
 	return { modalType }
 }
@@ -24,10 +24,11 @@ class ExampleModal extends Component {
 		super(props);
 		this.state = {}
 
-		this.hideModal = this.hideModal.bind(this)
+		this.deactivateModal = this.deactivateModal.bind(this)
 	}
 
 	deactivateModal() {
+		const { dispatch } = this.props
 		dispatch(hideModal())
 	}
 

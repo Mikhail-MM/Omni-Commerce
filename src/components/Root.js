@@ -10,7 +10,6 @@ import createHistory from 'history/createBrowserHistory'
 import rootReducer from '../reducers/reducers'
 
 
-import ModalRoot from './ModalRoot'
 
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
@@ -39,7 +38,6 @@ export default class Root extends Component {
 		return (
 		<Provider store={store}>
 			<ConnectedRouter history={history}>
-				<ModalRoot />
 				<Switch>
 						<Redirect exact="true" from="/" to="/login"/>
 						<Route path="/splash" render={() => <div> Marketing Splash </div> } />

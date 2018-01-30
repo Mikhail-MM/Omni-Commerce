@@ -1,6 +1,6 @@
 export function showError(errorText) {
 	return {
-		type:'NOTIFY_CLIENT_ERROR_PRESENT'
+		type:'NOTIFY_CLIENT_ERROR_PRESENT',
 		errorText
 	}
 }
