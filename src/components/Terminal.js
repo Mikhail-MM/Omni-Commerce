@@ -3,6 +3,8 @@ import { Route, Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchMenuItems, fetchTickets, createNewTicket, setVisibleCategory, fetchAllTicketsAndGenerateSalesReport, updateTransactionWithMenuItem, fetchCurrentTicketDetails } from '../actions/menu-items'
 import { logOut,  fetchLoggedUsers } from '../actions/auth-login'
+import { showModal } from '../actions/modals'
+
 // import { connect } from 'react-redux'
 // import { withRouter } from 'react-router-dom'
 import AddMenuItemForm from './AddMenuItemForm'
@@ -93,6 +95,10 @@ class Terminal extends Component {
 		dispatch(fetchCurrentTicketDetails(token, ticket_Id))
 	}
 
+	showExampleModal() {
+		const { dispatch } = this.props
+		dispatch(showModal('EXAMPLE_MODAL', {}))
+	}
 
 	// We will need a Socket.io component in componentDidMount() listening for ticket updates
 	render() {
@@ -114,6 +120,7 @@ class Terminal extends Component {
 				 	  </div>
 			 	  </div>
 			 	  <div className="Column-Right-25">
+			 	  	<button onClick={this.showExampleModal}> Example Modal </button>
 			 	  	<button onClick={this.selectUserToCreateNewTicket}> Open Ticket </button>
 			 	  	{selectUser && this.generateWaiterCallScreen()}
 			 	  	<Link to={`${match.url}/addItem`}> Add Menu Item </Link>

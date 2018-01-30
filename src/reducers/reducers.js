@@ -156,6 +156,26 @@ const marketplaceItemsReducer = (state = {}, action) => {
 const shoppingCartReducer = (state = {}, action) => {
 
 }
+
+const initialModalState = {
+	modalType: null,
+	modalProps: {}
+}
+
+modalReducer = (state = initialModalState, action) => {
+	switch(action.type){
+		case('SHOW_MODAL'):
+			return {
+				modalType: action.modalType,
+				modalProps: action.modalProps
+			}
+		case('HIDE_MODAL'):
+			return initialModalState
+		default:
+			return state
+	}
+}
+
 const rootReducer = combineReducers({
 	authReducer,
 	menuItemsReducer,
@@ -165,6 +185,7 @@ const rootReducer = combineReducers({
 	errorNotificationsReducer,
 	employeeManagementReducer,
 	marketplaceBrowserReducer,
+	modalReducer,
 	routerReducer
 })
 
