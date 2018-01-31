@@ -41,7 +41,7 @@ class TicketLedger extends Component {
 					 <td><button onClick={this.pullItemFromTicketItemsArray.bind(this, token, item._id, activeTicket._id)}>Remove</button></td>
 					 <td><button onClick={this.handleAddonRequest}>AddOn</button></td>
 					 <td>{item.itemName}</td>
-					 <td>{item.itemPrice}</td>
+					 <td>${item.itemPrice}</td>
 					</tr>
 					)
 			}
@@ -50,7 +50,7 @@ class TicketLedger extends Component {
 				 <td><button onClick={this.pullItemFromTicketItemsArray.bind(this, token, item._id, activeTicket._id)}>Remove</button></td>
 				 <td></td>
 				 <td>{item.itemName}</td>
-				 <td>{item.itemPrice}</td>
+				 <td>${item.itemPrice}</td>
 				</tr>
 			)
 		})

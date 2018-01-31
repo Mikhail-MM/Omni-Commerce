@@ -1,4 +1,4 @@
-export function retreiveAllMarketplaces() {
+export function retrieveAllMarketplaces() {
 	return dispatch => {
 		return fetch('http://localhost:3001/marketplace', {
 			headers:{
@@ -11,9 +11,7 @@ export function retreiveAllMarketplaces() {
 		.then(json => dispatch(receiveAllMarketplaces(json)))
 		.catch(err => console.log(err))
 	}
-
 }
-
 function receiveAllMarketplaces(allMarketplaces) {
 	return {
 		type: 'RECEIVE_ALL_MARKETPLACES',
@@ -42,13 +40,11 @@ function receiveCurrentMarketplace(currentMarketplace) {
 		currentMarketplace
 	}
 }
-
-export function retreiveItemsFromMarketplace(marketplaceMongoKey) {
+export function retrieveAllItemsForSale() {
 	return dispatch => {	
 		return fetch('http://localhost:3001/storeItem', {
 			headers:{
 				'Content-Type': 'application/json',
-				'x-mongo-key': marketplaceMongoKey,
 			},
 			method: 'GET',
 			mode: 'cors'
@@ -58,7 +54,21 @@ export function retreiveItemsFromMarketplace(marketplaceMongoKey) {
 		.catch(err => console.log(err))
 	}
 }
-
+export function retrieveItemsFromMarketplace(marketplaceId) {
+	const url = 'http://localhost:3001/storeItem/marketplaceLookup/' + marketplaceId
+	return dispatch => {	
+		return fetch('url, {
+			headers:{
+				'Content-Type': 'application/json',
+			},
+			method: 'GET',
+			mode: 'cors'
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => dispatch(receiveItems(json)))
+		.catch(err => console.log(err))
+	}
+}
 function receiveItems(items) {
 	return {
 		type: 'RECEIVE_MARKETPLACE_GOODS'

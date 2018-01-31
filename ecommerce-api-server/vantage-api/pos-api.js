@@ -74,10 +74,7 @@ app.use('/*', function(req, res, next) {
   next();
 });
 
-//////////////////////////////////////////////////////////
-// TODO: ID Param (app.param('<paramname>') validation)///
-//////////////////////////////////////////////////////////
-//TODO//
+
 //////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////
@@ -99,6 +96,7 @@ router.route('/clients')
 router.route('/clients/:id')
 	.put(clients.updateClient)
 	.delete(clients.deleteClientById);
+
 router.route('/menus/noIDhack/:id')
 	.get(authorize.routeEmployeeToMongoCollection, menus.getMenuItemByIdNoReturnId)
 router.route('/menus')
@@ -108,6 +106,7 @@ router.route('/menus/:id')
 	.get(authorize.routeEmployeeToMongoCollection, menus.getMenuItemById)
 	.put(authorize.routeEmployeeToMongoCollection, menus.updateMenuItemById)
 	.delete(authorize.routeEmployeeToMongoCollection, menus.deleteMenuItemById);
+
 router.route('/transactions/addItem/:id')	
 	.put(authorize.routeEmployeeToMongoCollection, transactions.updatePushTransactionById, transactions.calculatePricing) 
 router.route('/transactions/removeItem/:id')
@@ -119,40 +118,50 @@ router.route('/transactions')
 	.post(authorize.routeEmployeeToMongoCollection, transactions.createNewTransaction);
 router.route('/transactions/:id')
 	.get(authorize.routeEmployeeToMongoCollection, transactions.getTransactionById)
-	.put(authorize.routeEmployeeToMongoCollection, transactions.updateTransactionById) //SO FAR only does a PUSH
+	.put(authorize.routeEmployeeToMongoCollection, transactions.updateTransactionById)
 	.delete(authorize.routeEmployeeToMongoCollection, transactions.deleteTransactionById);
-// Should merge under single roof
+
 router.route('/timesheets/ci')
 	.post(authorize.routeEmployeeToMongoCollection, timesheets.checkForMissedTimesheets, timesheets.createNewTimesheet, storeConfig.pushLoggedUser);
 router.route('/timesheets/co')
 	.put(authorize.routeEmployeeToMongoCollection, timesheets.clockOutEmployee, storeConfig.pullLoggedUser);
+
 router.route('/salesReports/aggregate')
 	.post(authorize.routeEmployeeToMongoCollection, salesReports.lookupByTimestamp);
 router.route('/salesReports')
 	.get(authorize.routeEmployeeToMongoCollection, salesReports.getAllSalesReports)
 	.post(authorize.routeEmployeeToMongoCollection, salesReports.tabulateDailyTicketSales);
+
 router.route('/marketplace/:id')
-	.get(authorize.routeEmployeeToMongoCollection, marketplaces.getMarketplaceById)
-	.put(authorize.routeEmployeeToMongoCollection, marketplaces.updateMarketplaceById)
+	.get(marketplaces.getMarketplaceById)
+	.put(marketplaces.updateMarketplaceById)
 router.route('/marketplace')
-	.get(authorize.routeEmployeeToMongoCollection, marketplaces.getAllMarketplaces)
-	.post(authorize.routeEmployeeToMongoCollection, marketplaces.createNewMarketplace);
+	.get(marketplaces.getAllMarketplaces)
+	.post(marketplaces.createNewMarketplace);
+
+router.route('/storeItem/marketplaceLookup/:id')
+	.get(storeItems.findAllItemsFromMarketplace);
 router.route('/storeItem/:id')
-	.get(authorize.routeEmployeeToMongoCollection, storeItems.createNewStoreItem)
-	.put(authorize.routeEmployeeToMongoCollection, storeItems.getAllStoreItems)
+	.get(storeItems.createNewStoreItem)
+	.put(storeItems.getAllStoreItems);
 router.route('/storeItem')
-	.get(authorize.routeEmployeeToMongoCollection, storeItems.getStoreItemById)
-	.post(authorize.routeEmployeeToMongoCollection, storeItems.updateStoreItemById)
+	.get(storeItems.getStoreItemById)
+	.post(storeItems.updateStoreItemById);
+
 router.route('/salesReports/:id')
 	.get(authorize.routeEmployeeToMongoCollection, salesReports.getSalesReportById);
+
 router.route('/storeconfig')
 	.get(authorize.routeEmployeeToMongoCollection, storeConfig.getLoggedUsers);
+
 router.route('/authorize')
 	.post(authorize.login);
+
 router.route('/payments/stripe')
 	.post(payments.createStripeCharge);
 router.route('/payments/cash')
 	.post(authorize.routeEmployeeToMongoCollection, payments.createCashCharge, transactions.updateTransactionById);
+	
 app.use('/', router);
 
 //app.route('/clients')

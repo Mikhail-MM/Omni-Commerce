@@ -6,32 +6,37 @@ var marketplaceSchema = new Schema({
 	ownerName: String,
 	mongoKey: String,
 	tags: [String],
+	ownerRefId: {type: Schema.Types.ObjectId, ref: 'Client'}
 
 });
-
-
-var purchaseOrderSchema = new Schema({
-
-	//buyer: Client Subdoc
-	//seller: Client Subdoc
-	// Basically populate this with subdocs alongside Shipping and Billing info of receiver
-	
-});
-
 var storeItemSchema = new Schema({
 	itemName: String,
 	itemPrice: Number,
-	imageURL: String,
-	category: String,
+	mongoKey: String,
+	imageURL: String, 
+	category: String, // Consider consolidating with tags
 	options: [String],
 	tags: [String],
-	inStock: Number,
-	inStockBool: Boolean,
+	numberInStock: Number,
+	status: String, // inStock/ outOfStock
+	sellerRef_Id: {type: Schema.Types.ObjectId, ref: 'Client'}
+	marketplaceRef_Id: {type: Schema.Types.ObjectId, ref: 'Marketplace'}
 });
 
-var shoppingCart = new Schema({
-	itemsBought: [storeItemSchema]
-});
-
+// A reusable schema representing transactions in different states and instantiations
+const salesManifest = {
+	itemsBought: [storeItemSchema],
+	subtotal: Number,
+	tax: Number,
+	total: Number,
+}
+var purchaseOrderSchema = new Schema(salesManifest);
+var shoppingCartSchema = new Schema(salesManifest);
+var purchaseOrderSchema = new Schema(Object.assign({}, salesManifest, { additionalField: String }));
+var sellerSpecificPurchaseOrder = new Schema(salesManifest)
 
 module.exports.marketplaceSchema = marketplaceSchema;
+module.exports.storeItemSchema = storeItemSchema;
+module.exports.shoppingCart = shoppingCart;
+module.exports.purchaseOrderSchema = purchaseOrderSchema;
+

@@ -142,10 +142,6 @@ class RegisterForm extends Component {
 	handleSubmit(event) {
 		const { dispatch } = this.props
 		event.preventDefault();
-		// verify that password matches
-		// send POST request to server to /Clients route
-		// Request Body: this.state Object
-		// ON SERVER SIDE: Middleware to parse registrant and apply proper flags to their MongoDB Account Entry
 		console.log(this.state);
 
 			if (this.state.password !== this.state.confirmPassword) {
@@ -195,49 +191,32 @@ class RegisterForm extends Component {
 				Confirm Password:
 				<input type='password' value={this.state.confirmPassword} onChange={this.handleConfirmPasswordChange} />
 			</label>
-			
-			{	!this.state.isEmployee && 
+			{  !this.state.isEmployee && 
 				<label>
 					Register as Business Owner
 						<input type='checkbox' checked={this.state.isBusinessOwner} onChange={this.handleBusinessOwnerRegisterCheck} />
-					</label> 
-			}
-			
-			{	this.state.isBusinessOwner && 
+					</label> }
+			{  this.state.isBusinessOwner && 
 				<div>
-				<label>
-				Organization Name: (Public)
-				<input type='text' value={this.state.organizationName} onChange={this.handleOrganizationChange} />
-				</label>
-				
-					<button> Restaurant </button>
-					<button> Retail </button>
-					<button> E-Commerce/Online Storefront </button>
-				</div> 
-			}
-			
-			{	!this.state.isBusinessOwner && 
-					
+				 <label>
+				   Organization Name: (Public)
+				    <input type='text' value={this.state.organizationName} onChange={this.handleOrganizationChange} />
+				 </label>
+				</div> }	
+			{  !this.state.isBusinessOwner && 
 					<label>
 					Register as Employee
 					<input type='checkbox' checked={this.state.isEmployee} onChange={this.handleEmployeeRegisterCheck} />
-					</label> 
-					
-
-
-			}
-			
-			{	this.state.isEmployee && 
+					</label> }	
+			{  this.state.isEmployee && 
 				<div>
 				<label>
 					Find Your Employer:
 					<input type='text' checked={this.state.employerLookup} onChange={this.handleEmployerLookupCheck} />
 				</label>
-				</div>
-			}
+				</div> }
 			<input type="submit" value="submit"/>
-
-			{	this.state.isEmployee && 
+			{  this.state.isEmployee && 
 				<AutoCompleteSuggestionsBox employers={this.state.autoCompleteArray}/>
 			}
 		</form>
@@ -247,16 +226,3 @@ class RegisterForm extends Component {
 }
 
 export default withRouter(connect(mapStateToProps)(RegisterForm))
-
-/*
-
-		return fetch('http://localhost:3001/clients', {
-		headers:{
-			'Content-Type': 'application/json'
-		},
-		method: 'POST',
-		mode: 'cors', 
-		body: JSON.stringify(this.state) // beware adding other stuff to state, will have to give it to its own object
-			}).then((res) => console.log(res))
-
-		*/

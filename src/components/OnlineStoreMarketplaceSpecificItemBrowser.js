@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { retrieveItemsFromMarketplace } from '../actions/marketplaces'
+
 function mapStateToProps(state) {
 	const { token } = state.authReducer
-	return { token }
+	const { currentMarketplace } = state.marketplaceBrowserReducer
+	const { marketplaceItems } = state.marketplaceItemsReducer
+	return { token, currentMarketplace, marketplaceItems }
 }
 
 class OnlineStoreItemBrowser extends Component {
@@ -15,9 +19,10 @@ class OnlineStoreItemBrowser extends Component {
 	}
 
 	componentDidMount() {
-		// dispatch an action to retrieve all items within the store!
-		// dispatch to current store
+		const { dispatch, currentMarketplace } = this.props;
+		dispatch(retrieveItemsFromMarketplace(currentMarketplace._id))
 	}
+	
 	generateItemBuyScreen() {
 		// dispatch 
 	}

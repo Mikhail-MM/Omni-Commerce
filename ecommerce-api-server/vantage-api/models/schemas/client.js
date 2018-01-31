@@ -5,42 +5,45 @@ const bcrypt = require('bcrypt');
 var clientSchema = new Schema({
 	firstName: String,
 	lastName: String,
+	userName: String,
 	phoneNumber: String,
 	email: {type: String, required: true, unique: true },
-	address: String,
+	billing_address_line1: String,
+	billing_address_line2: String,
+	billing_address_city: String,
+	billing_address_zip: String,
+	billing_address_state: String,
+	shipping_address_line1: String,
+	shipping_address_line2: String,
+	shipping__address_city: String,
+	shipping_address_zip: String,
+	shipping_address_state: String,
 	isMaster: { type: Boolean, required: true },
 	employeeCounter: Number,
 	masterLookupIdentifier: String, // This might just be Organization name to make it easier. Think about scale
 	organizationName: String, // Used in the autocomplete to point Employees to the right way
 	rosterJob: String,
 	ownedBy: String,
-	mongoCollectionKey: { type: String, required: true }, // use in req.params for POST to route users to proper MongoDB instance
+	mongoCollectionKey: { type: String, required: true },
 	isAdmin: { type: Boolean, index: true },
 	hash: { type: String, required: true },
 	token: String,
 	clockInNumber: String,
-	accountType: String, // Master, Employee, Manager, Terminal
+	accountType: String, 
 	status: String, // PendingApproval[Pending] - Registered
-	master_id: Schema.Types.ObjectId
-
-//	hasChildren: Boolean,
-//	children: [ this ]
+	master_id: {type: Schema.Types.ObjectId, ref: 'Client' }
 	},
 	{
-		toObject:{ getters : true }	//WTF IS THIS still don't understand ;_;
+		toObject:{ getters : true }	
 	}
 );
 
 clientSchema.methods.comparePassword = function(password, next){
 	bcrypt.compare(password, this.hash, function(err, pwMatches){
 		if (err) return next(err);
-		// null in error position, need to put that there so the next function
-		//doesnt run its if(err) clause with whatever the first argument would be
 		next(null, pwMatches);
 	})
 }
-//schema.pre validation
-
 var Client = mongoose.model('Client', clientSchema);
 
 module.exports = Client;

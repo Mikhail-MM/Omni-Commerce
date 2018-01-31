@@ -2,46 +2,6 @@ const uuid4 = require('uuid/v4');
 const bcrypt = require('bcrypt');
 const Client = require('../models/schemas/client');
 
-
-
-
-/* Deprecated - Incorrect Usage of Promises + Callbacks Together
-findMasterAndTagChild = function(req, res, next) {
-	console.log("looking for Master")
-	Client.findOne({
-		isMaster: true,
-		organizationName: req.body.employerLookup
-	}, 
-			function(err, boss) {
-				if (err) return next(err);
-				console.log("Found Master:");
-				console.log(boss);
-				console.log("Master's Mongo key:");
-				console.log(boss.mongoCollectionKey)
-				req.body.mongoCollectionKey = boss.mongoCollectionKey;
-				req.body.organizationName = boss.organizationName;
-				req.body.master_id = boss._id;
-				// Give new employee simple and easily memorable number to use as a Clock-In number. 
-					// Update Master's records and increment the number of employees 
-				
-				req.body.clockInNumber = boss.employeeCounter; 
-				console.log("Updating new user's Clock-In Number")
-				console.log("Boss' old employeeCounter is: ")
-				console.log(boss.employeeCounter)
-				console.log("Appending this to the new employee: ")
-				console.log(req.body.clockInNumber)
-				req.body.newEmployeeCount = boss.employeeCounter + 1
-				console.log("Incrementing new counter: ")
-				console.log(req.body.newEmployeeCount)
-				console.log("Running findByIdAndUpdate...")
-				updateEmployerEmployeeCount(req, res, next);
-				// create custom fallbacks for not finding organization
-				console.log("New req.body:")
-				console.log(req.body)
-			}).exec().next()
-}
-
-*/
 updateEmployerEmployeeCount = function(req, res, next) {
 		Client.findByIdAndUpdate(req.body.master_id, { employeeCounter: req.body.newEmployeeCount }, {new: true}, function(err, newBoss) { 
 			console.log("Employer's Employer Counter Updated: ")
@@ -65,7 +25,9 @@ module.exports.configureNewUser = function(req, res, next) {
 	}
 
 	if (req.body.isOnlineMerchant) {
-		// Create Client Entry and 
+		// TODO:
+		// Register New Client
+		// Create their marketplace
 	}
 
 	if (req.body.isEmployee) {

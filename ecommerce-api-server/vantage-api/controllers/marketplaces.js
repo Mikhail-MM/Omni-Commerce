@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 const Schemas = require('../models/schemas/marketplace')
 const Marketplace = Schemas.marketplaceSchema
