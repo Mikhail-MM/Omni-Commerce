@@ -25,9 +25,10 @@ module.exports.configureNewUser = function(req, res, next) {
 	}
 
 	if (req.body.isOnlineMerchant) {
-		// TODO:
-		// Register New Client
-		// Create their marketplace
+		const mongoCollectionKey = uuid4().slice(0, 13);
+		req.body.mongoCollectionKey = mongoCollectionKey;
+		req.body.accountType = "OnlineMerchant"
+		next();
 	}
 
 	if (req.body.isEmployee) {
@@ -36,6 +37,8 @@ module.exports.configureNewUser = function(req, res, next) {
 		findMasterAndTagChild(req, res, next)		
 	}
 }
+
+
 
 createTerminalAccount = function(req, res, next) {
 	data = {

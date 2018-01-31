@@ -16,6 +16,7 @@ import RegisterForm from './RegisterForm'
 import OnlineMerchantRegistrationForm from './OnlineMerchantRegistrationForm'
 import Terminal from './Terminal'
 import TicketActionScreen from './TicketActionScreen'
+import OnlineMerchantDashboard from './OnlineMerchantDashboard'
 
 
 const loggerMiddleware = createLogger()
@@ -43,6 +44,7 @@ export default class Root extends Component {
 						<Route path="/splash" render={() => <div> Marketing Splash </div> } />
 						<Route exact path="/login" component={LoginForm} />
 						<Route path="/terminal" component={Terminal} />
+						<Route path="/marketplaceDashboard" component={OnlineMerchantDashboard} />
 						<Route exact path="/ticket" component={TicketActionScreen} />
 						<Route path="/login/registerPOS" component={RegisterForm}/>
 						<Route path="/login/registerMerchant" component={OnlineMerchantRegistrationForm} />

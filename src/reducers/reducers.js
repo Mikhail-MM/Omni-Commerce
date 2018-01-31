@@ -11,6 +11,7 @@ const authReducer = (state = initialState, action) => {
 		console.log(action.userInfo.token);
 		return Object.assign({}, state, {
 			isAuthenticated: true,
+			instanceType: action.userInfo.accountType,
 			token: action.userInfo.token,
 			// userPermissions: action.userInfo.userPermissions,
 			// instanceType: action.userInfo.instanceType

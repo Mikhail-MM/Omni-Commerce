@@ -41,7 +41,15 @@ class LoginForm extends Component {
 		return (
 			<div>
 		{/* Best to turn this login thing into a dispatch Push action */}
-			{ this.props.isAuthenticated && <Redirect to="/terminal" /> }
+			
+			{ 	this.props.isAuthenticated && 
+				( this.props.instanceType === "Master" || this.props.instanceType === "Employee" || this.props.instanceType === "Terminal" ) && 
+				<Redirect to="/terminal" /> }
+			
+			{	this.props.isAuthenticated &&
+				( this.props.instanceType === "OnlineMerchant" ) && 
+				<Redirect to="/marketplaceDashboard" /> }
+			
 			<form onSubmit={this.handleSubmit}>
 				<label>
 				Username:
@@ -67,8 +75,8 @@ class LoginForm extends Component {
 }
 
 function mapStateToProps(state) {
-	const { isAuthenticated, token } = state.authReducer
-	return { isAuthenticated, token }
+	const { isAuthenticated, token, instanceType } = state.authReducer
+	return { isAuthenticated, token, instanceType }
 }
 
 export default withRouter(connect(mapStateToProps)(LoginForm))

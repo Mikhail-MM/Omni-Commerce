@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 var marketplaceSchema = new Schema({
 	storeName: String,
 	ownerName: String,
-	mongoKey: String,
+	mongoCollectionKey: String,
 	tags: [String],
 	ownerRefId: {type: Schema.Types.ObjectId, ref: 'Client'}
 
@@ -12,7 +12,7 @@ var marketplaceSchema = new Schema({
 var storeItemSchema = new Schema({
 	itemName: String,
 	itemPrice: Number,
-	mongoKey: String,
+	mongoCollectionKey: String,
 	imageURL: String, 
 	category: String, // Consider consolidating with tags
 	options: [String],

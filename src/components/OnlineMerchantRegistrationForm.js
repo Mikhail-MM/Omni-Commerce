@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import fetch from 'cross-fetch'
 
 class OnlineMerchantRegistrationForm extends Component {
 	constructor(props){
@@ -24,6 +25,7 @@ class OnlineMerchantRegistrationForm extends Component {
 			shipping_address_state: '',
 			shopName: 'Store Name',
 			userName: 'Display Name',
+			isOnlineMerchant: true, // Decide whether it is necessary to differentiate between buyers and sellers or simply give all new clients an empty store
 		}
 	this.handleSubmit = this.handleSubmit.bind(this)
 	this.handleChange = this.handleChange.bind(this)
@@ -60,7 +62,16 @@ class OnlineMerchantRegistrationForm extends Component {
 	}
 	handleSubmit(event) {
 		event.preventDefault()
-		console.log(this.state)
+		fetch('http://localhost:3001/clients', {
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			method: 'POST',
+			mode: 'cors',
+			body: JSON.stringify(this.state)
+		})
+		.then(res => console.log(res))
+		.catch(err => console.log(err))	
 	}
 
 	render() {
