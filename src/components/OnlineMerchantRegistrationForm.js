@@ -17,7 +17,7 @@ class OnlineMerchantRegistrationForm extends Component {
 			billing_address_city: '',
 			billing_address_zip: '',
 			billing_address_state: '',
-			sameAddress: false,
+			sameAddress: false, // should change this from a button since state does not continuously change when it is entered
 			shipping_address_line1: '',
 			shipping_address_line2: '',
 			shipping__address_city: '',
@@ -39,6 +39,10 @@ class OnlineMerchantRegistrationForm extends Component {
 	}
 	handleAutofill(){
 		this.setState({sameAddress: !this.state.sameAddress}, () => {
+			console.log("Autofill Callback called!")
+			console.log("What's the state?")
+			console.log(this.state)
+			console.log(this.state.sameAddress)
 			if (this.state.sameAddress) {
 				// This may be async
 				this.setState({
@@ -70,7 +74,8 @@ class OnlineMerchantRegistrationForm extends Component {
 			mode: 'cors',
 			body: JSON.stringify(this.state)
 		})
-		.then(res => console.log(res))
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => console.log(json))
 		.catch(err => console.log(err))	
 	}
 
@@ -112,23 +117,23 @@ class OnlineMerchantRegistrationForm extends Component {
 			<div className="BillingAddressInputs">
 			<label>
 				Billing Address (Line 1):
-				<input type='text' value={this.state.address_line1} onChange={e => this.handleChange('billing_address_line1', e.target.value)} />
+				<input type='text' value={this.state.billing_address_line1} onChange={e => this.handleChange('billing_address_line1', e.target.value)} />
 			</label>
 			<label>
 				Billing Address (Line 2):
-				<input type='text' value={this.state.address_line2} onChange={e => this.handleChange('billing_address_line2', e.target.value)} />
+				<input type='text' value={this.state.billing_address_line2} onChange={e => this.handleChange('billing_address_line2', e.target.value)} />
 			</label>
 			<label>
 				City:
-				<input type='text' value={this.state.address_city} onChange={e => this.handleChange('billing_address_city', e.target.value)} />
+				<input type='text' value={this.state.billing_address_city} onChange={e => this.handleChange('billing_address_city', e.target.value)} />
 			</label>
 			<label>
 				State:
-				<input type='text' value={this.state.address_state} onChange={e => this.handleChange('billing_address_state', e.target.value)} />
+				<input type='text' value={this.state.billing_address_state} onChange={e => this.handleChange('billing_address_state', e.target.value)} />
 			</label>
 			<label>
 				ZIP Code:
-				<input type='text' value={this.state.address_zip} onChange={e => this.handleChange('billing_address_zip', e.target.value)} />
+				<input type='text' value={this.state.billing_address_zip} onChange={e => this.handleChange('billing_address_zip', e.target.value)} />
 			</label>
 			</div>
 			<label>
@@ -138,23 +143,23 @@ class OnlineMerchantRegistrationForm extends Component {
 			<div className="ShippingAddressInputs">
 			<label>
 				Shipping Address (Line 1):
-				<input type='text' value={this.state.address_line1} onChange={e => this.handleChange('shipping_address_line1', e.target.value)} />
+				<input type='text' value={this.state.shipping_address_line1} onChange={e => this.handleChange('shipping_address_line1', e.target.value)} />
 			</label>
 			<label>
 				Shipping Address (Line 2):
-				<input type='text' value={this.state.address_line2} onChange={e => this.handleChange('shipping_address_line2', e.target.value)} />
+				<input type='text' value={this.state.shipping_address_line2} onChange={e => this.handleChange('shipping_address_line2', e.target.value)} />
 			</label>
 			<label>
 				City:
-				<input type='text' value={this.state.address_city} onChange={e => this.handleChange('shipping_address_city', e.target.value)} />
+				<input type='text' value={this.state.shipping_address_city} onChange={e => this.handleChange('shipping_address_city', e.target.value)} />
 			</label>
 			<label>
 				State:
-				<input type='text' value={this.state.address_state} onChange={e => this.handleChange('shipping_address_state', e.target.value)} />
+				<input type='text' value={this.state.shipping_address_state} onChange={e => this.handleChange('shipping_address_state', e.target.value)} />
 			</label>
 			<label>
 				ZIP Code:
-				<input type='text' value={this.state.address_zip} onChange={e => this.handleChange('shipping_address_zip', e.target.value)} />
+				<input type='text' value={this.state.shipping_address_zip} onChange={e => this.handleChange('shipping_address_zip', e.target.value)} />
 			</label>
 			</div>
 			<input type="submit" value="submit"/>

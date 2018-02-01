@@ -18,7 +18,7 @@ var clientSchema = new Schema({
 	shipping__address_city: String,
 	shipping_address_zip: String,
 	shipping_address_state: String,
-	isMaster: { type: Boolean, required: true },
+	isMaster: Boolean,
 	employeeCounter: Number,
 	masterLookupIdentifier: String, // This might just be Organization name to make it easier. Think about scale
 	organizationName: String, // Used in the autocomplete to point Employees to the right way
@@ -31,7 +31,8 @@ var clientSchema = new Schema({
 	clockInNumber: String,
 	accountType: String, 
 	status: String, // PendingApproval[Pending] - Registered
-	master_id: {type: Schema.Types.ObjectId, ref: 'Client' }
+	master_id: {type: Schema.Types.ObjectId, ref: 'Client' },
+	marketplaceRef_id: {type: Schema.Types.ObjectId, ref: 'Marketplace' }
 	},
 	{
 		toObject:{ getters : true }	

@@ -17,24 +17,38 @@ class OnlineStorefrontBrowser extends Component {
 		this.state = {
 
 		}
+		this.generateMarketplacePortals = this.generateMarketplacePortals.bind(this)
 	}
 	componentDidMount() {
 		const { dispatch } = this.props
 		dispatch(retrieveAllMarketplaces())	
 	}
 	generateMarketplacePortals() {
-		// dispatch an action to route to OnlineStoreItemBrowser
+		const { allMarketplaces } = this.props
+
+		return allMarketplaces.map(marketplace => { 
+			console.log("Mapping Marketplaces")
+			return (
+				<div 
+					key={marketplace._id} 
+					onClick={this.bringMarketplaceIntoFocus.bind(this, marketplace._id)}>
+						{marketplace.storeName}
+				</div>
+			)
+		})
+
 	}
 	bringMarketplaceIntoFocus(marketplaceId) {
 		const { dispatch } = this.props
-		dispatch(retreiveMarketplaceById(marketplaceId))
+		dispatch(retrieveMarketplaceById(marketplaceId))
 	}
 
 	render() {
+		const { allMarketplaces } = this.props
 		return(
-			<div> We should be showing portals to all marketplaces here </div>
-			<div> Each store instance will have an onClick that brings that store into the current focus </div>
-			<div> When a current store is within the focus, need to transition to a storeviewer and fetch the items of that store </div>
+			<div>
+			{allMarketplaces && this.generateMarketplacePortals()}
+			</div>
 		)
 	}
 }

@@ -147,7 +147,11 @@ const marketplaceItemsReducer = (state = {}, action) => {
 	switch(action.type) {
 		case('RECEIVE_MARKETPLACE_GOODS'):
 			return Object.assign({}, state, {
-				marketplaceItems: action.marketplaceItems
+				marketplaceItems: action.items
+			})
+		case('RECEIVE_CURRENT_ITEM'):
+			return Object.assign({}, state, {
+				currentMarketplaceItem: action.item
 			})
 		default: 
 			return state
@@ -186,6 +190,7 @@ const rootReducer = combineReducers({
 	errorNotificationsReducer,
 	employeeManagementReducer,
 	marketplaceBrowserReducer,
+	marketplaceItemsReducer,
 	modalReducer,
 	routerReducer
 })

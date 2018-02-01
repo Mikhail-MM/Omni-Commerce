@@ -142,11 +142,11 @@ router.route('/marketplace')
 router.route('/storeItem/marketplaceLookup/:id')
 	.get(storeItems.findAllItemsFromMarketplace);
 router.route('/storeItem/:id')
-	.get(storeItems.createNewStoreItem)
-	.put(storeItems.getAllStoreItems);
-router.route('/storeItem')
 	.get(storeItems.getStoreItemById)
-	.post(storeItems.updateStoreItemById);
+	.put(storeItems.updateStoreItemById);
+router.route('/storeItem')
+	.get(storeItems.getAllStoreItems)
+	.post(authorize.routeEmployeeToMongoCollection, storeItems.createNewStoreItem);
 
 router.route('/salesReports/:id')
 	.get(authorize.routeEmployeeToMongoCollection, salesReports.getSalesReportById);

@@ -10,7 +10,7 @@ function mapStateToProps(state) {
 	return { token, currentMarketplace, marketplaceItems }
 }
 
-class OnlineStoreItemBrowser extends Component {
+class OnlineStoreMarketplaceSpecificItemBrowser extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -34,4 +34,4 @@ class OnlineStoreItemBrowser extends Component {
 	}
 }
 
-export default connect(mapStateToProps)(OnlineStoreItemBrowser)
+export default connect(mapStateToProps)(OnlineStoreMarketplaceSpecificItemBrowser)

@@ -6,7 +6,7 @@ var marketplaceSchema = new Schema({
 	ownerName: String,
 	mongoCollectionKey: String,
 	tags: [String],
-	ownerRefId: {type: Schema.Types.ObjectId, ref: 'Client'}
+	ownerRef_id: {type: Schema.Types.ObjectId, ref: 'Client'}
 
 });
 var storeItemSchema = new Schema({
@@ -19,8 +19,8 @@ var storeItemSchema = new Schema({
 	tags: [String],
 	numberInStock: Number,
 	status: String, // inStock/ outOfStock
-	sellerRef_Id: {type: Schema.Types.ObjectId, ref: 'Client'}
-	marketplaceRef_Id: {type: Schema.Types.ObjectId, ref: 'Marketplace'}
+	sellerRef_id: {type: Schema.Types.ObjectId, ref: 'Client'},
+	marketplaceRef_id: {type: Schema.Types.ObjectId, ref: 'Marketplace'},
 });
 
 // A reusable schema representing transactions in different states and instantiations
@@ -37,6 +37,6 @@ var sellerSpecificPurchaseOrder = new Schema(salesManifest)
 
 module.exports.marketplaceSchema = marketplaceSchema;
 module.exports.storeItemSchema = storeItemSchema;
-module.exports.shoppingCart = shoppingCart;
+module.exports.shoppingCartSchema = shoppingCartSchema;
 module.exports.purchaseOrderSchema = purchaseOrderSchema;
 

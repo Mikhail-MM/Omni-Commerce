@@ -1,10 +1,14 @@
 // Import client Mongoose Model
+const mongoose = require('mongoose');
 const Client = require('../models/schemas/client');
 const bcrypt = require('bcrypt');
-
+const MarketPlaceSchemas = require('../models/schemas/marketplace')
+// We can export the model in our marketplace Schemas file to avoid importing mongoose here
+const Marketplace = MarketPlaceSchemas.marketplaceSchema
+const MarketplaceModel = mongoose.model('Marketplace', Marketplace)
 //CREATE
 
-module.exports.createClient = function(req, res, next) {
+module.exports.createClient = async function(req, res, next) {
 	console.log("req.body recieved by CREATE CLIENT Function:")
 	console.log(req.body)
 
@@ -60,45 +64,44 @@ module.exports.createClient = function(req, res, next) {
 			const saltRounds = 10;			
 			const hashedPassword = await bcrypt.hash(plaintext, saltRounds);
 			newClient.hash = hashedPassword;
+				
+				if (req.body.accountType === "OnlineMerchant") {
+
+				const storeData = {
+					storeName: req.body.shopName,
+					ownerName: req.body.userName,
+					mongoCollectionKey: req.body.mongoCollectionKey,
+				}
+				console.log("Store Data: ")
+				console.log(storeData)
+
+
+				const newMarketplace = new MarketplaceModel(storeData)
+				const registeredMarketplace = await newMarketplace.save()
+
+				response.createdMarketplace = registeredMarketplace
+				newClient.marketplaceRef_id = registeredMarketplace._id
+				console.log("New Marketplace: ")
+				console.log(registeredMarketplace)
+				}
+
 			const registeredClient = await newClient.save();
 			response.createdClient = registeredClient
 			console.log("New Client: ")
 			console.log(registeredClient)
-		};
 		
-		if (req.body.accountType === "OnlineMerchant") {
-			const storeData = {
-				storeName: req.body.shopName,
-				ownerName: req.body.userName,
-				mongoCollectionKey: req.body.mongoCollectionKey,
-				ownerRefId: registeredClient._id,
-			}
-			console.log("Store Data: ")
-			console.log(storeData)
-
-			const Marketplace = Schemas.marketplaceSchema
-			const newMarketplace = new Marketplace(storeData)
-			const registeredMarketplace = await newMarketplace.save()
-
-			response.createdMarketplace = registeredMarketplace
-		}
-
+				if(req.body.accountType === "OnlineMerchant") {
+					const updatedMarketplaceWithClientRef = await MarketplaceModel.findOneAndUpdate({ _id: response.createdMarketplace._id }, { ownerRef_id: registeredClient._id}, { new: true })
+					console.log("Updated Marketplace with Client Ref ID:")
+					console.log(updatedMarketplaceWithClientRef)
+					response.updatedCreatedMarketplace = updatedMarketplaceWithClientRef;
+				}
+		};
+	
 	res.json(response);
 
 	} catch(err) { next(err) }
 }
-
-/*
-			shopName: 'Store Name',
-			userName: 'Display Name',
-	storeName: String,
-	ownerName: String,
-
-	storeName: String,
-	ownerName: String,
-	mongoCollectionKey: String,
-	tags: [String],
-	ownerRefId: {type: Schema.Types.ObjectId, ref: 'Client'}
 
 module.exports.autoCompleteClientOrgName = function (req, res, next) {
 	console.log(req.body)

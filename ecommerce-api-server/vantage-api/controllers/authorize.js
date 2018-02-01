@@ -26,7 +26,10 @@ exports.login = function(req, res, next) {
 
 			client.save(function(err){
 				if(err) return next(err);
-				return res.json({token: client.token});
+				return res.json({
+					token: client.token,
+					accountType: client.accountType
+				});
 			});
 		});
 	});

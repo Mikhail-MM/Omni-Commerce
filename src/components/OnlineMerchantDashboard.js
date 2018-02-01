@@ -1,20 +1,50 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
+
+import OnlineStorefrontBrowser from './OnlineStorefrontBrowser'
+import OnlineStoreGlobalItemBrowser from './OnlineStoreGlobalItemBrowser'
+import AddMarketplaceItemForm from './AddMarketplaceItemForm'
+
 
 function mapStateToProps(state) {
-	const { token } = state.authReducer
-	return { token }
+	const { token, isAuthenticated } = state.authReducer
+	const { currentMarketplace } = state.marketplaceBrowserReducer
+	return { token, isAuthenticated, currentMarketplace }
 }
 
 class OnlineMerchantDashboard extends Component {
 	constructor(props){
 		super(props)
-		this.state = {}
+		this.state = {
+
+		}
 	}
 
 	render() {
+		const { isAuthenticated, currentMarketplace } = this.props
 		return(
-			<div>This is the merchant dashboard which allows users to gain access to all their marketplace info and links to browse the inventory of other stores </div>
+			<div>
+			{ !isAuthenticated && <Redirect to='/login' /> }
+			
+			<div>
+				<h1>All Marketplaces</h1>
+				<OnlineStorefrontBrowser />
+				<h1>All Items</h1>
+				<OnlineStoreGlobalItemBrowser />
+				<h2>Add Item Form</h2>
+				<AddMarketplaceItemForm />
+				{/*
+				NOTE: We absolutely CAN'T have the SPECIFIC STORE ITEM VIEW alongside GLOBAL ALL ITEM VIEW....We will send conflicting Receive Items dispatches
+				{ currentMarketplace &&
+					<div>
+						<h3>Current Marketplace Items</h3>
+						<OnlineStoreMarketplaceSpecificItemBrowser>
+					</div> }
+					*/}
+
+			</div>
+			</div>
 		)
 	}
 }

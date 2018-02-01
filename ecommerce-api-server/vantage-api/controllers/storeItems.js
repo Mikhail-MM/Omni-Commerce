@@ -5,9 +5,13 @@ const StoreItemModel = mongoose.model('StoreItem', StoreItem)
 
 module.exports.createNewStoreItem = async function(req, res, next) { 
 		try {
-			const newStoreItem = new StoreItemModel(req.body)
-			const savedModel = await newStoreItem.save()
-				res.json(savedModel)
+			const data = Object.assign({}, req.body, {
+				ownerRef_id: req.body.client._id,
+				marketplaceRef_id: req.body.client.marketplaceRef_id
+			});
+				const newStoreItem = new StoreItemModel(data)
+				const savedModel = await newStoreItem.save()
+					res.json(savedModel)
 		} catch(err) { next(err) }
 }
 module.exports.getAllStoreItems = async function(req, res, next) {
