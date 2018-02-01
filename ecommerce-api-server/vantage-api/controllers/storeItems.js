@@ -34,7 +34,15 @@ module.exports.updateStoreItemById = async function(req, res, next) {
 }
 module.exports.findAllItemsFromMarketplace = async function(req, res, next) {
 	try {
-		const marketplaceSpecificStoreItems = await StoreItemModel({marketplaceRef_Id: req.params.id})
+		const marketplaceSpecificStoreItems = await StoreItemModel.find({marketplaceRef_Id: req.params.id})
 		
 	} catch(err) { next(err) }
 }
+
+module.exports.retrieveStoreItemWithoutId = async function(req, res, next) {
+try { 
+	const noIdItem = await StoreItemModel.findOne({_id: req.params.id}, '-_id')
+		res.json(noIdItem)
+	} catch(err) { next(err) }
+}
+

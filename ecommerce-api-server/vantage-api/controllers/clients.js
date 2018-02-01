@@ -6,6 +6,8 @@ const MarketPlaceSchemas = require('../models/schemas/marketplace')
 // We can export the model in our marketplace Schemas file to avoid importing mongoose here
 const Marketplace = MarketPlaceSchemas.marketplaceSchema
 const MarketplaceModel = mongoose.model('Marketplace', Marketplace)
+const ShoppingCartSchema = MarketPlaceSchemas.storeItemSchema
+
 //CREATE
 
 module.exports.createClient = async function(req, res, next) {
@@ -91,6 +93,10 @@ module.exports.createClient = async function(req, res, next) {
 			console.log(registeredClient)
 		
 				if(req.body.accountType === "OnlineMerchant") {
+					const ShoppingCartModel = mongoose.model('ShoppingCart', ShoppingCartSchema)
+					const newShoppingCartForClient = new ShoppingCartModel({ ownerRef_id: registeredClient._id })
+					const boundShoppingCart = await newShoppingCartForClient.save()
+					response.boundShoppingCart = boundShoppingCart
 					const updatedMarketplaceWithClientRef = await MarketplaceModel.findOneAndUpdate({ _id: response.createdMarketplace._id }, { ownerRef_id: registeredClient._id}, { new: true })
 					console.log("Updated Marketplace with Client Ref ID:")
 					console.log(updatedMarketplaceWithClientRef)

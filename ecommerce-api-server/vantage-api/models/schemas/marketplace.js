@@ -30,10 +30,18 @@ const salesManifest = {
 	tax: Number,
 	total: Number,
 }
+
 var purchaseOrderSchema = new Schema(salesManifest);
-var shoppingCartSchema = new Schema(salesManifest);
+
+var shoppingCartSchema = new Schema(Object.assign({}, salesManifest, {
+	ownerRef_id: {type: Schema.Types.ObjectId, ref: 'Client'},
+}));
+
 var purchaseOrderSchema = new Schema(Object.assign({}, salesManifest, { additionalField: String }));
-var sellerSpecificPurchaseOrder = new Schema(salesManifest)
+
+var sellerSpecificPurchaseOrder = new Schema(Object.assign({}, salesManifest, {
+	ownerRef_id: {type: Schema.Types.ObjectId, ref: 'Client'},
+}));
 
 module.exports.marketplaceSchema = marketplaceSchema;
 module.exports.storeItemSchema = storeItemSchema;

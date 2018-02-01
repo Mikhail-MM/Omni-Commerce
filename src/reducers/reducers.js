@@ -143,6 +143,8 @@ const marketplaceBrowserReducer = (state = {}, action) => {
 	}
 }
 
+// We may have to split marketPlaceItems into two reducers: Receive ALL items and Receive Store Specific Items
+// 
 const marketplaceItemsReducer = (state = {}, action) => {
 	switch(action.type) {
 		case('RECEIVE_MARKETPLACE_GOODS'):
@@ -159,7 +161,14 @@ const marketplaceItemsReducer = (state = {}, action) => {
 }
 
 const shoppingCartReducer = (state = {}, action) => {
-
+	switch(action.type){
+		case('RECEIVE_SHOPPING_CART'):
+			return Object.assign({}, state, {
+				shoppingCart: action.shoppingCart
+			})
+		default:
+			return state
+	}
 }
 
 const initialModalState = {
@@ -191,6 +200,7 @@ const rootReducer = combineReducers({
 	employeeManagementReducer,
 	marketplaceBrowserReducer,
 	marketplaceItemsReducer,
+	shoppingCartReducer,
 	modalReducer,
 	routerReducer
 })

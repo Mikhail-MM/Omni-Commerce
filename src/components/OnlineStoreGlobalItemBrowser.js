@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { retrieveAllItemsForSale, retrieveItemById } from '../actions/marketplaces'
+import { retrieveAllItemsForSale, retrieveItemById, pushItemIntoShoppingCart } from '../actions/marketplaces'
 
 function mapStateToProps(state) {
 	const { token } = state.authReducer
@@ -26,16 +26,24 @@ class OnlineStoreGlobalItemBrowser extends Component {
 	}
 
 	generateItemPreviews() {
-		const { marketplaceItems } = this.props
+		const { marketplaceItems, token } = this.props
 		return marketplaceItems.map(item => {
 			return(
 				<div 
 					key={item._id}
 					onClick={this.bringCurrentItemIntoFocus.bind(this, item._id)}>
 						{item.itemName}
+						<button 
+							onClick={this.addItemToCart.bind(this, token, item._id)}>
+								Add Item To Cart
+						</button>
 				</div>
 			)
 		})
+	}
+
+	addItemToCart(itemId) {
+
 	}
 
 	bringCurrentItemIntoFocus(itemId) {

@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { retrieveShoppingCart, pullItemFromCart } from '../actions/marketplaces'
+
 function mapStateToProps(state) {
 	const { token } = state.authReducer
-	return { token }
+	const { shoppingCart } = shoppingCartReducer
+	return { token, shoppingCart }
 }
 
 class ShoppingCart extends Component {
@@ -12,17 +15,33 @@ class ShoppingCart extends Component {
 		this.state = {
 
 		}
+		this.generateShoppingCartDOMElements = this.generateShoppingCartDOMElements.bind(this)
 	}
 
 	componentDidMount() {
-		// dispatch an action to retrieve customer's shopping cart!
+		const { dispatch, token } = this.props
+		dispatch(retrieveShoppingCart(token))
 	}
 
-	generateItemsWithButtonsToRemoveAndPay() {
-
+	generateShoppingCartDOMElements() {
+		const { shoppingCart, token } = this.props
+		return shoppingCart.itemsBought.map(cartItem => {
+			<div 
+				key={cartItem._id}>
+					{cartItem.itemName}
+			</div>
+			<button onClick={this.removeItem.bind(this, token, cartItem._id)}> Remove Item </button>
+		})
 	}
 
+	removeItem(token, cartItemPositionId) {
+		const{ dispatch } = this.props
+		dispatch(pullItemFromCart(token, cartItemPositionId))
+
+	}
 	render() {
+		const { shoppingCart } = this.props
+
 		return(
 
 		)

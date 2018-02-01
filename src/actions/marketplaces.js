@@ -1,3 +1,4 @@
+// TODO: Extract Common Headers to own config
 export function retrieveAllMarketplaces() {
 	return dispatch => {
 		return fetch('http://localhost:3001/marketplace', {
@@ -112,5 +113,73 @@ export function retrieveItemById(itemId) {
 		.then(response => response.ok ? response.json() : new Error(response.statusText))
 		.then(json => dispatch(receiveCurrentItem(json)))
 		.catch(err => console.log(err))
+	}
+}
+
+export function retrieveShoppingCart(token) {
+	return dispatch => {
+		return fetch('http://localhost:3001/shoppingCart/userLookup', {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': token
+			},
+			method: 'GET'
+			mode: 'cors'
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => dispatch(receiveShoppingCart(json)))
+		.catch(err => console.log(err))
+	}
+}
+
+export function pushItemIntoShoppingCart(token, itemId) {
+	const url = 'http://localhost:3001/storeItem/noIDhack/' + itemId
+	return dispatch => {
+		fetch(url, {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': token,
+			},
+			method: 'GET',
+			mode: 'cors'
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => {
+			return fetch('http://localhost:3001/shoppingCart/addItem', {
+				headers:{
+					'Content-Type': 'application/json',
+					'x-access-token': token,
+				},
+				method: 'PUT',
+				mode: 'cors',
+				body: JSON.stringify(json),
+			})
+			.then(response => response.ok ? response.json() : new Error(response.statusText))
+			.then(json => dispatch(receiveShoppingCart(json)))
+			.catch(err => console.log(err))
+		});
+	}
+}
+
+export function pullItemFromCart(token, subdocId) {
+	const url = 'http://localhost:3001/shoppingCart/removeItem',
+	fetch('http://localhost:3001/shoppingCart/removeItem',{ 
+		headers:{
+			'Content-Type': 'application/json',
+			'x-access-token': token,
+		}
+		method: 'PUT',
+		mode: 'cors',
+		body: JSON.stringify(subdocId)
+	})
+	.then(response => response.ok ? response.json() : new Error(response.statusText))
+	.then(json => dispatch(receiveShoppingCart(json)))
+	.catch(err => console.log(err))
+}
+
+function receiveShoppingCart(shoppingCart) {
+	return {
+		type: 'RECEIVE_SHOPPING_CART',
+		shoppingCart
 	}
 }

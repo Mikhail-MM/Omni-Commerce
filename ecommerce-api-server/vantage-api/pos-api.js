@@ -29,6 +29,7 @@ const salesReports = require('./controllers/salesReports')
 const payments = require('./controllers/payments')
 const marketplaces = require('./controllers/marketplaces')
 const storeItems = require('./controllers/storeItems')
+const shoppingCarts = require('./controllers/shoppingCarts')
 
 /* Depreciated Controllers 
 
@@ -139,8 +140,23 @@ router.route('/marketplace')
 	.get(marketplaces.getAllMarketplaces)
 	.post(marketplaces.createNewMarketplace);
 
+router.route('shoppingCart/userLookup')
+	.get(authorize.routeEmployeeToMongoCollection, shoppingCarts.getShoppingCartByClientRef)
+router.route('/shoppingCart/addItem/')
+	.put(authorize.routeEmployeeToMongoCollection, shoppingCarts.pushItemIntoShoppingCart)
+router.route('/shoppingCart/removeItem')
+	.put(authorize.routeEmployeeToMongoCollection, shoppingCarts.removeItemFromShoppingCart)
+router.route('/shoppingCart/:id')
+	.get(authorize.routeEmployeeToMongoCollection, shoppingCarts.getShoppingCartById)
+	.put(authorize.routeEmployeeToMongoCollection, shoppingCarts.updateShoppingCartById)
+router.route('/shoppingCart')
+	.get(authorize.routeEmployeeToMongoCollection, shoppingCarts.getAllShoppingCarts)
+	.post(authorize.routeEmployeeToMongoCollection, shoppingCarts.createShoppingCart)
+
 router.route('/storeItem/marketplaceLookup/:id')
 	.get(storeItems.findAllItemsFromMarketplace);
+router.route('/storeItem/noIDhack/:id')
+	.get(storeItems.retrieveStoreItemWithoutId)
 router.route('/storeItem/:id')
 	.get(storeItems.getStoreItemById)
 	.put(storeItems.updateStoreItemById);
