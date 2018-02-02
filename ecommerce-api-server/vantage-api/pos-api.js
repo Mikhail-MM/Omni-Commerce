@@ -68,6 +68,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( {extended: false }));
 
 
+
 app.use('/*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, x-access-token, x-mongo-key, X-Requested-With, Content-Type, Accept");
@@ -87,7 +88,7 @@ app.use('/*', function(req, res, next) {
 
 //.all can create a log entry in a manifest
 // Create function to return ALL DB ITEMS??
-router.route('clients/lookupEmployees')
+router.route('/clients/lookupEmployees')
 	.get(authorize.adminRequired, clients.findAllEmployees)
 router.route('/clients/lookup')
 	.post(clients.autoCompleteClientOrgName);
@@ -140,11 +141,11 @@ router.route('/marketplace')
 	.get(marketplaces.getAllMarketplaces)
 	.post(marketplaces.createNewMarketplace);
 
-router.route('shoppingCart/userLookup')
+router.route('/shoppingCart/userLookup/')
 	.get(authorize.routeEmployeeToMongoCollection, shoppingCarts.getShoppingCartByClientRef)
 router.route('/shoppingCart/addItem/')
 	.put(authorize.routeEmployeeToMongoCollection, shoppingCarts.pushItemIntoShoppingCart)
-router.route('/shoppingCart/removeItem')
+router.route('/shoppingCart/removeItem/')
 	.put(authorize.routeEmployeeToMongoCollection, shoppingCarts.removeItemFromShoppingCart)
 router.route('/shoppingCart/:id')
 	.get(authorize.routeEmployeeToMongoCollection, shoppingCarts.getShoppingCartById)

@@ -29,6 +29,12 @@ module.exports.createStripeCharge = function(req, res, next) {
 	});
 }
 
+module.exports.validateMarketplacePayment = function (req, res, next) {
+  // Go through all objects
+  // Query DB to see whether item has enough stock to satisfy cart request
+  // If so, findOneAndUpdate the item to reflect new stock
+  // Do final validation to see whether updated item is >0
+}
 /* Example of what a Stripe Token Object sent as req.body looks like:
 
 { id: 'tok_1BnGDOJGFIfkFzodqxlod2tr',

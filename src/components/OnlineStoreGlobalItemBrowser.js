@@ -26,24 +26,28 @@ class OnlineStoreGlobalItemBrowser extends Component {
 	}
 
 	generateItemPreviews() {
-		const { marketplaceItems, token } = this.props
+		const { marketplaceItems } = this.props
 		return marketplaceItems.map(item => {
 			return(
-				<div 
-					key={item._id}
-					onClick={this.bringCurrentItemIntoFocus.bind(this, item._id)}>
-						{item.itemName}
-						<button 
-							onClick={this.addItemToCart.bind(this, token, item._id)}>
-								Add Item To Cart
-						</button>
+				<div>
+					<div 
+						key={item._id}
+						onClick={this.bringCurrentItemIntoFocus.bind(this, item._id)}>
+							{item.itemName}
+					</div>
+					<input type="number" />
+					<button 
+						onClick={this.addItemToCart.bind(this, item._id)}>
+							Add Item To Cart
+					</button>
 				</div>
 			)
 		})
 	}
 
 	addItemToCart(itemId) {
-
+		const { dispatch, token } = this.props
+		dispatch(pushItemIntoShoppingCart(token, itemId))
 	}
 
 	bringCurrentItemIntoFocus(itemId) {

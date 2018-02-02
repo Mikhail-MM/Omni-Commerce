@@ -2,12 +2,12 @@
 const mongoose = require('mongoose');
 const Client = require('../models/schemas/client');
 const bcrypt = require('bcrypt');
-const MarketPlaceSchemas = require('../models/schemas/marketplace')
+const MarketPlaceModels = require('../models/schemas/marketplace')
 // We can export the model in our marketplace Schemas file to avoid importing mongoose here
-const Marketplace = MarketPlaceSchemas.marketplaceSchema
+const Marketplace = MarketPlaceModels.marketplaceSchema // TODO: Avoid having multiple calls to mongoose models and move all model exports to models/marketplace.js
 const MarketplaceModel = mongoose.model('Marketplace', Marketplace)
-const ShoppingCartSchema = MarketPlaceSchemas.storeItemSchema
-
+const ShoppingCartSchema = MarketPlaceModels.storeItemSchema
+const ShoppingCartModel = MarketPlaceModels.ShoppingCartModel
 //CREATE
 
 module.exports.createClient = async function(req, res, next) {
@@ -93,7 +93,6 @@ module.exports.createClient = async function(req, res, next) {
 			console.log(registeredClient)
 		
 				if(req.body.accountType === "OnlineMerchant") {
-					const ShoppingCartModel = mongoose.model('ShoppingCart', ShoppingCartSchema)
 					const newShoppingCartForClient = new ShoppingCartModel({ ownerRef_id: registeredClient._id })
 					const boundShoppingCart = await newShoppingCartForClient.save()
 					response.boundShoppingCart = boundShoppingCart

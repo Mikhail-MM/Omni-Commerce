@@ -79,22 +79,38 @@ exports.superAdminRequired = function(req, res, next) {
 };
 
 
-
-exports.routeEmployeeToMongoCollection = function(req, res, next) {
+exports.routeEmployeeToMongoCollection = async function(req, res, next) {
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
+	console.log("Routing Employee to Appropriate Mongo Collection")
+	console.log("Employee Token:")
+	console.log(token)
 	if (!token) return res.status(403).send("Access token required.")
 	try { 
 		var decoded = jwt.decode(token, config.secret)
+		console.log("Token Decoded")
+		console.log(decoded) 
+
 	} catch(err) {
 		return res.status(403).send("Could not verify access token.")
 	}
 	Client.findById(decoded._id, function(err, client) {
+		console.log("Looking for Employee via his _id: Querying Database Now.")
 		if (err) return next(err);
 		if (!client) return res.status(403).send("Invalid client.")
 		if (token !== client.token)
-			return res.status(403).senc("Expired token")
-		req.body.client = decoded
+			return res.status(403).send("Expired token")
+
+		console.log("Trying to set req.body.client to decoded value")
+		console.log("decoded:")
+		console.log(decoded);
+		console.log(client);
+		req.body.client = client;
+		console.log("req.body.client:")
+		console.log(req.body.client)
+		console.log("Attaching headers to request")
 		req.headers['x-mongo-key'] = decoded.mongoCollectionKey
+		req.headers['x-user-id'] = decoded._id
+		console.log("...headers should be attached, listing all headers:")
 		console.log(req.headers)
 		next();
 	});

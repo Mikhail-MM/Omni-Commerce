@@ -160,7 +160,7 @@ const marketplaceItemsReducer = (state = {}, action) => {
 	}
 }
 
-const shoppingCartReducer = (state = {}, action) => {
+const shoppingCartReducer = (state = { shoppingCart: { itemsBought: [] } }, action) => {
 	switch(action.type){
 		case('RECEIVE_SHOPPING_CART'):
 			return Object.assign({}, state, {

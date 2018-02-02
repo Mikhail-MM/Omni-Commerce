@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom'
 import OnlineStorefrontBrowser from './OnlineStorefrontBrowser'
 import OnlineStoreGlobalItemBrowser from './OnlineStoreGlobalItemBrowser'
 import AddMarketplaceItemForm from './AddMarketplaceItemForm'
-
+import ShoppingCart from './ShoppingCart'
 
 function mapStateToProps(state) {
 	const { token, isAuthenticated } = state.authReducer
@@ -34,6 +34,7 @@ class OnlineMerchantDashboard extends Component {
 				<OnlineStoreGlobalItemBrowser />
 				<h2>Add Item Form</h2>
 				<AddMarketplaceItemForm />
+				{ isAuthenticated && <ShoppingCart /> }
 				{/*
 				NOTE: We absolutely CAN'T have the SPECIFIC STORE ITEM VIEW alongside GLOBAL ALL ITEM VIEW....We will send conflicting Receive Items dispatches
 				{ currentMarketplace &&

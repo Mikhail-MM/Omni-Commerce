@@ -21,6 +21,7 @@ var storeItemSchema = new Schema({
 	status: String, // inStock/ outOfStock
 	sellerRef_id: {type: Schema.Types.ObjectId, ref: 'Client'},
 	marketplaceRef_id: {type: Schema.Types.ObjectId, ref: 'Marketplace'},
+	itemRef_id: {type: Schema.Types.ObjectId, ref:'StoreItem'}, // only used within shopping cart
 });
 
 // A reusable schema representing transactions in different states and instantiations
@@ -47,4 +48,5 @@ module.exports.marketplaceSchema = marketplaceSchema;
 module.exports.storeItemSchema = storeItemSchema;
 module.exports.shoppingCartSchema = shoppingCartSchema;
 module.exports.purchaseOrderSchema = purchaseOrderSchema;
-
+const ShoppingCartModel = mongoose.model('ShoppingCart', shoppingCartSchema)
+module.exports.ShoppingCartModel = ShoppingCartModel;

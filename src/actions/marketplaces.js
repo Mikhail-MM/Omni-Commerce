@@ -118,12 +118,12 @@ export function retrieveItemById(itemId) {
 
 export function retrieveShoppingCart(token) {
 	return dispatch => {
-		return fetch('http://localhost:3001/shoppingCart/userLookup', {
+		return fetch('http://localhost:3001/shoppingCart/userLookup/', {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token
 			},
-			method: 'GET'
+			method: 'GET',
 			mode: 'cors'
 		})
 		.then(response => response.ok ? response.json() : new Error(response.statusText))
@@ -133,7 +133,7 @@ export function retrieveShoppingCart(token) {
 }
 
 export function pushItemIntoShoppingCart(token, itemId) {
-	const url = 'http://localhost:3001/storeItem/noIDhack/' + itemId
+	const url = 'http://localhost:3001/storeItem/' + itemId
 	return dispatch => {
 		fetch(url, {
 			headers:{
@@ -152,7 +152,14 @@ export function pushItemIntoShoppingCart(token, itemId) {
 				},
 				method: 'PUT',
 				mode: 'cors',
-				body: JSON.stringify(json),
+				body: JSON.stringify({
+					itemName: json.itemName,
+					itemPrice: json.itemPrice,
+					imageURL: json.imageURL,
+					sellerRef_id: json.sellerRef_id,
+					marketplaceRef_id: json.marketplaceRef_id,
+					itemRef_id: json._id,
+				}),
 			})
 			.then(response => response.ok ? response.json() : new Error(response.statusText))
 			.then(json => dispatch(receiveShoppingCart(json)))
@@ -161,20 +168,25 @@ export function pushItemIntoShoppingCart(token, itemId) {
 	}
 }
 
+
 export function pullItemFromCart(token, subdocId) {
-	const url = 'http://localhost:3001/shoppingCart/removeItem',
-	fetch('http://localhost:3001/shoppingCart/removeItem',{ 
-		headers:{
-			'Content-Type': 'application/json',
-			'x-access-token': token,
-		}
-		method: 'PUT',
-		mode: 'cors',
-		body: JSON.stringify(subdocId)
-	})
-	.then(response => response.ok ? response.json() : new Error(response.statusText))
-	.then(json => dispatch(receiveShoppingCart(json)))
-	.catch(err => console.log(err))
+	console.log("Attempting to pull boughtItem at position");
+	console.log(subdocId);
+	const data = { _id: subdocId }
+	return dispatch => {
+		fetch('http://localhost:3001/shoppingCart/removeItem/',{ 
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': token,
+			},
+			method: 'PUT',
+			mode: 'cors',
+			body: JSON.stringify(data),
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => dispatch(receiveShoppingCart(json)))
+		.catch(err => console.log(err))
+	}
 }
 
 function receiveShoppingCart(shoppingCart) {
