@@ -132,7 +132,8 @@ export function retrieveShoppingCart(token) {
 	}
 }
 
-export function pushItemIntoShoppingCart(token, itemId, amountRequested) {
+// We can abstract out this into Switch statements or just abstract out and decide whether to use amountThatCanBeFulfilled vs amountRequested
+export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountAlreadyInCart) {
 	const url = 'http://localhost:3001/storeItem/' + itemId
 	return dispatch => {
 		fetch(url, {
@@ -145,28 +146,74 @@ export function pushItemIntoShoppingCart(token, itemId, amountRequested) {
 		})
 		.then(response => response.ok ? response.json() : new Error(response.statusText))
 		.then(json => {
-			return fetch('http://localhost:3001/shoppingCart/addItem', {
-				headers:{
-					'Content-Type': 'application/json',
-					'x-access-token': token,
-				},
-				method: 'PUT',
-				mode: 'cors',
-				body: JSON.stringify({
-					itemName: json.itemName,
-					itemPrice: json.itemPrice,
-					imageURL: json.imageURL,
-					numberRequested: amountRequested,
-					sellerRef_id: json.sellerRef_id,
-					marketplaceRef_id: json.marketplaceRef_id,
-					itemRef_id: json._id,
-				}),
-			})
-			.then(response => response.ok ? response.json() : new Error(response.statusText))
-			.then(json => dispatch(receiveShoppingCart(json)))
-			.catch(err => console.log(err))
+			if (amountAlreadyInCart + amountRequested > json.numberInStock) {
+				console.log("Merchant does not have sufficient stock to fulfill order")
+				
+				const amountThatCanBeFulfilled = json.numberInStock - amountAlreadyInCart
+				const unfulfillable = amountRequested - amountThatCanBeFulfilled
+
+				if (amountThatCanBeFulfilled > 0) {
+					return fetch('http://localhost:3001/shoppingCart/addItem', {
+					headers:{
+						'Content-Type': 'application/json',
+						'x-access-token': token,
+					},
+					method: 'PUT',
+					mode: 'cors',
+					body: JSON.stringify({
+						itemName: json.itemName,
+						itemPrice: json.itemPrice,
+						imageURL: json.imageURL,
+						numberRequested: amountThatCanBeFulfilled,
+						sellerRef_id: json.sellerRef_id,
+						marketplaceRef_id: json.marketplaceRef_id,
+						itemRef_id: json._id,
+					}),
+				})
+				.then(response => response.ok ? response.json() : new Error(response.statusText))
+				.then(json => {
+					dispatch(receiveShoppingCart(json))
+					json.unfulfillableStock = unfulfillable
+					dispatch(receiveInvalidatedShoppingCartItems(json))
+
+				})
+				.catch(err => console.log(err))
+				} else {
+					// append new field for that could not go through - for multiple item scans this will be done more thoroughly on the backend - the object will be constructed with flags to be parsed by a front end invalidation component
+					json.unfulfillableStock = amountRequested
+					dispatch(receiveInvalidatedShoppingCartItems(json))
+
+				}
+
+			} else {
+				return fetch('http://localhost:3001/shoppingCart/addItem', {
+					headers:{
+						'Content-Type': 'application/json',
+						'x-access-token': token,
+					},
+					method: 'PUT',
+					mode: 'cors',
+					body: JSON.stringify({
+						itemName: json.itemName,
+						itemPrice: json.itemPrice,
+						imageURL: json.imageURL,
+						numberRequested: amountRequested,
+						sellerRef_id: json.sellerRef_id,
+						marketplaceRef_id: json.marketplaceRef_id,
+						itemRef_id: json._id,
+					}),
+				})
+				.then(response => response.ok ? response.json() : new Error(response.statusText))
+				.then(json => dispatch(receiveShoppingCart(json)))
+				.catch(err => console.log(err))
+			}
 		});
+
 	}
+}
+
+export function validateCartAndProceedToPayment(token) {
+	
 }
 
 
@@ -195,5 +242,13 @@ function receiveShoppingCart(shoppingCart) {
 	return {
 		type: 'RECEIVE_SHOPPING_CART',
 		shoppingCart
+	}
+}
+
+function receiveInvalidatedShoppingCartItems(invalidatedItems) {
+	return{
+		type 'INVALID_CART_ORDER'
+		notifyUserOfCartInvalidation: true
+		invalidatedItems
 	}
 }

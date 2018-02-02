@@ -166,6 +166,11 @@ const shoppingCartReducer = (state = { shoppingCart: { itemsBought: [] } }, acti
 			return Object.assign({}, state, {
 				shoppingCart: action.shoppingCart
 			})
+		case('INVALID_CART_ORDER'):
+			return Object.assign({}, state, {
+				invalidatedItems: action.invalidatedItems
+				notifyUserOfCartInvalidation: action.notifyUserOfCartInvalidation
+			})
 		default:
 			return state
 	}

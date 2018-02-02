@@ -17,7 +17,7 @@ class AddMarketplaceItemForm extends Component {
 			itemName: '',
 			itemPrice: '',
 			imageURL: '',
-			numberInStock: '',
+			numberInStock: 1,
 			
 		}
 		this.handleChange = this.handleChange.bind(this)

@@ -107,6 +107,12 @@ module.exports.removeItemFromShoppingCart = async function(req, res, next) {
 
 module.exports.validateCartStock = async function(req, res, next) {
 	try {
+		// Preliminary validation which will remove any items from the cart which would cause stock to decrease below zero
+		// This will involve heavy Querying against all items in the DB
+		// Need an algorithm to return a new cart which has had all items which would have stocks overflow REPLACED
+		// If there is a discrepancy, simply replace the Amount Requested within the Shopping Cart
+		// Witht he Stock Available 
+		const response = {}
 		const passedItems = [];
 		const failedItems = [];
 		const flagIfClearForPayment = true; // change to false and attach to response 

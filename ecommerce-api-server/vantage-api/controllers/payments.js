@@ -30,11 +30,27 @@ module.exports.createStripeCharge = function(req, res, next) {
 }
 
 module.exports.validateMarketplacePayment = function (req, res, next) {
-  // Go through all objects
-  // Query DB to see whether item has enough stock to satisfy cart request
-  // If so, findOneAndUpdate the item to reflect new stock
-  // Do final validation to see whether updated item is >0
-}
+    // Before running this, save a Stripe customer to charge later (we may need to save this into a DB, saving his shopping cart ref (Basically just a foreign key))
+    // We will need to have a DECREMENT step - Create an array to store the History of Queries so that we can go and increment all items that fail validation.
+    // The final test is this:
+    // If the 3 step validation works - If the DECREMENTED ITEM LISTING IN THE DB has a STOCK of >=0, that shopping cart entry can be fulfilled and added to a purchase order
+    // If not, We must return the decrement
+    // If you want to still charge for as many items as possible, we will actually need recursion to reconcile the fulfillable amount, -
+    // Reverse the first decrement
+    // Query for the item's new, actual stock (since someone bought some to make this previously valid order invalid)
+    // Change the amount requested within the shopping cart
+    // Initialize validation again - and repeat if fails (and if stock is > 0)
+
+    // To make this easier/less ugly, we may want to make a retryValidation function. 
+    // Also, we can create an object const currentTarget {} instead of using longhand Array of Objects a certain index with certain key - just currentTarget.itemsBought - but doesnt matter rly
+
+    // All Items that pass 3 step validation can be turned into a general purchase order for the buyer/server as a receipt
+    // All items that fail are sent back to the thunk handler
+    // A flag in the constructed response will determine whether to send invalidated item message
+
+    // From here, splitting the Purchase Order will be simple enough. We will need a ref to the parent purchase order in each child, and each child is a seller-specific order that is sent
+    // to the marketplace ref (essentially the client ref) as an ID
+  }
 /* Example of what a Stripe Token Object sent as req.body looks like:
 
 { id: 'tok_1BnGDOJGFIfkFzodqxlod2tr',
