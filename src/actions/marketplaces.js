@@ -132,7 +132,7 @@ export function retrieveShoppingCart(token) {
 	}
 }
 
-export function pushItemIntoShoppingCart(token, itemId) {
+export function pushItemIntoShoppingCart(token, itemId, amountRequested) {
 	const url = 'http://localhost:3001/storeItem/' + itemId
 	return dispatch => {
 		fetch(url, {
@@ -156,6 +156,7 @@ export function pushItemIntoShoppingCart(token, itemId) {
 					itemName: json.itemName,
 					itemPrice: json.itemPrice,
 					imageURL: json.imageURL,
+					numberRequested: amountRequested,
 					sellerRef_id: json.sellerRef_id,
 					marketplaceRef_id: json.marketplaceRef_id,
 					itemRef_id: json._id,
@@ -188,6 +189,7 @@ export function pullItemFromCart(token, subdocId) {
 		.catch(err => console.log(err))
 	}
 }
+
 
 function receiveShoppingCart(shoppingCart) {
 	return {

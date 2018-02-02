@@ -3,9 +3,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import ExampleModal from './ExampleModal'
-
+import ConfirmCartAdditionModal from './ConfirmCartAdditionModal'
 const MODAL_COMPONENTS = {
-	'EXAMPLE_MODAL': ExampleModal
+	'EXAMPLE_MODAL': ExampleModal,
+	'CONFIRM_CART_ADDITION': ConfirmCartAdditionModal,
 }
 
 

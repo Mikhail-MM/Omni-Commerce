@@ -50,6 +50,14 @@ class ShoppingCart extends Component {
 		}
 	}
 
+	handleCheckOut() {
+		//const { dispatch, token, shoppingCart } = this.props;
+
+		//dispatch(initializeCartValidation(token));
+
+		console.log("TODO: Handle Checkout Validation")
+
+	}
 	removeItem(cartItemPositionId) {
 		const{ dispatch, token } = this.props
 		console.log("Dispatching pullItemFromCart")
@@ -65,6 +73,7 @@ class ShoppingCart extends Component {
 			<div>
 			<h1>Shopping Cart</h1>
 			{ shoppingCart && this.generateShoppingCartDOMElements() }
+			<button onClick={this.handleCheckOut}>Check Out</button>
 			</div>
 		)
 	}

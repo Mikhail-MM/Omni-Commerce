@@ -140,7 +140,8 @@ router.route('/marketplace/:id')
 router.route('/marketplace')
 	.get(marketplaces.getAllMarketplaces)
 	.post(marketplaces.createNewMarketplace);
-
+router.route('/shoppingCart/validate/')
+	.post(authorize.routeEmployeeToMongoCollection, shoppingCarts.validateCartStock)
 router.route('/shoppingCart/userLookup/')
 	.get(authorize.routeEmployeeToMongoCollection, shoppingCarts.getShoppingCartByClientRef)
 router.route('/shoppingCart/addItem/')

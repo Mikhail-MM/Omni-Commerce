@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { retrieveAllItemsForSale, retrieveItemById, pushItemIntoShoppingCart } from '../actions/marketplaces'
+import { showModal } from '../actions/modals'
+
+import ModalRoot from './ModalRoot'
 
 function mapStateToProps(state) {
 	const { token } = state.authReducer
@@ -35,9 +38,8 @@ class OnlineStoreGlobalItemBrowser extends Component {
 						onClick={this.bringCurrentItemIntoFocus.bind(this, item._id)}>
 							{item.itemName}
 					</div>
-					<input type="number" />
 					<button 
-						onClick={this.addItemToCart.bind(this, item._id)}>
+						onClick={this.confirmOrder.bind(this, item._id)}>
 							Add Item To Cart
 					</button>
 				</div>
@@ -45,9 +47,11 @@ class OnlineStoreGlobalItemBrowser extends Component {
 		})
 	}
 
-	addItemToCart(itemId) {
-		const { dispatch, token } = this.props
-		dispatch(pushItemIntoShoppingCart(token, itemId))
+
+	confirmOrder(itemId){
+		const { dispatch } = this.props
+		dispatch(retrieveItemById(itemId))
+		dispatch(showModal('CONFIRM_CART_ADDITION', {}))
 	}
 
 	bringCurrentItemIntoFocus(itemId) {
@@ -58,13 +62,12 @@ class OnlineStoreGlobalItemBrowser extends Component {
 
 	render() {
 		const { marketplaceItems } = this.props
-
+		// If the modal backdrop is not wide enough, we will have to move this to the overview component and pass down an onclick thru props down to this to show the proper modal
 		return(
 			<div>
+			<ModalRoot />
+			<h3> All Items </h3>
 			{marketplaceItems && this.generateItemPreviews()}
-			<div>This is a collection of all of the items within our entire marketplace app</div>
-			<div>Each item should have a link to the seller's store, as well as an option to send the item to the cart - a buy now button</div>
-			<div>The top corner should have a cart icon, which can be clicked to show a relatively positioned dropdown preview (Similar to how we implemented dropdowns in CSS tuts from W3schools)</div>
 			</div>
 
 		)

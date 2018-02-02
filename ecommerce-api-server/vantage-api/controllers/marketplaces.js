@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
-const Schemas = require('../models/schemas/marketplace')
-const Marketplace = Schemas.marketplaceSchema
-const MarketplaceModel = mongoose.model('Marketplace', Marketplace)
+const MarketplaceModels = require('../models/schemas/marketplace')
+const MarketplaceModel = MarketplaceModels.MarketplaceModel
 
 module.exports.createNewMarketplace = async function(req, res, next) { 
 	try {

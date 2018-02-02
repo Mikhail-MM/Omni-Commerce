@@ -18,6 +18,7 @@ var storeItemSchema = new Schema({
 	options: [String],
 	tags: [String],
 	numberInStock: Number,
+	numberRequested: Number, // we NEED to split these shoppingCartOnly values out
 	status: String, // inStock/ outOfStock
 	sellerRef_id: {type: Schema.Types.ObjectId, ref: 'Client'},
 	marketplaceRef_id: {type: Schema.Types.ObjectId, ref: 'Marketplace'},
@@ -27,12 +28,15 @@ var storeItemSchema = new Schema({
 // A reusable schema representing transactions in different states and instantiations
 const salesManifest = {
 	itemsBought: [storeItemSchema],
-	subtotal: Number,
-	tax: Number,
-	total: Number,
+	subtotalReal: Number,
+	subtotalDisplay: Number,
+	taxDisplay: Number,
+	taxReal: Number,
+	totalReal: Number,
+	totalDisplay: Number,
 }
 
-var purchaseOrderSchema = new Schema(salesManifest);
+
 
 var shoppingCartSchema = new Schema(Object.assign({}, salesManifest, {
 	ownerRef_id: {type: Schema.Types.ObjectId, ref: 'Client'},
@@ -49,4 +53,8 @@ module.exports.storeItemSchema = storeItemSchema;
 module.exports.shoppingCartSchema = shoppingCartSchema;
 module.exports.purchaseOrderSchema = purchaseOrderSchema;
 const ShoppingCartModel = mongoose.model('ShoppingCart', shoppingCartSchema)
+const MarketplaceModel = mongoose.model('Marketplace', marketplaceSchema)
+const StoreItemModel = mongoose.model('StoreItem', storeItemSchema)
 module.exports.ShoppingCartModel = ShoppingCartModel;
+module.exports.MarketplaceModel = MarketplaceModel;
+module.exports.StoreItemModel = StoreItemModel;

@@ -46,7 +46,36 @@ module.exports.getShoppingCartByClientRef = async function(req, res, next) {
 module.exports.pushItemIntoShoppingCart = async function(req, res, next) {
 	try {
 		console.log("Need to push item into Cart")
-		console.log(req.body)
+		// Check if we already have an instance of the item in the cart, 
+		// We can tailor the query to immediately find the entry later
+		console.log("Scanning for existing instances of item")
+		const shoppingCartByUser = await ShoppingCartModel.findOne({ownerRef_id: req.body.client._id})
+		console.log("Single out array of items")
+		console.log(shoppingCartByUser.itemsBought)
+		console.log("Looking for duplicate items")
+		const itemInCartToUpdate = shoppingCartByUser.itemsBought.find(element => element.itemRef_id == req.body.itemRef_id)
+		console.log(itemInCartToUpdate)
+		if (itemInCartToUpdate) {
+			console.log("Existing stock ordered by customer")
+			console.log("Additonal stock of existing item user would like to purchase: ")
+			const old = parseInt(itemInCartToUpdate.numberRequested, 10)
+			console.log(old)
+			const notOld = parseInt(req.body.numberRequested, 10)
+			console.log(notOld)
+			const newAmount = old + notOld
+			console.log("New amount:")
+			console.log(newAmount)
+			console.log("Looking for index of itemsBought array which needs to be replaced")
+			const indexToUpdate = shoppingCartByUser.itemsBought.findIndex(element => element.itemRef_id == req.body.itemRef_id)
+			console.log(indexToUpdate)
+			console.log("Updating amount at index")
+			shoppingCartByUser.itemsBought[indexToUpdate].numberRequested = newAmount
+			console.log(shoppingCartByUser.itemsBought)
+			const replacedShoppingCart = await ShoppingCartModel.findOneAndUpdate({ ownerRef_id: req.body.client._id }, shoppingCartByUser, { new:true })
+			return res.json(replacedShoppingCart)
+		}
+		else if(!itemInCartToUpdate) {
+			console.log("No duplicate items found, resuming regular push operation")
 		req.body._id = new mongoose.mongo.ObjectId();
 		console.log("appending autogen ID to new cart position")
 		console.log(req.body)
@@ -56,7 +85,8 @@ module.exports.pushItemIntoShoppingCart = async function(req, res, next) {
 			{upsert: true, new: true});
 		console.log("Shopping Cart Updated")
 		console.log(updatedPushedShoppingCart)
-			res.json(updatedPushedShoppingCart)
+			return res.json(updatedPushedShoppingCart)
+			}
 	} catch(err) { next(err) }
 
 }
