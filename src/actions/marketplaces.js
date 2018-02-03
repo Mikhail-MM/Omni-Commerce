@@ -213,6 +213,25 @@ export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountA
 }
 
 export function validateCartAndProceedToPayment(token) {
+	return dispatch => { // check validation, watch for flags, dispatch to payment gateway or just bring up a modal 
+		fetch('http://localhost:3001/shoppingCart/checkOut/', {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': token,
+			},
+			method: 'POST',
+			mode: 'cors',
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json =>{
+		if (json.partialValidationFail) { /* Dispatch a Invalidation Modal which consists of our Cart Invalidation Screen */ 
+			/* Also dispatch reciept of our update shopping cart contents */
+		}
+		else if (!json.partialValidationFail) { /* We may not NEED to dispatch a receipt of a shopping cart, but it would not be the worst thing
+		NOW we finally dispatch the STRIPE PAYMENT ACCEPTANCE MODAL */ }
+		})
+		.catch(console.log(err))
+	}
 	
 }
 
@@ -247,8 +266,14 @@ function receiveShoppingCart(shoppingCart) {
 
 function receiveInvalidatedShoppingCartItems(invalidatedItems) {
 	return{
-		type 'INVALID_CART_ORDER'
-		notifyUserOfCartInvalidation: true
+		type: 'INVALID_CART_ORDER',
+		notifyUserOfCartInvalidation: true,
 		invalidatedItems
 	}
+}
+
+export function disregardInvalidatedItems() {
+	type: 'DISREGARD_INVALIDATION',
+	notifyUserOfCartInvalidation: false,
+	invalidatedItems: null
 }

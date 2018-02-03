@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const MarketplaceModels = require('../models/schemas/marketplace')
 const ShoppingCartModel = MarketplaceModels.ShoppingCartModel
+const StoreItemModel = MarketplaceModels.StoreItemModel
+const BigNumber = require('bignumber.js');
 
 module.exports.createShoppingCart = async function(req, res, next) { 
 		try {
@@ -27,7 +29,8 @@ module.exports.updateShoppingCartById = async function(req, res, next) {
 		try {
 			console.log("Looking for shopping cart by ID")
 			const updatedShoppingCart = await ShoppingCartModel.findOneAndUpdate({ _id: req.params.id }, req.body, { new:true })
-				res.json(updatedShoppingCart)
+				req.body.shoppingCartSubdocs = updatedShoppingCart;
+				next();
 		} catch(err) { next(err) }
 }
 
@@ -72,7 +75,8 @@ module.exports.pushItemIntoShoppingCart = async function(req, res, next) {
 			shoppingCartByUser.itemsBought[indexToUpdate].numberRequested = newAmount
 			console.log(shoppingCartByUser.itemsBought)
 			const replacedShoppingCart = await ShoppingCartModel.findOneAndUpdate({ ownerRef_id: req.body.client._id }, shoppingCartByUser, { new:true })
-			return res.json(replacedShoppingCart)
+			req.body.shoppingCartSubdocs = replacedShoppingCart.itemsBought;
+			next()
 		}
 		else if(!itemInCartToUpdate) {
 			console.log("No duplicate items found, resuming regular push operation")
@@ -85,7 +89,8 @@ module.exports.pushItemIntoShoppingCart = async function(req, res, next) {
 			{upsert: true, new: true});
 		console.log("Shopping Cart Updated")
 		console.log(updatedPushedShoppingCart)
-			return res.json(updatedPushedShoppingCart)
+		req.body.shoppingCartSubdocs = updatedPushedShoppingCart.itemsBought
+		next()
 			}
 	} catch(err) { next(err) }
 
@@ -100,7 +105,8 @@ module.exports.removeItemFromShoppingCart = async function(req, res, next) {
 			{ ownerRef_id: req.body.client._id }, 
 			{ $pull: { itemsBought: { _id: req.body._id} } },
 			{upsert: true, new: true});
-		res.json(updatedPulledShoppingCart);
+		req.body.shoppingCartSubdocs = updatedPulledShoppingCart
+		next()
 	} catch(err) { next(err) }
 }
 
@@ -115,7 +121,53 @@ module.exports.validateCartStock = async function(req, res, next) {
 		const response = {}
 		const passedItems = [];
 		const failedItems = [];
-		const flagIfClearForPayment = true; // change to false and attach to response 
+		const partialValidationFail = false; // change to false and attach to response 
+		const shoppingCartByUser = await ShoppingCartModel.findOne({ownerRef_id: req.body.client._id})
+		shoppingCartByUser.itemsBought.forEach(cartItem => {
+			const merchantStock = await StoreItemModel.findOne({_id: cartItem.itemRef_id})
+			if (cartItem.numberRequested >= merchantStock.numberInStock) { passedItems.push(cartItem) }
+				// Improve this else-if method to reconcile :: use the method we used in our action dispatch last night to automatically adjust cart
+			// AND update it in the DB
+			else if (cartItem.numberRequested < merchantStock.numberInStock) { failedItems.push(cartItem) }
+		})
+		if (failedItems.length > 0) {partialValidationFail = true}
+			// Update ShoppingCart with new Items Bought
+		response.passedItems = passedItems
+		respones.failedItems = failedItems
+		response.partialValidationFail = partialValidationFail
+		res.json(response)
+
+
 
 	} catch(err) { next(err) }
+}
+
+module.exports.calculatePricing = async function(req, res, next) {
+	const bigNumberPriceRequest = req.body.shoppingCartSubdocs.map(item => {
+		return { 
+			itemPrice: new BigNumber(item.itemPrice),
+			multipleRequest: new BigNumber(item.numberRequested),
+		}
+	});
+	const subTotalBigNumber =  bigNumberPrices.reduce( (acc, cur, index, array) => { 
+		return acc.plus((cur.itemPrice.times(cur.multipleRequest))) }, bigNumberPriceRequest[0].itemPrice.times(bigNumberPriceRequest.multipleRequest)
+	)
+	const taxRate = new BigNumber(0.07) // outsource taxrate const to config
+	const subtotalReal = subTotalBigNumber.toNumber(),
+	const subtotalDisplay = subTotalBigNumber.round(2).toNumber(),
+	const taxReal = subTotalBigNumber.times(taxrate).toNumber(),
+	const taxDisplay = subTotalBigNumber.times(taxRate).round(2).toNumber(),
+	const totalReal = subTotalBigNumber.plus(taxReal).toNumber()
+	const totalDisplay = subTotalBigNumber.plus(taxReal).round(2).toNumber()
+
+	const priceField = {
+		subtotalReal: subtotalReal,
+		subtotalDisplay: subtotalDisplay,
+		taxReal: taxReal,
+		taxDisplay: taxDisplay,
+		totalReal: totalReal,
+		totalDisplay: totalDisplay,
+	}
+	const updatedPricesShoppingCart = await ShoppingCartModel.findOneAndUpdate({ownerRef_id: req.body.client._id}, priceField, {new: true})
+	res.json(updatedPricesShoppingCart)
 }

@@ -5,12 +5,13 @@ import { retrieveAllItemsForSale, retrieveItemById, pushItemIntoShoppingCart } f
 import { showModal } from '../actions/modals'
 
 import ModalRoot from './ModalRoot'
-
+import CartInvalidationAlert from './CartInvalidationAlert'
 function mapStateToProps(state) {
 	const { token } = state.authReducer
 	const { marketplaceItems, currentMarketplaceItem } = state.marketplaceItemsReducer
+	const { notifyUserOfCartInvalidation } = state.shoppingCartReducer
  
-	return { token, marketplaceItems, currentMarketplaceItem }
+	return { token, marketplaceItems, currentMarketplaceItem, notifyUserOfCartInvalidation }
 }
 
 class OnlineStoreGlobalItemBrowser extends Component {
@@ -61,10 +62,11 @@ class OnlineStoreGlobalItemBrowser extends Component {
 	}
 
 	render() {
-		const { marketplaceItems } = this.props
+		const { marketplaceItems, notifyUserOfCartInvalidation } = this.props
 		// If the modal backdrop is not wide enough, we will have to move this to the overview component and pass down an onclick thru props down to this to show the proper modal
 		return(
 			<div>
+			{ notifyUserOfCartInvalidation && <CartInvalidationAlert />}
 			<ModalRoot />
 			<h3> All Items </h3>
 			{marketplaceItems && this.generateItemPreviews()}

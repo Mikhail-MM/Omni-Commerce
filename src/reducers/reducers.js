@@ -168,7 +168,12 @@ const shoppingCartReducer = (state = { shoppingCart: { itemsBought: [] } }, acti
 			})
 		case('INVALID_CART_ORDER'):
 			return Object.assign({}, state, {
-				invalidatedItems: action.invalidatedItems
+				invalidatedItems: action.invalidatedItems,
+				notifyUserOfCartInvalidation: action.notifyUserOfCartInvalidation
+			})
+		case('DISREGARD_INVALIDATION'):
+			return Object.assign({}, state, {
+				invalidatedItems: action.invalidatedItems,
 				notifyUserOfCartInvalidation: action.notifyUserOfCartInvalidation
 			})
 		default:
