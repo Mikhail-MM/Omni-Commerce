@@ -125,18 +125,35 @@ module.exports.validateCartStock = async function(req, res, next) {
 		const shoppingCartByUser = await ShoppingCartModel.findOne({ownerRef_id: req.body.client._id})
 		shoppingCartByUser.itemsBought.forEach(cartItem => {
 			const merchantStock = await StoreItemModel.findOne({_id: cartItem.itemRef_id})
-			if (cartItem.numberRequested >= merchantStock.numberInStock) { passedItems.push(cartItem) }
-				// Improve this else-if method to reconcile :: use the method we used in our action dispatch last night to automatically adjust cart
-			// AND update it in the DB
-			else if (cartItem.numberRequested < merchantStock.numberInStock) { failedItems.push(cartItem) }
+			const numRequested = parseInt(cartItem.numberRequested, 10)
+			const inStock = parseInt(merchantStock.numberInStock, 10)
+			if (numRequested <= inStock) { passedItems.push(cartItem) }
+				else if (numRequested > merchantStock) { 
+					const amountThatCanBeFulfilled = merchantStock - numRequested
+					if (amountThatCanBeFulfilled == 0) { failedItems.push(cartItem) }
+					else if (amountThatCanBeFulfilled > 0) {
+						const unfulfillable = amountRequested - amountThatCanBeFulfilled
+						// Doing a Direct Mutation here - not sure if that's great
+						// Unfulfillable Portion
+						cartItem.numberRequested = unfulfillable
+						failedItems.push(cartItem) 
+						// Fulfillable
+						cartItem.numberRequested = amountThatCanBeFulfilled
+						passedItems.push(cartItem)
+					}
+				}
 		})
 		if (failedItems.length > 0) {partialValidationFail = true}
 			// Update ShoppingCart with new Items Bought
 		response.passedItems = passedItems
-		respones.failedItems = failedItems
+		response.failedItems = failedItems
 		response.partialValidationFail = partialValidationFail
-		res.json(response)
-
+		const validatedCart = await ShoppingCartModel.findOneAndUpdate({ownerRef_id: req.body.client._id}, {itemsBought: passedItems})
+		response.validatedCart = validatedCart
+		//res.json(response)
+		req.body.validation = response;
+		req.body.shoppingCartSubdocs = validatedCart.itemsBought;
+		next()
 
 
 	} catch(err) { next(err) }
@@ -169,5 +186,10 @@ module.exports.calculatePricing = async function(req, res, next) {
 		totalDisplay: totalDisplay,
 	}
 	const updatedPricesShoppingCart = await ShoppingCartModel.findOneAndUpdate({ownerRef_id: req.body.client._id}, priceField, {new: true})
-	res.json(updatedPricesShoppingCart)
+		if (req.body.validation) { 
+			req.body.validation.validatedCart = updatedPricesShoppingCart
+			return res.json(req.body.validation)
+		} else { return res.json(updatedPricesShoppingCart) }
+		
+		
 }

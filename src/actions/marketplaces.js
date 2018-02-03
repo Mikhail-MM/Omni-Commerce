@@ -1,3 +1,4 @@
+import { showModal } from '../actions/modals'
 // TODO: Extract Common Headers to own config
 export function retrieveAllMarketplaces() {
 	return dispatch => {
@@ -224,11 +225,17 @@ export function validateCartAndProceedToPayment(token) {
 		})
 		.then(response => response.ok ? response.json() : new Error(response.statusText))
 		.then(json =>{
-		if (json.partialValidationFail) { /* Dispatch a Invalidation Modal which consists of our Cart Invalidation Screen */ 
-			/* Also dispatch reciept of our update shopping cart contents */
-		}
-		else if (!json.partialValidationFail) { /* We may not NEED to dispatch a receipt of a shopping cart, but it would not be the worst thing
-		NOW we finally dispatch the STRIPE PAYMENT ACCEPTANCE MODAL */ }
+			if (json.partialValidationFail) { 
+				
+				dispatch(receiveInvalidatedShoppingCartItems(json.failedItems))
+				dispatch(receiveShoppingCart(json.validatedCart))
+				dispatch(showModal('CART_INVALIDATION', {}))
+			
+			} else if (!json.partialValidationFail) {
+				
+				dispatch(receiveShoppingCart(json))
+			  
+			  }	
 		})
 		.catch(console.log(err))
 	}

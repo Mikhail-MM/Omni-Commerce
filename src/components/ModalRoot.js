@@ -4,9 +4,16 @@ import { connect } from 'react-redux'
 
 import ExampleModal from './ExampleModal'
 import ConfirmCartAdditionModal from './ConfirmCartAdditionModal'
+import CartInvalidationModal from './CartInvalidationModal'
+import OnlineStoreSTripeCheckoutModal from './OnlineStoreStripeCheckoutModal'
+
+import CART_INVALIDATION
 const MODAL_COMPONENTS = {
 	'EXAMPLE_MODAL': ExampleModal,
 	'CONFIRM_CART_ADDITION': ConfirmCartAdditionModal,
+	'CART_INVALIDATION': CartInvalidationModal,
+	'ONLINE_STORE_STRIPE_CHECKOUT': OnlineStoreStripeCheckoutModal,
+
 }
 
 

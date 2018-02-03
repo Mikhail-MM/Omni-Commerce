@@ -142,7 +142,7 @@ router.route('/marketplace')
 	.post(marketplaces.createNewMarketplace);
 
 router.route('/shoppingCart/checkOut/')
-	.post(authorize.routeEmployeeToMongoCollection, shoppingCarts.validateCartStock)
+	.post(authorize.routeEmployeeToMongoCollection, shoppingCarts.validateCartStock, shoppingCarts.calculatePricing)
 router.route('/shoppingCart/userLookup/')
 	.get(authorize.routeEmployeeToMongoCollection, shoppingCarts.getShoppingCartByClientRef)
 router.route('/shoppingCart/addItem/')

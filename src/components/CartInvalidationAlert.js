@@ -28,12 +28,15 @@ class CartInvalidationAlert extends Component {
 		dispatch(disregardInvalidatedItems())
 	}
 
+	// Keep an eye out for whether this conditional modal removal thing works
 	render() {
 		const { invalidatedItems } = this.props
+		const { modalRemoval } = this.props
 		return(
 			{invalidatedItems && <h3>We're sorry - Parts of your order were not fulfilled - Merchant has insufficient stock</h3> }
 			{invalidatedItems && this.generateInvalidatedCartItemNotification()}
-			{invalidatedItems && <button onClick={this.clearInvalidation}> Close Notification </button>}
+			{invalidatedItems && !modalRemoval && <button onClick={this.clearInvalidation}> Close Notification </button>}
+			{modalRemoval && <button onClick={modalRemoval}> Continue </button>}
 		}
 		}
 		)
