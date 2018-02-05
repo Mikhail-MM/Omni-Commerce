@@ -12,9 +12,10 @@ import { sendStripeTokenToApi } from '../actions/payments'
 6) send general purchase order to buyer
 7) divvy up shipping orders to sellers
 
-TODO: import { beginCartPaymentValidationCascade } from '../actions/payments'
-
 */
+import { beginCartPaymentValidationCascade } from '../actions/payments'
+
+
 
 
 
@@ -31,20 +32,14 @@ class OnlineStoreStripeCheckout extends Component {
 		super(props)
 		this.state = { }
 	}
-	handleSubmit = (event) => {
+	
+handleSubmit = (event) => {
 		event.preventDefault()
-		/*
 
-		TODO: Create a token with custom customer info...!!!
-		
 		const { authToken, activeTicket, dispatch } = this.props
-		this.props.stripe.createToken({name: 'Random Customer'}).then(({token}) => {
-			dispatch(sendStripeTokenToApi(authToken, token, activeTicket._id))
-		
-
+		this.props.stripe.createToken({name: 'name_not_given_Clientside'}).then(({token}) => {
+			dispatch(sendStripeTokenToMarketplaceApi(authToken, token));
 		});
-		Old 
-		*/
 	}
 	// We can possibly connect this component to cached cart data just to show the customer how much he is paying...
 	render() {

@@ -46,7 +46,7 @@ class OnlineStoreStripeCheckoutModal extends Component {
 				<Modal
 					isOpen={modalType === 'ONLINE_STORE_STRIPE_CHECKOUT'}
 					style={customStyles}
-					contentLabel="Invalid Cart"
+					contentLabel="Stripe Checkout Modal For Online Store"
 				>
 					<OnlineStoreCheckout modalRemoval={this.deactivateModal}/>
 					<button onClick={this.deactivateModal}> Get rid of this nonsense! </button>

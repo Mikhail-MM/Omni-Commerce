@@ -180,3 +180,23 @@ function updateTransactionWithStripePaymentDetails(authToken, transaction_id, pa
 		.catch(err => console.log(err))
 	}
 }
+
+export function beginCartPaymentValidationCascade(authToken, token) {
+	return dispatch => {
+		return fetch('http://localhost:3001/shoppingCart/payment/', {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': authToken
+			},
+			method: 'POST',
+			mode: 'cors',
+			body: JSON.stringify({stripeToken: token})
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => {
+			console.log("Returning heavy response from payment endpoints - ensure data validity")
+			console.log(json)
+		})
+		.catch(err => console.log(err));
+	}
+}

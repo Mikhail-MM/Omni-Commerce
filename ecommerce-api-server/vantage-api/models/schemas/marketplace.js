@@ -79,8 +79,8 @@ var shoppingCartSchema = new Schema(Object.assign({}, salesManifest, {
 
 var purchaseOrderSchema = new Schema(Object.assign({}, salesManifest, { 
 	buyerRef_id: {type: Schema.Types.ObjectId, ref: 'Client'},
-	customerRef_id: {type: Schema.Types.ObjectId, ref: 'StripeCustomer'}
-	charge: {type: Schema.Types.Mixed} ,
+	customerRef_id: {type: Schema.Types.ObjectId, ref: 'StripeCustomer'},
+	charge: {type: Schema.Types.Mixed},
 }));
 
 var sellerSpecificPurchaseOrder = new Schema(Object.assign({}, salesManifest, {

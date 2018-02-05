@@ -234,6 +234,7 @@ export function validateCartAndProceedToPayment(token) {
 			} else if (!json.partialValidationFail) {
 				
 				dispatch(receiveShoppingCart(json))
+				dispatch(showModal('ONLINE_STORE_STRIPE_CHECKOUT', {}))
 			  
 			  }	
 		})
