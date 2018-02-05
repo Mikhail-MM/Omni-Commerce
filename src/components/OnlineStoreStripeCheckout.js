@@ -57,4 +57,4 @@ class OnlineStoreStripeCheckout extends Component {
 	}
 };
 
-export default injectStripe(connect(mapStateToProps)(PaymentCheckoutForm));
+export default injectStripe(connect(mapStateToProps)(OnlineStoreStripeCheckout));

@@ -141,6 +141,8 @@ router.route('/marketplace')
 	.get(marketplaces.getAllMarketplaces)
 	.post(marketplaces.createNewMarketplace);
 
+router.route('/shoppingCart/payment/')
+	.post(authorize.routeEmployeeToMongoCollection, shoppingCarts.validateMarketplacePayment, shoppingCarts.calculatePricing, payments.buildPurchaseOrder)
 router.route('/shoppingCart/checkOut/')
 	.post(authorize.routeEmployeeToMongoCollection, shoppingCarts.validateCartStock, shoppingCarts.calculatePricing)
 router.route('/shoppingCart/userLookup/')
@@ -180,7 +182,8 @@ router.route('/payments/stripe')
 	.post(payments.createStripeCharge);
 router.route('/payments/cash')
 	.post(authorize.routeEmployeeToMongoCollection, payments.createCashCharge, transactions.updateTransactionById);
-	
+router.route('/test')
+	.get(shoppingCarts.test);
 app.use('/', router);
 
 //app.route('/clients')

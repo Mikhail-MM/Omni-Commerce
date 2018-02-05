@@ -1,7 +1,9 @@
 require('dotenv').config()
 const stripe = require('stripe')(process.env.SECRET_KEY);
 const BigNumber = require('bignumber.js');
-
+const MarketPlaceModels = require('../models/schemas/marketplace')
+StripeCustomerModel = MarketPlaceModels.StripeCustomerModel;
+PurchaseOrderModel = MarketPlaceModels.PurchaseOrderModel;
 
 module.exports.createCashCharge = function(req, res, next) {
   console.log("Creating Cash Charge")
@@ -15,6 +17,7 @@ module.exports.createCashCharge = function(req, res, next) {
 }
 
 module.exports.createStripeCharge = function(req, res, next) {
+  const response = {};
 	const token = req.body.stripeToken.id // stripe token id
   const stripeAmount = new BigNumber(req.body.chargeTotal).times(100).round().toNumber()
   console.log(stripeAmount)
@@ -29,6 +32,43 @@ module.exports.createStripeCharge = function(req, res, next) {
 	});
 }
 
+module.exports.saveStripeCustomerInformation = async function(req, res, next) {
+const token = req.body.stripeToken.id
+// Need to get shopping cart info and acquire Cart total!
+const stripeAmount = new BigNumber(req.body.validatedCart.totalReal).times(100).round().toNumber()
+stripe.customers.create({
+  email: req.body.client.email,
+  source: token,
+}).then(async (customer) => {
+  console.log("Creating Stripe Customer...")
+  console.log(customer) // TODO: Save Customer and make routes. While we can use the natural customer here, if exporting this feature to POS system we must use Model with custom Mongo Key prefix in collection
+  const newCustomerDataModel = new StripeCustomerModel(StripeCustomerModel)
+  // we will need to manage this - add to DB only if customer not already existing? 
+  console.log("Saving customer...")
+  const savedCustomerEntity = await newCustomerdataModel.save()
+  console.log(savedCustomerEntity);
+  stripe.charges.create({
+    amount: stripeAmount,
+    currency: "usd",
+    customer: customer.id
+  }).then(async (charge) => {
+    console.log("Stripe Charge Created...")
+    console.log(charge)
+    const data = Object.assign({}, req.body.validatedCart, {
+      customerRef_id: savedCustomerEntity._id,
+      charge: charge
+    });
+    console.log("Building new purchase order")
+    const newPurchaseOrder = new PurchaseOrderModel(data)
+    const savedPurchaseOrder = await newPurchaseOrder.save()
+    console.log(savedPurchaseOrder);
+    response.savedPurchaseOrder = savedPurchaseOrder
+
+  })
+})
+response.validatedPurchaseOrderToProcess = req.body.validatedPurchaseOrderToProcess
+res.json(response);
+}
 module.exports.validateMarketplacePayment = function (req, res, next) {
     // Before running this, save a Stripe customer to charge later (we may need to save this into a DB, saving his shopping cart ref (Basically just a foreign key))
     // We will need to have a DECREMENT step - Create an array to store the History of Queries so that we can go and increment all items that fail validation.
@@ -50,6 +90,7 @@ module.exports.validateMarketplacePayment = function (req, res, next) {
 
     // From here, splitting the Purchase Order will be simple enough. We will need a ref to the parent purchase order in each child, and each child is a seller-specific order that is sent
     // to the marketplace ref (essentially the client ref) as an ID
+  
   }
 /* Example of what a Stripe Token Object sent as req.body looks like:
 

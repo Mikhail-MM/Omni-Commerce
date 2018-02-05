@@ -13,6 +13,8 @@ import AddMenuItemForm from './AddMenuItemForm'
 import ClockInOutForm from './ClockInOutForm'
 import SalesAnalytics from './SalesAnalytics'
 
+import { promiseTest } from '../actions/marketplaces'
+
 // Recharts
 function mapStateToProps(state) {
 	const { token, isAuthenticated, loggedInUsers } = state.authReducer
@@ -100,7 +102,8 @@ class Terminal extends Component {
 
 	showExampleModal() {
 		const { dispatch } = this.props
-		dispatch(showModal('EXAMPLE_MODAL', {}))
+		//dispatch(showModal('EXAMPLE_MODAL', {}))
+		dispatch(promiseTest())
 	}
 
 	// We will need a Socket.io component in componentDidMount() listening for ticket updates

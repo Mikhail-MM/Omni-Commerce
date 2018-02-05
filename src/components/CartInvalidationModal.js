@@ -7,6 +7,8 @@ import CartInvalidationAlert from './CartInvalidationAlert'
 import { hideModal } from '../actions/modals'
 import { disregardInvalidatedItems } from '../actions/marketplaces'
 
+
+
 const customStyles = {
 	content: {
 		top: '50%',
@@ -48,7 +50,7 @@ class CartInvalidationModal extends Component {
 					style={customStyles}
 					contentLabel="Invalid Cart"
 				>
-					<CartInvalidationAlert modalRemoval={deactivateModal}/>
+					<CartInvalidationAlert modalRemoval={this.deactivateModal}/>
 					<button onClick={this.deactivateModal}> Get rid of this nonsense! </button>
 				</Modal>
 			</div>

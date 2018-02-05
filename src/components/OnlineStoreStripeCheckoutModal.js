@@ -48,7 +48,7 @@ class OnlineStoreStripeCheckoutModal extends Component {
 					style={customStyles}
 					contentLabel="Invalid Cart"
 				>
-					<OnlineStoreCheckout modalRemoval={deactivateModal}/>
+					<OnlineStoreCheckout modalRemoval={this.deactivateModal}/>
 					<button onClick={this.deactivateModal}> Get rid of this nonsense! </button>
 				</Modal>
 			</div>

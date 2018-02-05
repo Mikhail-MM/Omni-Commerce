@@ -237,7 +237,7 @@ export function validateCartAndProceedToPayment(token) {
 			  
 			  }	
 		})
-		.catch(console.log(err))
+		.catch(err => console.log(err))
 	}
 	
 }
@@ -280,7 +280,24 @@ function receiveInvalidatedShoppingCartItems(invalidatedItems) {
 }
 
 export function disregardInvalidatedItems() {
+	return {
 	type: 'DISREGARD_INVALIDATION',
 	notifyUserOfCartInvalidation: false,
 	invalidatedItems: null
+	}
+}
+
+export function promiseTest() {
+return dispatch =>{	
+	return fetch('http://localhost:3001/test', {
+			headers:{
+				'Content-Type': 'application/json',
+			},
+			method: 'GET',
+			mode: 'cors'
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => console.log(json))
+		.catch(err => console.log(err))
+	}
 }

@@ -45,7 +45,7 @@ class ConfirmCartAdditionModal extends Component {
 		const existingCountInCart = 0
 		if (shoppingCart.itemsBought.find(element => element.itemRef_id == itemId)) {
 			const itemIndex = shoppingCart.itemsBought.findIndex(element => element.itemRef_id == itemId)
-			existingCountInCart = shoppingCart.itemsBought[itemIndex].numberRequested
+			const existingCountInCart = shoppingCart.itemsBought[itemIndex].numberRequested
 		}
 		dispatch(pushItemIntoShoppingCart(token, itemId, this.state.requestedAmount, existingCountInCart))
 	}

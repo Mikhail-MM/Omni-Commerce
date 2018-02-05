@@ -111,6 +111,7 @@ module.exports.removeItemFromShoppingCart = async function(req, res, next) {
 }
 
 
+
 module.exports.validateCartStock = async function(req, res, next) {
 	try {
 		// Preliminary validation which will remove any items from the cart which would cause stock to decrease below zero
@@ -123,13 +124,13 @@ module.exports.validateCartStock = async function(req, res, next) {
 		const failedItems = [];
 		const partialValidationFail = false; // change to false and attach to response 
 		const shoppingCartByUser = await ShoppingCartModel.findOne({ownerRef_id: req.body.client._id})
-		shoppingCartByUser.itemsBought.forEach(cartItem => {
+		shoppingCartByUser.itemsBought.forEach(async (cartItem) => {
 			const merchantStock = await StoreItemModel.findOne({_id: cartItem.itemRef_id})
 			const numRequested = parseInt(cartItem.numberRequested, 10)
 			const inStock = parseInt(merchantStock.numberInStock, 10)
 			if (numRequested <= inStock) { passedItems.push(cartItem) }
-				else if (numRequested > merchantStock) { 
-					const amountThatCanBeFulfilled = merchantStock - numRequested
+				else if (numRequested > inStock) { 
+					const amountThatCanBeFulfilled = inStock - numRequested
 					if (amountThatCanBeFulfilled == 0) { failedItems.push(cartItem) }
 					else if (amountThatCanBeFulfilled > 0) {
 						const unfulfillable = amountRequested - amountThatCanBeFulfilled
@@ -159,6 +160,118 @@ module.exports.validateCartStock = async function(req, res, next) {
 	} catch(err) { next(err) }
 }
 
+
+module.exports.validateMarketplacePayment = async function (req, res, next) {
+    // Before running this, save a Stripe customer to charge later (we may need to save this into a DB, saving his shopping cart ref (Basically just a foreign key))
+    // We will need to have a DECREMENT step - Create an array to store the History of Queries so that we can go and increment all items that fail validation.
+    // The final test is this:
+    // If the 3 step validation works - If the DECREMENTED ITEM LISTING IN THE DB has a STOCK of >=0, that shopping cart entry can be fulfilled and added to a purchase order
+    // If not, We must return the decrement
+    // If you want to still charge for as many items as possible, we will actually need recursion to reconcile the fulfillable amount, -
+    // Reverse the first decrement
+    // Query for the item's new, actual stock (since someone bought some to make this previously valid order invalid)
+    // Change the amount requested within the shopping cart
+    // Initialize validation again - and repeat if fails (and if stock is > 0)
+
+    // To make this easier/less ugly, we may want to make a retryValidation function. 
+    // Also, we can create an object const currentTarget {} instead of using longhand Array of Objects a certain index with certain key - just currentTarget.itemsBought - but doesnt matter rly
+
+    // All Items that pass 3 step validation can be turned into a general purchase order for the buyer/server as a receipt
+    // All items that fail are sent back to the thunk handler
+    // A flag in the constructed response will determine whether to send invalidated item message
+
+    // From here, splitting the Purchase Order will be simple enough. We will need a ref to the parent purchase order in each child, and each child is a seller-specific order that is sent
+    // to the marketplace ref (essentially the client ref) as an ID
+		const response = {}
+		const passedItems = [];
+		const failedItems = [];
+		const oldStoreItems = []; // Development Only
+		const newStoreItems = []; // Development Only
+		const partialValidationFail = false; // change to false and attach to response 
+		
+
+		const shoppingCartByUser = await ShoppingCartModel.findOne({ownerRef_id: req.body.client._id})
+		
+
+		shoppingCartByUser.itemsBought.forEach(async (cartItem) => {
+			
+			const merchantStock = await StoreItemModel.findOne({_id: cartItem.itemRef_id})
+			
+			oldStoreItems.push(merchantStock)
+			
+			const numRequested = parseInt(cartItem.numberRequested, 10)
+			
+			const inStock = parseInt(merchantStock.numberInStock, 10)
+			
+			if (numRequested <= inStock) { 
+			
+				passedItems.push(cartItem)
+			
+				const updatedMerchantStock = await StoreItemModel.findOneAndUpdate({_id: cartItem.itemRef_id}, {numberInStock: newStock})
+			
+				newStoreItems.push(updatedMerchantStock)
+			}
+				else if (numRequested > inStock) { 
+
+					const amountThatCanBeFulfilled = inStock - numRequested
+
+					if (amountThatCanBeFulfilled == 0) { 
+						
+						const updatedMerchantStock = await StoreItemModel.findOne({_id: cartItem.itemRef_id}) //unnecessary?
+						
+						newStoreItems.push(updatedMerchantStock)
+						
+						failedItems.push(cartItem) 
+					}
+					else if (amountThatCanBeFulfilled > 0) {
+						
+						const unfulfillable = amountRequested - amountThatCanBeFulfilled
+						
+						// Doing a Direct Mutation here - not sure if that's great
+						// Unfulfillable Portion
+						
+						cartItem.numberRequested = unfulfillable
+						
+						failedItems.push(cartItem) 
+						
+						// Fulfillable
+						
+						cartItem.numberRequested = amountThatCanBeFulfilled
+						
+						passedItems.push(cartItem)
+
+						const newStock = inStock - amountThatCanBeFulfilled
+
+						const updatedMerchantStock = await StoreItemModel.findOne({_id: cartItem.itemRef_id}, {numberInStock: newStock})
+
+						newStoreItems.push(updatedMerchantStock)
+					}
+				}
+		})
+		if (failedItems.length > 0) {partialValidationFail = true}
+			// Update ShoppingCart with new Items Bought
+		response.passedItems = passedItems
+		response.failedItems = failedItems
+		response.partialValidationFail = partialValidationFail
+		const validatedCart = await ShoppingCartModel.findOneAndUpdate({ownerRef_id: req.body.client._id}, {itemsBought: passedItems}) // Prices Not Updated - be aware - outsource full update til later
+		response.validatedCart = validatedCart
+		response.oldStoreItems = oldStoreItems
+		response.newStoreItems = newStoreItems
+
+		//res.json(response)
+		req.body.validatedPurchaseOrderToProcess = response;
+		req.body.shoppingCartSubdocs = validatedCart.itemsBought; // could be passedItems and do full shopping cart update later - feels weird to update items separately from prices
+		next()
+  }
+
+module.exports.test = async function(req, res, next) {
+	const array = [ShoppingCartModel.find({}).exec(), ShoppingCartModel.find({}).exec()]
+	console.log(array)
+	const promise = await Promise.all(array)
+	console.log(promise)
+	res.json(promise)
+}
+
 module.exports.calculatePricing = async function(req, res, next) {
 	const bigNumberPriceRequest = req.body.shoppingCartSubdocs.map(item => {
 		return { 
@@ -170,10 +283,10 @@ module.exports.calculatePricing = async function(req, res, next) {
 		return acc.plus((cur.itemPrice.times(cur.multipleRequest))) }, bigNumberPriceRequest[0].itemPrice.times(bigNumberPriceRequest.multipleRequest)
 	)
 	const taxRate = new BigNumber(0.07) // outsource taxrate const to config
-	const subtotalReal = subTotalBigNumber.toNumber(),
-	const subtotalDisplay = subTotalBigNumber.round(2).toNumber(),
-	const taxReal = subTotalBigNumber.times(taxrate).toNumber(),
-	const taxDisplay = subTotalBigNumber.times(taxRate).round(2).toNumber(),
+	const subtotalReal = subTotalBigNumber.toNumber()
+	const subtotalDisplay = subTotalBigNumber.round(2).toNumber()
+	const taxReal = subTotalBigNumber.times(taxrate).toNumber()
+	const taxDisplay = subTotalBigNumber.times(taxRate).round(2).toNumber()
 	const totalReal = subTotalBigNumber.plus(taxReal).toNumber()
 	const totalDisplay = subTotalBigNumber.plus(taxReal).round(2).toNumber()
 
@@ -189,7 +302,10 @@ module.exports.calculatePricing = async function(req, res, next) {
 		if (req.body.validation) { 
 			req.body.validation.validatedCart = updatedPricesShoppingCart
 			return res.json(req.body.validation)
-		} else { return res.json(updatedPricesShoppingCart) }
+		} else if (req.body.validatedPurchaseOrderToProcess) {
+			req.body.validatedCart = updatedPricesShoppingCart
+			next()
+		} else{ return res.json(updatedPricesShoppingCart) }
 		
 		
 }
