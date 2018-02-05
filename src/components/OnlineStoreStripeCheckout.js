@@ -38,7 +38,7 @@ handleSubmit = (event) => {
 
 		const { authToken, activeTicket, dispatch } = this.props
 		this.props.stripe.createToken({name: 'name_not_given_Clientside'}).then(({token}) => {
-			dispatch(sendStripeTokenToMarketplaceApi(authToken, token));
+			dispatch(beginCartPaymentValidationCascade(authToken, token));
 		});
 	}
 	// We can possibly connect this component to cached cart data just to show the customer how much he is paying...

@@ -16,9 +16,9 @@ class CartInvalidationAlert extends Component {
 	}
 	generateInvalidatedCartItemNotification() {
 		const { invalidatedItems } = this.props
-		return invalidatedItems.map(removedItem => {
+		return invalidatedItems.itemsBought.map(removedItem => {
 			return(
-				<div><span>{removedItem.itemName}</span> was removed from your cart due to insufficient stock </div>
+				<div><span>{removedItem.itemName} count {removedItem.unfulfillableStock}</span> was removed from your cart due to insufficient stock </div>
 			)
 		})
 	}

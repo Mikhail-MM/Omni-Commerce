@@ -42,10 +42,15 @@ class ConfirmCartAdditionModal extends Component {
 	addItemToCart(itemId) {
 		const { dispatch, token, shoppingCart } = this.props
 		// See how many items of this type are already in the cart, default to 0 - Use Cached Value to see if seller can fulfill request with existing stock
+		console.log("Looking if item is already in cart, existingCountInCart defaults to 0")
 		const existingCountInCart = 0
 		if (shoppingCart.itemsBought.find(element => element.itemRef_id == itemId)) {
+			console.log("Found item already in cart")
 			const itemIndex = shoppingCart.itemsBought.findIndex(element => element.itemRef_id == itemId)
+			console.log("Setting existing count in cart to the number within cached cart:")
 			const existingCountInCart = shoppingCart.itemsBought[itemIndex].numberRequested
+			console.log(existingCountInCart);
+
 		}
 		dispatch(pushItemIntoShoppingCart(token, itemId, this.state.requestedAmount, existingCountInCart))
 	}

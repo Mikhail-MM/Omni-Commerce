@@ -273,19 +273,21 @@ module.exports.test = async function(req, res, next) {
 }
 
 module.exports.calculatePricing = async function(req, res, next) {
-	const bigNumberPriceRequest = req.body.shoppingCartSubdocs.map(item => {
+	console.log("req.body.shoppingCartSubdocs")
+	console.log(req.body.shoppingCartSubdocs)
+	const bigNumberPrices = req.body.shoppingCartSubdocs.map(item => {
 		return { 
 			itemPrice: new BigNumber(item.itemPrice),
 			multipleRequest: new BigNumber(item.numberRequested),
 		}
 	});
 	const subTotalBigNumber =  bigNumberPrices.reduce( (acc, cur, index, array) => { 
-		return acc.plus((cur.itemPrice.times(cur.multipleRequest))) }, bigNumberPriceRequest[0].itemPrice.times(bigNumberPriceRequest.multipleRequest)
+		return acc.plus((cur.itemPrice.times(cur.multipleRequest))) }, bigNumberPrices[0].itemPrice.times(bigNumberPrices[0].multipleRequest)
 	)
 	const taxRate = new BigNumber(0.07) // outsource taxrate const to config
 	const subtotalReal = subTotalBigNumber.toNumber()
 	const subtotalDisplay = subTotalBigNumber.round(2).toNumber()
-	const taxReal = subTotalBigNumber.times(taxrate).toNumber()
+	const taxReal = subTotalBigNumber.times(taxRate).toNumber()
 	const taxDisplay = subTotalBigNumber.times(taxRate).round(2).toNumber()
 	const totalReal = subTotalBigNumber.plus(taxReal).toNumber()
 	const totalDisplay = subTotalBigNumber.plus(taxReal).round(2).toNumber()

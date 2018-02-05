@@ -141,8 +141,9 @@ router.route('/marketplace')
 	.get(marketplaces.getAllMarketplaces)
 	.post(marketplaces.createNewMarketplace);
 
+// Note: Still need to divvy up purchase orders and arrange them to sellers
 router.route('/shoppingCart/payment/')
-	.post(authorize.routeEmployeeToMongoCollection, shoppingCarts.validateMarketplacePayment, shoppingCarts.calculatePricing, payments.buildPurchaseOrder)
+	.post(authorize.routeEmployeeToMongoCollection, shoppingCarts.validateMarketplacePayment, shoppingCarts.calculatePricing, payments.saveStripeCustomerInformation)
 router.route('/shoppingCart/checkOut/')
 	.post(authorize.routeEmployeeToMongoCollection, shoppingCarts.validateCartStock, shoppingCarts.calculatePricing)
 router.route('/shoppingCart/userLookup/')

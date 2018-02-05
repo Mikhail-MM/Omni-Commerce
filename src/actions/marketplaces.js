@@ -147,13 +147,26 @@ export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountA
 		})
 		.then(response => response.ok ? response.json() : new Error(response.statusText))
 		.then(json => {
+			// This is not properly holding response from hitting the backend
 			if (amountAlreadyInCart + amountRequested > json.numberInStock) {
 				console.log("Merchant does not have sufficient stock to fulfill order")
-				
+				console.log("running if statement: amountAlreadyInCart + amountRequested > json.numberInStock")
+
+				console.log("ExistingCountInCart (amountAlreadyInCart: ")
+				console.log(amountAlreadyInCart)
+				console.log("amount requested:")
+				console.log(amountRequested)
+				console.log("amount in stock from json fetch of item in DB")
+				console.log(json.numberInStock)
 				const amountThatCanBeFulfilled = json.numberInStock - amountAlreadyInCart
+				console.log("amountThatCanBeFulfilled:")
+				console.log(amountThatCanBeFulfilled)
 				const unfulfillable = amountRequested - amountThatCanBeFulfilled
+				console.log("unfulfillable:")
+				console.log(unfulfillable)
 
 				if (amountThatCanBeFulfilled > 0) {
+					console.log("amountThatCanBeFulfilled > 0, fetching addItem with that amount")
 					return fetch('http://localhost:3001/shoppingCart/addItem', {
 					headers:{
 						'Content-Type': 'application/json',
@@ -181,12 +194,21 @@ export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountA
 				.catch(err => console.log(err))
 				} else {
 					// append new field for that could not go through - for multiple item scans this will be done more thoroughly on the backend - the object will be constructed with flags to be parsed by a front end invalidation component
+					console.log("This else route should only run if AmountThatCanBeFulfilled is < 0")
+					console.log("json.unfulFillable Stock being set to amountRequested")
+					console.log("amountRequested:")
+					console.log(amountRequested)
 					json.unfulfillableStock = amountRequested
+					console.log("json.unfulfillableStock")
+					console.log(json.unfulfillableStock)
+					console.log("dispatching invalidated cart receipt")
 					dispatch(receiveInvalidatedShoppingCartItems(json))
 
 				}
 
-			} else {
+			} else if ( amountAlreadyInCart + amountRequested < json.numberInStock ){
+				console.log("This else route should only run if the following if clause did NOT go through")
+				console.log("amountAlreadyInCart + amountRequested > json.numberInStock DID NOT go through")
 				return fetch('http://localhost:3001/shoppingCart/addItem', {
 					headers:{
 						'Content-Type': 'application/json',

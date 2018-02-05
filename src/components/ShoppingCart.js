@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { retrieveShoppingCart, pullItemFromCart } from '../actions/marketplaces'
+import { validateCartAndProceedToPayment } from '../actions/marketplaces'
 
 function mapStateToProps(state) {
 	const { token } = state.authReducer
 	const { shoppingCart } = state.shoppingCartReducer
 	return { token, shoppingCart }
 }
+
 
 class ShoppingCart extends Component {
 	constructor(props) {
@@ -16,6 +18,7 @@ class ShoppingCart extends Component {
 
 		}
 		this.generateShoppingCartDOMElements = this.generateShoppingCartDOMElements.bind(this)
+		this.handleCheckOut = this.handleCheckOut.bind(this)
 	}
 
 	componentDidMount() {
@@ -51,12 +54,9 @@ class ShoppingCart extends Component {
 	}
 
 	handleCheckOut() {
-		//const { dispatch, token, shoppingCart } = this.props;
+		const { dispatch, token, } = this.props;
 
-		//dispatch(initializeCartValidation(token));
-
-		console.log("TODO: Handle Checkout Validation")
-
+		dispatch(validateCartAndProceedToPayment(token));
 	}
 	removeItem(cartItemPositionId) {
 		const{ dispatch, token } = this.props
