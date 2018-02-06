@@ -38,7 +38,7 @@ class ShoppingCart extends Component {
 				return (<div>
 							<div 
 								key={cartItem._id}>
-									{cartItem.itemName}
+									{cartItem.itemName} Count {cartItem.numberRequested}
 							</div>
 							<button onClick={this.removeItem.bind(this, cartItem._id)}> Remove Item </button>
 						</div>
@@ -53,6 +53,9 @@ class ShoppingCart extends Component {
 		}
 	}
 
+	generateShoppingCartPriceFieldDOMElements() {
+		
+	}
 	handleCheckOut() {
 		const { dispatch, token, } = this.props;
 

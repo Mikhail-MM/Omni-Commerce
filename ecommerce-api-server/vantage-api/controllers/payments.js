@@ -5,6 +5,7 @@ const MarketPlaceModels = require('../models/schemas/marketplace')
 StripeCustomerModel = MarketPlaceModels.StripeCustomerModel;
 PurchaseOrderModel = MarketPlaceModels.PurchaseOrderModel;
 
+
 module.exports.createCashCharge = function(req, res, next) {
   console.log("Creating Cash Charge")
   // Needs error handling to ensure that customer didn't over/underpay due to cached redux values that didn't update for whatever reason
@@ -35,17 +36,19 @@ module.exports.createStripeCharge = function(req, res, next) {
 module.exports.saveStripeCustomerInformation = async function(req, res, next) {
 const token = req.body.stripeToken.id
 // Need to get shopping cart info and acquire Cart total!
-const stripeAmount = new BigNumber(req.body.validatedCart.totalReal).times(100).round().toNumber()
+console.log("Tabulating amount to be paid ")
+const stripeAmount = new BigNumber(req.body.validatedPurchaseOrderToProcess.validatedCart.totalReal).times(100).round().toNumber()
 stripe.customers.create({
   email: req.body.client.email,
   source: token,
 }).then(async (customer) => {
   console.log("Creating Stripe Customer...")
   console.log(customer) // TODO: Save Customer and make routes. While we can use the natural customer here, if exporting this feature to POS system we must use Model with custom Mongo Key prefix in collection
-  const newCustomerDataModel = new StripeCustomerModel(StripeCustomerModel)
+  const data = Object.assign({}, customer, {clientRef_id: req.body.client._id})
+  const newCustomerDataModel = new StripeCustomerModel(data)
   // we will need to manage this - add to DB only if customer not already existing? 
   console.log("Saving customer...")
-  const savedCustomerEntity = await newCustomerdataModel.save()
+  const savedCustomerEntity = await newCustomerDataModel.save()
   console.log(savedCustomerEntity);
   stripe.charges.create({
     amount: stripeAmount,
@@ -54,7 +57,8 @@ stripe.customers.create({
   }).then(async (charge) => {
     console.log("Stripe Charge Created...")
     console.log(charge)
-    const data = Object.assign({}, req.body.validatedCart, {
+    // const { itemsBought } = req.body.validatedPurchaseOrderToProcess.validatedCart
+    const data = Object.assign({}, {itemsBought: req.body.validatedPurchaseOrderToProcess.validatedCart.itemsBought}, {
       customerRef_id: savedCustomerEntity._id,
       charge: charge
     });
@@ -62,12 +66,10 @@ stripe.customers.create({
     const newPurchaseOrder = new PurchaseOrderModel(data)
     const savedPurchaseOrder = await newPurchaseOrder.save()
     console.log(savedPurchaseOrder);
-    response.savedPurchaseOrder = savedPurchaseOrder
-
+    req.body.validatedPurchaseOrderToProcess.savedPurchaseOrder = savedPurchaseOrder
   })
 })
-response.validatedPurchaseOrderToProcess = req.body.validatedPurchaseOrderToProcess
-res.json(response);
+res.json(req.body.validatedPurchaseOrderToProcess);
 }
 module.exports.validateMarketplacePayment = function (req, res, next) {
     // Before running this, save a Stripe customer to charge later (we may need to save this into a DB, saving his shopping cart ref (Basically just a foreign key))

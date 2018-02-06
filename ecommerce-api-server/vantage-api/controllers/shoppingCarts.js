@@ -51,35 +51,36 @@ module.exports.pushItemIntoShoppingCart = async function(req, res, next) {
 		console.log("Need to push item into Cart")
 		// Check if we already have an instance of the item in the cart, 
 		// We can tailor the query to immediately find the entry later
-		console.log("Scanning for existing instances of item")
+		console.log("Scanning for existing instances of item within shopping cart")
 		const shoppingCartByUser = await ShoppingCartModel.findOne({ownerRef_id: req.body.client._id})
 		console.log("Single out array of items")
 		console.log(shoppingCartByUser.itemsBought)
-		console.log("Looking for duplicate items")
+		console.log("Looking for duplicate items - may be undefined if not found")
 		const itemInCartToUpdate = shoppingCartByUser.itemsBought.find(element => element.itemRef_id == req.body.itemRef_id)
 		console.log(itemInCartToUpdate)
 		if (itemInCartToUpdate) {
-			console.log("Existing stock ordered by customer")
-			console.log("Additonal stock of existing item user would like to purchase: ")
+			console.log("Amount already in cart")
 			const old = parseInt(itemInCartToUpdate.numberRequested, 10)
 			console.log(old)
+			console.log("Amount customer wants to add with this request")
 			const notOld = parseInt(req.body.numberRequested, 10)
 			console.log(notOld)
 			const newAmount = old + notOld
-			console.log("New amount:")
+			console.log("New Combine Amount")
 			console.log(newAmount)
 			console.log("Looking for index of itemsBought array which needs to be replaced")
 			const indexToUpdate = shoppingCartByUser.itemsBought.findIndex(element => element.itemRef_id == req.body.itemRef_id)
 			console.log(indexToUpdate)
-			console.log("Updating amount at index")
+			console.log("Updating amount at index and logging entire new entry")
 			shoppingCartByUser.itemsBought[indexToUpdate].numberRequested = newAmount
 			console.log(shoppingCartByUser.itemsBought)
 			const replacedShoppingCart = await ShoppingCartModel.findOneAndUpdate({ ownerRef_id: req.body.client._id }, shoppingCartByUser, { new:true })
 			req.body.shoppingCartSubdocs = replacedShoppingCart.itemsBought;
+			console.log("Moving on to calculate prices")
 			next()
 		}
 		else if(!itemInCartToUpdate) {
-			console.log("No duplicate items found, resuming regular push operation")
+		console.log("No duplicate items found, resuming regular push operation")
 		req.body._id = new mongoose.mongo.ObjectId();
 		console.log("appending autogen ID to new cart position")
 		console.log(req.body)
@@ -105,7 +106,7 @@ module.exports.removeItemFromShoppingCart = async function(req, res, next) {
 			{ ownerRef_id: req.body.client._id }, 
 			{ $pull: { itemsBought: { _id: req.body._id} } },
 			{upsert: true, new: true});
-		req.body.shoppingCartSubdocs = updatedPulledShoppingCart
+		req.body.shoppingCartSubdocs = updatedPulledShoppingCart.itemsBought
 		next()
 	} catch(err) { next(err) }
 }
@@ -119,41 +120,90 @@ module.exports.validateCartStock = async function(req, res, next) {
 		// Need an algorithm to return a new cart which has had all items which would have stocks overflow REPLACED
 		// If there is a discrepancy, simply replace the Amount Requested within the Shopping Cart
 		// Witht he Stock Available 
-		const response = {}
-		const passedItems = [];
-		const failedItems = [];
-		const partialValidationFail = false; // change to false and attach to response 
+
+		var response = {}
+		var passedItems = [];
+		var failedItems = [];
+		var partialValidationFail = false; // change to false and attach to response 
+		console.log("Secondary Validation of cart stock against items on DB")
 		const shoppingCartByUser = await ShoppingCartModel.findOne({ownerRef_id: req.body.client._id})
-		shoppingCartByUser.itemsBought.forEach(async (cartItem) => {
-			const merchantStock = await StoreItemModel.findOne({_id: cartItem.itemRef_id})
-			const numRequested = parseInt(cartItem.numberRequested, 10)
-			const inStock = parseInt(merchantStock.numberInStock, 10)
-			if (numRequested <= inStock) { passedItems.push(cartItem) }
-				else if (numRequested > inStock) { 
-					const amountThatCanBeFulfilled = inStock - numRequested
-					if (amountThatCanBeFulfilled == 0) { failedItems.push(cartItem) }
-					else if (amountThatCanBeFulfilled > 0) {
-						const unfulfillable = amountRequested - amountThatCanBeFulfilled
-						// Doing a Direct Mutation here - not sure if that's great
-						// Unfulfillable Portion
-						cartItem.numberRequested = unfulfillable
-						failedItems.push(cartItem) 
-						// Fulfillable
-						cartItem.numberRequested = amountThatCanBeFulfilled
-						passedItems.push(cartItem)
-					}
+		
+		for (const cartItem of shoppingCartByUser.itemsBought) { 
+				console.log("Running ForEach - Looking for requested cartItem listing within DB:")
+				const merchantStock = await StoreItemModel.findOne({_id: cartItem.itemRef_id}, '-_id')
+				console.log(merchantStock)
+				console.log("# in Customer Cart")
+				const numRequested = parseInt(cartItem.numberRequested, 10)
+				console.log(numRequested)
+				console.log("# stocked by merchant")
+				const inStock = parseInt(merchantStock.numberInStock, 10)
+				console.log(inStock)
+
+				if (numRequested <= inStock) { 
+					// better to use an array of object and concat I guess
+					console.log("if statement running: Number Requested is Less than or Equal to amount in stock by merchant")
+					console.log("Pushing cartItem into passedItems array - logging passedItems array")
+					passedItems.push(cartItem) 
+					console.log(passedItems)
 				}
-		})
-		if (failedItems.length > 0) {partialValidationFail = true}
+					else if (numRequested > inStock) { 
+						console.log("else If statement running: number requested exceeds amount in stock")
+						console.log("Reconciling - determining amountThatCanBeFulfilled:")
+
+						var amountThatCanBeFulfilled = inStock
+						console.log(amountThatCanBeFulfilled)
+						if (amountThatCanBeFulfilled == 0) { 
+							console.log("nested if within else if running:")
+							console.log("Amount that can be fulfilled is ZERO...")
+							console.log("Pushing entire cartItem to failedItems array - logging failedItems array")
+							failedItems.push(cartItem) 
+							console.log(failedItems)
+						}
+						else if (amountThatCanBeFulfilled > 0) {
+							console.log("Nested else if within else if statement:")
+							console.log("Amount that can be fulfilled is greater than zero")
+							console.log("Calculating how much is unfulfillable (amount requested - amount that can be fulfilled) - logging unfulfillable")
+							const unfulfillable = numRequested - amountThatCanBeFulfilled
+							console.log(unfulfillable)
+							// Doing a Direct Mutation here - not sure if that's great
+							// Unfulfillable Portion
+							console.log("Doing a mutation type thing now")
+							console.log("Setting cartItem.numberRequested to unfulfillable - pushing a partial invalidation to failed Items - logging failed items")
+							cartItem.numberRequested = unfulfillable
+							failedItems.push(cartItem) 
+							console.log(failedItems)
+							// Fulfillable
+							console.log("Setting cartItem.numberRequested to amountThatCanbeFulfilled - pushing cartItem as partial validation to passedItems - logging passed items")
+							cartItem.numberRequested = amountThatCanBeFulfilled
+							passedItems.push(cartItem)
+							console.log(passedItems)
+						}
+					}
+		}
+
+		if (failedItems.length > 0) {
+			console.log("Evaluate length of failedItems - If it has any invalidations, flip flag to notify front-end")
+			partialValidationFail = true
+		}
 			// Update ShoppingCart with new Items Bought
-		response.passedItems = passedItems
-		response.failedItems = failedItems
-		response.partialValidationFail = partialValidationFail
-		const validatedCart = await ShoppingCartModel.findOneAndUpdate({ownerRef_id: req.body.client._id}, {itemsBought: passedItems})
-		response.validatedCart = validatedCart
+		
+		response.passedItems = passedItems;
+		response.failedItems = failedItems;
+		response.partialValidationFail = partialValidationFail;
+
+		console.log("Updating cart - replacing itemsBought array with all items that are within passedItems array");
+		const validatedCart = await ShoppingCartModel.findOneAndUpdate({ownerRef_id: req.body.client._id}, {$set: { itemsBought: passedItems } }, {new: true});
+		console.log("New Cart:")
+		console.log(validatedCart)
+		response.validatedCart = validatedCart;
 		//res.json(response)
 		req.body.validation = response;
 		req.body.shoppingCartSubdocs = validatedCart.itemsBought;
+		console.log("Logging Response, which should contain PassedItems/FailedItems as well as our entire validated cart")
+		console.log(response);
+		console.log("Here is validatedCart.itemsBought:")
+		console.log(validatedCart.itemsBought)
+		console.log("Proceeding to Price Calculation...")
 		next()
 
 
@@ -182,81 +232,129 @@ module.exports.validateMarketplacePayment = async function (req, res, next) {
 
     // From here, splitting the Purchase Order will be simple enough. We will need a ref to the parent purchase order in each child, and each child is a seller-specific order that is sent
     // to the marketplace ref (essentially the client ref) as an ID
-		const response = {}
-		const passedItems = [];
-		const failedItems = [];
-		const oldStoreItems = []; // Development Only
-		const newStoreItems = []; // Development Only
-		const partialValidationFail = false; // change to false and attach to response 
+		var response = {}
+		var passedItems = [];
+		var failedItems = [];
+		var oldStoreItems = []; // Development Only
+		var newStoreItems = []; // Development Only
+		var partialValidationFail = false; // change to false and attach to response 
 		
 
 		const shoppingCartByUser = await ShoppingCartModel.findOne({ownerRef_id: req.body.client._id})
 		
 
-		shoppingCartByUser.itemsBought.forEach(async (cartItem) => {
+		for (const cartItem of shoppingCartByUser.itemsBought) {
 			
-			const merchantStock = await StoreItemModel.findOne({_id: cartItem.itemRef_id})
-			
+			console.log("Running ForEach - Looking for requested cartItem listing within DB - Logging Listed Item:");
+			const merchantStock = await StoreItemModel.findOne({_id: cartItem.itemRef_id}, '-_id');
+			console.log(merchantStock)
 			oldStoreItems.push(merchantStock)
 			
 			const numRequested = parseInt(cartItem.numberRequested, 10)
 			
 			const inStock = parseInt(merchantStock.numberInStock, 10)
+
+			console.log("# in Customer Cart")
+			console.log(numRequested)
+			console.log("# stocked by merchant")
+			console.log(inStock)
 			
 			if (numRequested <= inStock) { 
-			
-				passedItems.push(cartItem)
-			
-				const updatedMerchantStock = await StoreItemModel.findOneAndUpdate({_id: cartItem.itemRef_id}, {numberInStock: newStock})
-			
+
+					console.log("if statement running: Number Requested is Less than or Equal to amount in stock by merchant")
+					console.log("Pushing cartItem into passedItems array - logging passedItems array")
+					console.log(passedItems)
+
+					passedItems.push(cartItem)
+
+					console.log("Updating item stock in DB - Logging new Item")
+					const newStock = inStock - numRequested
+					const updatedMerchantStock = await StoreItemModel.findOneAndUpdate({_id: cartItem.itemRef_id}, {numberInStock: newStock}, {new: true})
+					
+					console.log(updatedMerchantStock)
+
 				newStoreItems.push(updatedMerchantStock)
 			}
 				else if (numRequested > inStock) { 
 
-					const amountThatCanBeFulfilled = inStock - numRequested
+						console.log("else If statement running: number requested exceeds amount in stock")
+						console.log("Reconciling - determining amountThatCanBeFulfilled:")
+
+					const amountThatCanBeFulfilled = inStock
+						console.log(amountThatCanBeFulfilled)
 
 					if (amountThatCanBeFulfilled == 0) { 
 						
+							console.log("nested if within else if running:")
+							console.log("Amount that can be fulfilled is ZERO...")
+							console.log("Pushing entire cartItem to failedItems array - logging failedItems array")
+
 						const updatedMerchantStock = await StoreItemModel.findOne({_id: cartItem.itemRef_id}) //unnecessary?
 						
 						newStoreItems.push(updatedMerchantStock)
 						
+						
+
 						failedItems.push(cartItem) 
+						console.log(failedItems)
 					}
 					else if (amountThatCanBeFulfilled > 0) {
 						
-						const unfulfillable = amountRequested - amountThatCanBeFulfilled
-						
+							console.log("Nested else if within else if statement:")
+							console.log("Amount that can be fulfilled is greater than zero")
+							console.log("Calculating how much is unfulfillable (amount requested - amount that can be fulfilled) - logging unfulfillable")
+
+						const unfulfillable = numRequested - amountThatCanBeFulfilled
+						console.log(unfulfillable)
 						// Doing a Direct Mutation here - not sure if that's great
 						// Unfulfillable Portion
+						console.log("Doing a mutation type thing now")
+						console.log("Setting cartItem.numberRequested to unfulfillable - pushing a partial invalidation to failed Items - logging failed items")
 						
-						cartItem.numberRequested = unfulfillable
+						var unfulfillableObject = Object.assign({}, cartItem)
+						unfulfillableObject.numberRequested = unfulfillable
 						
-						failedItems.push(cartItem) 
+						failedItems.push(unfulfillableObject) 
 						
+						console.log(failedItems)
 						// Fulfillable
 						
+						console.log("Setting cartItem.numberRequested to amountThatCanbeFulfilled - pushing cartItem as partial validation to passedItems - logging passed items")
+
+
 						cartItem.numberRequested = amountThatCanBeFulfilled
+
 						
 						passedItems.push(cartItem)
-
+						console.log(passedItems)
+						console.log("Updating item stored on DB - Logging new stock and new item entry")
 						const newStock = inStock - amountThatCanBeFulfilled
 
-						const updatedMerchantStock = await StoreItemModel.findOne({_id: cartItem.itemRef_id}, {numberInStock: newStock})
-
+						const updatedMerchantStock = await StoreItemModel.findOneAndUpdate({_id: cartItem.itemRef_id}, {numberInStock: newStock}, {new: true})
+						console.log(newStock)
+						console.log(updatedMerchantStock)
 						newStoreItems.push(updatedMerchantStock)
 					}
 				}
-		})
+		}
 		if (failedItems.length > 0) {partialValidationFail = true}
 			// Update ShoppingCart with new Items Bought
 		response.passedItems = passedItems
 		response.failedItems = failedItems
 		response.partialValidationFail = partialValidationFail
-		const validatedCart = await ShoppingCartModel.findOneAndUpdate({ownerRef_id: req.body.client._id}, {itemsBought: passedItems}) // Prices Not Updated - be aware - outsource full update til later
+		console.log("Updating cart - replacing itemsBought array with all items that are within passedItems array");
+		console.log("New Cart:")
+
+		const validatedCart = await ShoppingCartModel.findOneAndUpdate({ownerRef_id: req.body.client._id}, {$set: {itemsBought: passedItems } }, {new: true}) // Prices Not Updated - be aware - outsource full update til later
+		console.log(validatedCart)
 		response.validatedCart = validatedCart
 		response.oldStoreItems = oldStoreItems
 		response.newStoreItems = newStoreItems
+		console.log("Logging Response, which should contain PassedItems/FailedItems as well as our entire validated cart, as well as all items in the DB before/after they were run ")
+		console.log(response);
+		console.log("Here is validatedCart.itemsBought:")
+		console.log(validatedCart.itemsBought)
+		console.log("Proceeding to Price Calculation...")
 
 		//res.json(response)
 		req.body.validatedPurchaseOrderToProcess = response;
@@ -281,9 +379,18 @@ module.exports.calculatePricing = async function(req, res, next) {
 			multipleRequest: new BigNumber(item.numberRequested),
 		}
 	});
-	const subTotalBigNumber =  bigNumberPrices.reduce( (acc, cur, index, array) => { 
-		return acc.plus((cur.itemPrice.times(cur.multipleRequest))) }, bigNumberPrices[0].itemPrice.times(bigNumberPrices[0].multipleRequest)
+	console.log("Mapping array of bigNumberPrices")
+	console.log(bigNumberPrices)
+
+	// initialValue used to be  bigNumberPrices[0].itemPrice.times(bigNumberPrices[0].multipleRequest whereas It should just be zero
+	const subTotalBigNumber =  bigNumberPrices.reduce( (acc, cur) => { 
+		console.log('cur, acc:')
+		console.log(cur)
+		console.log(acc)
+		return acc.plus((cur.itemPrice.times(cur.multipleRequest))) }, new BigNumber(0)
 	)
+
+	
 	const taxRate = new BigNumber(0.07) // outsource taxrate const to config
 	const subtotalReal = subTotalBigNumber.toNumber()
 	const subtotalDisplay = subTotalBigNumber.round(2).toNumber()
@@ -300,12 +407,21 @@ module.exports.calculatePricing = async function(req, res, next) {
 		totalReal: totalReal,
 		totalDisplay: totalDisplay,
 	}
+	console.log("Logging priceField and appending to shopping cart via findOneAndUpdate")
+	console.log(priceField)
+	console.log("Checking shopping cart on deck")
+	const shoppingCartBeforeUpdate = await ShoppingCartModel.findOne({ownerRef_id: req.body.client._id})
+	console.log(shoppingCartBeforeUpdate)
 	const updatedPricesShoppingCart = await ShoppingCartModel.findOneAndUpdate({ownerRef_id: req.body.client._id}, priceField, {new: true})
+	console.log("logging updated shopping cart after price calculations")
+	console.log(updatedPricesShoppingCart)
+	console.log("Figuring out why itemsBought disappeared")
+	console.log(updatedPricesShoppingCart.itemsBought)
 		if (req.body.validation) { 
 			req.body.validation.validatedCart = updatedPricesShoppingCart
 			return res.json(req.body.validation)
 		} else if (req.body.validatedPurchaseOrderToProcess) {
-			req.body.validatedCart = updatedPricesShoppingCart
+			req.body.validatedPurchaseOrderToProcess.validatedCart = updatedPricesShoppingCart
 			next()
 		} else{ return res.json(updatedPricesShoppingCart) }
 		

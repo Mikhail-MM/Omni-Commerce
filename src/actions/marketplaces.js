@@ -136,6 +136,11 @@ export function retrieveShoppingCart(token) {
 // We can abstract out this into Switch statements or just abstract out and decide whether to use amountThatCanBeFulfilled vs amountRequested
 export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountAlreadyInCart) {
 	const url = 'http://localhost:3001/storeItem/' + itemId
+	console.log("Action Creator to Push Item into Shopping Cart Triggered - Pinging Item on tap in DB")
+	console.log("amountRequested:")
+	console.log(amountRequested)
+	console.log("amountAlreadyInCart")
+	console.log(amountAlreadyInCart)
 	return dispatch => {
 		fetch(url, {
 			headers:{
@@ -147,26 +152,23 @@ export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountA
 		})
 		.then(response => response.ok ? response.json() : new Error(response.statusText))
 		.then(json => {
-			// This is not properly holding response from hitting the backend
-			if (amountAlreadyInCart + amountRequested > json.numberInStock) {
-				console.log("Merchant does not have sufficient stock to fulfill order")
-				console.log("running if statement: amountAlreadyInCart + amountRequested > json.numberInStock")
-
-				console.log("ExistingCountInCart (amountAlreadyInCart: ")
-				console.log(amountAlreadyInCart)
-				console.log("amount requested:")
-				console.log(amountRequested)
-				console.log("amount in stock from json fetch of item in DB")
+				console.log("Evaluating how much of item is in stock on server (json.numberInStock:")
 				console.log(json.numberInStock)
+
+			if (amountAlreadyInCart + amountRequested > json.numberInStock) {
+				console.log("If statement firing: amount already in cart + amount requested exceeds stock")
+				console.log("Reconciling to update cart with amount that can be fulfilled")
 				const amountThatCanBeFulfilled = json.numberInStock - amountAlreadyInCart
 				console.log("amountThatCanBeFulfilled:")
 				console.log(amountThatCanBeFulfilled)
+				console.log("Determining overflow which is unfulfillable")
 				const unfulfillable = amountRequested - amountThatCanBeFulfilled
 				console.log("unfulfillable:")
 				console.log(unfulfillable)
 
 				if (amountThatCanBeFulfilled > 0) {
-					console.log("amountThatCanBeFulfilled > 0, fetching addItem with that amount")
+					console.log("nested If within an if statement firing: amountThatCanBeFulfilled is greater than 0")
+					console.log("This means that we can push some amount of request to cart")
 					return fetch('http://localhost:3001/shoppingCart/addItem', {
 					headers:{
 						'Content-Type': 'application/json',
@@ -185,16 +187,19 @@ export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountA
 					}),
 				})
 				.then(response => response.ok ? response.json() : new Error(response.statusText))
-				.then(json => {
-					dispatch(receiveShoppingCart(json))
+				.then(pushedCart => {
+					console.log("Updating client's shopping cart with updated version")
+					dispatch(receiveShoppingCart(pushedCart))
+				const unfulfillableObject = {/* create a new object by bringing down info from original fetched 'json' of item down to here */}
+					console.log("Mutating original returned item from DB - attaching a field 'unfulfillableStock' to that json, to represent a version which can't be added to cart - and returning a notice of that item. best to create a whole new object instead of mutating")
 					json.unfulfillableStock = unfulfillable
 					dispatch(receiveInvalidatedShoppingCartItems(json))
 
 				})
 				.catch(err => console.log(err))
-				} else {
-					// append new field for that could not go through - for multiple item scans this will be done more thoroughly on the backend - the object will be constructed with flags to be parsed by a front end invalidation component
-					console.log("This else route should only run if AmountThatCanBeFulfilled is < 0")
+				} else if (amountThatCanBeFulfilled <= 0) {
+					console.log("nested else if within an if statement runs only run if AmountThatCanBeFulfilled is <= 0")
+					console.log("it would be better if we did not mutate the original returned json")
 					console.log("json.unfulFillable Stock being set to amountRequested")
 					console.log("amountRequested:")
 					console.log(amountRequested)
@@ -206,9 +211,8 @@ export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountA
 
 				}
 
-			} else if ( amountAlreadyInCart + amountRequested < json.numberInStock ){
-				console.log("This else route should only run if the following if clause did NOT go through")
-				console.log("amountAlreadyInCart + amountRequested > json.numberInStock DID NOT go through")
+			} else if ( amountAlreadyInCart + amountRequested <= json.numberInStock ){
+				console.log("If statmenet running: Item DB is greater than or equal to amount requested + amount already in cart")
 				return fetch('http://localhost:3001/shoppingCart/addItem', {
 					headers:{
 						'Content-Type': 'application/json',
@@ -255,7 +259,7 @@ export function validateCartAndProceedToPayment(token) {
 			
 			} else if (!json.partialValidationFail) {
 				
-				dispatch(receiveShoppingCart(json))
+				dispatch(receiveShoppingCart(json.validatedCart))
 				dispatch(showModal('ONLINE_STORE_STRIPE_CHECKOUT', {}))
 			  
 			  }	
