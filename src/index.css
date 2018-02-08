@@ -7,3 +7,8 @@ body {
 .Hide {
   display:none;
 }
+
+.login-form-submit-button>.ui.button {
+	color: #fff;
+	background-color: #0375B4;
+}

@@ -18,7 +18,6 @@ import Terminal from './Terminal'
 import TicketActionScreen from './TicketActionScreen'
 import OnlineMerchantDashboard from './OnlineMerchantDashboard'
 
-
 const loggerMiddleware = createLogger()
 const history = createHistory()
 
