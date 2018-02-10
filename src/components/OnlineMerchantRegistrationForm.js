@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import fetch from 'cross-fetch'
+import { Button, Icon, Form, Grid, Header, Image, Message, Segment, Label, Divider } from 'semantic-ui-react'
 
 class OnlineMerchantRegistrationForm extends Component {
 	constructor(props){
@@ -81,90 +82,65 @@ class OnlineMerchantRegistrationForm extends Component {
 
 	render() {
 		return(
-		<form onSubmit={this.handleSubmit}>
-			<label>
-				Display Username:
-				<input type='text' value={this.state.userName} onChange={e => this.handleChange('userName', e.target.value)} />
-			</label>
-			<label>
-				Store Display Name:
-				<input type='text' value={this.state.shopName} onChange={e => this.handleChange('shopName', e.target.value)} />
-			</label>
-			<label>
-				First Name:
-				<input type='text' value={this.state.firstName} onChange={e => this.handleChange('firstName', e.target.value)} />
-			</label>
-			<label>
-				Last Name:
-				<input type='text' value={this.state.lastName} onChange={e => this.handleChange('lastName', e.target.value)} />
-			</label>
-			<label>
-				Phone Number:
-				<input type='text' value={this.state.phoneNumber} onChange={e => this.handleChange('phoneNumber', e.target.value)} />
-			</label>
-			<label>
-				Email:
-				<input type='email' value={this.state.email} onChange={e => this.handleChange('email', e.target.value)} />
-			</label>
-			<label>
-				Password:
-				<input type='password' value={this.state.password} onChange={e => this.handleChange('password', e.target.value)} />
-			</label>
-			<label>
-				Confirm Password:
-				<input type='password' value={this.state.confirmPassword} onChange={e => this.handleChange('confirmPassword', e.target.value)} />
-			</label>
-			<div className="BillingAddressInputs">
-			<label>
-				Billing Address (Line 1):
-				<input type='text' value={this.state.billing_address_line1} onChange={e => this.handleChange('billing_address_line1', e.target.value)} />
-			</label>
-			<label>
-				Billing Address (Line 2):
-				<input type='text' value={this.state.billing_address_line2} onChange={e => this.handleChange('billing_address_line2', e.target.value)} />
-			</label>
-			<label>
-				City:
-				<input type='text' value={this.state.billing_address_city} onChange={e => this.handleChange('billing_address_city', e.target.value)} />
-			</label>
-			<label>
-				State:
-				<input type='text' value={this.state.billing_address_state} onChange={e => this.handleChange('billing_address_state', e.target.value)} />
-			</label>
-			<label>
-				ZIP Code:
-				<input type='text' value={this.state.billing_address_zip} onChange={e => this.handleChange('billing_address_zip', e.target.value)} />
-			</label>
-			</div>
-			<label>
-				Use billing address as shipping address 
-				<input type='checkbox' checked={this.state.sameAddress} onChange={this.handleAutofill}/>
-			</label>
-			<div className="ShippingAddressInputs">
-			<label>
-				Shipping Address (Line 1):
-				<input type='text' value={this.state.shipping_address_line1} onChange={e => this.handleChange('shipping_address_line1', e.target.value)} />
-			</label>
-			<label>
-				Shipping Address (Line 2):
-				<input type='text' value={this.state.shipping_address_line2} onChange={e => this.handleChange('shipping_address_line2', e.target.value)} />
-			</label>
-			<label>
-				City:
-				<input type='text' value={this.state.shipping_address_city} onChange={e => this.handleChange('shipping_address_city', e.target.value)} />
-			</label>
-			<label>
-				State:
-				<input type='text' value={this.state.shipping_address_state} onChange={e => this.handleChange('shipping_address_state', e.target.value)} />
-			</label>
-			<label>
-				ZIP Code:
-				<input type='text' value={this.state.shipping_address_zip} onChange={e => this.handleChange('shipping_address_zip', e.target.value)} />
-			</label>
-			</div>
-			<input type="submit" value="submit"/>
-		</form>
-
+		<div className="merchant-registration-form">
+				<style>{`
+     			 	body > div,
+      				body > div > div,
+      				body > div > div > div.login-form {
+        			height: 100%;
+      				}`}
+      			</style>
+		<Grid
+		textAlign='center'
+		style={{ height: '100%' }}
+		verticalAlign='middle'
+		>
+		 <Grid.Column style={{ maxWidth: 800 }}>
+		 	<Segment basic />
+		 	<Header as='h2' color='blue' textAlign='center'>
+		 		<Icon name='shopping basket' />
+		 		{' '} Register for a Merchant Account!
+		 	</Header>
+		 	<Segment raised>
+			<Form size="large" onSubmit={this.handleSubmit}>
+				<Message>
+					Help us get your online shop up and running! <br/> Your email will be used to log into your account and manage your inventory.<br/>
+					Your billing and shipping information is used to deliver goods that you purchase from other users!
+				</Message>
+				<Form.Group>
+					<Form.Input label={<Label>First Name </Label>} placeholder="First Name" width={8}/>
+					<Form.Input label={<Label>Last Name</Label>} placeholder="Last Name" width={8}/>
+				</Form.Group>
+				<Form.Group>
+					<Form.Input label={<Label><Icon name='mail' />Email</Label>} placeholder="Email Address (Login Pass)" width={10}/>
+					<Form.Input label={<Label>Phone Number</Label>} placeholder="Phone Number" width={6}/>
+				</Form.Group>
+				<Divider horizontal> Billing Address </Divider >
+				<Form.Group>
+					<Form.Input label={<Label><Icon name='payment' />Billing Address</Label>} placeholder="Billing Address (Line 1)" width={12}/>
+					<Form.Input label={<Label><Icon name='payment' />Line 2</Label>} placeholder="Billing Address (Line 2)" width={4} />
+				</Form.Group>
+				<Form.Group>
+					<Form.Input label={<Label><Icon name='payment' />City</Label>} placeholder="New York" width={8} />
+					<Form.Input label={<Label><Icon name='payment' />State</Label>} placeholder="NY" width={2} />
+					<Form.Input label={<Label><Icon name='payment' />Zip Code</Label>} placeholder="04151" width={6} />
+				</Form.Group>
+				<Divider horizontal> Shipping Address </Divider >
+				<Form.Group>
+					<Form.Input label={<Label><Icon name='truck' />Shipping Address</Label>} placeholder="Shipping Address (Line 1)" width={12}/>
+					<Form.Input label={<Label><Icon name='truck' />Line 2</Label>} placeholder="Shipping Address (Line 2)" width={4} />
+				</Form.Group>
+				<Form.Group>
+					<Form.Input label={<Label><Icon name='truck' />City</Label>} placeholder="New York" width={8} />
+					<Form.Input label={<Label><Icon name='truck' />State</Label>} placeholder="NY" width={2} />
+					<Form.Input label={<Label><Icon name='truck' />Zip Code</Label>} placeholder="04151" width={6} />
+				</Form.Group>
+				<Form.Button className='merchant-registration-submit-button' size='large' content='Submit'>Register</Form.Button>
+			</Form>
+			</Segment>
+		</Grid.Column>
+		</Grid>
+		</div>
 		)
 	}
 }

@@ -5,6 +5,7 @@ import { push } from 'react-router-redux'
 import LoginForm from './LoginForm'
 import AutoCompleteSuggestionsBox from './AutoCompleteSuggestionsBox'
 import fetch from 'cross-fetch'
+import { Button, Icon, Form, Grid, Header, Image, Message, Segment, Label, Divider, Checkbox } from 'semantic-ui-react'
 
 function mapStateToProps(state) {
 	const { isAuthenticated } = state.authReducer;
@@ -166,61 +167,61 @@ class RegisterForm extends Component {
 	render() {
 		const { isAuthenticated } = this.props;
 		return(
-		<form onSubmit={this.handleSubmit}>
-			<label>
-				First Name:
-				<input type='text' value={this.state.firstName} onChange={this.handleFirstNameChange} />
-			</label>
-			<label>
-				Last Name:
-				<input type='text' value={this.state.lastName} onChange={this.handleLastNameChange} />
-			</label>
-			<label>
-				Phone Number:
-				<input type='text' value={this.state.phoneNumber} onChange={this.handlePhoneChange} />
-			</label>
-			<label>
-				Email:
-				<input type='email' value={this.state.email} onChange={this.handleEmailChange} />
-			</label>
-			<label>
-				Password:
-				<input type='password' value={this.state.password} onChange={this.handlePasswordChange} />
-			</label>
-			<label>
-				Confirm Password:
-				<input type='password' value={this.state.confirmPassword} onChange={this.handleConfirmPasswordChange} />
-			</label>
-			{  !this.state.isEmployee && 
-				<label>
-					Register as Business Owner
-						<input type='checkbox' checked={this.state.isBusinessOwner} onChange={this.handleBusinessOwnerRegisterCheck} />
-					</label> }
-			{  this.state.isBusinessOwner && 
-				<div>
-				 <label>
-				   Organization Name: (Public)
-				    <input type='text' value={this.state.organizationName} onChange={this.handleOrganizationChange} />
-				 </label>
-				</div> }	
-			{  !this.state.isBusinessOwner && 
-					<label>
-					Register as Employee
-					<input type='checkbox' checked={this.state.isEmployee} onChange={this.handleEmployeeRegisterCheck} />
-					</label> }	
-			{  this.state.isEmployee && 
-				<div>
-				<label>
-					Find Your Employer:
-					<input type='text' checked={this.state.employerLookup} onChange={this.handleEmployerLookupCheck} />
-				</label>
-				</div> }
-			<input type="submit" value="submit"/>
-			{  this.state.isEmployee && 
-				<AutoCompleteSuggestionsBox employers={this.state.autoCompleteArray}/>
-			}
-		</form>
 
+		<div className="merchant-registration-form">
+				<style>{`
+     			 	body > div,
+      				body > div > div,
+      				body > div > div > div.login-form {
+        			height: 100%;
+      				}`}
+      			</style>
+		<Grid
+		textAlign='center'
+		style={{ height: '100%' }}
+		verticalAlign='middle'
+		>
+		 <Grid.Column style={{ maxWidth: 800 }}>
+		 <Segment basic />
+		 	<Header as='h2' color='blue' textAlign='center'>
+		 		<Icon name='id badge' />
+		 		{' '} Register your organization to use Omni-Commerce POS
+		 	</Header>
+		 	<Segment raised>
+		 	<Form size='large' onSubmit={this.onSubmit}>
+		 		<Message>
+					Help us get your online shop up and running! <br/> Your email will be used to log into your account and manage your inventory.<br/>
+					Your billing and shipping information is used to deliver goods that you purchase from other users!
+				</Message>
+				<Form.Group>
+					<Form.Input label={<Label>First Name </Label>} placeholder="First Name" width={8} value={this.state.firstName} onChange={this.handleFirstNameChange} />
+					<Form.Input label={<Label>Last Name</Label>} placeholder="Last Name" width={8} type='text' value={this.state.lastName} onChange={this.handleLastNameChange} />
+				</Form.Group>
+				<Form.Group>
+					<Form.Input label={<Label><Icon name='mail' />Email</Label>} placeholder="Email Address (Login Pass)" width={10} value={this.state.email} onChange={this.handleEmailChange} />
+					<Form.Input label={<Label>Phone Number</Label>} placeholder="Phone Number" width={6} value={this.state.phoneNumber} onChange={this.handlePhoneChange} />
+				</Form.Group>
+				<Divider horizontal> Billing Address </Divider >
+				<Form.Group>
+					<Form.Input label={<Label>Password</Label>} type="password" placeholder="Password" width={8} value={this.state.password} onChange={this.handlePasswordChange} />
+					<Form.Input label={<Label>Confirm Password</Label>} type="password" placeholder="Confirm Password" width={8} value={this.state.confirmPassword} onChange={this.handleConfirmPasswordChange}/>
+				</Form.Group>
+				<Form.Group>
+					<Checkbox label="Register as business owner" checked={this.state.isBusinessOwner} onChange={this.handleBusinessOwnerRegisterCheck} />
+					{ this.state.isBusinessOwner && <Form.Input label={<Label>Organization/Company Name</Label>} value={this.state.organizationName} onChange={this.handleOrganizationChange} />}
+				</Form.Group>
+				<Form.Group>
+					<Checkbox label="Register as employee" checked={this.state.isEmployee} onChange={this.handleEmployeeRegisterCheck} />
+					{ this.state.isEmployee && <Form.Input label={<Label>Find Your Employer:</Label>} checked={this.state.employerLookup} onChange={this.handleEmployerLookupCheck} /> }
+				</Form.Group>
+				<Form.Button className='merchant-registration-submit-button' size='large' content='Submit'>Register</Form.Button>
+		 	</Form>
+
+		 	</Segment>
+		</Grid.Column>
+		</Grid>
+		</div>
+	
 		)
 	}
 }
