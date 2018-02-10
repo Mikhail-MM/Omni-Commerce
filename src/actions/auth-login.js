@@ -12,9 +12,10 @@ function authSuccess (userInfo) {
 
 } 
 
-function authFail () {
+function authFail (err) {
 	return {
-	type: 'INVALID_CREDENTIALS'
+	type: 'INVALID_CREDENTIALS',
+	errorText: err,
 	}
 }
 
@@ -41,9 +42,9 @@ export function attemptLogIn(credentials) {
 		mode: 'cors', 
 		body: JSON.stringify(credentials)
 		})
-		.then(response => response.ok ? response.json() : throwError("Error"))
+		.then(response => response.ok ? response.json() : throwError(response.statusText))
 		.then(json => dispatch(authSuccess(json)))
-		.catch(err => dispatch(authFail()))
+		.catch(err => dispatch(authFail(err)))
 	}
 
 }

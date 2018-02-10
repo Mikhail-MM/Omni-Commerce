@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import fetch from 'cross-fetch'
-import { Button, Icon, Form, Grid, Header, Image, Message, Segment, Label, Divider } from 'semantic-ui-react'
+import { Button, Icon, Form, Grid, Header, Image, Message, Segment, Label, Divider, Checkbox } from 'semantic-ui-react'
 
 class OnlineMerchantRegistrationForm extends Component {
 	constructor(props){
@@ -108,32 +108,42 @@ class OnlineMerchantRegistrationForm extends Component {
 					Your billing and shipping information is used to deliver goods that you purchase from other users!
 				</Message>
 				<Form.Group>
-					<Form.Input label={<Label>First Name </Label>} placeholder="First Name" width={8}/>
-					<Form.Input label={<Label>Last Name</Label>} placeholder="Last Name" width={8}/>
+					<Form.Input label={<Label>First Name </Label>} placeholder="First Name" width={8} value={this.state.firstName} onChange={e => this.handleChange('firstName', e.target.value)}/>
+					<Form.Input label={<Label>Last Name</Label>} placeholder="Last Name" width={8} value={this.state.lastName} onChange={e => this.handleChange('lastName', e.target.value)} />
 				</Form.Group>
 				<Form.Group>
-					<Form.Input label={<Label><Icon name='mail' />Email</Label>} placeholder="Email Address (Login Pass)" width={10}/>
-					<Form.Input label={<Label>Phone Number</Label>} placeholder="Phone Number" width={6}/>
+					<Form.Input label={<Label><Icon name='mail' />Email</Label>} placeholder="Email Address (Login Pass)" width={10} value={this.state.email} onChange={e => this.handleChange('email', e.target.value)}/>
+					<Form.Input label={<Label>Phone Number</Label>} placeholder="Phone Number" width={6} value={this.state.phoneNumber} onChange={e => this.handleChange('phoneNumber', e.target.value)}/>
+				</Form.Group>
+				<Form.Group>
+					<Form.Input label={<Label>Password</Label>} placeholder="Password" value={this.state.password} onChange={e => this.handleChange('password', e.target.value)} />
+					<Form.Input label={<Label>Confirm Password</Label>} placeholder="Confirm Password" value={this.state.confirmPassword} onChange={e => this.handleChange('confirmPassword', e.target.value)} />
 				</Form.Group>
 				<Divider horizontal> Billing Address </Divider >
 				<Form.Group>
-					<Form.Input label={<Label><Icon name='payment' />Billing Address</Label>} placeholder="Billing Address (Line 1)" width={12}/>
-					<Form.Input label={<Label><Icon name='payment' />Line 2</Label>} placeholder="Billing Address (Line 2)" width={4} />
+					<Form.Input label={<Label><Icon name='payment' />Billing Address</Label>} placeholder="Billing Address (Line 1)" width={12} value={this.state.billing_address_line1} onChange={e => this.handleChange('billing_address_line1', e.target.value)} />
+					<Form.Input label={<Label><Icon name='payment' />Line 2</Label>} placeholder="Billing Address (Line 2)" width={4} value={this.state.billing_address_line2} onChange={e => this.handleChange('billing_address_line2', e.target.value)} />
 				</Form.Group>
 				<Form.Group>
-					<Form.Input label={<Label><Icon name='payment' />City</Label>} placeholder="New York" width={8} />
-					<Form.Input label={<Label><Icon name='payment' />State</Label>} placeholder="NY" width={2} />
-					<Form.Input label={<Label><Icon name='payment' />Zip Code</Label>} placeholder="04151" width={6} />
+					<Form.Input label={<Label><Icon name='payment' />City</Label>} placeholder="New York" width={8} value={this.state.billing_address_city} onChange={e => this.handleChange('billing_address_city', e.target.value)} />
+					<Form.Input label={<Label><Icon name='payment' />State</Label>} placeholder="NY" width={2} value={this.state.billing_address_state} onChange={e => this.handleChange('billing_address_state', e.target.value)} />
+					<Form.Input label={<Label><Icon name='payment' />Zip Code</Label>} placeholder="04151" width={6}  value={this.state.billing_address_zip} onChange={e => this.handleChange('billing_address_zip', e.target.value)}/>
 				</Form.Group>
 				<Divider horizontal> Shipping Address </Divider >
+				<Checkbox label="Use billing address information as shipping address" checked={this.state.sameAddress} onChange={this.handleAutofill}/>
 				<Form.Group>
-					<Form.Input label={<Label><Icon name='truck' />Shipping Address</Label>} placeholder="Shipping Address (Line 1)" width={12}/>
-					<Form.Input label={<Label><Icon name='truck' />Line 2</Label>} placeholder="Shipping Address (Line 2)" width={4} />
+					<Form.Input label={<Label><Icon name='truck' />Shipping Address</Label>} placeholder="Shipping Address (Line 1)" width={12} value={this.state.shipping_address_line1} onChange={e => this.handleChange('shipping_address_line1', e.target.value)} />
+					<Form.Input label={<Label><Icon name='truck' />Line 2</Label>} placeholder="Shipping Address (Line 2)" width={4} value={this.state.shipping_address_line2} onChange={e => this.handleChange('shipping_address_line2', e.target.value)} />
 				</Form.Group>
 				<Form.Group>
-					<Form.Input label={<Label><Icon name='truck' />City</Label>} placeholder="New York" width={8} />
-					<Form.Input label={<Label><Icon name='truck' />State</Label>} placeholder="NY" width={2} />
-					<Form.Input label={<Label><Icon name='truck' />Zip Code</Label>} placeholder="04151" width={6} />
+					<Form.Input label={<Label><Icon name='truck' />City</Label>} placeholder="New York" width={8} value={this.state.shipping_address_city} onChange={e => this.handleChange('shipping_address_city', e.target.value)} />
+					<Form.Input label={<Label><Icon name='truck' />State</Label>} placeholder="NY" width={2} value={this.state.shipping_address_state} onChange={e => this.handleChange('shipping_address_state', e.target.value)} />
+					<Form.Input label={<Label><Icon name='truck' />Zip Code</Label>} placeholder="04151" width={6}  value={this.state.shipping_address_zip} onChange={e => this.handleChange('shipping_address_zip', e.target.value)} />
+				</Form.Group>
+				<Divider horizontal> Display Info </Divider>
+				<Form.Group>
+				<Form.Input label={<Label>UserName</Label>} placeholder="Display Name" width={8} value={this.state.userName} onChange={e => this.handleChange('userName', e.target.value)} />
+				<Form.Input label={<Label>Marketplace Display Name</Label>} placeholder="My Marketplace" width={8} value={this.state.shopName} onChange={e => this.handleChange('shopName', e.target.value)} />
 				</Form.Group>
 				<Form.Button className='merchant-registration-submit-button' size='large' content='Submit'>Register</Form.Button>
 			</Form>

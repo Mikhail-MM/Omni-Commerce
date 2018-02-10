@@ -4,6 +4,10 @@ import { attemptLogIn } from '../actions/auth-login'
 import { Redirect, Link, withRouter } from 'react-router-dom'
 import { Button, Icon, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 
+function mapStateToProps(state) {
+	const {hasError, errorText } = state.authReducer;
+	return {hasError, errorText }
+}
 class LoginForm extends Component {
 	constructor(props) {
 		super(props)
@@ -37,7 +41,8 @@ class LoginForm extends Component {
 
 	render() {
 
-		const { isAuthenticated } = this.props; // You must pull this into the render method, or else the thing will crash saying that isAuthenticated is undefined (it is, within the render scope)
+		const { isAuthenticated, errorText } = this.props; // You must pull this into the render method, or else the thing will crash saying that isAuthenticated is undefined (it is, within the render scope)
+		
 		return (
 			<div className='login-form'>
 				{/* ALl elements up to the grid must have a height of 100% - so the center aligned grid can be in the middle of the screen*/}
@@ -69,6 +74,15 @@ class LoginForm extends Component {
 			    </Header>
 			    <Form size='large' onSubmit={this.handleSubmit}>
 			      <Segment stacked>
+			      	
+			      	{ this.props.hasError && 
+			      		<Message negative>
+			      			<Message.Header>Log-in failed! Please try again</Message.Header>
+			      			<p>Please ensure that you have the correct login credentials</p>
+			      			<p>Development Error: </p>
+			      			<p>{errorText} </p>
+			      		</Message> }
+
 					<Form.Input
 					  fluid
 					  icon='user circle outline'
@@ -106,8 +120,8 @@ class LoginForm extends Component {
 }
 
 function mapStateToProps(state) {
-	const { isAuthenticated, token, instanceType } = state.authReducer
-	return { isAuthenticated, token, instanceType }
+	const { isAuthenticated, token, instanceType, hasError, errorText  } = state.authReducer
+	return { isAuthenticated, token, instanceType, hasError, errorText  }
 }
 
 export default withRouter(connect(mapStateToProps)(LoginForm))

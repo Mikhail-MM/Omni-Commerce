@@ -13,6 +13,7 @@ const authReducer = (state = initialState, action) => {
 			isAuthenticated: true,
 			instanceType: action.userInfo.accountType,
 			token: action.userInfo.token,
+			hasError: false
 			// userPermissions: action.userInfo.userPermissions,
 			// instanceType: action.userInfo.instanceType
 			}
@@ -20,7 +21,9 @@ const authReducer = (state = initialState, action) => {
 	}
 	case ('INVALID_CREDENTIALS'): { 
 		return Object.assign({}, state, {
-			isAuthenticated:false
+			isAuthenticated:false,
+			hasError: true,
+			errorText: action.errorText,
 			}
 		) 
 	}
