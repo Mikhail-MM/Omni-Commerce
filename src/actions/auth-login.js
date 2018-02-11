@@ -1,7 +1,7 @@
 import fetch from 'cross-fetch'
 import { showError } from './errors'
 
-function throwError(err) { throw err }
+function throwError(errorMessage) { throw new Error(errorMessage) }
 
 function authSuccess (userInfo) {
 	console.log(userInfo)

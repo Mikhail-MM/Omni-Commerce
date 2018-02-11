@@ -12,3 +12,11 @@ body {
 	color: #fff;
 	background-color: #0375B4;
 }
+
+.leftLabel {
+	text-align: left;
+}
+
+.rightLabel {
+	text-align: right;
+}

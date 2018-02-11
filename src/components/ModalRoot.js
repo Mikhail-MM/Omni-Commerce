@@ -6,12 +6,14 @@ import ExampleModal from './ExampleModal'
 import ConfirmCartAdditionModal from './ConfirmCartAdditionModal'
 import CartInvalidationModal from './CartInvalidationModal'
 import OnlineStoreStripeCheckoutModal from './OnlineStoreStripeCheckoutModal'
+import RegistrationConfirmationModal from './RegistrationConfirmationModal'
 
 const MODAL_COMPONENTS = {
 	'EXAMPLE_MODAL': ExampleModal,
 	'CONFIRM_CART_ADDITION': ConfirmCartAdditionModal,
 	'CART_INVALIDATION': CartInvalidationModal,
 	'ONLINE_STORE_STRIPE_CHECKOUT': OnlineStoreStripeCheckoutModal,
+	'REGISTRATION_CONFIRMATION_MODAL': RegistrationConfirmationModal,
 
 }
 

@@ -60,10 +60,12 @@ createTerminalAccount = function(req, res, next) {
 				
 				newClient.hash = hash;
 				
+				// convert to async/await try/catch
 				newClient.save(function(err, client) {
 					if (err) return next(err);
 					console.log("New Terminal Account Created:")
 					console.log(client)
+					req.body.clientForRollback = client;
 					next();
 				});
 			}).catch(function(error){
@@ -79,6 +81,13 @@ findMasterAndTagChild = async function(req, res, next) {
 			isMaster: true,
 			organizationName: req.body.employerLookup
 		});
+
+		if (!boss) { 
+			console.log("Master Account does not exist - Delete client and abort ! ")
+			Client.findOneAndRemove({_id: req.body.clientForRollback._id})
+			return res.status(400).send("Could not find a Master account with that organization name - Retry please") 
+		}
+
 		console.log("Found Master:")
 		console.log(boss)
 		console.log("Master's Mongo Key:")

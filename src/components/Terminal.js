@@ -110,6 +110,7 @@ class Terminal extends Component {
 	render() {
 		const { match, menuItems, isAuthenticated, tickets, activeTicket, token, activeSalesReport } = this.props;
 		const { selectUser } = this.state
+		// This is a general purpose terminal for our employees. Just keep it a big centered modal with Top, Left : 50%. So it's just a giant section with buttons, and a grid inside. EASY! 
 		return(
 			<div className="Page-Wrapper">
 			<ModalRoot />
