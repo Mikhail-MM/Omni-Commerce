@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Route, Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { Button, Icon, Form, Grid, Header, Image, Message, Segment, Label, Divider, Checkbox } from 'semantic-ui-react'
+
 import { fetchMenuItems, fetchTickets, createNewTicket, setVisibleCategory, fetchAllTicketsAndGenerateSalesReport, updateTransactionWithMenuItem, fetchCurrentTicketDetails } from '../actions/menu-items'
 import { logOut,  fetchLoggedUsers } from '../actions/auth-login'
 import { showModal } from '../actions/modals'
@@ -105,16 +107,18 @@ class Terminal extends Component {
 		//dispatch(showModal('EXAMPLE_MODAL', {}))
 		dispatch(promiseTest())
 	}
-
+	// 
 	// We will need a Socket.io component in componentDidMount() listening for ticket updates
 	render() {
 		const { match, menuItems, isAuthenticated, tickets, activeTicket, token, activeSalesReport } = this.props;
 		const { selectUser } = this.state
 		// This is a general purpose terminal for our employees. Just keep it a big centered modal with Top, Left : 50%. So it's just a giant section with buttons, and a grid inside. EASY! 
 		return(
-			<div className="Page-Wrapper">
+			<div className="page-wrapper">
+			{/*!isAuthenticated && <Redirect to='/login' /> */}
 			<ModalRoot />
-			{!isAuthenticated && <Redirect to='/login' />}
+			<Segment raised className='terminal-navigation-wrapper'>
+			
 			 	<header className="Logo-Time-Header">
 			 	<p> This could be a component</p>
 			 	</header>
@@ -146,7 +150,8 @@ class Terminal extends Component {
 				</footer>
 				<Route path={`${match.url}/addItem`} component={AddMenuItemForm} />
 				{tickets && this.iterateThruTicketStatusCategories()} 
-				<SalesAnalytics/>
+				</Segment>
+				
 			</div>
 		)
 	}
