@@ -1,4 +1,4 @@
-import { fetchLoggedUsers } from './auth-login'
+import { fetchLoggedUsers } from './employees'
 export function clockEmployeeOut(token, employeeNumber) {
 	const data = {clockInNumber: employeeNumber}
 	return dispatch => {

@@ -2,18 +2,25 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import ExampleModal from './ExampleModal'
 import ConfirmCartAdditionModal from './ConfirmCartAdditionModal'
 import CartInvalidationModal from './CartInvalidationModal'
 import OnlineStoreStripeCheckoutModal from './OnlineStoreStripeCheckoutModal'
 import RegistrationConfirmationModal from './RegistrationConfirmationModal'
+import AddPointOfSaleItemModal from './AddPointOfSaleItemModal'
+import TransactionHistoryModal from './TransactionHistoryModal'
+import WaiterCallScreenModal from './WaiterCallScreenModal'
+import EmployeePunchClockFormModal from './EmployeePunchClockFormModal'
 
 const MODAL_COMPONENTS = {
-	'EXAMPLE_MODAL': ExampleModal,
 	'CONFIRM_CART_ADDITION': ConfirmCartAdditionModal,
 	'CART_INVALIDATION': CartInvalidationModal,
 	'ONLINE_STORE_STRIPE_CHECKOUT': OnlineStoreStripeCheckoutModal,
 	'REGISTRATION_CONFIRMATION_MODAL': RegistrationConfirmationModal,
+	'ADD_POINT_SALE_ITEM': AddPointOfSaleItemModal,
+	'DISPLAY_ALL_TRANSACTIONS': TransactionHistoryModal,
+	'SELECT_EMPLOYEE_OPENING_TICKET': WaiterCallScreenModal,
+	'EMPLOYEE_PUNCH_CLOCK_FORM_MODAL': EmployeePunchClockFormModal
+
 
 }
 

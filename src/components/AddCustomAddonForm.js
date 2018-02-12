@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { updateTransactionWithRequestedAddon } from '../actions/menu-items'
+import { updateTransactionWithRequestedAddon } from '../actions/tickets-transactions'
 import { connect } from 'react-redux'
 
 function mapStateToProps(state) {

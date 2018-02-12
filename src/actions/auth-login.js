@@ -19,13 +19,7 @@ function authFail (err) {
 	}
 }
 
-function receiveLoggedUsers(loggedUsers) {
-	console.log(loggedUsers)
-	return {
-		type:'RECEIVE_LOGGED_USERS',
-		loggedUsers
-	}
-}
+
 export function logOut() {
 	return {
 	type: 'LOG_OUT'
@@ -50,19 +44,5 @@ export function attemptLogIn(credentials) {
 }
 
 // Error Upon Initial Start with New StoreConfig - When there is not a storeConfig yet, as nobody has started, we get a null return. We should create an empty storeConfig when the Master is Created
-export function fetchLoggedUsers(token) {
-	return dispatch => {
-		return fetch('http://localhost:3001/storeconfig', {
-			headers:{
-				'Content-Type': 'application/json',
-				'x-access-token': token
-			},
-			method: 'GET',
-			mode: 'cors'
-		})
-		.then(response => response.ok ? response.json() : throwError("Error"))
-		.then(json => dispatch(receiveLoggedUsers(json)))
-		.catch(err => console.log(err))
-	}
-}
+
 

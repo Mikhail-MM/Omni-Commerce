@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { setVisibleCategory, updateTransactionWithMenuItem, updateTicketStatus } from '../actions/menu-items'
+import { setVisibleCategory, updateTransactionWithMenuItem, updateTicketStatus } from '../actions/tickets-transactions'
 
 import Checkout from './Checkout'
 import CashPaymentForm from './CashPaymentForm'

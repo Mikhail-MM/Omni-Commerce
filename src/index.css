@@ -24,13 +24,41 @@ body {
 	justify-content: center;
 	width: 100%;
 	height: 100%;
+	background-color: #313C45;
 	margin: auto;
 }
-
 .terminal-navigation-wrapper {
-	height: 80%;
-	width: 75%;
+	height: 60%;
+	width: 60%;
 	margin: auto;
+}
+.terminal-nav-bar {
+	position: fixed;
+	top: 0vh;
+	left: 0vw;
+	background-color: #363F48;
+	height: 50px;
+	width: 100%;
+}
+.terminal-button {
+	position: relative;
+	height: 100%;
+	width: 25%;
+}
+.terminal-button-row {
+	display: block;
+	height: 50%;
+	width: 100%;
+}
+.iconPosition {
+	position: absolute;
+	top: 30%;
+	left: 47%;
+}
+.terminal-button-row-internal-flex {
+	display: flex;
+	height: 100%;
+	justify-content: space-evenly;
 }
 
 .leftLabel {

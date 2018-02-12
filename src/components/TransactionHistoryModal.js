@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
+import { Segment, Button } from 'semantic-ui-react'
+
 import Modal from 'react-modal';
+import TransactionHistoryDisplay from './TransactionHistoryDisplay'
 
 import { hideModal } from '../actions/modals'
+
 const customStyles = {
 	content: {
 		top: '50%',
@@ -19,7 +24,7 @@ function mapStateToProps(state) {
 	return { modalType }
 }
 
-class ExampleModal extends Component {
+class TransactionHistoryModal extends Component {
 	constructor(props){
 		super(props);
 		this.state = {}
@@ -40,12 +45,14 @@ class ExampleModal extends Component {
 		return(
 			<div>
 				<Modal
-					isOpen={modalType === 'EXAMPLE_MODAL'}
+					isOpen={modalType === 'DISPLAY_ALL_TRANSACTIONS'}
 					style={customStyles}
 					contentLabel="Example Modal"
 				>
-					<div> I am just a modal! An example one, at that...</div>
-					<button onClick={this.deactivateModal}> Get rid of this nonsense! </button>
+					<Segment raised>
+					<TransactionHistoryDisplay />
+					<Button color='black' onClick={this.deactivateModal}> Cancel </Button>
+					</Segment>
 				</Modal>
 			</div>
 		)
@@ -54,4 +61,4 @@ class ExampleModal extends Component {
 
 }
 
-export default connect(mapStateToProps)(ExampleModal)
+export default connect(mapStateToProps)(TransactionHistoryModal)

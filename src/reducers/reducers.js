@@ -27,10 +27,16 @@ const authReducer = (state = initialState, action) => {
 			}
 		) 
 	}
-
 	case ('LOG_OUT'): { 
 		return initialState 
 	}
+	default: 
+		return state
+	}
+}
+
+const activeEmployeesReducer = (state = { loggedInUsers: [ 'Terminal' ] }, action) => {
+	switch(action.type){
 	case ('RECEIVE_LOGGED_USERS'): {
 		return Object.assign({}, state, {
 			loggedInUsers: action.loggedUsers.loggedInUsers
@@ -38,7 +44,7 @@ const authReducer = (state = initialState, action) => {
 		)
 	}
 	default:
-			return state
+		return state
 	}
 }
 // We are getting some kind of Undefined array under menuItems in MenuItems reducer
@@ -205,6 +211,7 @@ const modalReducer = (state = initialModalState, action) => {
 
 const rootReducer = combineReducers({
 	authReducer,
+	activeEmployeesReducer,
 	menuItemsReducer,
 	ticketTrackingReducer,
 	salesReportReducer,

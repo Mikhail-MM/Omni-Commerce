@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { updateTransactionWithSubdocRemoval } from '../actions/menu-items'
+import { updateTransactionWithSubdocRemoval } from '../actions/tickets-transactions'
 import { connect } from 'react-redux'
 import AddCustomAddonForm from './AddCustomAddonForm'
 

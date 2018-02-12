@@ -3,8 +3,10 @@ import { Route, Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Button, Icon, Form, Grid, Header, Image, Message, Segment, Label, Divider, Checkbox } from 'semantic-ui-react'
 
-import { fetchMenuItems, fetchTickets, createNewTicket, setVisibleCategory, fetchAllTicketsAndGenerateSalesReport, updateTransactionWithMenuItem, fetchCurrentTicketDetails } from '../actions/menu-items'
-import { logOut,  fetchLoggedUsers } from '../actions/auth-login'
+import { fetchMenuItems, fetchAllTicketsAndGenerateSalesReport, } from '../actions/menu-items'
+import { fetchTickets, createNewTicket } from '../actions/tickets-transactions'
+import { logOut, } from '../actions/auth-login'
+import { fetchLoggedUsers } from '../actions/employees'
 import { showModal } from '../actions/modals'
 
 import ModalRoot from './ModalRoot'
@@ -19,7 +21,8 @@ import { promiseTest } from '../actions/marketplaces'
 
 // Recharts
 function mapStateToProps(state) {
-	const { token, isAuthenticated, loggedInUsers } = state.authReducer
+	const { loggedInUsers } = state.activeEmployeesReducer
+	const { token, isAuthenticated } = state.authReducer
 	const { menuItems, visibleCategory } = state.menuItemsReducer 
 	const { tickets, activeTicket } = state.ticketTrackingReducer
 	const { activeSalesReport } = state.salesReportReducer
@@ -31,19 +34,21 @@ class Terminal extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			currentlyLoggedIn: ['Stacy', 'John', 'Blake'],
-			selectUser: false,
 			selectClockInScreen: false,
 			selectClockOutScreen: false
 			// Do we need local state here?
 		}
-		this.selectUserToCreateNewTicket = this.selectUserToCreateNewTicket.bind(this)
-		this.showClockInScreen = this.showClockInScreen.bind(this)
-		this.showClockOutScreen = this.showClockOutScreen.bind(this)
+		
 		this.handleLogOut = this.handleLogOut.bind(this)
-		this.iterateThruTicketStatusCategories = this.iterateThruTicketStatusCategories.bind(this)
 		this.generateSalesReport = this.generateSalesReport.bind(this)
-		this.showExampleModal = this.showExampleModal.bind(this)
+
+		this.dispatchTransactionHistoryModal = this.dispatchTransactionHistoryModal.bind(this)
+		this.dispatchAddItemModal = this.dispatchAddItemModal.bind(this)
+		this.dispatchWaiterCallModal = this.dispatchWaiterCallModal.bind(this)
+		this.dispatchClockInForm = this.dispatchClockInForm.bind(this)
+		this.dispatchClockOutForm = this.dispatchClockOutForm.bind(this)
+
+
 	}
 	componentDidMount() {
 		const { dispatch, token } = this.props
@@ -57,101 +62,86 @@ class Terminal extends Component {
 		const { dispatch } = this.props
 		dispatch(logOut());
 	}
-	showClockInScreen() {
-		this.setState(
-			Object.assign({}, ...this.state, {selectClockInScreen: true}))
-	}	
-	showClockOutScreen() {
-		this.setState(
-			Object.assign({}, ...this.state, {selectClockOutScreen: true}))
-	}
-	selectUserToCreateNewTicket() {
-		this.setState(
-			Object.assign({}, ...this.state, {selectUser: true}))
-	}
 	
-	generateWaiterCallScreen() {
-		const { token, loggedInUsers, dispatch } = this.props
-		if (loggedInUsers) return loggedInUsers.map(server => <div key={server} onClick={this.postNewTicketByServerName.bind(this, token, server, dispatch)}>{server}</div>)
-		else return console.log("There are no logged-in users! Consider allowing a catch-all general order call-in")
-	}
-	postNewTicketByServerName(token, name, dispatch){
-		dispatch(createNewTicket(token, name))	
-	}
 	generateSalesReport() {
 		const { token, dispatch } = this.props
 		dispatch(fetchAllTicketsAndGenerateSalesReport(token))
 	}
 
-	// TODO: Componentize
-	iterateThruTicketStatusCategories() {
-		const { tickets } = this.props;
-		return Object.keys(tickets).map(ticketKey => {
-			return <div key={ticketKey} className="TODOClassCheck">{this.iterateThruTicketsByStatus(ticketKey)}</div>
-		})
-	}
-
-	iterateThruTicketsByStatus(ticketKey) {
-		const { token, tickets, dispatch } = this.props
-		const selector = ticketKey
-			return tickets[selector].map(ticket => <div className={selector} key={ticket._id} onClick={this.loadActiveTicket.bind(this, token, ticket._id, dispatch)}>{ticket.status} Ticket {ticket._id}</div>)
-	}
-
-
-	loadActiveTicket(token, ticket_Id, dispatch) {
-		dispatch(fetchCurrentTicketDetails(token, ticket_Id))
-	}
-
-	showExampleModal() {
+	dispatchWaiterCallModal() {
 		const { dispatch } = this.props
-		//dispatch(showModal('EXAMPLE_MODAL', {}))
-		dispatch(promiseTest())
+		dispatch(showModal('SELECT_EMPLOYEE_OPENING_TICKET', {}))
 	}
-	// 
-	// We will need a Socket.io component in componentDidMount() listening for ticket updates
+	dispatchTransactionHistoryModal() {
+		const { dispatch } = this.props
+		dispatch(showModal('DISPLAY_ALL_TRANSACTIONS', {}))
+	}
+
+	dispatchAddItemModal() {
+		const { dispatch } = this.props
+		dispatch(showModal('ADD_POINT_SALE_ITEM', {}))
+	}
+
+	dispatchClockInForm() {
+		const { dispatch } = this.props
+		const formSelector = "Clock In"
+		dispatch(showModal('EMPLOYEE_PUNCH_CLOCK_FORM_MODAL'), {formSelector})
+	}
+
+	dispatchClockOutForm() {
+		const { dispatch } = this.props
+		const formSelector = "Clock Out"
+
+		dispatch(showModal('EMPLOYEE_PUNCH_CLOCK_FORM_MODAL'), {formSelector})
+	}
+
 	render() {
 		const { match, menuItems, isAuthenticated, tickets, activeTicket, token, activeSalesReport } = this.props;
 		const { selectUser } = this.state
 		// This is a general purpose terminal for our employees. Just keep it a big centered modal with Top, Left : 50%. So it's just a giant section with buttons, and a grid inside. EASY! 
 		return(
 			<div className="page-wrapper">
+			<div className="terminal-nav-bar" >
+			</div>
 			{/*!isAuthenticated && <Redirect to='/login' /> */}
 			<ModalRoot />
-			<Segment raised className='terminal-navigation-wrapper'>
-			
-			 	<header className="Logo-Time-Header">
-			 	<p> This could be a component</p>
-			 	</header>
-			 
-			 	<div className="Main-Terminal-Wrapper">
-			 	  <div className="Column-Left-75">
-				 	  <header className="Admin-Options">{"Conditional Rendering of Admin Terminal - Live Updates - See Employees"}</header>
-				 	  <div className="Ticket-Window-With-Scroll">
-				 	  	<button className="Button-Styling"> A whole load of buttons </button>
-				 	  	<p> We could turn this ticket window into a component - conditionally render these tickets, or alternatively render employee management screen or transaction history using JSX, depending on the UI State stored in Redux, which itself is dispatched by the admin terminal buttons</p>
-				 	  </div>
-			 	  </div>
-			 	  <div className="Column-Right-25">
-			 	  	<button onClick={this.showExampleModal}> Example Modal </button>
-			 	  	<button onClick={this.selectUserToCreateNewTicket}> Open Ticket </button>
-			 	  	{selectUser && this.generateWaiterCallScreen()}
-			 	  	<Link to={`${match.url}/addItem`}> Add Menu Item </Link>
-			 	  	<button onClick={this.showClockInScreen}>Clock In</button>
-			 	  	{this.state.selectClockInScreen && <ClockInOutForm option="Clock In"/> }
-			 	  	<button onClick={this.showClockOutScreen}>Clock Out</button>
-			 	  	{this.state.selectClockOutScreen && <ClockInOutForm option="Clock Out" />}
-			 	  	<button onClick={this.generateSalesReport}> Close Out </button>
-			 	  </div>
-				</div>
+			<Segment inverted color='black' className='terminal-navigation-wrapper'>
+			<div className='terminal-button-row'>
+				<div className='terminal-button-row-internal-flex'>
 
-				<footer className="Footer-Options">
-					<Link to='/' onClick={this.handleLogOut}> Log Out </Link>
-					<button> Settings </button> 
-				</footer>
-				<Route path={`${match.url}/addItem`} component={AddMenuItemForm} />
-				{tickets && this.iterateThruTicketStatusCategories()} 
-				</Segment>
-				
+					<Button inverted className='terminal-button' onClick={this.dispatchWaiterCallModal}>
+						<Icon size='large'className='iconPosition' name='add square'/> Open New Ticket
+					</Button>
+					<Button inverted className='terminal-button' onClick={this.dispatchTransactionHistoryModal}>
+						<Icon size='large'className='iconPosition' name='dollar' /> See All Transactions
+					</Button>
+					<Button inverted className='terminal-button' onClick={this.dispatchAddItemModal}>
+						<Icon size='large'className='iconPosition' name='barcode' /> Add New Item
+					</Button>
+					<Button inverted className='terminal-button'>
+						<Icon size='large'className='iconPosition' name='table' /> Modify Items
+					</Button>
+
+				</div>
+			</div>
+
+			<div className='terminal-button-row'>
+				<div className='terminal-button-row-internal-flex'>
+					<Button inverted className='terminal-button'>
+						<Icon size='large'className='iconPosition' name='log out'/> Log Out
+					</Button>
+					<Button inverted className='terminal-button' onClick={this.dispatchClockInForm}>
+						<Icon size='large'className='iconPosition' name='hourglass start'/> Clock In
+					</Button>
+					<Button inverted className='terminal-button' onClick={this.dispatchClockOutForm}>
+						<Icon size='large'className='iconPosition' name='hourglass end'/> Clock Out
+					</Button>
+					<Button inverted className='terminal-button'>
+						<Icon size='large'className='iconPosition' name='checkmark box' /> Close Out/Sales Report
+					</Button>
+				</div>
+			</div>
+			</Segment>			
 			</div>
 		)
 	}
