@@ -2,27 +2,30 @@ import React, { Component } from 'react'
 
 import { Menu, Image, Icon } from 'semantic-ui-react'
 
-class AdminMockup extends Component {
+import avatar from '../assets/image-1.png'
+
+class AdminTerminal extends Component {
 
 	render() {
 		return(
 		<div className="admin-page-wrapper" >
 			<div className="admin-header" >
-				<Menu pointing secondary>
-					<Menu.Item>
-						<Image src='/assets/image-1' avatar/>
+				<Menu pointing secondary fluid>
+					<Menu.Item className="admin-header-menu-item_first-item">
+						<Image src={ avatar } avatar />
 					</Menu.Item>
-					<Menu.Item name='My Account' />
-					<Menu.Item>
+					<Menu.Item name='My Account' className='admin-header-menu-item_extra_padding_bottom'/>
+					<Menu.Item className='admin-header-menu-item_extra_padding_bottom'>
 						<Icon name='alarm'/>
 						Notifications
 					</Menu.Item>
-					<Menu.Item name='Logout' position='right' />
+					<Menu.Item name='Logout' position='right' className='admin-header-menu-item_extra_padding_bottom'/>
 				</Menu>
 			</div>
+			<div className="admin-sidebar-and-content-wrapper" >
 			<div className="admin-sidebar-menu" >
-				<Menu inverted attached='top' vertical>
-					<Menu.Item>
+				<Menu inverted vertical fluid>
+					<Menu.Item >
 						<Icon name="home" />
 						Home
 					</Menu.Item>
@@ -63,7 +66,7 @@ class AdminMockup extends Component {
 
 					<Menu.Item>
 						<Icon name='barcode' />
-						Add Item To Sales Terminal
+						Add Item To Terminal
 					</Menu.Item>
 
 					<Menu.Item>
@@ -85,7 +88,7 @@ class AdminMockup extends Component {
 						Broadcast Announcement
 					</Menu.Item>
 
-					<Menu.Item>
+					<Menu.Item className='admin-menu_bottom-button'>
 						<Icon name='help circle' />
 						Help and Feedback
 					</Menu.Item>
@@ -93,12 +96,14 @@ class AdminMockup extends Component {
 			</div>
 			<div className="admin-content-display">
 			</div>
-			<div classname="admin-footer">
+			</div>
+			<div className="admin-footer">
 			<Icon name='copyright' />
 			Copyright Omni-Commerce 2018
 			</div>
-
 		</div>
 		)
 	}
 }
+
+export default AdminTerminal
