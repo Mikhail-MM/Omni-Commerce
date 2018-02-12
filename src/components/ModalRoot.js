@@ -20,8 +20,6 @@ const MODAL_COMPONENTS = {
 	'DISPLAY_ALL_TRANSACTIONS': TransactionHistoryModal,
 	'SELECT_EMPLOYEE_OPENING_TICKET': WaiterCallScreenModal,
 	'EMPLOYEE_PUNCH_CLOCK_FORM_MODAL': EmployeePunchClockFormModal
-
-
 }
 
 

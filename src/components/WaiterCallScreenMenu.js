@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 import { createNewTicket } from '../actions/tickets-transactions'
 
@@ -13,21 +14,17 @@ class WaiterCallScreenMenu extends Component {
 		super(props)
 
 		this.generateWaiterCallScreen = this.generateWaiterCallScreen.bind(this)
-		this.selectUserToCreateNewTicket = this.selectUserToCreateNewTicket.bind(this)
+		this.postNewTicketByServerName = this.postNewTicketByServerName.bind(this)
 	}
 
 	generateWaiterCallScreen() {
 
 		const { dispatch } = this.props
 		const { token, loggedInUsers } = this.props
+		console.log(loggedInUsers)
+		
+		if (loggedInUsers) return loggedInUsers.map(server => <button key={server} onClick={this.postNewTicketByServerName.bind(this, token, server, dispatch)}>{server}</button>)	
 
-		return (
-			loggedInUsers.map(server => {
-				<button key={server} onClick={this.postNewTicketByServerName.bind(this, token, server, dispatch)}>
-					{server}
-				</button>
-			})
-		)
 	}
 
 	postNewTicketByServerName(token, name, dispatch){
@@ -36,8 +33,12 @@ class WaiterCallScreenMenu extends Component {
 
 	render() {
 		const { loggedInUsers } = this.props
+		console.log(loggedInUsers)
 		return(
-			{ loggedInUsers && this.generateWaiterCallScreen }
+			<div>
+			HELLO!? IS ANYONE THERE!??!?!
+			{ loggedInUsers && this.generateWaiterCallScreen() }
+			</div>
 		)
 	}
 }

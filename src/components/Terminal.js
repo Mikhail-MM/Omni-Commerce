@@ -84,21 +84,20 @@ class Terminal extends Component {
 
 	dispatchClockInForm() {
 		const { dispatch } = this.props
-		const formSelector = "Clock In"
-		dispatch(showModal('EMPLOYEE_PUNCH_CLOCK_FORM_MODAL'), {formSelector})
+		const modalProps = {formSelector: "Clock In"}
+		dispatch(showModal('EMPLOYEE_PUNCH_CLOCK_FORM_MODAL', modalProps))
 	}
 
 	dispatchClockOutForm() {
 		const { dispatch } = this.props
-		const formSelector = "Clock Out"
+		const modalProps = {formSelector: "Clock Out"}
 
-		dispatch(showModal('EMPLOYEE_PUNCH_CLOCK_FORM_MODAL'), {formSelector})
+		dispatch(showModal('EMPLOYEE_PUNCH_CLOCK_FORM_MODAL', modalProps))
 	}
 
 	render() {
 		const { match, menuItems, isAuthenticated, tickets, activeTicket, token, activeSalesReport } = this.props;
-		const { selectUser } = this.state
-		// This is a general purpose terminal for our employees. Just keep it a big centered modal with Top, Left : 50%. So it's just a giant section with buttons, and a grid inside. EASY! 
+		
 		return(
 			<div className="page-wrapper">
 			<div className="terminal-nav-bar" >
@@ -148,37 +147,3 @@ class Terminal extends Component {
 }
 
 export default connect(mapStateToProps)(Terminal);
-
-/* Previously Attempted Iterator Functions
-
-		handleClicktoFetch(id) {
-		console.log("_id of Clicked Element is: ", id);
-
-	}
-
-	iterateThruObject() {
-		const { menuItems } = this.props
-
-		return Object.keys(menuItems).map((k) => {
-			console.log(k);
-  			return menuItems[k].map(item => <div className={k} key={item._id} onClick={this.handleClicktoFetch.bind(this, item._id)}>{item.itemName}</div>)
-		})
-	}
-
-Current
-
-	iterateThruCategories() {
-		const { menuItems } = this.props
-		return Object.keys(menuItems).map(f => <div className={f}>{this.iterateThruObject(f)}</div>) 
-	}
-
-	iterateThruObject(currentKey) {
-		const { menuItems } = this.props
-		const selector = currentKey
-  			
-  			return menuItems[selector].map(item => <div className={selector} key={item._id} onClick={this.handleClicktoFetch.bind(this, item._id)}>{item.itemName}</div>)
-	}
-
-
-
-*/

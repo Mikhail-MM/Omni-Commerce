@@ -1,4 +1,5 @@
 export function showModal(modalType, modalProps) {
+	console.log(modalProps)
 	return {
 		type: 'SHOW_MODAL',
 		modalType: modalType,
