@@ -77,6 +77,7 @@ body {
 	width: 100%;
 }
 .admin-sidebar-menu {
+	width: 250px !important;
 	background-color: rgba(0,0,0,.87);
 }
 
@@ -93,13 +94,13 @@ body {
 	color: #fff;
 	background-color: #3f1115;
 }
-
-/* 
-	Employee Terminal 
-*/
 .ui.menu {
 	height: 100%;
 }
+/* 
+	Employee Terminal 
+*/
+
 .page-wrapper {
 	display: flex;
 	align-items: center;
