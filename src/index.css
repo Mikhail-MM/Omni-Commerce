@@ -145,3 +145,47 @@ body {
 	justify-content: space-evenly;
 }
 
+/* 
+	My Store Viewer
+*/
+
+.my-store-page-wrapper {
+	height: 100%;
+	width: 100%;
+	display:flex;
+}
+
+.my-store-homepage-sidebar-left {
+	display: flex;
+	height: 100%;
+	width: 13vw;
+	flex-direction: column;
+	background-image: radial-gradient(
+      circle at bottom right,
+      #693D41,
+      #451B36 60%,
+      #200416
+    );
+}
+
+.my-store-homepage-main-content {
+	display: flex;
+	height: 100%;
+	width: 52vw;
+	flex-direction: row;
+	background-color: rgb(0, 0, 0, .90);
+	/* background-color: rgba(19, 0, 2, .92); */
+	/* background-color: rgba(69, 27, 54, 0.77); */
+}
+
+.my-store-homepage-right-sidebar {
+	display: flex;
+	height: 100%;
+	width: 35vw;
+	background-image: radial-gradient(
+      circle at bottom left,
+      #693D41,
+      #451B36 50%,
+      #200416
+    );;
+}

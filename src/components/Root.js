@@ -18,6 +18,7 @@ import Terminal from './Terminal'
 import TicketActionScreen from './TicketActionScreen'
 import OnlineMerchantDashboard from './OnlineMerchantDashboard'
 import AdminTerminal from './AdminTerminal'
+import MyStoreHomepage from './MyStoreHomepage'
 
 const loggerMiddleware = createLogger()
 const history = createHistory()
@@ -49,6 +50,7 @@ export default class Root extends Component {
 						<Route path="/login/registerPOS" component={RegisterForm}/>
 						<Route path="/login/registerMerchant" component={OnlineMerchantRegistrationForm} />
 						<Route path="/admin" component={AdminTerminal} />
+						<Route path="/marketplace_landing" component={MyStoreHomepage} />
 
 				</Switch>
 			</ConnectedRouter>
