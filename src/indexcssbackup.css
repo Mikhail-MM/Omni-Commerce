@@ -71,16 +71,9 @@ body {
 	height: 100%;
 	background-color: #313C45;
 }
-.admin-content-display_inner-wrapper {
-	margin: auto;
-	height: 100%;
-	width: 95%;
-	border-left: 1px solid #66737E;
-	border-right: 1px solid #66737E;
-}
 .admin-sidebar-and-content-wrapper {
 	display: flex;
-	height: 100vh;
+	height: 90vh;
 	width: 100%;
 }
 .admin-sidebar-menu {
@@ -165,10 +158,12 @@ body {
 .my-store-sidebar-left {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: flex-end;
 	align-items: center;
 	height: 100%;
-	width: 150px;
+	width: 100px;
+	padding-bottom: 1vh;
+
 	background-image: radial-gradient(
       circle at bottom right,
       #693D41,
@@ -176,63 +171,48 @@ body {
       #200416
     );
 }
-
+.my-store-left-sidebar_button_icon {
+	position: absolute;
+	top: 10%;
+	left: 20%;
+}
 .my-store-left-sidebar_button {
-	display: flex;
-	flex-direction: column;
-	position: relative;
-	text-align: center;
 	color: white;
+	border-bottom: 1px solid gray;
 	height: 100px;
-	width: 90%;
+	width: 10vw;
 	height: 16.66vh;
 
 }
-
-.my-store-left-sidebar_button_icon {
-	position: absolute;
-	top: 15%;
-	left: 25%;
+.my-store-left-sidebar_bottom-button{
+	margin-bottom: 3vh;
 }
-._last_icon {
-	left: 23%;
-}
-.my-store-left-sidebar_button_heading {
-	padding-top: 50%;
-
-}
-.my-store-main-content-border {
-	width: 	95%;
-	border: 1px 1px solid #605B5B;
-	margin: auto;
-}
-
-/*
-	Main Content
-*/ 
 
 .my-store-homepage-main-content {
 	display: flex;
 	height: 100%;
 	width: 54vw;
-	flex-grow: 1;
 	flex-direction: row;
-	background-color: rgb(221, 221, 221);
-	/* background-color: rgb(0, 0, 0, .90); */
+	background-color: rgb(0, 0, 0, .90);
 	/* background-color: rgba(19, 0, 2, .92); */
 	/* background-color: rgba(69, 27, 54, 0.77); */
 }
 
-/* 
-	Store - Right Sidebar
-*/
+.store-modern-menu {
+	background-color: rgb(1, 1, 1, .45);
+	color: white;
+	border: 1px solid white;
+	margin: auto;
+	padding: 20px 20px 20px 20px;
+}
 
+.store-modern-menu:hover {
+	text-shadow: 0 0 0.2em #fff;
+}
 .my-store-homepage-right-sidebar {
 	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
 	height: 100%;
-	width: 25vw;
+	width: 35vw;
 	background-image: radial-gradient(
       circle at bottom left,
       #693D41,
@@ -240,42 +220,3 @@ body {
       #200416
     );;
 }
-.store-modern-menu {
-	background-color: rgb(1, 1, 1, .45);
-	color: white;
-	text-align: center;
-	border: 1px solid white;
-	padding: 20px 20px 20px 20px;
-	margin-right: 10px;
-	margin-left: 10px;
-	margin-top: 10px;
-	letter-spacing: 0.075em
-}
-.store-and-user-avatar {
-	min-height: 100px;
-	display: flex;
-	flex-direction: column;
-	background-color: rgb(1, 1, 1, .45);
-}
-.bottom-menu {
-	min-height: 75px;
-	display: flex;
-	flex-direction: column;
-	border: 1px solid white;
-	background-color: rgb(1, 1, 1, .45);	
-}
-.shop-stats-container {
-	border: 1px solid white;
-	min-height: 450px;
-	background-color: rgb(1, 1, 1, .45);
-	text-align: center;
-	color: white;
-	padding: 20px 20px 20px 20px;
-	margin-right: 10px;
-	margin-left: 10px;
-	margin-bottom: 10px;
-}
-.store-modern-menu:hover {
-	text-shadow: 0 0 0.2em #fff;
-}
-

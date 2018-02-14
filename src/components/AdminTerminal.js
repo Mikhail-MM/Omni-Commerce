@@ -10,7 +10,7 @@ class AdminTerminal extends Component {
 		return(
 		<div className="admin-page-wrapper" >
 			<div className="admin-header" >
-				<Menu pointing secondary fluid>
+				<Menu pointing secondary fluid selectable>
 					<Menu.Item className="admin-header-menu-item_first-item">
 						<Image src={ avatar } avatar />
 					</Menu.Item>
@@ -95,12 +95,14 @@ class AdminTerminal extends Component {
 				</Menu>
 			</div>
 			<div className="admin-content-display">
+				<div className="admin-content-display_inner-wrapper">
+				</div>
 			</div>
 			</div>
-			<div className="admin-footer">
+			{ /*<div className="admin-footer">
 			<Icon name='copyright' />
 			Copyright Omni-Commerce 2018
-			</div>
+			</div> */}
 		</div>
 		)
 	}

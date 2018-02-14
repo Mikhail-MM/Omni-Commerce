@@ -19,6 +19,8 @@ import TicketActionScreen from './TicketActionScreen'
 import OnlineMerchantDashboard from './OnlineMerchantDashboard'
 import AdminTerminal from './AdminTerminal'
 import MyStoreHomepage from './MyStoreHomepage'
+import TerminalActionScreenMockup from './TerminalActionScreenMockup'
+
 
 const loggerMiddleware = createLogger()
 const history = createHistory()
@@ -51,6 +53,7 @@ export default class Root extends Component {
 						<Route path="/login/registerMerchant" component={OnlineMerchantRegistrationForm} />
 						<Route path="/admin" component={AdminTerminal} />
 						<Route path="/marketplace_landing" component={MyStoreHomepage} />
+						<Route path="/table" component={TerminalActionScreenMockup} />
 
 				</Switch>
 			</ConnectedRouter>
