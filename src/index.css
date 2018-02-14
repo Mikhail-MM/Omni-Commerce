@@ -176,7 +176,12 @@ body {
       #200416
     );
 }
+.ui.card { background-color: rgb(221, 221, 221); }
+.ui.card > .content { background-color: rgb(221, 221, 221); }
 
+.cardContainer {
+	padding-bottom: 25px;
+}
 .my-store-left-sidebar_button {
 	display: flex;
 	flex-direction: column;
@@ -217,10 +222,27 @@ body {
 	width: 54vw;
 	flex-grow: 1;
 	flex-direction: row;
-	background-color: rgb(221, 221, 221);
+	background-image: radial-gradient(
+      circle at center,
+      #4C1D3B,
+      #340D27 50%,
+      #040003
+    );;
+	overflow: auto;
+	/* background-color: rgb(221, 221, 221); */
 	/* background-color: rgb(0, 0, 0, .90); */
 	/* background-color: rgba(19, 0, 2, .92); */
 	/* background-color: rgba(69, 27, 54, 0.77); */
+}
+.my-store-main-content-border {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-content: flex-start;
+	justify-content: space-around;
+	padding-top: 5%;
+	width: 95%;
+	overflow: auto;
 }
 
 /* 
@@ -258,11 +280,10 @@ body {
 	background-color: rgb(1, 1, 1, .45);
 }
 .bottom-menu {
-	min-height: 75px;
+	min-height: 50px;
 	display: flex;
 	flex-direction: column;
-	border: 1px solid white;
-	background-color: rgb(1, 1, 1, .45);	
+	border: 1px solid white;;	
 }
 .shop-stats-container {
 	border: 1px solid white;

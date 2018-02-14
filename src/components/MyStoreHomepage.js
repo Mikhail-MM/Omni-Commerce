@@ -1,12 +1,35 @@
 import React, { Component } from 'react'
-import { Icon } from 'semantic-ui-react'
-
+import { Card, Button, Image, Icon } from 'semantic-ui-react'
+import blouseImage from '../assets/marketBlouse.jpg'
 class MyStoreHomepage extends Component {
 	constructor(props) {
 		super(props)
 	}
 
+	renderCards() {
+		const cardsArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
+		return cardsArray.map(card => {
+			return (<div className='cardContainer'>
+						<Card>
+							<Image src={blouseImage} />
+							<Card.Content>
+								<Card.Header> Floral Blouse, Black </Card.Header>
+								<Card.Meta> In-Stock: 5 </Card.Meta>
+								<Card.Description> A classy top that is sure to turn heads! </Card.Description>
+								<Card.Header> $ 16.99 </Card.Header>
+							</Card.Content>
+							<Card.Content extra>
+								<Button color='black'> <Icon name='add to cart' /> Add To Cart </Button>
+							</Card.Content>
+						</Card>
+					</div>
+					)
+
+		})
+	}
 	render() {
+		
 		return(
 			<div className='my-store-page-wrapper' >
 				<div className='my-store-sidebar-left'>
@@ -41,7 +64,7 @@ class MyStoreHomepage extends Component {
 					<div className='store-main-content-nav-bar' >
 					</div>
 					<div className='my-store-main-content-border'>
-						
+						{this.renderCards()}
 					</div>
 
 
