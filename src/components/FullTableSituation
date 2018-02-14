@@ -122,124 +122,6 @@ class TerminalActionScreenMockup extends Component {
 
 						</Table.Row>
 						
-						<Table.Row>
-							
-							<Table.Cell>
-								<Button inverted> Remove Item </Button>
-							</Table.Cell>
-							<Table.Cell>
-								<Button inverted> <Icon name='plus' /> </Button>
-							</Table.Cell>
-							<Table.Cell>
-								Turkey Legs MyDude
-							</Table.Cell>
-							<Table.Cell>
-								$ 19.43
-							</Table.Cell>
-
-						</Table.Row>
-
-						<Table.Row>
-							
-							<Table.Cell>
-								<Button inverted> Remove Item </Button>
-							</Table.Cell>
-							<Table.Cell>
-								<Button inverted> <Icon name='plus' /> </Button>
-							</Table.Cell>
-							<Table.Cell>
-								Turkey Legs MyDude
-							</Table.Cell>
-							<Table.Cell>
-								$ 19.43
-							</Table.Cell>
-
-						</Table.Row>
-
-						<Table.Row>
-							
-							<Table.Cell>
-								<Button inverted> Remove Item </Button>
-							</Table.Cell>
-							<Table.Cell>
-								<Button inverted> <Icon name='plus' /> </Button>
-							</Table.Cell>
-							<Table.Cell>
-								Turkey Legs MyDude
-							</Table.Cell>
-							<Table.Cell>
-								$ 19.43
-							</Table.Cell>
-
-						</Table.Row>
-
-						<Table.Row>
-							
-							<Table.Cell>
-								<Button inverted> Remove Item </Button>
-							</Table.Cell>
-							<Table.Cell>
-								<Button inverted> <Icon name='plus' /> </Button>
-							</Table.Cell>
-							<Table.Cell>
-								Turkey Legs MyDude
-							</Table.Cell>
-							<Table.Cell>
-								$ 19.43
-							</Table.Cell>
-
-						</Table.Row>
-
-						<Table.Row>
-							
-							<Table.Cell>
-								<Button inverted> Remove Item </Button>
-							</Table.Cell>
-							<Table.Cell>
-								<Button inverted> <Icon name='plus' /> </Button>
-							</Table.Cell>
-							<Table.Cell>
-								Turkey Legs MyDude
-							</Table.Cell>
-							<Table.Cell>
-								$ 19.43
-							</Table.Cell>
-
-						</Table.Row>
-
-						<Table.Row>
-							
-							<Table.Cell>
-								<Button inverted> Remove Item </Button>
-							</Table.Cell>
-							<Table.Cell>
-								<Button inverted> <Icon name='plus' /> </Button>
-							</Table.Cell>
-							<Table.Cell>
-								Turkey Legs MyDude
-							</Table.Cell>
-							<Table.Cell>
-								$ 19.43
-							</Table.Cell>
-
-						</Table.Row>
-
-						<Table.Row>
-							
-							<Table.Cell>
-								<Button inverted> Remove Item </Button>
-							</Table.Cell>
-							<Table.Cell>
-								<Button inverted> <Icon name='plus' /> </Button>
-							</Table.Cell>
-							<Table.Cell>
-								Turkey Legs MyDude
-							</Table.Cell>
-							<Table.Cell>
-								$ 19.43
-							</Table.Cell>
-
-						</Table.Row>
 
 
 
@@ -287,8 +169,6 @@ class TerminalActionScreenMockup extends Component {
 								$ 0.00
 							</Table.Cell>
 						</Table.Row>
-
-
 
 					</Table.Footer>
 					</Table>

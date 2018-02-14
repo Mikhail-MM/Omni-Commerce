@@ -279,3 +279,32 @@ body {
 	text-shadow: 0 0 0.2em #fff;
 }
 
+/* 
+	Terminal Action Screen
+*/
+
+.action-screen-wrapper {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	position: relative;
+}
+
+.left-40 {
+	overflow: auto;
+	display: flex;
+	flex-direction: column;
+	width: 40%;
+	height: 100%;
+	background-color: rgb(43, 43, 43);
+}
+
+.right-60 {
+	width: 60%;
+	height: 100%;
+	background-color: rgb(51, 51, 51);
+}
+
+table {
+	border: 1px solid black !important;
+}
