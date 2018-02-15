@@ -19,11 +19,12 @@ var clientSchema = new Schema({
 	shipping_address_zip: String,
 	shipping_address_state: String,
 	isMaster: Boolean,
+	masterSubscriptionApproved: Boolean,
+	employeeApproved: Boolean,
 	employeeCounter: Number,
 	masterLookupIdentifier: String, // This might just be Organization name to make it easier. Think about scale
 	organizationName: String, // Used in the autocomplete to point Employees to the right way
 	rosterJob: String,
-	ownedBy: String,
 	mongoCollectionKey: { type: String, required: true },
 	isAdmin: { type: Boolean, index: true },
 	hash: { type: String, required: true },
@@ -31,8 +32,8 @@ var clientSchema = new Schema({
 	clockInNumber: String,
 	accountType: String, 
 	status: String, // PendingApproval[Pending] - Registered
-	master_id: {type: Schema.Types.ObjectId, ref: 'Client' },
-	marketplaceRef_id: {type: Schema.Types.ObjectId, ref: 'Marketplace' }
+	master_id: { type: Schema.Types.ObjectId, ref: 'Client' },
+	marketplaceRef_id: { type: Schema.Types.ObjectId, ref: 'Marketplace' }
 	},
 	{
 		toObject:{ getters : true }	

@@ -176,9 +176,33 @@ body {
       #200416
     );
 }
-.ui.card { background-color: rgb(221, 221, 221); }
-.ui.card > .content { background-color: rgb(221, 221, 221); }
 
+/*
+	Marketplace-Cards
+*/
+
+/* rgb(221, 221, 221) */
+
+.ui.card > .content > .header, .ui.cards > .card > .content > .header { color: white !important; }
+.ui.card .meta, .ui.cards > .card .meta { color: rgb(255, 255, 255, .5) !important; }
+.ui.card > .content > .description, .ui.cards > .card > .content > .description { color: rgb(255, 255, 255, .8) !important }
+
+.ui.card { 
+	background-color: rgb(34, 35, 39) !important;
+	color:white !important; 
+}
+.ui.card > .content { 
+	background-color: rgb(34, 35, 39) !important; 
+	color:white !important;
+}
+.ui.cards > .card > .content { 
+	background-color: rgb(34, 35, 39) ;
+	color:white !important;
+}
+.ui.cards > .card > .extra { 
+	background-color: rgb(34, 35, 39);
+	color:white !important;
+}
 .cardContainer {
 	padding-bottom: 25px;
 }
@@ -229,6 +253,7 @@ body {
       #040003
     );;
 	overflow: auto;
+	
 	/* background-color: rgb(221, 221, 221); */
 	/* background-color: rgb(0, 0, 0, .90); */
 	/* background-color: rgba(19, 0, 2, .92); */
