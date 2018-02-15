@@ -75,8 +75,6 @@ body {
 	margin: auto;
 	height: 100%;
 	width: 95%;
-	border-left: 1px solid #66737E;
-	border-right: 1px solid #66737E;
 }
 .admin-sidebar-and-content-wrapper {
 	display: flex;

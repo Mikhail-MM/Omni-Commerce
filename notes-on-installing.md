@@ -4,6 +4,6 @@ Need to run:
 
 npm install --global --production windows-build-tools
 
-Then install npm-gyp globally, I think
+Then install npm-gyp globally
 
 Only then can you install bcrypt, since it is built up with npm-gyp upon npm installation

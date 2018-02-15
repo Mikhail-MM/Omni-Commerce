@@ -17,9 +17,6 @@ exports.login = function(req, res, next) {
 			if (!pwMatches) return res.status(403).send("Invalid Password");
 			client.token = null;
 
-			//export secret to config!!
-			// TODO: Remove Password Hash from Token!
-
 			var payload = client; 
 			
 			client.token = jwt.encode(payload, config.secret);
@@ -110,8 +107,6 @@ exports.routeEmployeeToMongoCollection = async function(req, res, next) {
 		console.log("Attaching headers to request")
 		req.headers['x-mongo-key'] = decoded.mongoCollectionKey
 		req.headers['x-user-id'] = decoded._id
-		console.log("...headers should be attached, listing all headers:")
-		console.log(req.headers)
 		next();
 	});
 

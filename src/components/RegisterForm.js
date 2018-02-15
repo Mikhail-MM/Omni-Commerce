@@ -24,6 +24,8 @@ function mapStateToProps(state) {
 
 
 /*
+		// Unused code - Autocomplete organization lookup discarded in favor of private invites by Employer
+		
 class AutoCompleteSuggestions extends Compoenent {
 	constructor(props) {
 		super(props)

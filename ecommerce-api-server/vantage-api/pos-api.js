@@ -1,7 +1,3 @@
-// Notes
-// Offline functionality can be made by creating JS objects to store within LocalStorage 
-
-
 ////////////////////////////////////////////////////
 //				Dependencies					  //
 ////////////////////////////////////////////////////
@@ -13,8 +9,6 @@ const mongoose = require('mongoose');
 const path = require('path');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
-
-
 
 const config = require('./models/config');
 
@@ -32,39 +26,20 @@ const marketplaces = require('./controllers/marketplaces')
 const storeItems = require('./controllers/storeItems')
 const shoppingCarts = require('./controllers/shoppingCarts')
 
-/* Depreciated Controllers 
 
-const customers = require('./controllers/customers');
-const members = require('./controllers/members');
-const punchcards = require('./controllers/punchcards');
-
-*/ 
-
-//test@bones.com
 var app = express();
-var router = express.Router(); // retuns 404 if I use it lik in his example
-
-
-//todo: Create functionality for connecting to a new DB depending on user login
-
-//CONSIDER MAKING NEW CONNECTIONS
-// var connection = mongoose.createConnection('mongodb://localhost:27017/test');
-// YOU WILL CREATE NEW MODELS TO THIS CONNECTION!
-// var Tank = connection.model('Tank', yourSchema);
+var router = express.Router(); 
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/vantageAPI-2', { useMongoClient: true });
-
-var conn2 = mongoose.createConnection('mongodb://localhost/vantage2');
 
 if(app.get('env') === 'development') var dev = true;
 if (dev) app.use(logger('dev'));
 if(app.get('env') === 'production') {
 	return
-	// run init script here
+	// Init script can be built to instantiate first Admin
 };
 
-//Parse JSON Transmissions - responses, right?
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( {extended: false }));
 
@@ -78,17 +53,12 @@ app.use('/*', function(req, res, next) {
 });
 
 
-//////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////
 //					Routes								  //
 ////////////////////////////////////////////////////////////
 
-//app.post('/clients', clients.createClient);
-//app.get('/clients', clients.getAllClients);
 
-//.all can create a log entry in a manifest
-// Create function to return ALL DB ITEMS??
 router.route('/clients/lookupEmployees')
 	.get(authorize.adminRequired, clients.findAllEmployees)
 router.route('/clients/lookup')
@@ -102,7 +72,7 @@ router.route('/clients/:id')
 
 router.route('employees/find_all')
 	.get(authorize.routeEmployeeToMongoCollection, employees.findMyEmployees)
-	
+
 router.route('/menus/noIDhack/:id')
 	.get(authorize.routeEmployeeToMongoCollection, menus.getMenuItemByIdNoReturnId)
 router.route('/menus')
@@ -191,19 +161,9 @@ router.route('/test')
 	.get(shoppingCarts.test);
 app.use('/', router);
 
-//app.route('/clients')
-//    .get(clients.getAllClients)
-//    .post(clients.createClient);
 
-//Interesting note. The commented out bottom section was working. The top section, above app.use, was NOT.
-//It was returning 404. Why? Because if you are using the route middleware, you must mount it on the app via app.use('/', router). What is the first parameter, tho?
-//router.route('/clients/:id')
-	//TODO GetByID
-//	.put(clients.updateClient)
-//	.delete(clients.deleteClientById);
-
-//Error Handling Middleware//
-///404 Handler///
+//	Error Handling Middleware	//
+///		404 Handler			  ///
 
 app.use(function(req, res, next){
 	var err = new Error("Response Status: 404; Page Not Found")
@@ -211,7 +171,8 @@ app.use(function(req, res, next){
 	next(err);
 })
 
-//Development Error Handler
+//	Development Error Handler
+
 if (dev) {
 	app.use(function(err, req, res, next) {
 		console.log(err);
@@ -219,7 +180,7 @@ if (dev) {
 	});
 }
 
-//Production Error Handler
+//	Production Error Handler
 
 app.use(function(err, req, res, next) {
 	res.status(err.status || 500).send();

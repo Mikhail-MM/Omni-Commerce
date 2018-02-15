@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const Client = require('../models/schemas/client');
 const bcrypt = require('bcrypt');
 const MarketPlaceModels = require('../models/schemas/marketplace')
-// We can export the model in our marketplace Schemas file to avoid importing mongoose here
-const Marketplace = MarketPlaceModels.marketplaceSchema // TODO: Avoid having multiple calls to mongoose models and move all model exports to models/marketplace.js
+
+const Marketplace = MarketPlaceModels.marketplaceSchema
 const MarketplaceModel = mongoose.model('Marketplace', Marketplace)
 const ShoppingCartSchema = MarketPlaceModels.storeItemSchema
 const ShoppingCartModel = MarketPlaceModels.ShoppingCartModel
@@ -49,16 +49,6 @@ module.exports.createClient = async function(req, res, next) {
 
 		var newClient = new Client(data);
 		
-		//TODO: handle subsequent validation of inputs past Mongoose Typecasting
-
-		//TODO: handle duplicates - add unique fields within schema level
-
-
-
-
-		//Purpose of keeping the hash function async - if for whatever reason we are getting lots of requests for hashes, or a hash takes a long time due to memory
-		//intensity, requests can continue to be fulfilled...I guess..?
-		// Converting to AsyncAwait may slow down this? but keeping parent function asnyc should make it OK
 	const response = {}
 		
 		if (!newClient.hash) {
@@ -108,6 +98,8 @@ module.exports.createClient = async function(req, res, next) {
 	} catch(err) { next(err) }
 }
 
+// TODO: Update to Async/Await
+
 module.exports.autoCompleteClientOrgName = function (req, res, next) {
 	console.log(req.body)
 	// Make sure the i for case insensitive flag worked
@@ -121,8 +113,6 @@ module.exports.autoCompleteClientOrgName = function (req, res, next) {
 		
 }
 
-// Move to TimeSheet controls?
-// Need Middleware to find client
 module.exports.getAllClients = function(req, res, next) {
 	Client.find({}, function(err, clients) {
 		if (err) return next(err);
@@ -140,9 +130,6 @@ module.exports.findMasterAndTagChild = function(req, res, next) {
 				req.body.mongoCollectionKey = client.mongoCollectionKey;
 			})
 }
-//TODO: Specific Filtering FindFunctions
-
-//UPDATE
 
 module.exports.updateClient = function(req, res, next) {
 	Client.findOneAndUpdate({_id: req.params.id}, req.body, 
@@ -152,8 +139,6 @@ module.exports.updateClient = function(req, res, next) {
 			return res.json(client);
 		});
 }
-
-//DELETE
 
 module.exports.deleteClientById = function(req, res, next) {
 	Coupon.findOneAndRemove({_id: req.params.id}, function(err, client){
