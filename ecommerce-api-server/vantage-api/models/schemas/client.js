@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 
-var clientSchema = new Schema({
+const clientSchema = new Schema({
 	firstName: String,
 	lastName: String,
 	userName: String,
@@ -46,6 +46,6 @@ clientSchema.methods.comparePassword = function(password, next){
 		next(null, pwMatches);
 	})
 }
-var Client = mongoose.model('Client', clientSchema);
+const Client = mongoose.model('Client', clientSchema);
 
 module.exports = Client;

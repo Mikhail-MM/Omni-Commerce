@@ -14,6 +14,7 @@ const config = require('./models/config');
 
 const clients = require('./controllers/clients');
 const employees = require('./controllers/employees');
+const messages = require('/controllers/messages')
 const menus = require('./controllers/menus');
 const transactions = require('./controllers/transactions');
 const authorize = require('./controllers/authorize');
@@ -69,6 +70,16 @@ router.route('/clients')
 router.route('/clients/:id')
 	.put(clients.updateClient)
 	.delete(clients.deleteClientById);
+
+router.route('/messages')
+	.get(authorize.routeEmployeeToMongoCollection, messages.getAllMyMessages)
+	.post(authorize.routeEmployeeToMongoCollection, messages.composeNewMessage)
+	.delete(authorize.routeEmployeeToMongoCollection, messages.deleteMessage)
+
+router.route('/announcements')
+	.get(authorize.routeEmployeeToMongoCollection, messages.getAllAnnouncementsByOrganization)
+	.post(authorize.routeEmployeeToMongoCollection, messages.composeNewAnnouncement)
+	.delete(authorize.routeEmployeeToMongoCollection, authorize.adminRequired, messages.deleteMessage)
 
 router.route('employees/find_all')
 	.get(authorize.routeEmployeeToMongoCollection, employees.findMyEmployees)

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-var marketplaceSchema = new Schema({
+const marketplaceSchema = new Schema({
 	storeName: String,
 	ownerName: String,
 	mongoCollectionKey: String,
@@ -9,7 +9,7 @@ var marketplaceSchema = new Schema({
 	ownerRef_id: {type: Schema.Types.ObjectId, ref: 'Client'}
 
 });
-var storeItemSchema = new Schema({
+const storeItemSchema = new Schema({
 	itemName: String,
 	itemPrice: Number,
 	mongoCollectionKey: String,
@@ -36,7 +36,7 @@ const salesManifest = {
 	totalDisplay: Number,
 }
 
-var stripeCustomerSchema = new Schema({
+const stripeCustomerSchema = new Schema({
 	id: {type: String, required: true},
 	clientRef_id: {type: Schema.Types.ObjectId, ref: 'Client', required: true},
 	created: Date,
@@ -73,32 +73,24 @@ var stripeCustomerSchema = new Schema({
 	},
 })
 
-var shoppingCartSchema = new Schema(Object.assign({}, salesManifest, {
+const shoppingCartSchema = new Schema(Object.assign({}, salesManifest, {
 	ownerRef_id: {type: Schema.Types.ObjectId, ref: 'Client'},
 }));
 
-var purchaseOrderSchema = new Schema(Object.assign({}, salesManifest, { 
+const purchaseOrderSchema = new Schema(Object.assign({}, salesManifest, { 
 	buyerRef_id: {type: Schema.Types.ObjectId, ref: 'Client'},
 	customerRef_id: {type: Schema.Types.ObjectId, ref: 'StripeCustomer'},
 	charge: {type: Schema.Types.Mixed},
 }));
 
-var sellerSpecificPurchaseOrder = new Schema(Object.assign({}, salesManifest, {
+const sellerSpecificPurchaseOrder = new Schema(Object.assign({}, salesManifest, {
 	ownerRef_id: {type: Schema.Types.ObjectId, ref: 'Client'},
 }));
 
-module.exports.marketplaceSchema = marketplaceSchema;
-module.exports.storeItemSchema = storeItemSchema;
-module.exports.shoppingCartSchema = shoppingCartSchema;
-module.exports.stripeCustomerSchema = stripeCustomerSchema;
-module.exports.purchaseOrderSchema = purchaseOrderSchema;
-const ShoppingCartModel = mongoose.model('ShoppingCart', shoppingCartSchema)
-const MarketplaceModel = mongoose.model('Marketplace', marketplaceSchema)
-const StoreItemModel = mongoose.model('StoreItem', storeItemSchema)
-const StripeCustomerModel = mongoose.model('StripeCustomer', stripeCustomerSchema)
-const PurchaseOrderModel = mongoose.model('PurchaseOrder', purchaseOrderSchema)
-module.exports.ShoppingCartModel = ShoppingCartModel;
-module.exports.MarketplaceModel = MarketplaceModel;
-module.exports.StoreItemModel = StoreItemModel;
-module.exports.StripeCustomerModel = StripeCustomerModel;
-module.exports.PurchaseOrderModel = PurchaseOrderModel;
+
+
+module.exports.ShoppingCartModel = mongoose.model('ShoppingCart', shoppingCartSchema);
+module.exports.MarketplaceModel = mongoose.model('Marketplace', marketplaceSchema);
+module.exports.StoreItemModel = mongoose.model('StoreItem', storeItemSchema);
+module.exports.StripeCustomerModel = mongoose.model('StripeCustomer', stripeCustomerSchema);
+module.exports.PurchaseOrderModel = mongoose.model('PurchaseOrder', purchaseOrderSchema);
