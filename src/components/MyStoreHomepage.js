@@ -7,6 +7,7 @@ class MyStoreHomepage extends Component {
 	}
 
 	renderCards() {
+		// Placeholder function to mock styling for real data to be retrieved from API
 		const cardsArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
 		return cardsArray.map(card => {

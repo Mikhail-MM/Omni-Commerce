@@ -1,11 +1,12 @@
 import {startLoading, stopLoading} from './loading'
 
 function throwError(errorMessage) { throw new Error(errorMessage) }
-{/* 
+
 export function fetchAllEmployees() {
 	return dispatch => {
+		// Need to make loading dispatch more reducer-specific, instead of a global loading counter. Maybe even do it within a semantic UI segment
 		dispatch(startLoading())
-		return fetch('http://localhost:3001/clients/lookupEmployees', {
+		return fetch('http://localhost:3001/employees/find_all', {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token
@@ -24,11 +25,11 @@ export function fetchAllEmployees() {
 
 function receiveEmployees(employees) {
 	return{
-		type: 'RECEIVE_EMPLOYEES',
+		type: 'RECEIVE_ALL_EMPLOYEES',
 		employees
 	}
 }
-*/}
+
 export function fetchLoggedUsers(token) {
 	return dispatch => {
 		return fetch('http://localhost:3001/storeconfig', {
@@ -55,3 +56,4 @@ function receiveLoggedUsers(loggedUsers) {
 		loggedUsers
 	}
 }
+

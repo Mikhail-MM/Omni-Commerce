@@ -35,13 +35,18 @@ const authReducer = (state = initialState, action) => {
 	}
 }
 
-const activeEmployeesReducer = (state = { loggedInUsers: [ 'Terminal' ] }, action) => {
+const EmployesReducer = (state = { loggedInUsers: [ 'Terminal' ] }, action) => {
 	switch(action.type){
 	case ('RECEIVE_LOGGED_USERS'): {
 		return Object.assign({}, state, {
 			loggedInUsers: action.loggedUsers.loggedInUsers
 			}
 		)
+	}
+	case ('RECEIVE_ALL_EMPLOYEES'): {
+		return Object.assign({}, state, {
+			myEmployees: action.employees
+		})
 	}
 	default:
 		return state
@@ -211,7 +216,7 @@ const modalReducer = (state = initialModalState, action) => {
 
 const rootReducer = combineReducers({
 	authReducer,
-	activeEmployeesReducer,
+	EmployesReducer,
 	menuItemsReducer,
 	ticketTrackingReducer,
 	salesReportReducer,

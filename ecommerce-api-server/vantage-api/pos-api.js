@@ -19,6 +19,7 @@ const bodyParser = require('body-parser');
 const config = require('./models/config');
 
 const clients = require('./controllers/clients');
+const employees = require('./controllers/employees');
 const menus = require('./controllers/menus');
 const transactions = require('./controllers/transactions');
 const authorize = require('./controllers/authorize');
@@ -99,6 +100,9 @@ router.route('/clients/:id')
 	.put(clients.updateClient)
 	.delete(clients.deleteClientById);
 
+router.route('employees/find_all')
+	.get(authorize.routeEmployeeToMongoCollection, employees.findMyEmployees)
+	
 router.route('/menus/noIDhack/:id')
 	.get(authorize.routeEmployeeToMongoCollection, menus.getMenuItemByIdNoReturnId)
 router.route('/menus')
