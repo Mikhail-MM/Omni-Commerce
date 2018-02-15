@@ -233,29 +233,3 @@ const rootReducer = combineReducers({
 export default rootReducer
 
 
-
-/*
-
-// Actions
-
-function authSuccess () {
-	type:'USER_AUTHENTICATED'
-	userInfo
-
-} 
-
-function authFail () {
-	type: 'INVALID_CREDENTIALS'
-
-}
-
-function instantiateUser () {
-	
-} 
-
-function loginUser () {
-	// Begin Dispatch Chain as THUNK
-}
-
-
-*/
