@@ -61,7 +61,10 @@ createTerminalAccount = function(req, res, next) {
 				
 				// convert to async/await try/catch
 				const savedTerminal = await newTerminal.save()
-
+				// Add Terminal Acc. to Store Config of logged users:
+				const StoreConfig = mongoose.model('StoreConfig', storeConfigSchema, req.body.mongoCollectionKey + '_StoreConfig');
+				const terminalDaemon = await StoreConfig.findOneAndUpdate({mongoKey: req.body.mongoCollectionKey}, {$addToSet: {loggedInUsers: "Terminal"}}, {upsert: true, new: true});
+				console.log("Ensure Terminal Daemon can create new transactions", terminalDaemon)
 				next();
 		});
 	};
