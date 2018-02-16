@@ -47,6 +47,7 @@ class Terminal extends Component {
 		this.dispatchWaiterCallModal = this.dispatchWaiterCallModal.bind(this)
 		this.dispatchClockInForm = this.dispatchClockInForm.bind(this)
 		this.dispatchClockOutForm = this.dispatchClockOutForm.bind(this)
+		this.dispatchItemModificationScreen = this.dispatchItemModificationScreen.bind(this)
 
 
 	}
@@ -95,6 +96,10 @@ class Terminal extends Component {
 		dispatch(showModal('EMPLOYEE_PUNCH_CLOCK_FORM_MODAL', modalProps))
 	}
 
+	dispatchItemModificationScreen() {
+		const { dispatch } = this.props
+		dispatch(showModal('MODIFY_ITEMS_SCREEN_MODAL', {}))
+	}
 	render() {
 		const { match, menuItems, isAuthenticated, tickets, activeTicket, token, activeSalesReport } = this.props;
 		
@@ -117,7 +122,7 @@ class Terminal extends Component {
 					<Button inverted className='terminal-button' onClick={this.dispatchAddItemModal}>
 						<Icon size='large'className='iconPosition' name='barcode' /> Add New Item
 					</Button>
-					<Button inverted className='terminal-button'>
+					<Button inverted className='terminal-button' onClick={this.dispatchItemModificationScreen}>
 						<Icon size='large'className='iconPosition' name='table' /> Modify Items
 					</Button>
 

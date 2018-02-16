@@ -2,16 +2,65 @@ import fetch from 'cross-fetch'
 import { push } from 'react-router-redux'
 import { groupBy } from 'underscore'
 
+import { showModal } from './modals'
+
 function organizeItemsToCategories(ArrayOfAllMenuItemObjects) {
 	
 	const categorizedMenuItems = groupBy(ArrayOfAllMenuItemObjects, 'category');
-	console.log(categorizedMenuItems); // Comment out Later
 	return {
-	type: 'RECEIVE_MENU_ITEMS',
-	categorizedMenuItems
+			type: 'RECEIVE_MENU_ITEMS',
+			categorizedMenuItems
 	}
 
 }
+
+function receiveMenuItemFocus(menuItem) {
+	return{
+		type: 'FOCUS_MENU_ITEM',
+		menuItem
+	}
+}
+
+export function fetchMenuItemByIdToModify(token, item_id) {
+	const url = 'http://localhost:3001/menus/' + item_id 
+	return dispatch => {
+		return fetch(url, {
+			headers: {
+				'Content-Type': 'application/json',
+				'x-access-token': token,
+			},
+			method: 'GET',
+			mode: 'cors',
+		})
+		.then(response => response.ok ? response.json() : console.log(response.statusText))
+		.then(json => {
+			dispatch(receiveMenuItemFocus(json))
+			dispatch(showModal('MODIFY_ITEM_FORM_MODAL', {}))
+		})
+		.catch(err => console.log(err)) 
+	}
+}
+
+export function updateMenuItemProperties(token, item_id, newProps) {
+	const url = 'http://localhost:3001/menus/' + item_id
+	return dispatch => {
+		return fetch(url, {
+			headers: {
+				'Content-Type': 'application/json',
+				'x-access-token': token,
+			},
+			method: 'PUT',
+			mode: 'cors',
+			body: JSON.stringify(newProps),
+		})
+		.then(response => response.ok ? response.json() : console.log(response.statusText))
+		.then(json => {
+			dispatch(receiveMenuItemFocus(json))
+		})
+		.catch(err => console.log(err))
+	}
+}
+
 export function createNewMenuItem(token, data) {
 	return dispatch => {
 		return fetch('http://localhost:3001/menus', {

@@ -49,7 +49,7 @@ module.exports.updateMenuItemById = function (req, res, next) {
 		{ new: true }, function(err, menuItem) {
 		if (err) return next(err);
 		if (!menuItem) res.status(404).send("No menu item with that ID!")
-		res.status(200).send("Successfully updated Menu Item");
+		res.json(menuItem);
 	})
 }
 module.exports.deleteMenuItemById = function (req, res, next) {

@@ -64,6 +64,10 @@ const menuItemsReducer = (state = {isInvalidated: false, isFetching: false}, act
 		return Object.assign({}, state, {
 			visibleCategory: action.visibleCategory
 		})
+	case('FOCUS_MENU_ITEM'):
+		return Object.assign({}, state, {
+			itemInFocus: action.menuItem
+		})
 	default:
 		return state
 	}	

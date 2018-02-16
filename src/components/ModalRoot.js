@@ -10,6 +10,8 @@ import AddPointOfSaleItemModal from './AddPointOfSaleItemModal'
 import TransactionHistoryModal from './TransactionHistoryModal'
 import WaiterCallScreenModal from './WaiterCallScreenModal'
 import EmployeePunchClockFormModal from './EmployeePunchClockFormModal'
+import ModifyItemScreenModal from './ModifyItemScreenModal'
+import ModifyItemFormModal from './ModifyItemFormModal'
 
 const MODAL_COMPONENTS = {
 	'CONFIRM_CART_ADDITION': ConfirmCartAdditionModal,
@@ -19,7 +21,9 @@ const MODAL_COMPONENTS = {
 	'ADD_POINT_SALE_ITEM': AddPointOfSaleItemModal,
 	'DISPLAY_ALL_TRANSACTIONS': TransactionHistoryModal,
 	'SELECT_EMPLOYEE_OPENING_TICKET': WaiterCallScreenModal,
-	'EMPLOYEE_PUNCH_CLOCK_FORM_MODAL': EmployeePunchClockFormModal
+	'EMPLOYEE_PUNCH_CLOCK_FORM_MODAL': EmployeePunchClockFormModal,
+	'MODIFY_ITEMS_SCREEN_MODAL': ModifyItemScreenModal,
+	'MODIFY_ITEM_FORM_MODAL': ModifyItemFormModal,
 }
 
 
