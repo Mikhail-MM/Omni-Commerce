@@ -42,8 +42,6 @@ class ModifyItemForm extends Component {
 
 	handleSubmit() {
 		const { token, itemInFocus, dispatch } = this.props
-		console.log(itemInFocus)
-		console.log(itemInFocus._id)
 		dispatch(updateMenuItemProperties(token, itemInFocus._id, this.state))
 
 	}
