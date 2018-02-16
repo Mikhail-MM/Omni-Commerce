@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Redirect} from 'react-router-dom'
 import { Table, Button, Icon } from 'semantic-ui-react'
 import { setVisibleCategory, updateTransactionWithMenuItem, updateTicketStatus, updateTransactionWithSubdocRemoval } from '../actions/tickets-transactions'
 
@@ -32,7 +33,7 @@ class TerminalActionScreenMockup extends Component {
 	buildMenuCategorySelection() {
 		const { menuItems } = this.props
 			return Object.keys(menuItems).map(j => {
-				return <button key= {j} className="category-selection" onClick = {this.sendCategorySelectionDispatch.bind(this, j)}>{j}</button>})
+				return <Button color="black" key= {j} className="category-selection" onClick = {this.sendCategorySelectionDispatch.bind(this, j)}>{j}</Button>})
 	}	
 
 	sendCategorySelectionDispatch(category) {
@@ -62,7 +63,7 @@ class TerminalActionScreenMockup extends Component {
 	iterateThruObject(currentKey) {
 		const { menuItems, token, activeTicket, dispatch } = this.props
 		const selector = currentKey
-  			return menuItems[selector].map(item => <div className={selector} key={item._id} onClick={this.handleClicktoFetch.bind(this, token, item._id, activeTicket._id, dispatch)}>{item.itemName}</div>)
+  			return menuItems[selector].map(item => <Button color="black" className={selector} key={item._id} onClick={this.handleClicktoFetch.bind(this, token, item._id, activeTicket._id, dispatch)}>{item.itemName}</Button>)
 	}
 
 	handleClicktoFetch(token, menuItem_Id, currentTransaction_Id, dispatch) { 
@@ -91,13 +92,13 @@ class TerminalActionScreenMockup extends Component {
 	
 	generateLedgerFromActiveTicket() {
 		const { activeTicket, token } = this.props
-		// Add unique option to only return Addon button on LAST element of the array
+		// Add unique option to only return Addon Button on LAST element of the array
 		return activeTicket.items.map((item, index, array) => {
 			if (index == array.length - 1) {
 				return (
 					<Table.Row key={item._id}>
-					 <Table.Cell><button onClick={this.pullItemFromTicketItemsArray.bind(this, token, item._id, activeTicket._id)}>Remove</button></Table.Cell>
-					 <Table.Cell><button onClick={this.handleAddonRequest}>AddOn</button></Table.Cell>
+					 <Table.Cell><Button  color="black" onClick={this.pullItemFromTicketItemsArray.bind(this, token, item._id, activeTicket._id)}>Remove</Button></Table.Cell>
+					 <Table.Cell><Button  color="black" onClick={this.handleAddonRequest}>AddOn</Button></Table.Cell>
 					 <Table.Cell>{item.itemName}</Table.Cell>
 					 <Table.Cell>${item.itemPrice}</Table.Cell>
 					</Table.Row>
@@ -105,7 +106,7 @@ class TerminalActionScreenMockup extends Component {
 			}
 			return(
 				<Table.Row key={item._id}>
-				 <Table.Cell><button onClick={this.pullItemFromTicketItemsArray.bind(this, token, item._id, activeTicket._id)}>Remove</button></Table.Cell>
+				 <Table.Cell><Button color="black" onClick={this.pullItemFromTicketItemsArray.bind(this, token, item._id, activeTicket._id)}>Remove</Button></Table.Cell>
 				 <Table.Cell></Table.Cell>
 				 <Table.Cell>{item.itemName}</Table.Cell>
 				 <Table.Cell>${item.itemPrice}</Table.Cell>
@@ -114,7 +115,7 @@ class TerminalActionScreenMockup extends Component {
 		})
 	}
 	displayPricingFromActiveTicket() {
-		const { activeTicket } = this.props
+		const { activeTicket, menuItems } = this.props
 		return(
 		 <Table.Footer> 
 		  <Table.Row>
@@ -137,12 +138,14 @@ class TerminalActionScreenMockup extends Component {
 		)
 	}
 	render() {
-		const { token, menuItems, activeTicket } = this.props
+		const { token, menuItems, activeTicket, isAuthenticated} = this.props
 		const { showCardPaymentForm, showCashPaymentForm } = this.state
 		
 		return(
 		<div className="action-screen-wrapper" >
+
 			<div className="left-40" >
+				{!isAuthenticated && <Redirect to='/login' />}
 
 				<Table celled inverted selectable>
 					
@@ -168,15 +171,15 @@ class TerminalActionScreenMockup extends Component {
 					<div className="category-navigation">
 						{menuItems && this.buildMenuCategorySelection()}
 					</div>
-					<div className="menu-item-buttons">
+					<div className="menu-item-Buttons">
 						{menuItems && activeTicket && this.iterateThruCategories()}
 					</div>
-					<div className="action-buttons" >
-						<button onClick={this.handleTicketStatusUpdate.bind(this, token, "Fired")}>Fire Ticket</button>
-						<button onClick={this.handleTicketStatusUpdate.bind(this, token, "Void")}>Void Ticket</button>
-						<button onClick={this.handleTicketStatusUpdate.bind(this, token, "Delivered")}>Order Delivered</button>
-						<button onClick={this.toggleCashPaymentFormUI}>Pay With Cash</button>
-						<button onClick={this.toggleCardPaymentFormUI}>Pay With Stripe</button>
+					<div className="action-Buttons" >
+						<Button onClick={this.handleTicketStatusUpdate.bind(this, token, "Fired")}>Fire Ticket</Button>
+						<Button onClick={this.handleTicketStatusUpdate.bind(this, token, "Void")}>Void Ticket</Button>
+						<Button onClick={this.handleTicketStatusUpdate.bind(this, token, "Delivered")}>Order Delivered</Button>
+						<Button onClick={this.toggleCashPaymentFormUI}>Pay With Cash</Button>
+						<Button onClick={this.toggleCardPaymentFormUI}>Pay With Stripe</Button>
 						{showCardPaymentForm && <Checkout />}
 						{showCashPaymentForm && <CashPaymentForm />}
 						{ this.state.showAddonScreen && <AddCustomAddonForm/> }
@@ -189,4 +192,4 @@ class TerminalActionScreenMockup extends Component {
 	}
 }
 
-export default TerminalActionScreenMockup;
+export default connect(mapStateToProps)(TerminalActionScreenMockup);

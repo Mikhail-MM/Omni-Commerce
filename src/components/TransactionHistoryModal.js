@@ -49,9 +49,9 @@ class TransactionHistoryModal extends Component {
 					style={customStyles}
 					contentLabel="Example Modal"
 				>
-					<Segment raised>
+					<Segment inverted raised>
 					<TransactionHistoryDisplay />
-					<Button color='black' onClick={this.deactivateModal}> Cancel </Button>
+					<Button fluid color='black' onClick={this.deactivateModal}> Cancel </Button>
 					</Segment>
 				</Modal>
 			</div>

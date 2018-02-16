@@ -105,7 +105,7 @@ class OnlineMerchantRegistrationForm extends Component {
 			<Form size="large" onSubmit={this.handleSubmit}>
 				<Message>
 					Help us get your online shop up and running! <br/> Your email will be used to log into your account and manage your inventory.<br/>
-					Your billing and shipping information is used to deliver goods that you purchase from other users!
+					Your billing and shipping information is used to pay for and recieve delivered goods that you purchase from other users!
 				</Message>
 				<Form.Group>
 					<Form.Input  label={<Label>First Name </Label>} placeholder="First Name" width={8} value={this.state.firstName} onChange={e => this.handleChange('firstName', e.target.value)}/>

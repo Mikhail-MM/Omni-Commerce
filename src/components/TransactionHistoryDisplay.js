@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Table } from 'semantic-ui-react'
+import moment from 'moment'
 
 import { fetchCurrentTicketDetails } from '../actions/tickets-transactions'
 
@@ -22,10 +24,7 @@ class TransactionHistoryDisplay extends Component {
 		const { tickets } = this.props;
 
 		return ( Object.keys(tickets).map(ticketStatusCategory => {
-			return ( <div key={ticketStatusCategory} className="TODOClassCheck"> 
-						{ this.iterateThruTicketsByStatus(ticketStatusCategory) }
-					 </div>
-			)
+			return ( this.iterateThruTicketsByStatus(ticketStatusCategory) )
 		}))
 	}
 
@@ -34,9 +33,13 @@ class TransactionHistoryDisplay extends Component {
 		const { token, tickets, dispatch } = this.props
 
 		return ( tickets[ticketStatusCategory].map(ticket => {
-			return ( <div className={ticketStatusCategory} key={ticket._id} onClick={this.loadActiveTicket.bind(this, token, ticket._id, dispatch)}>
-						{ticket.status} Ticket {ticket._id}
-					 </div>
+			return ( 
+					<Table.Row key={ticket._id} onClick={this.loadActiveTicket.bind(this, token, ticket._id, dispatch)}>
+						<Table.Cell> {ticket.status} </Table.Cell>
+						<Table.Cell> {ticket.createdBy} </Table.Cell>
+						<Table.Cell> {moment(ticket.createdAt).format('h:mm:ss a')} </Table.Cell>
+						<Table.Cell> $ {ticket.total} </Table.Cell>
+					</Table.Row>
 			)
 		}))
 	}
@@ -48,9 +51,21 @@ class TransactionHistoryDisplay extends Component {
 	render() {
 		const { tickets } = this.props
 		return (
-			<div className="innerModalContainer_ticketHistory">
-			{ tickets && this.iterateThruTicketStatusCategories() }
-			</div>
+
+				<Table celled inverted selectable>
+					
+					<Table.Header>
+						<Table.Row>
+							<Table.HeaderCell> Ticket Status </Table.HeaderCell>
+							<Table.HeaderCell> Server </Table.HeaderCell>
+							<Table.HeaderCell> Time Created </Table.HeaderCell>
+							<Table.HeaderCell> Total Charge </Table.HeaderCell>
+						</Table.Row>
+					</Table.Header>
+					<Table.Body>
+						{ tickets && this.iterateThruTicketStatusCategories() }
+					</Table.Body>
+				</Table>
 		)
 	}
 

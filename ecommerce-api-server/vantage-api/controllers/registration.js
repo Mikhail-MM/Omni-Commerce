@@ -46,30 +46,23 @@ createTerminalAccount = function(req, res, next) {
 		isMaster: false,
 		isAdmin: false,
 		mongoCollectionKey: req.body.mongoCollectionKey, 
-		organizationName: req.body.organizationName,
 		password: req.body.mongoCollectionKey, // change later
 		accountType: "Terminal"
 	}
 
-	var newClient = new Client(data);
-	if (!newClient.hash) {
+	var newTerminal = new Client(data);
+	if (!newTerminal.hash) {
 			var plaintext = data.password;
 			const saltRounds = 10;
 			
-			bcrypt.hash(plaintext, saltRounds).then(function(hash) {
+			bcrypt.hash(plaintext, saltRounds).then(async (hash) => {
 				
-				newClient.hash = hash;
+				newTerminal.hash = hash;
 				
 				// convert to async/await try/catch
-				newClient.save(function(err, client) {
-					if (err) return next(err);
-					console.log("New Terminal Account Created:")
-					console.log(client)
-					req.body.clientForRollback = client;
-					next();
-				});
-			}).catch(function(error){
-				console.log("Unexpected Error: " + error);
+				const savedTerminal = await newTerminal.save()
+
+				next();
 		});
 	};
 

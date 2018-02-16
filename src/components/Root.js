@@ -20,7 +20,6 @@ import AdminTerminal from './AdminTerminal'
 import MyStoreHomepage from './MyStoreHomepage'
 import TerminalActionScreenMockup from './TerminalActionScreenMockup'
 
-
 const loggerMiddleware = createLogger()
 const history = createHistory()
 
@@ -48,7 +47,7 @@ export default class Root extends Component {
 						<Route path="/terminal" component={Terminal} />
 						<Route path="/marketplaceDashboard" component={OnlineMerchantDashboard} />
 						<Route exact path="/ticket" component={TerminalActionScreenMockup} />
-						<Route path="/register_business_organization" component={RegisterForm}/>
+						<Route path="/register_business_organization" component={RegisterForm} />
 						<Route path="/register_merchant" component={OnlineMerchantRegistrationForm} />
 						<Route path="/admin" component={AdminTerminal} />
 						<Route path="/marketplace_landing" component={MyStoreHomepage} />
