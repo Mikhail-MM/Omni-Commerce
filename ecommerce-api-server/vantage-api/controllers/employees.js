@@ -2,6 +2,7 @@ const Client = require('../models/schemas/client');
 
 module.exports.findMyEmployees = async function(req, res, next) {
 	try {
+		console.log("Looking for employees")
 		const myEmployees = await Client.find({organizationName: req.body.client.organizationName})
 		if (!myEmployees) return res.status(404).send("Could not find any employees in this organization")
 		res.json(myEmployees)
@@ -47,7 +48,7 @@ module.exports.sendPrivateEmployeeInvitation = async function(req, res, next) {
 		// Run Functions to establish Clock-In numbers and update Admin employee count
 
 		const data = {
-			lastName = req.body.lastName,
+			lastName: req.body.lastName,
 			userName: req.body.firstName,
 			phoneNumber: req.body.phoneNumber,
 			email: req.body.email,

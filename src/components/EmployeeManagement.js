@@ -1,38 +1,54 @@
 // This is an Admin Only Component. 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Icon, Item, Button } from 'semantic-ui-react'
+import { fetchAllEmployees } from '../actions/employees'
 
+import employeeFace from '../assets/image-2.png'
 function mapStateToProps(state) {
 	const { token } = state.authReducer
-	const { employees } = state.employeeManagementReducer
+	const { employees } = state.employeeReducer
 	return { token, employees }
 }
 
 class EmployeeManagement extends Component {
 	constructor(props) {
-		super(props)
-		this.state = {
+		super(props);
+		this.drawEmployeeMenu = this.drawEmployeeMenu.bind(this);
+	}
 
-		}
-		this.showEmployeeMenu = this.showEmployeeMenu.bind(this)
+	componentDidMount() {
+		const { dispatch, token } = this.props;
+		dispatch(fetchAllEmployees(token))
 
 	}
 
-	showEmployeeMenu() {
+	drawEmployeeMenu() {
 		const { employees } = this.props
-		return employees.map(
-			return <div>This is an employee</div>
-		)
+		return employees.map(employee => {
+			return(
+				<Item>
+					<Item.Image avatar size='tiny' src={employeeFace} />
+
+					<Item.Content>
+							<Item.Header> {employee.firstName} {employee.lastName} </Item.Header>
+							<Item.Meta> Waiter </Item.Meta>
+							<Item.Description> <Icon name=""/>Some sort of description stuff</Item.Description>
+							<Item.Extra>
+								<Button> Approve Employee </Button>
+							</Item.Extra>
+					</Item.Content>
+				</Item>
+			)
+		});
 	}
+
 	render() {
-		const { employees } = this.props
+		const { employees } = this.props;
 		return(
-			<div>
-				<h4>
-					You should be able to see all of your employees here - Hire, Fire, and Enroll New Applicants
-				</h4>
-				{employees && this.showEmployeeMenu}
-			</div>
+			<Item.Group divided className='employee-management-ui-container'>
+				{employees && this.drawEmployeeMenu()}
+			</Item.Group>
 		)
 	}
 }

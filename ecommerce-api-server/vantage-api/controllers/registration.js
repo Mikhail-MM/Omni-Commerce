@@ -84,7 +84,6 @@ findMasterAndTagChild = async function(req, res, next) {
 
 		if (!boss) { 
 			console.log("Master Account does not exist - Delete client and abort ! ")
-			Client.findOneAndRemove({_id: req.body.clientForRollback._id})
 			return res.status(400).send("Could not find a Master account with that organization name - Retry please") 
 		}
 

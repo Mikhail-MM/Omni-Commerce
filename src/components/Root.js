@@ -15,7 +15,6 @@ import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
 import OnlineMerchantRegistrationForm from './OnlineMerchantRegistrationForm'
 import Terminal from './Terminal'
-import TicketActionScreen from './TicketActionScreen'
 import OnlineMerchantDashboard from './OnlineMerchantDashboard'
 import AdminTerminal from './AdminTerminal'
 import MyStoreHomepage from './MyStoreHomepage'
@@ -48,12 +47,11 @@ export default class Root extends Component {
 						<Route exact path="/login" component={LoginForm} />
 						<Route path="/terminal" component={Terminal} />
 						<Route path="/marketplaceDashboard" component={OnlineMerchantDashboard} />
-						<Route exact path="/ticket" component={TicketActionScreen} />
-						<Route path="/login/registerPOS" component={RegisterForm}/>
-						<Route path="/login/registerMerchant" component={OnlineMerchantRegistrationForm} />
+						<Route exact path="/ticket" component={TerminalActionScreenMockup} />
+						<Route path="/register_business_organization" component={RegisterForm}/>
+						<Route path="/register_merchant" component={OnlineMerchantRegistrationForm} />
 						<Route path="/admin" component={AdminTerminal} />
 						<Route path="/marketplace_landing" component={MyStoreHomepage} />
-						<Route path="/table" component={TerminalActionScreenMockup} />
 
 				</Switch>
 			</ConnectedRouter>

@@ -14,7 +14,7 @@ const config = require('./models/config');
 
 const clients = require('./controllers/clients');
 const employees = require('./controllers/employees');
-const messages = require('/controllers/messages')
+const messages = require('./controllers/messages')
 const menus = require('./controllers/menus');
 const transactions = require('./controllers/transactions');
 const authorize = require('./controllers/authorize');
@@ -74,18 +74,18 @@ router.route('/clients/:id')
 router.route('/messages')
 	.get(authorize.routeEmployeeToMongoCollection, messages.getAllMyMessages)
 	.post(authorize.routeEmployeeToMongoCollection, messages.composeNewMessage)
-	.delete(authorize.routeEmployeeToMongoCollection, messages.deleteMessage)
+	.delete(authorize.routeEmployeeToMongoCollection, messages.deleteMessage);
 
 router.route('/announcements')
 	.get(authorize.routeEmployeeToMongoCollection, messages.getAllAnnouncementsByOrganization)
 	.post(authorize.routeEmployeeToMongoCollection, messages.composeNewAnnouncement)
-	.delete(authorize.routeEmployeeToMongoCollection, authorize.adminRequired, messages.deleteMessage)
+	.delete(authorize.routeEmployeeToMongoCollection, authorize.adminRequired, messages.deleteMessage);
 
-router.route('employees/find_all')
-	.get(authorize.routeEmployeeToMongoCollection, employees.findMyEmployees)
+router.route('/employees/find_all')
+	.get(authorize.routeEmployeeToMongoCollection, employees.findMyEmployees);
 
 router.route('/menus/noIDhack/:id')
-	.get(authorize.routeEmployeeToMongoCollection, menus.getMenuItemByIdNoReturnId)
+	.get(authorize.routeEmployeeToMongoCollection, menus.getMenuItemByIdNoReturnId);
 router.route('/menus')
 	.get(authorize.routeEmployeeToMongoCollection, menus.getAllMenuItems)
 	.post(authorize.routeEmployeeToMongoCollection, menus.createNewMenuItem);

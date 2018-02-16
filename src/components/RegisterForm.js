@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { push } from 'react-router-redux'
+
 import LoginForm from './LoginForm'
 import AutoCompleteSuggestionsBox from './AutoCompleteSuggestionsBox'
 import fetch from 'cross-fetch'
@@ -16,32 +16,8 @@ function mapStateToProps(state) {
 	const { isAuthenticated } = state.authReducer;
 	return {
 		isAuthenticated,
-		//userPermissions,
-		//instanceType
 	}
 }
-
-
-
-/*
-		// Unused code - Autocomplete organization lookup discarded in favor of private invites by Employer
-		
-class AutoCompleteSuggestions extends Compoenent {
-	constructor(props) {
-		super(props)
-		this.state = {}
-	}
-
-	render() {
-		<ul>
-		// send employers found as props
-		// employersArray.map(emp => <li onclick= {this.handleParentClick}> emp.orgname <li>)
-		// pass clickhandle from registerform as that handler will be using registerforms props and altering registerforms state (value of find employer)
-		<ul>
-	}
-
-}
-*/
 
 class RegisterForm extends Component { 
 
@@ -58,17 +34,13 @@ class RegisterForm extends Component {
 			isEmployee: false,
 			employerLookup: '',
 			organizationName:'',
-			autoCompleteArray: [],
 		}
 
 		this.state = Object.assign({}, this.initialState, {hasError: false, validationErrors: []})
 
 		this.handleBusinessOwnerRegisterCheck = this.handleBusinessOwnerRegisterCheck.bind(this);
 		this.handleEmployeeRegisterCheck = this.handleEmployeeRegisterCheck.bind(this);
-		this.handleEmployerLookupCheck = this.handleEmployerLookupCheck.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.finishAutoComplete = this.finishAutoComplete.bind(this);
-
 	}
 	
 	handleBusinessOwnerRegisterCheck(event) {
@@ -79,41 +51,9 @@ class RegisterForm extends Component {
 		this.setState(
 			Object.assign({}, ...this.state, {isEmployee: !this.state.isEmployee, organizationName: '' }))
 	}
-	handleEmployerLookupCheck(event) {
-		this.setState(
-			Object.assign({}, ...this.state, { employerLookup: event.target.value }))
-				    fetch('http://localhost:3001/clients/lookup', {
-		    			headers:{
-		    				'Content-Type': 'application/json'
-		    			},
-		    				method: 'POST',
-		    				mode: 'cors',
-		    				body: JSON.stringify(this.state)
-		    			}).then(res => {
-		    				/*
-		    				console.log(res)
-		    				console.log(res._bodyText)
-		    				const JSONresponse = res._bodyText;
-		    				console.log(JSONresponse.json())
-		    				console.log(typeof(JSONresponse))
-		    				//const parsedArray = JSONresponse.map((r) => JSON.parse(r))
-		    				*/
-		    				return res.json()
-		    			})
-		    			.then(responseJSON => responseJSON.map((r) => r.organizationName))
-		    			.then(organizations => {
-		    				this.setState(
-		    					Object.assign({}, ...this.state, {autoCompleteArray: organizations}))
-		    			})
-			
-	}
 	handleOrganizationChange(event) {
 		this.setState(
 			Object.assign({}, ...this.state, {organizationName: event.target.value}))
-	}
-
-	finishAutoComplete(arrayOfOrganizations) {
- 	// Why is this DELETED and MISSING? OMG?
 	}
 	
 	throwError(errorMessage) { 

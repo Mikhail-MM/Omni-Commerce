@@ -53,7 +53,7 @@ class WaiterCallScreenModal extends Component {
 					<Segment raised>
 					{ (formSelector === "Clock In" ) && <ClockInOutForm option={formSelector}/> }
 					{ (formSelector === "Clock Out" ) && <ClockInOutForm option={formSelector}/> }
-					<Button color='black' onClick={this.deactivateModal}> Cancel </Button>
+					<Button fluid color='black' onClick={this.deactivateModal}> Cancel </Button>
 					</Segment>
 				</Modal>
 			</div>

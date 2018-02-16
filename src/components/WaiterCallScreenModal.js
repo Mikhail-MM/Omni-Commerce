@@ -49,10 +49,8 @@ class WaiterCallScreenModal extends Component {
 					style={customStyles}
 					contentLabel="Example Modal"
 				>
-					<Segment raised>
 					<WaiterCallScreenMenu />
-					<Button color='black' onClick={this.deactivateModal}> Cancel </Button>
-					</Segment>
+					<Button fluid color='black' onClick={this.deactivateModal}> Cancel </Button>
 				</Modal>
 			</div>
 		)

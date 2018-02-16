@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { clockEmployeeIn, clockEmployeeOut } from '../actions/timeSheets'
 
+import { Form, Button, Segment } from 'semantic-ui-react'
+
 
 function mapStateToProps(state) {
 	const { token } = state.authReducer;
@@ -26,6 +28,8 @@ class ClockInOutForm extends Component {
 			Object.assign({}, ...this.state, {employeeNumber: event.target.value}))
 		console.log(this.state.employeeNumber)
 	}
+
+	// Dispatch a success modal
 	handleClockIn(event) {
 		console.log("Firing handleClockIn function")
 		const { dispatch, token } = this.props
@@ -47,26 +51,31 @@ class ClockInOutForm extends Component {
 		const ClockIn = (option === "Clock In")
 		const ClockOut = (option === "Clock Out")
 		return(
-		<div>
+		<Segment className="timesheetEntryModal" raised>
 		{ ClockIn && 
-			<form onSubmit={this.handleClockIn}>
-				<label>
-					Clock In Employee Number:
-					<input type='text' value={this.state.employeeNumber} onChange={this.handleChange} />
-				</label> 
-				<input type="submit" value="submit"/>
-			</form> }
+			<Form onSubmit={this.handleClockIn}>
+				<Form.Input
+					fluid
+					placeholder='Employee Number'
+					type='text'
+					value={this.state.employeeNumber} 
+					onChange={this.handleChange}
+				/>
+				<Form.Button fluid size='large' content='Submit'>Clock In</Form.Button>
+			</Form> }
 		{ ClockOut && 
-			<form onSubmit={this.handleClockOut}>
-				<label>
-					Clock Out Employee Number:
-					<input type='text' value={this.state.employeeNumber} onChange={this.handleChange} />
-				</label> 
-				<input type="submit" value="submit"/>
-			</form> 
+			<Form onSubmit={this.handleClockOut}>
+				<Form.Input
+					fluid
+					placeholder='Employee Number'
+					type='text'
+					value={this.state.employeeNumber} 
+					onChange={this.handleChange}
+				/>
+				<Form.Button fluid size='large' content='Submit'>Clock Out</Form.Button>
+			</Form>
 		}
-		
-		</div>
+		</Segment>
 		)
 	}
 }

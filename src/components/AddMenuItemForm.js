@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { createNewMenuItem } from '../actions/menu-items'
 import { connect } from 'react-redux'
+import { Form, Input, Segment } from 'semantic-ui-react'
 
 function mapStateToProps(state) {
 	const { token } = state.authReducer
@@ -44,7 +45,6 @@ class AddMenuItemForm extends Component {
 	}
 
 	handleSubmit(event) {
-		// Add to Redux?
 		const { token, dispatch } = this.props
 		event.preventDefault()
 		console.log(this.state);
@@ -55,21 +55,32 @@ class AddMenuItemForm extends Component {
 
 	render() {
 		return(
-		<form onSubmit={this.handleSubmit}>
-			<label>
-				Item:
-				<input type='text' value={this.state.itemName} onChange={this.handleItemNameChange} />
-			</label>
-			<label>
-				Price:
-				<input type='text' value={this.state.itemPrice} onChange={this.handleItemPriceChange} />
-			</label>
-			<label>
-				Category:
-				<input type='text' value={this.state.category} onChange={this.handleCategoryChange} />
-			</label>
-			<input type="submit" value="Enter new Item" />
-		</form>
+		<Form onSubmit={this.handleSubmit}>
+			<Segment className="addItemModalForm" raised>
+			<Form.Input
+				fluid
+				placeholder='Item Name'
+				type='text'
+				value={this.state.itemName} 
+				onChange={this.handleItemNameChange}
+			/>
+			<Form.Input
+				fluid
+				placeholder='Item Price'
+				type='text'
+				value={this.state.itemPrice} 
+				onChange={this.handleItemPriceChange}
+			/>
+			<Form.Input
+				fluid
+				placeholder='Category'
+				type='text'
+				value={this.state.category} 
+				onChange={this.handleCategoryChange}
+			/>
+			<Form.Button fluid size='large' content='Submit'>Add Item</Form.Button>
+			</Segment>
+		</Form>
 		)
 	}
 }

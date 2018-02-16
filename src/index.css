@@ -1,3 +1,14 @@
+/*
+	Add Item Modal
+*/
+.addItemModalForm {
+	min-width: 350px;
+}
+.timesheetEntryModal {
+	min-width: 350px;
+}
+
+
 /* 
 	Root Body Styling 
 */
@@ -73,16 +84,21 @@ body {
 }
 .admin-content-display_inner-wrapper {
 	margin: auto;
+	overflow: auto;
 	height: 100%;
-	width: 95%;
+	padding-left: 75px;
+	padding-right: 75px;
+	padding-bottom: 25px;
+	padding-top: 25px;
 }
 .admin-sidebar-and-content-wrapper {
 	display: flex;
-	height: 100vh;
+	height: calc(100vh - 53.2px);
 	width: 100%;
 }
 .admin-sidebar-menu {
 	width: 250px !important;
+	height: 100% !important;
 	background-color: rgba(0,0,0,.87);
 }
 
@@ -91,6 +107,12 @@ body {
 
 }
 
+/*
+	Employee Management Screen - Admin Component
+*/
+
+
+/*
 .admin-footer {
 	display: block;
 	text-align: center;
@@ -99,6 +121,8 @@ body {
 	color: #fff;
 	background-color: #3f1115;
 }
+*/
+
 .ui.menu {
 	height: 100%;
 }

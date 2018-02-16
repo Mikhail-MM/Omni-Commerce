@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
+import { Button, Segment } from 'semantic-ui-react'
 import { createNewTicket } from '../actions/tickets-transactions'
 
 function mapStateToProps(state) {
 	const { token } = state.authReducer
-	const { loggedInUsers } = state.activeEmployeesReducer
+	const { loggedInUsers } = state.employeeReducer
 	return { token, loggedInUsers }
 }
 
@@ -23,7 +23,7 @@ class WaiterCallScreenMenu extends Component {
 		const { token, loggedInUsers } = this.props
 		console.log(loggedInUsers)
 		
-		if (loggedInUsers) return loggedInUsers.map(server => <button key={server} onClick={this.postNewTicketByServerName.bind(this, token, server, dispatch)}>{server}</button>)	
+		if (loggedInUsers) return loggedInUsers.map(server => <Button color="black" key={server} onClick={this.postNewTicketByServerName.bind(this, token, server, dispatch)}>{server}</Button>)	
 
 	}
 
@@ -35,10 +35,9 @@ class WaiterCallScreenMenu extends Component {
 		const { loggedInUsers } = this.props
 		console.log(loggedInUsers)
 		return(
-			<div>
-			HELLO!? IS ANYONE THERE!??!?!
+			<Segment raised>
 			{ loggedInUsers && this.generateWaiterCallScreen() }
-			</div>
+			</Segment>
 		)
 	}
 }

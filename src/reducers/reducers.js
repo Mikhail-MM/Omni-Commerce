@@ -14,8 +14,6 @@ const authReducer = (state = initialState, action) => {
 			instanceType: action.userInfo.accountType,
 			token: action.userInfo.token,
 			hasError: false
-			// userPermissions: action.userInfo.userPermissions,
-			// instanceType: action.userInfo.instanceType
 			}
 		)
 	}
@@ -35,7 +33,7 @@ const authReducer = (state = initialState, action) => {
 	}
 }
 
-const EmployesReducer = (state = { loggedInUsers: [ 'Terminal' ] }, action) => {
+const employeeReducer = (state = { loggedInUsers: [ 'Terminal' ] }, action) => {
 	switch(action.type){
 	case ('RECEIVE_LOGGED_USERS'): {
 		return Object.assign({}, state, {
@@ -45,7 +43,7 @@ const EmployesReducer = (state = { loggedInUsers: [ 'Terminal' ] }, action) => {
 	}
 	case ('RECEIVE_ALL_EMPLOYEES'): {
 		return Object.assign({}, state, {
-			myEmployees: action.employees
+			employees: action.employees
 		})
 	}
 	default:
@@ -131,17 +129,6 @@ const errorNotificationsReducer = (state = { hasError: false }, action) => {
 	}
 }
 
-const employeeManagementReducer = (state = {}, action) => {
-	switch(action.type) {
-		case('RECEIVE_EMPLOYEES'):
-			return Object.assign({}, state, {
-				employees: action.employees
-			})
-		default:
-			return state
-	}
-}
-
 const marketplaceBrowserReducer = (state = {}, action) => {
 	switch(action.type) {
 		case('RECEIVE_ALL_MARKETPLACES'):
@@ -216,13 +203,12 @@ const modalReducer = (state = initialModalState, action) => {
 
 const rootReducer = combineReducers({
 	authReducer,
-	EmployesReducer,
+	employeeReducer,
 	menuItemsReducer,
 	ticketTrackingReducer,
 	salesReportReducer,
 	loadingSpinnerReducer,
 	errorNotificationsReducer,
-	employeeManagementReducer,
 	marketplaceBrowserReducer,
 	marketplaceItemsReducer,
 	shoppingCartReducer,

@@ -45,6 +45,7 @@ class RegistrationConfirmationModal extends Component {
 	render() {
 		const { modalType } = this.props
 		// Split this into 2 components which give conditional messages to be re-used in different registration
+		// Via ModalProps
 		return(	
 			<Modal
 				isOpen={modalType === 'REGISTRATION_CONFIRMATION_MODAL'}

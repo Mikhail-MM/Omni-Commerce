@@ -42,14 +42,14 @@ module.exports.composeNewAnnouncement = async function(req, res, next) {
 module.exports.globallyBroadcastAnnouncement = async function(req, res, next) {
 
 	try {
-		const globalAnnouncement = await Message.findOneAndUpdate({_id: req.body._id} {globalBroadcast: true}, {new: true})
+		const globalAnnouncement = await Message.findOneAndUpdate({_id: req.body._id}, {globalBroadcast: true}, {new: true})
 	} catch(err) { next(err) }
 }
 
 module.exports.muteGlobalAnnouncement = async function(req, res, next) {
 
 	try {
-		const globalAnnouncement = await Message.findOneAndUpdate({_id: req.body._id} {globalBroadcast: false}, {new: true})
+		const globalAnnouncement = await Message.findOneAndUpdate({_id: req.body._id}, {globalBroadcast: false}, {new: true})
 	} catch(err) { next(err) }
 }
 

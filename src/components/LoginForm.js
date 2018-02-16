@@ -5,9 +5,10 @@ import { Redirect, Link, withRouter } from 'react-router-dom'
 import { Button, Icon, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 
 function mapStateToProps(state) {
-	const {hasError, errorText } = state.authReducer;
-	return {hasError, errorText }
+	const { isAuthenticated, token, instanceType, hasError, errorText  } = state.authReducer
+	return { isAuthenticated, token, instanceType, hasError, errorText  }
 }
+
 class LoginForm extends Component {
 	constructor(props) {
 		super(props)
@@ -35,13 +36,13 @@ class LoginForm extends Component {
 		const { dispatch } = this.props
 		const credentials = this.state
 		console.log(credentials)
-		dispatch(attemptLogIn(credentials)); // need to add a .then() to determine where to PUSH the browser
+		dispatch(attemptLogIn(credentials));
 	}
 	
 
 	render() {
 
-		const { isAuthenticated, errorText } = this.props; // You must pull this into the render method, or else the thing will crash saying that isAuthenticated is undefined (it is, within the render scope)
+		const { isAuthenticated, errorText } = this.props; 
 		
 		return (
 			<div className='login-form'>
@@ -53,15 +54,6 @@ class LoginForm extends Component {
         			height: 100%;
       				}`}
       			</style>
-		{/* Best to turn this login thing into a dispatch Push action */}
-			
-			{ 	this.props.isAuthenticated && 
-				( this.props.instanceType === "Master" || this.props.instanceType === "Employee" || this.props.instanceType === "Terminal" ) && 
-				<Redirect to="/terminal" /> }
-			
-			{	this.props.isAuthenticated &&
-				( this.props.instanceType === "OnlineMerchant" ) && 
-				<Redirect to="/marketplaceDashboard" /> }
 			<Grid
 				textAlign='center'
 				style={{ height: '100%' }}
@@ -106,8 +98,8 @@ class LoginForm extends Component {
 				 </Form>
 				 <Message>
 						Don't have an account? Register now!<br/>
-						<Link to="/login/registerPOS">  Register for a Point of Sale Terminal account</Link><br/>
-						<Link to="/login/registerMerchant"> Register for an online merchant account </Link>
+						<Link to="/register_business_organization">  Register for a Point of Sale Terminal account</Link><br/>
+						<Link to="/login/register_merchant"> Register for an Online Merchant account to buy and sell goods! </Link>
 				</Message>
 			  </Grid.Column>
 			</Grid>
@@ -119,9 +111,5 @@ class LoginForm extends Component {
 
 }
 
-function mapStateToProps(state) {
-	const { isAuthenticated, token, instanceType, hasError, errorText  } = state.authReducer
-	return { isAuthenticated, token, instanceType, hasError, errorText  }
-}
 
 export default withRouter(connect(mapStateToProps)(LoginForm))

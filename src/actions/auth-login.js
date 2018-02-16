@@ -1,5 +1,6 @@
 import fetch from 'cross-fetch'
 import { showError } from './errors'
+import { routeUserToModule } from './routing'
 
 function throwError(errorMessage) { throw new Error(errorMessage) }
 
@@ -37,8 +38,11 @@ export function attemptLogIn(credentials) {
 		body: JSON.stringify(credentials)
 		})
 		.then(response => response.ok ? response.json() : throwError(response.statusText))
-		.then(json => dispatch(authSuccess(json)))
-		.catch(err => dispatch(authFail(err)))
+		.then(json => {
+			dispatch(authSuccess(json))
+			dispatch(routeUserToModule(json))
+		})
+		.catch(err => dispatch(authFail(err.message)))
 	}
 
 }

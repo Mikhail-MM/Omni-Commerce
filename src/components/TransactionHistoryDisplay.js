@@ -48,7 +48,7 @@ class TransactionHistoryDisplay extends Component {
 	render() {
 		const { tickets } = this.props
 		return (
-			<div>
+			<div className="innerModalContainer_ticketHistory">
 			{ tickets && this.iterateThruTicketStatusCategories() }
 			</div>
 		)

@@ -49,10 +49,8 @@ class AddPointOfSaleItemModal extends Component {
 					style={customStyles}
 					contentLabel="Example Modal"
 				>
-					<Segment raised>
 					<AddMenuItemForm />
-					<Button color='black' onClick={this.deactivateModal}> Get rid of this nonsense! </Button>
-					</Segment>
+					<Button fluid color='black' onClick={this.deactivateModal}> Cancel </Button>
 				</Modal>
 			</div>
 		)

@@ -21,7 +21,7 @@ import { promiseTest } from '../actions/marketplaces'
 
 // Recharts
 function mapStateToProps(state) {
-	const { loggedInUsers } = state.activeEmployeesReducer
+	const { loggedInUsers } = state.employeeReducer
 	const { token, isAuthenticated } = state.authReducer
 	const { menuItems, visibleCategory } = state.menuItemsReducer 
 	const { tickets, activeTicket } = state.ticketTrackingReducer
@@ -102,7 +102,7 @@ class Terminal extends Component {
 			<div className="page-wrapper">
 			<div className="terminal-nav-bar" >
 			</div>
-			{/*!isAuthenticated && <Redirect to='/login' /> */}
+			{!isAuthenticated && <Redirect to='/login' />}
 			<ModalRoot />
 			<Segment inverted color='black' className='terminal-navigation-wrapper'>
 			<div className='terminal-button-row'>

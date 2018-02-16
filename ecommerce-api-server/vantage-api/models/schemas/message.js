@@ -8,12 +8,11 @@ var messageSchema = new Schema({
 	isAnnouncement: Boolean,
 	sentTo: { type: Schema.Types.ObjectId, ref: 'Client' },
 	sentDate: { type: Date, required: true, default: Date.now },
-	isAnnouncement: { type: Boolean, required: true }
-	mongoKey: String,
-	messageReadStatus: Boolean
-	globalBroadcast: Boolean
+	isAnnouncement: { type: Boolean, required: true },
+	mongoCollectionKey: String,
+	messageReadStatus: Boolean,
+	globalBroadcast: Boolean,
 });
 
-var Message = mongoose.model('Message', messageSchema);
 
-module.exports Message = Message;
+module.exports.Message = mongoose.model('Message', messageSchema);
