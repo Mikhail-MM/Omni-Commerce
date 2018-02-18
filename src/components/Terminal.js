@@ -69,6 +69,8 @@ class Terminal extends Component {
 		dispatch(fetchAllTicketsAndGenerateSalesReport(token))
 	}
 
+	// TODO: Abstract all Modal Dispatches into single function dependent on passed string const argument
+	
 	dispatchWaiterCallModal() {
 		const { dispatch } = this.props
 		dispatch(showModal('SELECT_EMPLOYEE_OPENING_TICKET', {}))

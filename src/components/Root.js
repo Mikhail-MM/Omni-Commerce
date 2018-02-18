@@ -19,6 +19,7 @@ import OnlineMerchantDashboard from './OnlineMerchantDashboard'
 import AdminTerminal from './AdminTerminal'
 import MyStoreHomepage from './MyStoreHomepage'
 import TerminalActionScreenMockup from './TerminalActionScreenMockup'
+import Algo from './Algo'
 
 const loggerMiddleware = createLogger()
 const history = createHistory()
@@ -38,23 +39,24 @@ const store = createStore(
 export default class Root extends Component {
 	render() {
 		return (
-		<Provider store={store}>
-			<ConnectedRouter history={history}>
-				<Switch>
-						<Redirect exact="true" from="/" to="/login"/>
-						<Route path="/splash" render={() => <div> Marketing Splash </div> } />
-						<Route exact path="/login" component={LoginForm} />
-						<Route path="/terminal" component={Terminal} />
-						<Route path="/marketplaceDashboard" component={OnlineMerchantDashboard} />
-						<Route exact path="/ticket" component={TerminalActionScreenMockup} />
-						<Route path="/register_business_organization" component={RegisterForm} />
-						<Route path="/register_merchant" component={OnlineMerchantRegistrationForm} />
-						<Route path="/admin" component={AdminTerminal} />
-						<Route path="/marketplace_landing" component={MyStoreHomepage} />
+<Provider store={store}>
+	<ConnectedRouter history={history}>
+		<Switch>
+				<Redirect exact="true" from="/" to="/login"/>
+				<Route path="/splash" render={() => <div> Marketing Splash </div> } />
+				<Route exact path="/login" component={LoginForm} />
+				<Route path="/terminal" component={Terminal} />
+				<Route path="/marketplaceDashboard" component={OnlineMerchantDashboard} />
+				<Route exact path="/ticket" component={TerminalActionScreenMockup} />
+				<Route path="/register_business_organization" component={RegisterForm} />
+				<Route path="/register_merchant" component={OnlineMerchantRegistrationForm} />
+				<Route path="/admin" component={AdminTerminal} />
+				<Route path="/marketplace_landing" component={MyStoreHomepage} />
+				<Route path="/algo" component={Algo} />
 
-				</Switch>
-			</ConnectedRouter>
-		</Provider>
+		</Switch>
+	</ConnectedRouter>
+</Provider>
 		)
 	}
 }

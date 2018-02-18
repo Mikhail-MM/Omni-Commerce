@@ -1,9 +1,22 @@
 import React, { Component } from 'react'
-import { Card, Button, Image, Icon } from 'semantic-ui-react'
+import { connect } from 'react-redux'
+import { Card, Button, Image, Icon, Sidebar, Menu, Segment } from 'semantic-ui-react'
+
 import blouseImage from '../assets/marketBlouse.jpg'
+
+import ModalRoot from './ModalRoot'
+import { showModal } from '../actions/modals'
+
+import ShoppingCartSidebar from './ShoppingCartSidebar'
+
 class MyStoreHomepage extends Component {
 	constructor(props) {
 		super(props)
+		this.state = {
+			sidebarVisible: false
+		}
+		this.toggleSidebar = this.toggleSidebar.bind(this)
+		this.dispatchMarketplaceItemAddModal = this.dispatchMarketplaceItemAddModal.bind(this)
 	}
 
 	renderCards() {
@@ -29,9 +42,26 @@ class MyStoreHomepage extends Component {
 
 		})
 	}
+
+	toggleSidebar() {
+		this.setState({sidebarVisible: !this.state.sidebarVisible})
+	}
+
+	dispatchMarketplaceItemAddModal() {
+		const { dispatch } = this.props
+		dispatch(showModal('ADD_MARKETPLACE_ITEM', {}))
+	}
+
 	render() {
 		
 		return(
+			<Sidebar.Pushable>
+			<ModalRoot/>
+			<Sidebar className="tryMe" as={Menu} animation='overlay' width='very wide' visible={this.state.sidebarVisible} icon='labeled' inverted>
+				<ShoppingCartSidebar />
+			</Sidebar>
+			
+			<Sidebar.Pusher>
 			<div className='my-store-page-wrapper' >
 				<div className='my-store-sidebar-left'>
 					<div className='my-store-left-sidebar_button' >
@@ -43,7 +73,7 @@ class MyStoreHomepage extends Component {
 						<h5 className='my-store-left-sidebar_button_heading'> Messages </h5>					
 					</div>
 
-					<div className='my-store-left-sidebar_button my-store-left-sidebar_bottom-button' >
+					<div className='my-store-left-sidebar_button my-store-left-sidebar_bottom-button'>
 						<Icon className='my-store-left-sidebar_button_icon _last_icon' name='shopping cart' size='huge'/>
 						<h5 className='my-store-left-sidebar_button_heading'> My Cart </h5>					
 					</div>
@@ -84,13 +114,19 @@ class MyStoreHomepage extends Component {
 					</div>
 					<div className='shop-stats-container' >
 						<h5>Store Stats</h5>
+						<Button color="black" fluid onClick={this.toggleSidebar}> Browse All Marketplaces </Button>
+						<Button color="black" fluid> Browse All Items </Button>
+						<Button color="black" fluid onClick={this.dispatchMarketplaceItemAddModal}> Add Item To My Marketplace </Button>
 					</div>
 					<div className='bottom-menu' >
 					</div>
 				</div>
 			</div>
+			</Sidebar.Pusher>
+			</Sidebar.Pushable>
+
 		)
 	}
 }
 
-export default MyStoreHomepage
+export default connect()(MyStoreHomepage)

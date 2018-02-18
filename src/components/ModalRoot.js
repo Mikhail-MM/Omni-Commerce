@@ -12,6 +12,7 @@ import WaiterCallScreenModal from './WaiterCallScreenModal'
 import EmployeePunchClockFormModal from './EmployeePunchClockFormModal'
 import ModifyItemScreenModal from './ModifyItemScreenModal'
 import ModifyItemFormModal from './ModifyItemFormModal'
+import AddMarketplaceItemModal from './AddMarketplaceItemModal'
 
 const MODAL_COMPONENTS = {
 	'CONFIRM_CART_ADDITION': ConfirmCartAdditionModal,
@@ -24,6 +25,7 @@ const MODAL_COMPONENTS = {
 	'EMPLOYEE_PUNCH_CLOCK_FORM_MODAL': EmployeePunchClockFormModal,
 	'MODIFY_ITEMS_SCREEN_MODAL': ModifyItemScreenModal,
 	'MODIFY_ITEM_FORM_MODAL': ModifyItemFormModal,
+	'ADD_MARKETPLACE_ITEM': AddMarketplaceItemModal
 }
 
 

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { Menu } from 'semantic-ui-react'
+
 import { retrieveShoppingCart, pullItemFromCart } from '../actions/marketplaces'
 import { validateCartAndProceedToPayment } from '../actions/marketplaces'
 
@@ -12,7 +14,7 @@ function mapStateToProps(state) {
 }
 
 
-class ShoppingCart extends Component {
+class ShoppingCartSidebar extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -34,6 +36,9 @@ class ShoppingCart extends Component {
 		console.log("Attempting to generate Shopping Cart Elements")
 		console.log(shoppingCart)
 		console.log(shoppingCart.itemsBought)
+		if (!shoppingCart.itemsBought) {
+			return <Menu.Item header> Dangerous server error! Can't find your itemsBought array! </Menu.Item>
+		}
 		if (shoppingCart.itemsBought.length > 0) {
 			return shoppingCart.itemsBought.map(cartItem => {
 				return (<div>
@@ -48,9 +53,6 @@ class ShoppingCart extends Component {
 		}
 		else if (shoppingCart.itemsBought.length === 0) {
 			return <h3> Your shopping cart is empty </h3>
-		}
-		else if (!shoppingCart.itemsBought) {
-			return <h5> Dangerous server error! Can't find your itemsBought array! </h5>
 		}
 	}
 
@@ -76,12 +78,11 @@ class ShoppingCart extends Component {
 
 		return(
 			<div>
-			<h1>Shopping Cart</h1>
 			{ shoppingCart && this.generateShoppingCartDOMElements() }
-			<button onClick={this.handleCheckOut}>Check Out</button>
+			{ !shoppingCart && <Menu.Item header> We couldn't find your shopping cart! Sorry! </Menu.Item> }
 			</div>
 		)
 	}
 }
 
-export default connect(mapStateToProps)(ShoppingCart)
+export default connect(mapStateToProps)(ShoppingCartSidebar)

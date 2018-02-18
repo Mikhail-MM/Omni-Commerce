@@ -178,8 +178,12 @@ body {
 	My Store Viewer
 */
 
-.my-store-page-wrapper {
+.my-store-page-wrapper_sidebar-meta {
 	height: 100%;
+	width: 100%;
+}
+.my-store-page-wrapper {
+	height: 100vh;
 	width: 100%;
 	display:flex;
 }
@@ -347,6 +351,13 @@ body {
 	text-shadow: 0 0 0.2em #fff;
 }
 
+/*
+	Store - Left Overlay ShoppingCart Sidebar
+*/
+
+.tryMe > div {
+	background-color: red;
+}
 /* 
 	Terminal Action Screen
 */
