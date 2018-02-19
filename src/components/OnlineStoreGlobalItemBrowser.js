@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { Card, Image, Button, Icon } from 'semantic-ui-react'
+
 import { retrieveAllItemsForSale, retrieveItemById, pushItemIntoShoppingCart } from '../actions/marketplaces'
 import { showModal } from '../actions/modals'
 
-import ModalRoot from './ModalRoot'
+import blouseImage from '../assets/marketBlouse.jpg'
+
 import CartInvalidationAlert from './CartInvalidationAlert'
+
 function mapStateToProps(state) {
 	const { token } = state.authReducer
 	const { marketplaceItems, currentMarketplaceItem } = state.marketplaceItemsReducer
@@ -17,18 +21,39 @@ function mapStateToProps(state) {
 class OnlineStoreGlobalItemBrowser extends Component {
 	constructor(props) {
 		super(props)
-		this.state = {
-
-		}
 		this.generateItemPreviews = this.generateItemPreviews.bind(this)
 	}
 
 	componentDidMount() {
 		const { dispatch } = this.props;
-		console.log("Retrieving all items from Global Storefront Browser")
 		dispatch(retrieveAllItemsForSale())
 	}
 
+
+	renderMarketplaceItems() {
+		// Placeholder function to mock styling for real data to be retrieved from API
+		const { marketplaceItems } = this.props
+		return marketplaceItems.map(item => {
+			return (<div className='cardContainer'>
+						<Card>
+							<Image src={blouseImage} />
+							<Card.Content>
+								<Card.Header> {item.itemName} </Card.Header>
+								<Card.Meta> In-Stock: 5 </Card.Meta>
+								<Card.Description> A classy top that is sure to turn heads! </Card.Description>
+								<Card.Header> $ 16.99 </Card.Header>
+							</Card.Content>
+							<Card.Content extra>
+								<Button color='black'> <Icon name='add to cart' /> Add To Cart </Button>
+							</Card.Content>
+						</Card>
+					</div>
+					)
+
+		})
+	}
+
+	/*
 	generateItemPreviews() {
 		const { marketplaceItems } = this.props
 		return marketplaceItems.map(item => {
@@ -47,6 +72,7 @@ class OnlineStoreGlobalItemBrowser extends Component {
 			)
 		})
 	}
+	*/
 
 
 	confirmOrder(itemId){
@@ -67,9 +93,8 @@ class OnlineStoreGlobalItemBrowser extends Component {
 		return(
 			<div>
 			{ notifyUserOfCartInvalidation && <CartInvalidationAlert />}
-			<ModalRoot />
 			<h3> All Items </h3>
-			{marketplaceItems && this.generateItemPreviews()}
+			{ marketplaceItems && this.renderMarketplaceItems() }
 			</div>
 
 		)

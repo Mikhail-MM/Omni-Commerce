@@ -77,7 +77,7 @@ class ShoppingCartSidebar extends Component {
 		const { shoppingCart } = this.props
 
 		return(
-			<div>
+			<div className="shopping-cart-inner-container">
 			{ shoppingCart && this.generateShoppingCartDOMElements() }
 			{ !shoppingCart && <Menu.Item header> We couldn't find your shopping cart! Sorry! </Menu.Item> }
 			</div>

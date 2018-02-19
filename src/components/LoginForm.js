@@ -99,7 +99,7 @@ class LoginForm extends Component {
 				 <Message>
 						Don't have an account? Register now!<br/>
 						<Link to="/register_business_organization">  Register for a Point of Sale Terminal account</Link><br/>
-						<Link to="/login/register_merchant"> Register for an Online Merchant account to buy and sell goods! </Link>
+						<Link to="/register_merchant"> Register for an Online Merchant account to buy and sell goods! </Link>
 				</Message>
 			  </Grid.Column>
 			</Grid>

@@ -35,7 +35,9 @@ module.exports.updateStoreItemById = async function(req, res, next) {
 }
 module.exports.findAllItemsFromMarketplace = async function(req, res, next) {
 	try {
-		const marketplaceSpecificStoreItems = await StoreItemModel.find({marketplaceRef_Id: req.params.id})
+		console.log(req.params.id)
+		const marketplaceSpecificStoreItems = await StoreItemModel.find({marketplaceRef_id: req.params.id})
+			res.json(marketplaceSpecificStoreItems)
 		
 	} catch(err) { next(err) }
 }

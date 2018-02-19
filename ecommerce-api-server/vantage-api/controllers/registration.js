@@ -12,6 +12,9 @@ updateEmployerEmployeeCount = function(req, res, next) {
 
 
 module.exports.configureNewUser = function(req, res, next) {
+	console.log("Determining Type of User!")
+	console.log(req.body)
+	console.log(req.body.isOnlineMerchant)
 	if (req.body.isBusinessOwner) {
 		req.body.isMaster = true;
 		req.body.isAdmin = true;
@@ -25,6 +28,7 @@ module.exports.configureNewUser = function(req, res, next) {
 	}
 
 	if (req.body.isOnlineMerchant) {
+		console.log("Online MErchant Configuration")
 		const mongoCollectionKey = uuid4().slice(0, 13);
 		req.body.mongoCollectionKey = mongoCollectionKey;
 		req.body.accountType = "OnlineMerchant"

@@ -1,45 +1,40 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Card, Button, Image, Icon, Sidebar, Menu, Segment } from 'semantic-ui-react'
+import { Card, Button, Image, Icon, Item, Sidebar, Menu, Segment } from 'semantic-ui-react'
 
-import blouseImage from '../assets/marketBlouse.jpg'
 
 import ModalRoot from './ModalRoot'
 import { showModal } from '../actions/modals'
 
+import { retrieveAllMarketplaces, retrieveMarketplaceById } from '../actions/marketplaces'
+
+import OnlineStoreGlobalItemBrowser from './OnlineStoreGlobalItemBrowser'
+import OnlineStorefrontBrowser from './OnlineStorefrontBrowser'
+import OnlineStoreMarketplaceSpecificItemBrowser from './OnlineStoreMarketplaceSpecificItemBrowser'
 import ShoppingCartSidebar from './ShoppingCartSidebar'
 
+function mapStateToProps(state) {
+	const { allMarketplaces, currentMarketplace } = state.marketplaceBrowserReducer
+	const { marketplaceItems, currentMarketplaceItem } = state.marketplaceItemsReducer
+	return { allMarketplaces, currentMarketplace, marketplaceItems, currentMarketplaceItem }
+}
 class MyStoreHomepage extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			sidebarVisible: false
+			sidebarVisible: false,
+			mainContentVisible: 'AllMarketplaces'
 		}
 		this.toggleSidebar = this.toggleSidebar.bind(this)
 		this.dispatchMarketplaceItemAddModal = this.dispatchMarketplaceItemAddModal.bind(this)
+		this.setContentVisible = this.setContentVisible.bind(this)
 	}
 
-	renderCards() {
-		// Placeholder function to mock styling for real data to be retrieved from API
-		const cardsArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+	
 
-		return cardsArray.map(card => {
-			return (<div className='cardContainer'>
-						<Card>
-							<Image src={blouseImage} />
-							<Card.Content>
-								<Card.Header> Floral Blouse, Black </Card.Header>
-								<Card.Meta> In-Stock: 5 </Card.Meta>
-								<Card.Description> A classy top that is sure to turn heads! </Card.Description>
-								<Card.Header> $ 16.99 </Card.Header>
-							</Card.Content>
-							<Card.Content extra>
-								<Button color='black'> <Icon name='add to cart' /> Add To Cart </Button>
-							</Card.Content>
-						</Card>
-					</div>
-					)
-
+	setContentVisible(contentType) {
+		this.setState({
+			mainContentVisible: contentType
 		})
 	}
 
@@ -57,7 +52,7 @@ class MyStoreHomepage extends Component {
 		return(
 			<Sidebar.Pushable>
 			<ModalRoot/>
-			<Sidebar className="tryMe" as={Menu} animation='overlay' width='very wide' visible={this.state.sidebarVisible} icon='labeled' inverted>
+			<Sidebar className="shopping-cart-sidebar-wrapper" as={Menu} animation='overlay' width='very wide' visible={this.state.sidebarVisible} icon='labeled' inverted>
 				<ShoppingCartSidebar />
 			</Sidebar>
 			
@@ -95,7 +90,14 @@ class MyStoreHomepage extends Component {
 					<div className='store-main-content-nav-bar' >
 					</div>
 					<div className='my-store-main-content-border'>
-						{this.renderCards()}
+
+				
+						{ this.state.mainContentVisible === "AllItems" && <OnlineStoreGlobalItemBrowser /> }
+	
+						{ this.state.mainContentVisible === "AllMarketplaces" && <OnlineStorefrontBrowser changeVisibility={this.setContentVisible} /> }
+
+						{ this.state.mainContentVisible === "StoreItems" && <OnlineStoreMarketplaceSpecificItemBrowser />}
+
 					</div>
 
 
@@ -114,9 +116,10 @@ class MyStoreHomepage extends Component {
 					</div>
 					<div className='shop-stats-container' >
 						<h5>Store Stats</h5>
-						<Button color="black" fluid onClick={this.toggleSidebar}> Browse All Marketplaces </Button>
-						<Button color="black" fluid> Browse All Items </Button>
+						<Button color="black" fluid onClick={() => this.setContentVisible("AllMarketplaces")}> Browse All Marketplaces </Button>
+						<Button color="black" fluid onClick={() => this.setContentVisible("AllItems")}> Browse All Items </Button>
 						<Button color="black" fluid onClick={this.dispatchMarketplaceItemAddModal}> Add Item To My Marketplace </Button>
+						<Button color="black" fluid onClick={this.toggleSidebar}> Shopping Cart Sidebar </Button>
 					</div>
 					<div className='bottom-menu' >
 					</div>
@@ -129,4 +132,4 @@ class MyStoreHomepage extends Component {
 	}
 }
 
-export default connect()(MyStoreHomepage)
+export default connect(mapStateToProps)(MyStoreHomepage)

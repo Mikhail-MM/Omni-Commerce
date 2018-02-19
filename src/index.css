@@ -232,6 +232,15 @@ body {
 .cardContainer {
 	padding-bottom: 25px;
 }
+
+.storeItemContainer {
+	height: 100vh;
+	width: 100%;
+	overflow: auto;
+	display: flex;
+	flex-direction: column;
+}
+
 .my-store-left-sidebar_button {
 	display: flex;
 	flex-direction: column;
@@ -355,7 +364,12 @@ body {
 	Store - Left Overlay ShoppingCart Sidebar
 */
 
-.tryMe > div {
+.shopping-cart-sidebar-wrapper > .shopping-cart-inner-container {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	max-height: 100vh;
+	overflow: auto;
 	background-color: red;
 }
 /* 

@@ -72,6 +72,39 @@ export function retrieveItemsFromMarketplace(marketplaceId) {
 		.catch(err => console.log(err))
 	}
 }
+
+export function navigateToMarketplaceAndGrabItems(marketplaceId) {
+
+	const url = 'http://localhost:3001/marketplace/' + marketplaceId
+	console.log(marketplaceId, url)
+	return dispatch => {
+		fetch(url, {
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			method: 'GET',
+			mode: 'cors',
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => { 
+			dispatch(receiveCurrentMarketplace(json))
+			const url2 = 'http://localhost:3001/storeItem/marketplaceLookup/' + marketplaceId
+			console.log(url2)
+			return fetch(url2, {
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				method: 'GET',
+				mode:'cors'
+			})
+			.then(response => response.ok ? response.json() : new Error(response.statusText))
+			.then(itemsJSON => {
+				dispatch(receiveItems(itemsJSON))
+			})
+		})
+		.catch(err => console.log(err))
+	}	
+}
 function receiveItems(items) {
 	return {
 		type: 'RECEIVE_MARKETPLACE_GOODS',
@@ -118,6 +151,8 @@ export function retrieveItemById(itemId) {
 }
 
 export function retrieveShoppingCart(token) {
+	console.log("Sending token to server for shopping cart retrieval")
+	console.log(token)
 	return dispatch => {
 		return fetch('http://localhost:3001/shoppingCart/userLookup/', {
 			headers:{
@@ -128,7 +163,9 @@ export function retrieveShoppingCart(token) {
 			mode: 'cors'
 		})
 		.then(response => response.ok ? response.json() : new Error(response.statusText))
-		.then(json => dispatch(receiveShoppingCart(json)))
+		.then(json => {
+			if (json.message) { return new Error(json.message) }
+			dispatch(receiveShoppingCart(json))})
 		.catch(err => console.log(err))
 	}
 }

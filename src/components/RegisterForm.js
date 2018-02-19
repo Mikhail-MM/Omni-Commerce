@@ -88,7 +88,7 @@ class RegisterForm extends Component {
 			
 
 			if(localValidationErrors.length === 0) {
-			
+				console.log(data)
 				await fetch('http://localhost:3001/clients', {
 					headers:{
 						'Content-Type': 'application/json'
@@ -99,8 +99,8 @@ class RegisterForm extends Component {
 					})
 					.then(response => response.ok ? response.json() : throwError(response.statusText.concat(' - ').concat(response._bodyText)))
 					.then(json => {
-						console.log(json) // Development Check
-						dispatch(showModal('REGISTRATION_CONFIRMATION_MODAL', {json}))
+						const modalProps = Object.assign({}, json, {registrationModalMode: 'PointOfSale'}) 
+						dispatch(showModal('REGISTRATION_CONFIRMATION_MODAL', {...modalProps}))
 					})
 					.catch(err => {
 						localValidationErrors.push(err.message);
@@ -163,7 +163,7 @@ class RegisterForm extends Component {
 					<Form.Input label={<Label><Icon name='mail' />Email</Label>} placeholder="Email Address (Login Pass)" width={10} value={this.state.email} onChange={e => this.handleChange('email', e.target.value)} />
 					<Form.Input label={<Label>Phone Number</Label>} placeholder="Phone Number" width={6} value={this.state.phoneNumber} onChange={e => this.handleChange('phoneNumber', e.target.value)} />
 				</Form.Group>
-				<Divider horizontal> Billing Address </Divider >
+				<Divider horizontal> User Info </Divider >
 				<Form.Group>
 					<Form.Input label={<Label>Password</Label>} type="password" placeholder="Password" width={8} value={this.state.password} onChange={e => this.handleChange('password', e.target.value)} />
 					<Form.Input label={<Label>Confirm Password</Label>} type="password" placeholder="Confirm Password" width={8} value={this.state.confirmPassword} onChange={e => this.handleChange('confirmPassword', e.target.value)}/>

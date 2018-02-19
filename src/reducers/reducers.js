@@ -90,7 +90,7 @@ const ticketTrackingReducer = (state = {isInvalidated: false, isFetching: false}
 	}
 }
 
-const salesReportReducer = (state = {}, action) => {
+const salesReportReducer = (state = {activeSalesReport: {}}, action) => {
 	switch(action.type){
 		case('RECEIVE_SALES_REPORT'):
 			return Object.assign({}, state, {
@@ -133,7 +133,7 @@ const errorNotificationsReducer = (state = { hasError: false }, action) => {
 	}
 }
 
-const marketplaceBrowserReducer = (state = {}, action) => {
+const marketplaceBrowserReducer = (state = { allMarketplaces: [], currentMarketplace: {} }, action) => {
 	switch(action.type) {
 		case('RECEIVE_ALL_MARKETPLACES'):
 			return Object.assign({}, state, {
@@ -150,7 +150,7 @@ const marketplaceBrowserReducer = (state = {}, action) => {
 
 // We may have to split marketPlaceItems into two reducers: Receive ALL items and Receive Store Specific Items
 // 
-const marketplaceItemsReducer = (state = {}, action) => {
+const marketplaceItemsReducer = (state = { marketplaceItems: [], currentMarketplaceItem: {} }, action) => {
 	switch(action.type) {
 		case('RECEIVE_MARKETPLACE_GOODS'):
 			return Object.assign({}, state, {

@@ -3,14 +3,20 @@ import { connect } from 'react-redux'
 import fetch from 'cross-fetch'
 import { Button, Icon, Form, Grid, Header, Image, Message, Segment, Label, Divider, Checkbox } from 'semantic-ui-react'
 
+import ModalRoot from './ModalRoot'
+
+import { showModal } from '../actions/modals'
+import { throwError } from '../actions/errors'
+
+
 class OnlineMerchantRegistrationForm extends Component {
 	constructor(props){
-		super(props) 
-		this.state = {
-			firstName: 'First Name',
-			lastName: 'Last Name',
-			phoneNumber: 'Phone Number',
-			email: 'Email',
+	super(props) 
+		this.initialState = {
+			firstName: '',
+			lastName: '',
+			phoneNumber: '',
+			email: '',
 			password: '',
 			confirmPassword: '',
 			billing_address_line1: '',
@@ -24,15 +30,21 @@ class OnlineMerchantRegistrationForm extends Component {
 			shipping__address_city: '',
 			shipping_address_zip: '',
 			shipping_address_state: '',
-			shopName: 'Store Name',
-			userName: 'Display Name',
+			shopName: '',
+			userName: '',
 			isOnlineMerchant: true, // Decide whether it is necessary to differentiate between buyers and sellers or simply give all new clients an empty store
 		}
+		this.state = Object.assign({}, this.initialState, {hasError: false, validationErrors: []})
+	
 	this.handleSubmit = this.handleSubmit.bind(this)
 	this.handleChange = this.handleChange.bind(this)
 	this.handleAutofill = this.handleAutofill.bind(this)
+	
 	}
 
+	componentDidMount() {
+		console.log(this.state)
+	}
 	handleChange(input, value) {
 		this.setState({
 			[input]: value
@@ -40,10 +52,6 @@ class OnlineMerchantRegistrationForm extends Component {
 	}
 	handleAutofill(){
 		this.setState({sameAddress: !this.state.sameAddress}, () => {
-			console.log("Autofill Callback called!")
-			console.log("What's the state?")
-			console.log(this.state)
-			console.log(this.state.sameAddress)
 			if (this.state.sameAddress) {
 				// This may be async
 				this.setState({
@@ -65,19 +73,64 @@ class OnlineMerchantRegistrationForm extends Component {
 			}
 		});	
 	}
-	handleSubmit(event) {
+	async handleSubmit(event) {
+		
 		event.preventDefault()
-		fetch('http://localhost:3001/clients', {
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			method: 'POST',
-			mode: 'cors',
-			body: JSON.stringify(this.state)
-		})
-		.then(response => response.ok ? response.json() : new Error(response.statusText))
-		.then(json => console.log(json))
-		.catch(err => console.log(err))	
+	
+		const { dispatch } = this.props
+
+		// Clear Errors in State
+		this.setState({ hasError: false, validationErrors: [] }) 
+
+
+			const localValidationErrors = []
+				
+				if (this.state.password !== this.state.confirmPassword) {
+					localValidationErrors.push("Passwords do not match! Please try again!")
+				}
+
+			const data = {
+				firstName: this.state.firstName,
+				lastName: this.state.lastName,
+				phoneNumber: this.state.phoneNumber,
+				email: this.state.email,
+				password: this.state.password,
+				billing_address_line1: this.state.billing_address_line1,
+				billing_address_line2: this.state.billing_address_line2,
+				billing_address_city: this.state.billing_address_city,
+				billing_address_zip: this.state.billing_address_zip,
+				billing_address_state: this.state.billing_address_state,
+				shipping_address_line1: this.state.shipping_address_line1,
+				shipping_address_line2: this.state.shipping_address_line2,
+				shipping__address_city: this.state.shipping__address_city,
+				shipping_address_zip: this.state.shipping_address_zip,
+				shipping_address_state: this.state.shipping_address_state,
+				shopName: this.state.shopName,
+				userName: this.state.userName,
+				isOnlineMerchant: this.state.isOnlineMerchant,
+			}
+
+		if(localValidationErrors.length === 0) {
+
+				await fetch('http://localhost:3001/clients', {
+					headers:{
+						'Content-Type': 'application/json'
+					},
+					method: 'POST',
+					mode: 'cors', 
+					body: JSON.stringify(data)
+					})
+					.then(response => response.ok ? response.json() : throwError(response.statusText.concat(' - ').concat(response._bodyText)))
+					.then(json => {
+						const modalProps = Object.assign({}, {registrationReturn: json}, {registrationModalMode: 'Marketplace'}) 
+						dispatch(showModal('REGISTRATION_CONFIRMATION_MODAL', {...modalProps}))
+					})
+					.catch(err => {
+						localValidationErrors.push(err.message);
+					})
+			}
+
+		if (localValidationErrors.length > 0) { this.setState({hasError: true, validationErrors: localValidationErrors}) }
 	}
 
 	render() {
@@ -95,6 +148,7 @@ class OnlineMerchantRegistrationForm extends Component {
 		style={{ height: '100%' }}
 		verticalAlign='middle'
 		>
+		<ModalRoot />
 		 <Grid.Column style={{ maxWidth: 800 }}>
 		 	<Segment basic />
 		 	<Header as='h2' color='blue' textAlign='center'>
