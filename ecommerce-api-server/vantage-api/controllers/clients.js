@@ -83,7 +83,17 @@ module.exports.createClient = async function(req, res, next) {
 			console.log(registeredClient)
 		
 				if(req.body.accountType === "OnlineMerchant") {
-					const newShoppingCartForClient = new ShoppingCartModel({ ownerRef_id: registeredClient._id })
+					
+					const newShoppingCartForClient = new ShoppingCartModel({ 
+						ownerRef_id			: registeredClient._id,
+						subtotalDisplay		: 0,
+						subtotalReal		: 0,
+						taxDisplay			: 0,
+						taxReal				: 0,
+						totalDisplay		: 0,
+						totalReal			: 0,
+					})
+
 					const boundShoppingCart = await newShoppingCartForClient.save()
 					response.boundShoppingCart = boundShoppingCart
 					const updatedMarketplaceWithClientRef = await MarketplaceModel.findOneAndUpdate({ _id: response.createdMarketplace._id }, { ownerRef_id: registeredClient._id}, { new: true })

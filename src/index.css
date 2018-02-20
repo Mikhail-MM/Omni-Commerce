@@ -370,8 +370,13 @@ body {
 	width: 100%;
 	max-height: 100vh;
 	overflow: auto;
-	background-color: red;
+	border: 1px solid white;
+	background-color: rgb(1, 1, 1, .45);
 }
+.shopping-cart-item-wrapper {
+	border-bottom: 1px solid white;
+}
+
 /* 
 	Terminal Action Screen
 */

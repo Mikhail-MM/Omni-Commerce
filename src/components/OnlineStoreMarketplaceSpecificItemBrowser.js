@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Card, Icon, Button, Image } from 'semantic-ui-react'
 
-import { retrieveItemsFromMarketplace } from '../actions/marketplaces'
+import { retrieveItemsFromMarketplace, retrieveItemById } from '../actions/marketplaces'
+import { showModal } from '../actions/modals'
 
 import blouseImage from '../assets/marketBlouse.jpg'
 
@@ -19,6 +20,8 @@ class OnlineStoreMarketplaceSpecificItemBrowser extends Component {
 		this.state = {
 
 		}
+		this.renderMarketplaceItems = this.renderMarketplaceItems.bind(this)
+		this.confirmOrder = this.confirmOrder.bind(this)
 	}
 
 	
@@ -45,6 +48,12 @@ class OnlineStoreMarketplaceSpecificItemBrowser extends Component {
 					)
 
 		})
+	}
+
+	confirmOrder(itemId){
+		const { dispatch } = this.props
+		dispatch(retrieveItemById(itemId))
+		dispatch(showModal('CONFIRM_CART_ADDITION', {}))
 	}
 
 	render() {

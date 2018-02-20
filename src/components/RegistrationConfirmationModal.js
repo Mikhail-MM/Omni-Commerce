@@ -69,11 +69,18 @@ class RegistrationConfirmationModal extends Component {
 				  !this.props.createdClient.isMaster &&
 				  <Segment>
 				  	<h1>Employee Registration Successful! </h1>
+				  	<p> Thanks for registering with us, {this.props.createdClient.firstName}. </p>
+				  	<p> Once your employer confirms your credentials, you'll be able to log in and use Omni! </p>
 				  </Segment>
 				}
 				{ this.props.registrationModalMode === "Marketplace" && 
 					<Segment>
 						<h1> Marketplace Registration Successful!</h1>
+						<p> Thanks for registering with us, {this.props.createdClient.firstName}! </p>
+						<p> We've sent you an e-mail to confirm your account at {this.props.createdClient.email} </p>
+						<p> Your store, {this.props.createdMarketplace.storeName} has been added to the Omni marketplace browser. </p>
+						<p> Once you add some items to your marketplace, you'll be able to sell items and accept payments from other Omni users </p>
+						<p> After you confirm your account, your store will be ready for business </p>
 						<button onClick={this.deactivateModal}> Confirm </button>
 					</Segment>
 				}

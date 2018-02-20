@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { Menu } from 'semantic-ui-react'
+import { Menu, Table, Button } from 'semantic-ui-react'
 
 import { retrieveShoppingCart, pullItemFromCart } from '../actions/marketplaces'
 import { validateCartAndProceedToPayment } from '../actions/marketplaces'
@@ -41,37 +41,41 @@ class ShoppingCartSidebar extends Component {
 		}
 		if (shoppingCart.itemsBought.length > 0) {
 			return shoppingCart.itemsBought.map(cartItem => {
-				return (<div>
+				return (<div className='shopping-cart-item-wrapper'>
 							<div 
 								key={cartItem._id}>
 									{cartItem.itemName} Count {cartItem.numberRequested}
 							</div>
-							<button onClick={this.removeItem.bind(this, cartItem._id)}> Remove Item </button>
+							<Button onClick={this.removeItem.bind(this, cartItem._id)}> Remove Item </Button>
 						</div>
 				)
 			})
 		}
 		else if (shoppingCart.itemsBought.length === 0) {
-			return <h3> Your shopping cart is empty </h3>
+			return <h3 style={{color: 'white'}}> Your shopping cart is empty </h3>
 		}
 	}
 
 	generateShoppingCartPriceFieldDOMElements() {
 		const { shoppingCart } = this.props
-		<Table.Footer> 
-		  <Table.Row>
-		   <Table.HeaderCell colSpan="3">SubTotal</Table.HeaderCell>
-		   <Table.Cell>${shoppingCart.subtotalDisplay}</Table.Cell>
-		  </Table.Row>
-		  <Table.Row>
-		   <Table.HeaderCell colSpan="3">Tax</Table.HeaderCell>
-		   <Table.Cell>${shoppingCart.taxDisplay}</Table.Cell>
-		  </Table.Row>
-		  <Table.Row>
-		   <Table.HeaderCell colSpan="3">Total</Table.HeaderCell>
-		   <Table.Cell>${shoppingCart.totalDisplay}</Table.Cell>
-		  </Table.Row>
-		  </Table.Footer>
+		return(
+			<Table celled inverted selectable>
+			<Table.Footer> 
+			  <Table.Row>
+			   <Table.HeaderCell colSpan="3">SubTotal</Table.HeaderCell>
+			   <Table.Cell>${shoppingCart.subtotalDisplay}</Table.Cell>
+			  </Table.Row>
+			  <Table.Row>
+			   <Table.HeaderCell colSpan="3">Tax</Table.HeaderCell>
+			   <Table.Cell>${shoppingCart.taxDisplay}</Table.Cell>
+			  </Table.Row>
+			  <Table.Row>
+			   <Table.HeaderCell colSpan="3">Total</Table.HeaderCell>
+			   <Table.Cell>${shoppingCart.totalDisplay}</Table.Cell>
+			  </Table.Row>
+		  	</Table.Footer>
+		  	</Table>
+		)
 	}
 
 	handleCheckOut() {
