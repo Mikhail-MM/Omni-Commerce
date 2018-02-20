@@ -32,7 +32,7 @@ class ShoppingCartSidebar extends Component {
 	}
 
 	generateShoppingCartDOMElements() {
-		const { shoppingCart, token } = this.props
+		const { shoppingCart } = this.props
 		console.log("Attempting to generate Shopping Cart Elements")
 		console.log(shoppingCart)
 		console.log(shoppingCart.itemsBought)
@@ -57,7 +57,21 @@ class ShoppingCartSidebar extends Component {
 	}
 
 	generateShoppingCartPriceFieldDOMElements() {
-		
+		const { shoppingCart } = this.props
+		<Table.Footer> 
+		  <Table.Row>
+		   <Table.HeaderCell colSpan="3">SubTotal</Table.HeaderCell>
+		   <Table.Cell>${shoppingCart.subtotalDisplay}</Table.Cell>
+		  </Table.Row>
+		  <Table.Row>
+		   <Table.HeaderCell colSpan="3">Tax</Table.HeaderCell>
+		   <Table.Cell>${shoppingCart.taxDisplay}</Table.Cell>
+		  </Table.Row>
+		  <Table.Row>
+		   <Table.HeaderCell colSpan="3">Total</Table.HeaderCell>
+		   <Table.Cell>${shoppingCart.totalDisplay}</Table.Cell>
+		  </Table.Row>
+		  </Table.Footer>
 	}
 
 	handleCheckOut() {
@@ -78,6 +92,7 @@ class ShoppingCartSidebar extends Component {
 
 		return(
 			<div className="shopping-cart-inner-container">
+			{ shoppingCart && this.generateShoppingCartPriceFieldDOMElements()}
 			{ shoppingCart && this.generateShoppingCartDOMElements() }
 			{ !shoppingCart && <Menu.Item header> We couldn't find your shopping cart! Sorry! </Menu.Item> }
 			</div>

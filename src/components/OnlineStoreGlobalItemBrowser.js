@@ -44,7 +44,7 @@ class OnlineStoreGlobalItemBrowser extends Component {
 								<Card.Header> $ 16.99 </Card.Header>
 							</Card.Content>
 							<Card.Content extra>
-								<Button color='black'> <Icon name='add to cart' /> Add To Cart </Button>
+								<Button color='black'onClick={this.confirmOrder.bind(this, item._id)}> <Icon name='add to cart' /> Add To Cart </Button>
 							</Card.Content>
 						</Card>
 					</div>
