@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { Form, Button, Segment, Message } from 'semantic-ui-react'
+import { Form, Button, Segment, Message, Label } from 'semantic-ui-react'
 
 import { postItemToMarketplace } from '../actions/marketplaces'
 
@@ -20,16 +20,42 @@ class AddMarketplaceItemForm extends Component {
 			itemPrice: '',
 			imageURL: '',
 			numberInStock: 1,
+			tags: [],
 			
 		}
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
+		this.renderTagSelectionsToDOM = this.renderTagSelectionsToDOM.bind(this)
+		this.handleTagChange = this.handleTagChange.bind(this)
 	}
 
 	handleChange(input, value) {
 		this.setState({
 			[input]: value
 		})
+	}
+
+	renderTagSelectionsToDOM() {
+		const allTags = ["Clothes", "Men's", "Women's", "Tops", "Bottoms", "Accessories", "Shoes", "Art", "Computers", "Electronics", "Appliances", "Cars", "Motorcycles", "Furniture" ]
+
+		return allTags.map(tag => {
+			if (!this.state.tags.includes(tag))return <Label onClick={ () => this.handleTagChange(tag) }>{tag}</Label>
+			else if (this.state.tags.includes(tag)) return <Label color='red' onClick={ () => this.handleTagChange(tag) }> {tag} </Label>
+		})
+
+	}
+	handleTagChange(tagName){
+		if (!this.state.tags.includes(tagName)) {
+			this.setState({
+				tags: this.state.tags.concat([tagName])	
+			})
+		}
+		if (this.state.tags.includes(tagName)) {
+			this.setState({
+				tags: this.state.tags.filter(item => item !== tagName)
+			})
+		}
+		
 	}
 
 	handleSubmit(event) {
@@ -74,7 +100,10 @@ class AddMarketplaceItemForm extends Component {
 						/>
 					</Message>
 					<Message>
-						TODO: Add support for TAGS! 
+						What kind of item are you selling?
+						<div className="tagSelectionContainer">
+						{ this.renderTagSelectionsToDOM() } 
+						</div>
 					</Message>
 					<Message>
 						Quantity to stock (Default is one item)

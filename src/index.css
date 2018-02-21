@@ -7,6 +7,13 @@
 .timesheetEntryModal {
 	min-width: 350px;
 }
+.tagSelectionContainer {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	max-width: 400px;
+	justify-content: center;
+}
 
 
 /* 
@@ -265,11 +272,6 @@ body {
 	padding-top: 50%;
 
 }
-.my-store-main-content-border {
-	width: 	95%;
-	border: 1px 1px solid #605B5B;
-	margin: auto;
-}
 
 /*
 	Main Content
@@ -294,14 +296,39 @@ body {
 	/* background-color: rgba(19, 0, 2, .92); */
 	/* background-color: rgba(69, 27, 54, 0.77); */
 }
+
+.checkboxFormContainer {
+	border: 1px solid white;
+	color: white;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
 .my-store-main-content-border {
+	display: flex;
+	flex-direction: column;
+	padding-top: 5%;
+	width: 100%;
+	overflow: auto;
+}
+
+.itemBrowserWrapper{
+	overflow: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.cardViewerWrapper{
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
 	align-content: flex-start;
 	justify-content: space-around;
 	padding-top: 5%;
-	width: 95%;
+	width: 100%;
 	overflow: auto;
 }
 

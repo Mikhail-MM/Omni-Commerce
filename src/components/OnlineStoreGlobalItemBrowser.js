@@ -9,6 +9,7 @@ import { showModal } from '../actions/modals'
 import blouseImage from '../assets/marketBlouse.jpg'
 
 import CartInvalidationAlert from './CartInvalidationAlert'
+import TagFilterSearch from './TagFilterSearch'
 
 function mapStateToProps(state) {
 	const { token } = state.authReducer
@@ -92,9 +93,10 @@ class OnlineStoreGlobalItemBrowser extends Component {
 		const { marketplaceItems } = this.props
 		// If the modal backdrop is not wide enough, we will have to move this to the overview component and pass down an onclick thru props down to this to show the proper modal
 		return(
-			<div>
-			<h3> All Items </h3>
-			{ marketplaceItems && this.renderMarketplaceItems() }
+			<div className='itemBrowserWrapper'>
+				<div className='cardViewerWrapper'>
+					{ marketplaceItems && this.renderMarketplaceItems() }
+				</div>
 			</div>
 
 		)

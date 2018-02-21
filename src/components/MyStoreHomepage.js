@@ -12,6 +12,7 @@ import OnlineStoreGlobalItemBrowser from './OnlineStoreGlobalItemBrowser'
 import OnlineStorefrontBrowser from './OnlineStorefrontBrowser'
 import OnlineStoreMarketplaceSpecificItemBrowser from './OnlineStoreMarketplaceSpecificItemBrowser'
 import ShoppingCartSidebar from './ShoppingCartSidebar'
+import TagFilterSearch from './TagFilterSearch'
 
 function mapStateToProps(state) {
 	const { allMarketplaces, currentMarketplace } = state.marketplaceBrowserReducer
@@ -48,7 +49,7 @@ class MyStoreHomepage extends Component {
 	}
 
 	render() {
-		
+		const { marketplaceItems } = this.props
 		return(
 			<Sidebar.Pushable>
 			<ModalRoot/>
@@ -87,8 +88,6 @@ class MyStoreHomepage extends Component {
 
 				</div> 
 				<div className='my-store-homepage-main-content' >
-					<div className='store-main-content-nav-bar' >
-					</div>
 					<div className='my-store-main-content-border'>
 
 				
@@ -120,6 +119,9 @@ class MyStoreHomepage extends Component {
 						<Button color="black" fluid onClick={() => this.setContentVisible("AllItems")}> Browse All Items </Button>
 						<Button color="black" fluid onClick={this.dispatchMarketplaceItemAddModal}> Add Item To My Marketplace </Button>
 						<Button color="black" fluid onClick={this.toggleSidebar}> Shopping Cart Sidebar </Button>
+						<div className='itemFilterFormWrapper'>
+							{ marketplaceItems && <TagFilterSearch /> }
+						</div>
 					</div>
 					<div className='bottom-menu' >
 					</div>

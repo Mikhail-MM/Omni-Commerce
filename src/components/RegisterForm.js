@@ -14,9 +14,7 @@ import { throwError } from '../actions/errors'
 
 function mapStateToProps(state) {
 	const { isAuthenticated } = state.authReducer;
-	return {
-		isAuthenticated,
-	}
+	return { isAuthenticated }
 }
 
 class RegisterForm extends Component { 
