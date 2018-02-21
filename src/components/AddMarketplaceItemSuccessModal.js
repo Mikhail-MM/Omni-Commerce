@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
+import { Button } from 'semantic-ui-react'
 import Modal from 'react-modal';
-
-import CartInvalidationAlert from './CartInvalidationAlert'
-
 import { hideModal } from '../actions/modals'
-import { disregardInvalidatedItems } from '../actions/marketplaces'
-
-
+import ItemPreviewCard from './ItemPreviewCard'
 
 const customStyles = {
 	content: {
@@ -25,39 +22,35 @@ function mapStateToProps(state) {
 	return { modalType }
 }
 
-class CartInvalidationModal extends Component {
+class AddMarketplaceItemSuccessModal extends Component {
 	constructor(props){
-		super(props);
-		this.state = {}
+		super(props)
 		this.deactivateModal = this.deactivateModal.bind(this)
 	}
 
 	deactivateModal() {
 		const { dispatch } = this.props
 		dispatch(hideModal())
-		dispatch(disregardInvalidatedItems())
 	}
 
 	render(){
-		// This can be moved to the actual component's props instead of a redux connection to avoid perf hit
 
 		const { modalType } = this.props
 		
 		return(
 			<div>
 				<Modal
-					isOpen={modalType === 'CART_INVALIDATION_MODAL'}
+					isOpen={modalType === 'ADD_MARKETPLACE_ITEM_SUCCESS'}
 					style={customStyles}
-					contentLabel="Invalid Cart"
+					contentLabel="Example Modal"
 				>
-					<CartInvalidationAlert modalRemoval={this.deactivateModal}/>
-					<button onClick={this.deactivateModal}> Get rid of this nonsense! </button>
+					<ItemPreviewCard parentProps={{ ...this.props }}/>
+					<Button fluid color='black' onClick={this.deactivateModal}> Cancel </Button>
 				</Modal>
 			</div>
 		)
 
 	}
-
 }
 
-export default connect(mapStateToProps)(CartInvalidationModal)
+export default connect(mapStateToProps)(AddMarketplaceItemSuccessModal)

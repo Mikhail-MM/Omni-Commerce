@@ -36,10 +36,24 @@ class OnlineStoreStripeCheckout extends Component {
 handleSubmit = (event) => {
 		event.preventDefault()
 
-		const { authToken, activeTicket, dispatch } = this.props
-		this.props.stripe.createToken({name: 'name_not_given_Clientside'}).then(({token}) => {
-			dispatch(beginCartPaymentValidationCascade(authToken, token));
-		});
+		const { authToken, activeTicket, dispatch } = this.props;
+
+		fetch('http://localhost:3001/client/gatherClientToken', {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': authToken,
+			},
+			method: 'GET',
+			mode: 'cors',	
+		})
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+		.then(customerInfoJSON => {
+			console.log(customerInfoJSON)
+			this.props.stripe.createToken(customerInfoJSON)
+			.then(({token}) => {
+				dispatch(beginCartPaymentValidationCascade(authToken, token));
+			});
+		})
 	}
 	// We can possibly connect this component to cached cart data just to show the customer how much he is paying...
 	render() {

@@ -1,4 +1,9 @@
 import { showModal } from '../actions/modals'
+
+// Promise.reject(response.statusText) will take to catch handlers
+
+// Build a general util function for handling errors - pop up a global modal, or put in a marker for errorType which current components would mapStateToProps to, showing pertinent info
+
 // TODO: Extract Common Headers to own config
 export function retrieveAllMarketplaces() {
 	return dispatch => {
@@ -129,7 +134,13 @@ export function postItemToMarketplace(token, itemData) {
 			body: JSON.stringify(itemData)
 		})
 		.then(response => response.ok ? response.json() : new Error(response.statusText))
-		.then(json => dispatch(receiveCurrentItem(json)))
+		.then(json => { 
+
+			// TODO: HANDLE ERRORS BEFORE THEY GO ONTO REDUCER!!!
+			if (json.__proto__.name === "Error") { return console.log("We got an error here, boys!")}
+			dispatch(receiveCurrentItem(json)) 
+			dispatch(showModal('ADD_MARKETPLACE_ITEM_SUCCESS', {...json}))
+		})
 		.catch(err => console.log(err))
 	}
 }
@@ -292,7 +303,7 @@ export function validateCartAndProceedToPayment(token) {
 				
 				dispatch(receiveInvalidatedShoppingCartItems(json.failedItems))
 				dispatch(receiveShoppingCart(json.validatedCart))
-				dispatch(showModal('CART_INVALIDATION', {}))
+				dispatch(showModal('CART_INVALIDATION_MODAL', {}))
 			
 			} else if (!json.partialValidationFail) {
 				

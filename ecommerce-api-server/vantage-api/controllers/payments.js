@@ -1,9 +1,12 @@
 require('dotenv').config()
+const _ = require('underscore');
 const stripe = require('stripe')(process.env.SECRET_KEY);
 const BigNumber = require('bignumber.js');
+
 const MarketPlaceModels = require('../models/schemas/marketplace')
 StripeCustomerModel = MarketPlaceModels.StripeCustomerModel;
 PurchaseOrderModel = MarketPlaceModels.PurchaseOrderModel;
+sellerSpecificPurchaseOrderModel = MarketPlaceModels.sellerSpecificPurchaseOrderModel;
 
 
 module.exports.createCashCharge = function(req, res, next) {
@@ -33,6 +36,7 @@ module.exports.createStripeCharge = function(req, res, next) {
 	});
 }
 
+// TODO: Comprehensive Error Handling using Stripe API Error Test
 module.exports.saveStripeCustomerInformation = async function(req, res, next) {
 const token = req.body.stripeToken.id
 // Need to get shopping cart info and acquire Cart total!
@@ -67,9 +71,66 @@ stripe.customers.create({
     const savedPurchaseOrder = await newPurchaseOrder.save()
     console.log(savedPurchaseOrder);
     req.body.validatedPurchaseOrderToProcess.savedPurchaseOrder = savedPurchaseOrder
+    console.log("grouping")
+    const sellerSpecificShippingOrders = _.groupBy(savedPurchaseOrder.itemsBought, "sellerRef_id")
+    console.log(sellerSpecificShippingOrders)
+    const arrayOfReceiptsForBuyers = []
+    console.log("TYPEDEF", typeof(sellerSpecificShippingOrders))
+    for (const seller_id in sellerSpecificShippingOrders) {
+
+      console.log("seller_id", seller_id)
+      console.log("sellerSpecificShippingOrders", sellerSpecificShippingOrders)
+      console.log("sellerSpecificShippingOrders[seller_id]", sellerSpecificShippingOrders[seller_id])
+      console.log(typeof(sellerSpecificShippingOrders[seller_id]))
+        // Determine localized pricing for each seller
+        const bigNumberPrices = sellerSpecificShippingOrders[seller_id].map(item => {
+          return { 
+            itemPrice: new BigNumber(item.itemPrice),
+            multipleRequest: new BigNumber(item.numberRequested),
+          }
+        });
+        
+        const subTotalBigNumber =  bigNumberPrices.reduce( (acc, cur) => { 
+          return acc.plus((cur.itemPrice.times(cur.multipleRequest))) }, new BigNumber(0)
+        )
+        
+        // Can be improved with abstraction to our other pricing function in shoppingcarts and smarter use of the ... spread operator
+
+        const taxRate = new BigNumber(0.07) 
+        const subtotalReal = subTotalBigNumber.toNumber()
+        const subtotalDisplay = subTotalBigNumber.round(2).toNumber()
+        const taxReal = subTotalBigNumber.times(taxRate).toNumber()
+        const taxDisplay = subTotalBigNumber.times(taxRate).round(2).toNumber()
+        const totalReal = subTotalBigNumber.plus(taxReal).toNumber()
+        const totalDisplay = subTotalBigNumber.plus(taxReal).round(2).toNumber()
+  
+        const receiptObject = Object.assign({
+          sellerRef_id: seller_id,
+          masterOrderRef_id: savedPurchaseOrder._id,
+          itemsBought: sellerSpecificShippingOrders.seller_id,
+          subtotalReal: subtotalReal,
+          subtotalDisplay: subtotalDisplay,
+          taxReal: taxReal,
+          taxDisplay: taxDisplay,
+          totalReal: totalReal,
+          totalDisplay: totalDisplay,
+        })
+
+        arrayOfReceiptsForBuyers.push(receiptObject)
+      
+    }
+
+    req.body.validatedPurchaseOrderToProcess.arrayOfReceiptsForBuyers = arrayOfReceiptsForBuyers;
+
+    for (const receipt of arrayOfReceiptsForBuyers) {
+      const newSellerSpecificPurchaseOrder = new sellerSpecificPurchaseOrderModel(receipt);
+      const savedSellerSpecificPurchaseOrder = await newSellerSpecificPurchaseOrder.save()
+      console.log(savedSellerSpecificPurchaseOrder);
+    }
+
+    res.json(req.body.validatedPurchaseOrderToProcess);
   })
 })
-res.json(req.body.validatedPurchaseOrderToProcess);
 }
 
 

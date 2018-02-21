@@ -112,3 +112,15 @@ exports.routeEmployeeToMongoCollection = async function(req, res, next) {
 
 };
 
+exports.sendStripeTokenMetadataToClient = function(req, res, next) {
+	const data = {
+		name: req.body.client.firstName.concat(' ', req.body.client.lastName),
+		address_line1: req.body.client.billing_address_line1,
+		address_line2: req.body.client.billing_address_line2,
+		address_city: req.body.client.billing_address_city,
+		address_state: req.body.client.billing_address_state,
+		address_zip: req.body.client.billing_address_zip,
+	}
+
+	res.json(data)
+}

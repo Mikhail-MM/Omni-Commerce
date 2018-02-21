@@ -7,7 +7,7 @@ const StoreItemModel = MarketplaceModels.StoreItemModel
 module.exports.createNewStoreItem = async function(req, res, next) { 
 		try {
 			const data = Object.assign({}, req.body, {
-				ownerRef_id: req.body.client._id,
+				sellerRef_id: req.body.client._id,
 				marketplaceRef_id: req.body.client.marketplaceRef_id
 			});
 				const newStoreItem = new StoreItemModel(data)

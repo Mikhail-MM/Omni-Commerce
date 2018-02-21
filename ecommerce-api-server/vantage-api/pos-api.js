@@ -60,6 +60,8 @@ app.use('/*', function(req, res, next) {
 ////////////////////////////////////////////////////////////
 
 
+
+
 router.route('/clients/lookupEmployees')
 	.get(authorize.adminRequired, clients.findAllEmployees)
 router.route('/clients/lookup')
@@ -70,6 +72,9 @@ router.route('/clients')
 router.route('/clients/:id')
 	.put(clients.updateClient)
 	.delete(clients.deleteClientById);
+
+router.route('/client/gatherClientToken') 
+	.get(authorize.routeEmployeeToMongoCollection, authorize.sendStripeTokenMetadataToClient)
 
 router.route('/messages')
 	.get(authorize.routeEmployeeToMongoCollection, messages.getAllMyMessages)

@@ -84,7 +84,8 @@ const purchaseOrderSchema = new Schema(Object.assign({}, salesManifest, {
 }));
 
 const sellerSpecificPurchaseOrder = new Schema(Object.assign({}, salesManifest, {
-	ownerRef_id: {type: Schema.Types.ObjectId, ref: 'Client'},
+	sellerRef_id: {type: Schema.Types.ObjectId, ref: 'Client'},
+	masterOrderRef_id: {type: Schema.Types.ObjectId, ref: 'PurchaseOrder'},
 }));
 
 
@@ -94,3 +95,4 @@ module.exports.MarketplaceModel = mongoose.model('Marketplace', marketplaceSchem
 module.exports.StoreItemModel = mongoose.model('StoreItem', storeItemSchema);
 module.exports.StripeCustomerModel = mongoose.model('StripeCustomer', stripeCustomerSchema);
 module.exports.PurchaseOrderModel = mongoose.model('PurchaseOrder', purchaseOrderSchema);
+module.exports.sellerSpecificPurchaseOrderModel = mongoose.model('SellerShippingOrder', sellerSpecificPurchaseOrder);

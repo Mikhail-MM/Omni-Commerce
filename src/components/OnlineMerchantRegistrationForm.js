@@ -122,7 +122,7 @@ class OnlineMerchantRegistrationForm extends Component {
 					})
 					.then(response => response.ok ? response.json() : throwError(response.statusText.concat(' - ').concat(response._bodyText)))
 					.then(json => {
-						const modalProps = Object.assign({}, {registrationReturn: json}, {registrationModalMode: 'Marketplace'}) 
+						const modalProps = Object.assign({}, json, {registrationModalMode: 'Marketplace'}) 
 						dispatch(showModal('REGISTRATION_CONFIRMATION_MODAL', {...modalProps}))
 					})
 					.catch(err => {
@@ -170,8 +170,8 @@ class OnlineMerchantRegistrationForm extends Component {
 					<Form.Input label={<Label>Phone Number</Label>} placeholder="Phone Number" width={6} value={this.state.phoneNumber} onChange={e => this.handleChange('phoneNumber', e.target.value)}/>
 				</Form.Group>
 				<Form.Group>
-					<Form.Input  label={<Label>Password</Label>} placeholder="Password" value={this.state.password} onChange={e => this.handleChange('password', e.target.value)} />
-					<Form.Input  label={<Label>Confirm Password</Label>} placeholder="Confirm Password" value={this.state.confirmPassword} onChange={e => this.handleChange('confirmPassword', e.target.value)} />
+					<Form.Input  label={<Label>Password</Label>} type="password" placeholder="Password" value={this.state.password} onChange={e => this.handleChange('password', e.target.value)} />
+					<Form.Input  label={<Label>Confirm Password</Label>} type="password" placeholder="Confirm Password" value={this.state.confirmPassword} onChange={e => this.handleChange('confirmPassword', e.target.value)} />
 				</Form.Group>
 				<Divider horizontal> Billing Address </Divider >
 				<Form.Group>

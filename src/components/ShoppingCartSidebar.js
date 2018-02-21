@@ -37,7 +37,7 @@ class ShoppingCartSidebar extends Component {
 		console.log(shoppingCart)
 		console.log(shoppingCart.itemsBought)
 		if (!shoppingCart.itemsBought) {
-			return <Menu.Item header> Dangerous server error! Can't find your itemsBought array! </Menu.Item>
+			return <Menu.Item as='div'> Dangerous server error! Can't find your itemsBought array! </Menu.Item>
 		}
 		if (shoppingCart.itemsBought.length > 0) {
 			return shoppingCart.itemsBought.map(cartItem => {
@@ -97,6 +97,7 @@ class ShoppingCartSidebar extends Component {
 		return(
 			<div className="shopping-cart-inner-container">
 			{ shoppingCart && this.generateShoppingCartPriceFieldDOMElements()}
+			{ shoppingCart.itemsBought.length >= 1 && <Button fluid color='black' onClick={this.handleCheckOut}> Check Out </Button> }
 			{ shoppingCart && this.generateShoppingCartDOMElements() }
 			{ !shoppingCart && <Menu.Item header> We couldn't find your shopping cart! Sorry! </Menu.Item> }
 			</div>

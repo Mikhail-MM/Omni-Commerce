@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Modal from 'react-modal';
 
 import { pushItemIntoShoppingCart } from '../actions/marketplaces'
-import { hideModal } from '../actions/modals'
+import { showModal, hideModal } from '../actions/modals'
 
 const customStyles = {
 	content: {
@@ -20,8 +20,8 @@ function mapStateToProps(state) {
 	const { currentMarketplaceItem } = state.marketplaceItemsReducer
  	const { token } = state.authReducer
 	const { modalType } = state.modalReducer
-	const { shoppingCart } = state.shoppingCartReducer
-	return { modalType, token, currentMarketplaceItem, shoppingCart  }
+	const { shoppingCart, notifyUserOfCartInvalidation } = state.shoppingCartReducer
+	return { modalType, token, currentMarketplaceItem, notifyUserOfCartInvalidation, shoppingCart  }
 }
 
 class ConfirmCartAdditionModal extends Component {
@@ -37,6 +37,12 @@ class ConfirmCartAdditionModal extends Component {
 		this.setState({
 			[input]: value
 		})
+	}
+
+	dispatchCartInvalidationModal(){
+		const { dispatch } = this.props
+		dispatch(hideModal())
+		dispatch(showModal('CART_INVALIDATION_MODAL', {}))
 	}
 
 	addItemToCart(itemId) {
@@ -62,7 +68,7 @@ class ConfirmCartAdditionModal extends Component {
 	render(){
 		// This can be moved to the actual component's props instead of a redux connection to avoid perf hit
 
-		const { modalType, currentMarketplaceItem} = this.props
+		const { modalType, currentMarketplaceItem, notifyUserOfCartInvalidation} = this.props
 		
 		return(
 			<div>
@@ -71,7 +77,9 @@ class ConfirmCartAdditionModal extends Component {
 					style={customStyles}
 					contentLabel="Add Item Confirmation"
 				>
+					
 					<h3>Confirm Your Order!</h3>
+					{ notifyUserOfCartInvalidation && this.dispatchCartInvalidationModal() }
 					{currentMarketplaceItem &&
 						<div>
 							<h4> Confirm your purchase of {currentMarketplaceItem.itemName} </h4>

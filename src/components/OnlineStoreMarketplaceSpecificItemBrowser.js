@@ -36,12 +36,12 @@ class OnlineStoreMarketplaceSpecificItemBrowser extends Component {
 							<Image src={blouseImage} />
 							<Card.Content>
 								<Card.Header> {item.itemName} </Card.Header>
-								<Card.Meta> In-Stock: 5 </Card.Meta>
+								<Card.Meta> In-Stock: { item.numberInStock } </Card.Meta>
 								<Card.Description> A classy top that is sure to turn heads! </Card.Description>
 								<Card.Header> $ 16.99 </Card.Header>
 							</Card.Content>
 							<Card.Content extra>
-								<Button color='black' onClick={this.confirmOrder.bind(this, item._id)}> <Icon name='add to cart' /> Add To Cart </Button>
+								<Button color='black' onClick={this.confirmOrder.bind(this, item._id)} disabled={item.numberInStock === 0}> <Icon name='add to cart' /> Add To Cart </Button>
 							</Card.Content>
 						</Card>
 					</div>

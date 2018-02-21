@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { Form, Button, Segment, Message } from 'semantic-ui-react'
+
 import { postItemToMarketplace } from '../actions/marketplaces'
 
 // Should be a form that uses the authroken to route to Client's Marketplace - upload a new item via a POST request
@@ -34,7 +35,6 @@ class AddMarketplaceItemForm extends Component {
 	handleSubmit(event) {
 		event.preventDefault()
 		const { dispatch, token } = this.props
-
 		dispatch(postItemToMarketplace(token, this.state))
 
 	}

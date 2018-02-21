@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
 
+import { Segment } from 'semantic-ui-react'
 import OnlineStoreCheckout from './OnlineStoreCheckout'
 
 import { hideModal } from '../actions/modals'
@@ -48,8 +49,10 @@ class OnlineStoreStripeCheckoutModal extends Component {
 					style={customStyles}
 					contentLabel="Stripe Checkout Modal For Online Store"
 				>
+				<Segment style={{minWidth: '600px'}}>
 					<OnlineStoreCheckout modalRemoval={this.deactivateModal}/>
-					<button onClick={this.deactivateModal}> Get rid of this nonsense! </button>
+					<button onClick={this.deactivateModal}> Cancel </button>
+				</Segment>
 				</Modal>
 			</div>
 		)
