@@ -35,7 +35,7 @@ class ModifyMyStoreItemForm extends Component {
 		this.setState({
 			itemName: currentMarketplaceItem.itemName,
 			itemPrice: currentMarketplaceItem.itemPrice,
-			imageURL: currentMarketplaceItem.imageURL
+			imageURL: currentMarketplaceItem.imageURL,
 			numberInStock: currentMarketplaceItem.numberInStock,
 			tags: currentMarketplaceItem.tags,
 		})

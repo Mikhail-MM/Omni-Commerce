@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { Card, Image, Button, Icon } from 'semantic-ui-react'
 
 import { showModal } from '../actions/modals'
+import { retrieveItemById } from '../actions/marketplaces'
+import blouseImage from '../assets/marketBlouse.jpg'
 
 function mapStateToProps(state) {
 	const { token } = state.authReducer
@@ -15,7 +17,7 @@ function mapStateToProps(state) {
 class ModifyMyStoreItemsScreen extends Component {
 	constructor(props) {
 		super(props)
-		this.
+		this.renderMarketplaceItems = this.renderMarketplaceItems.bind(this)
 	}
 	
 	renderMarketplaceItems() {
@@ -59,7 +61,6 @@ class ModifyMyStoreItemsScreen extends Component {
 
 		)
 	}
-}
 }
 
 export default connect()(ModifyMyStoreItemsScreen)

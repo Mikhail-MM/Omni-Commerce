@@ -19,6 +19,9 @@ import OnlineMerchantDashboard from './OnlineMerchantDashboard'
 import AdminTerminal from './AdminTerminal'
 import MyStoreHomepage from './MyStoreHomepage'
 import TerminalActionScreenMockup from './TerminalActionScreenMockup'
+import PurchaseOrderViewScreen from './PurchaseOrderViewScreen'
+import ShippingOrderViewScreen from './ShippingOrderViewScreen'
+
 import Algo from './Algo'
 
 const loggerMiddleware = createLogger()
@@ -52,6 +55,8 @@ export default class Root extends Component {
 				<Route path="/register_merchant" component={OnlineMerchantRegistrationForm} />
 				<Route path="/admin" component={AdminTerminal} />
 				<Route path="/marketplace_landing" component={MyStoreHomepage} />
+				<Route path="/marketplace/purchase_orders" component={PurchaseOrderViewScreen} />
+				<Route path="/marketplace/sell_orders" component={ShippingOrderViewScreen} />
 				<Route path="/algo" component={Algo} />
 
 		</Switch>

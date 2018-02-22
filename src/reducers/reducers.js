@@ -211,9 +211,9 @@ const purchaseOrderReducer = (state = { purchaseOrders: [], salesOrders: [] }, a
 			return {
 				purchaseOrders: action.purchaseOrders
 			}
-		case('RECEIVE_SALES_ORDERS'):
+		case('RECEIVE_SHIPPING_ORDERS'):
 			return {
-				salesOrders: action.salesOrders
+				shippingOrders: action.shippingOrders
 			}
 		default:
 			return state

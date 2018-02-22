@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Segment, Button } from 'semantic-ui-react'
 
 import Modal from 'react-modal';
-import AddMarketplaceItemForm from './AddMarketplaceItemForm'
+import ModifyMyStoreItemForm from './ModifyMyStoreItemForm'
 
 import { hideModal } from '../actions/modals'
 

@@ -14,6 +14,7 @@ import ModifyItemScreenModal from './ModifyItemScreenModal'
 import ModifyItemFormModal from './ModifyItemFormModal'
 import AddMarketplaceItemModal from './AddMarketplaceItemModal'
 import AddMarketplaceItemSuccessModal from './AddMarketplaceItemSuccessModal'
+import ModifyMyStoreItemsModal from './ModifyMyStoreItemsModal'
 
 const MODAL_COMPONENTS = {
 	'CONFIRM_CART_ADDITION': ConfirmCartAdditionModal,

@@ -360,6 +360,51 @@ export function pullItemFromCart(token, subdocId) {
 	}
 }
 
+export function retrieveMyPurchaseOrders(token) {
+	return dispatch => {
+		return fetch('http://localhost:3001/purchaseorders/userLookup/', {
+			headers: {
+				'Content-Type': 'application/json',
+				'x-access-token': token,
+			},
+			method: 'GET',
+			mode: 'cors',
+		})
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+		.then(json => dispatch(receivePurchaseOrders(json)))
+		.catch(err => console.log(err))
+	}
+}
+
+export function retrieveMyShippingOrders(token) {
+	return dispatch => {
+		return fetch('http://localhost:3001/sellorders/userLookup/', {
+			headers: {
+				'Content-Type': 'application/json',
+				'x-access-token': token,
+			},
+			method: 'GET',
+			mode: 'cors',
+		})
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+		.then(json => dispatch(receiveShippingOrders(json)))
+		.catch(err => console.log(err))	
+	}
+}
+
+function receivePurchaseOrders(purchaseOrders) {
+	return {
+		type: 'RECEIVE_PURCHASE_ORDERS',
+		purchaseOrders
+	}
+}
+
+function receiveShippingOrders(shippingOrders) {
+	return {
+		type: 'RECEIVE_SHIPPING_ORDERS',
+		shippingOrders
+	}
+}
 
 function receiveShoppingCart(shoppingCart) {
 	return {
