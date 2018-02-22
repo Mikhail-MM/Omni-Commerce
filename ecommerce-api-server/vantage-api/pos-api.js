@@ -26,7 +26,8 @@ const payments = require('./controllers/payments')
 const marketplaces = require('./controllers/marketplaces')
 const storeItems = require('./controllers/storeItems')
 const shoppingCarts = require('./controllers/shoppingCarts')
-
+const purchaseOrders = require('./controllers/purchaseOrders')
+const sellOrders = require('./controllers/sellOrders')
 
 var app = express();
 var router = express.Router(); 
@@ -133,21 +134,40 @@ router.route('/marketplace')
 
 // Note: Still need to divvy up purchase orders and arrange them to sellers
 router.route('/shoppingCart/payment/')
-	.post(authorize.routeEmployeeToMongoCollection, shoppingCarts.validateMarketplacePayment, shoppingCarts.calculatePricing, payments.saveStripeCustomerInformation)
+	.post(authorize.routeEmployeeToMongoCollection, shoppingCarts.validateMarketplacePayment, shoppingCarts.calculatePricing, payments.saveStripeCustomerInformation);
 router.route('/shoppingCart/checkOut/')
-	.post(authorize.routeEmployeeToMongoCollection, shoppingCarts.validateCartStock, shoppingCarts.calculatePricing)
+	.post(authorize.routeEmployeeToMongoCollection, shoppingCarts.validateCartStock, shoppingCarts.calculatePricing);
 router.route('/shoppingCart/userLookup/')
-	.get(authorize.routeEmployeeToMongoCollection, shoppingCarts.getShoppingCartByClientRef)
+	.get(authorize.routeEmployeeToMongoCollection, shoppingCarts.getShoppingCartByClientRef);
 router.route('/shoppingCart/addItem/')
-	.put(authorize.routeEmployeeToMongoCollection, shoppingCarts.pushItemIntoShoppingCart, shoppingCarts.calculatePricing)
+	.put(authorize.routeEmployeeToMongoCollection, shoppingCarts.pushItemIntoShoppingCart, shoppingCarts.calculatePricing);
 router.route('/shoppingCart/removeItem/')
-	.put(authorize.routeEmployeeToMongoCollection, shoppingCarts.removeItemFromShoppingCart, shoppingCarts.calculatePricing)
+	.put(authorize.routeEmployeeToMongoCollection, shoppingCarts.removeItemFromShoppingCart, shoppingCarts.calculatePricing);
 router.route('/shoppingCart/:id')
 	.get(authorize.routeEmployeeToMongoCollection, shoppingCarts.getShoppingCartById)
-	.put(authorize.routeEmployeeToMongoCollection, shoppingCarts.updateShoppingCartById, shoppingCarts.calculatePricing)
+	.put(authorize.routeEmployeeToMongoCollection, shoppingCarts.updateShoppingCartById, shoppingCarts.calculatePricing);
 router.route('/shoppingCart')
 	.get(authorize.routeEmployeeToMongoCollection, shoppingCarts.getAllShoppingCarts)
-	.post(authorize.routeEmployeeToMongoCollection, shoppingCarts.createShoppingCart)
+	.post(authorize.routeEmployeeToMongoCollection, shoppingCarts.createShoppingCart);
+
+router.route('/purchaseorders/userLookup/')
+	.get(authorize.routeEmployeeToMongoCollection, purchaseOrders.getMyPurchaseOrders);
+router.route('/purchaseorders')
+	.get(authorize.routeEmployeeToMongoCollection, purchaseOrders.getAllPurchaseOrders)
+	.post(authorize.routeEmployeeToMongoCollection, purchaseOrders.createNewPurchaseOrder);
+router.route('/purchaseorders/:id')
+	.get(authorize.routeEmployeeToMongoCollection, purchaseOrders.getPurchaseOrderById)
+	.put(authorize.routeEmployeeToMongoCollection, purchaseOrders.updatePurchasOrderById);
+
+router.route('/sellorders/userLookup/')
+	.get(authorize.routeEmployeeToMongoCollection, sellOrders.getMySellOrders);
+router.route('/sellorders')
+	.get(authorize.routeEmployeeToMongoCollection, sellOrders.getAllSellOrders)
+	.post(authorize.routeEmployeeToMongoCollection, sellOrders.createNewSellOrder);
+router.route('/sellorders/:id')
+	.get(authorize.routeEmployeeToMongoCollection, sellOrders.getSellOrderById)
+	.put(authorize.routeEmployeeToMongoCollection, sellOrders.updateSellOrderById);
+
 
 router.route('/storeItem/marketplaceLookup/:id')
 	.get(storeItems.findAllItemsFromMarketplace);

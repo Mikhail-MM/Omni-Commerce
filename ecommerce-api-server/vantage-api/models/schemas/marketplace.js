@@ -86,6 +86,7 @@ const purchaseOrderSchema = new Schema(Object.assign({}, salesManifest, {
 const sellerSpecificPurchaseOrder = new Schema(Object.assign({}, salesManifest, {
 	sellerRef_id: {type: Schema.Types.ObjectId, ref: 'Client'},
 	masterOrderRef_id: {type: Schema.Types.ObjectId, ref: 'PurchaseOrder'},
+	customerRef_id: {type: Schema.Types.ObjectId, ref: 'StripeCustomer'},
 }));
 
 

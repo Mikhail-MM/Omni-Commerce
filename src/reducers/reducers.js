@@ -205,6 +205,21 @@ const modalReducer = (state = initialModalState, action) => {
 	}
 }
 
+const purchaseOrderReducer = (state = { purchaseOrders: [], salesOrders: [] }, action) => {
+	switch(action.type){
+		case('RECEIVE_PURCHASE_ORDERS'):
+			return {
+				purchaseOrders: action.purchaseOrders
+			}
+		case('RECEIVE_SALES_ORDERS'):
+			return {
+				salesOrders: action.salesOrders
+			}
+		default:
+			return state
+	}
+}
+
 const rootReducer = combineReducers({
 	authReducer,
 	employeeReducer,
@@ -217,6 +232,7 @@ const rootReducer = combineReducers({
 	marketplaceItemsReducer,
 	shoppingCartReducer,
 	modalReducer,
+	purchaseOrderReducer,
 	routerReducer
 })
 

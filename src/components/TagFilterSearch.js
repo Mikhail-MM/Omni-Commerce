@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { Checkbox, Form } from 'semantic-ui-react'
+import { Checkbox, Form, Button } from 'semantic-ui-react'
 const allTags = ["Clothes", "Mens", "Womens", "Tops", "Bottoms", "Accessories", "Shoes", "Art", "Computers", "Electronics", "Appliances", "Cars", "Motorcycles", "Furniture"]
+
+function mapStateToProps(state) {
+	const { marketplaceItems } = state.marketplaceItemsReducer
+	return { marketplaceItems }
+} 
 
 class TagFilterSearch extends Component {
 	constructor(props) {
@@ -26,7 +31,7 @@ class TagFilterSearch extends Component {
 		}
 		this.generateCheckboxInputs = this.generateCheckboxInputs.bind(this)
 		this.handleTagChange = this.handleTagChange.bind(this)
-		this.handleSubmit = this.handleSubmit.bind(this)
+		this.filterStoredItems = this.filterStoredItems.bind(this)
 	}
 
 	generateCheckboxInputs() {
@@ -37,6 +42,8 @@ class TagFilterSearch extends Component {
 	}
 
 	handleTagChange(tagName){
+		// We need to create a global reducer/action to load active filters into redux state
+		// So new items will be filtered by tag when navigating between stores
 		this.setState({
 			[tagName]: !this.state[tagName]
 		})
@@ -54,10 +61,11 @@ class TagFilterSearch extends Component {
 		
 	}
 
-	handleSubmit(event) {
-		event.preventDefault()
-		console.log("Query all items for { $and: [{tags: 'selected[1]'}] }...basically build the query!")
-		console.log(this.state.selected)
+
+	filterStoredItems(filter) {
+		const { marketplaceItems } = this.props
+		console.log(filter)
+
 
 
 	}
@@ -65,11 +73,11 @@ class TagFilterSearch extends Component {
 	render() {
 		return(
 			<div className="checkboxFormContainer" >
-
 				{this.generateCheckboxInputs()}
+				<Button onClick={ () => this.filterStoredItems(this.state.selected)}>Filter Items </Button>
 			</div>
 		)
 	}
 }
 
-export default connect()(TagFilterSearch)
+export default connect(mapStateToProps)(TagFilterSearch)
