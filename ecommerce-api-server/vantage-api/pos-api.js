@@ -10,9 +10,15 @@ const path = require('path');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 
+const multer = require('multer');
+const storage = multer.memoryStorage()
+
+const upload = multer({ dest: 'uploads/', storage: storage })
+
 const config = require('./models/config');
 
 const clients = require('./controllers/clients');
+const images = require('./controllers/images')
 const employees = require('./controllers/employees');
 const messages = require('./controllers/messages')
 const menus = require('./controllers/menus');
@@ -45,8 +51,6 @@ if(app.get('env') === 'production') {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( {extended: false }));
 
-
-
 app.use('/*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, x-access-token, x-mongo-key, X-Requested-With, Content-Type, Accept");
@@ -76,6 +80,9 @@ router.route('/clients/:id')
 
 router.route('/client/gatherClientToken') 
 	.get(authorize.routeEmployeeToMongoCollection, authorize.sendStripeTokenMetadataToClient)
+
+router.route('/images')
+	.post(upload.single('marketplaceItems'), images.uploadNewImage)
 
 router.route('/messages')
 	.get(authorize.routeEmployeeToMongoCollection, messages.getAllMyMessages)

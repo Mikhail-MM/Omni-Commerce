@@ -21,18 +21,46 @@ class AddMarketplaceItemForm extends Component {
 			imageURL: '',
 			numberInStock: 1,
 			tags: [],
+			selectedFile: null,
 			
 		}
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
 		this.renderTagSelectionsToDOM = this.renderTagSelectionsToDOM.bind(this)
 		this.handleTagChange = this.handleTagChange.bind(this)
+		this.imageSelectedHandler = this.imageSelectedHandler.bind(this)
+		this.fileUploadHandler = this.fileUploadHandler.bind(this)
 	}
 
 	handleChange(input, value) {
 		this.setState({
 			[input]: value
 		})
+	}
+
+	imageSelectedHandler(event) {
+		console.log(event.target.files[0])
+		this.setState({selectedFile: event.target.files[0]}, console.log(this.state.selectedFile))
+	}
+
+	fileUploadHandler(event) {
+		event.preventDefault()
+
+		const formData = new FormData()
+		
+		formData.append('itemName', this.state.itemName)
+		formData.append('itemPrice', this.state.itemPrice)
+		formData.append('marketplaceItems', this.state.selectedFile)
+		formData.append('numberInStock', this.state.numberInStock)
+		formData.append('tags', this.state.tags)
+		
+		fetch('http://localhost:3001/images', {
+			method: 'POST',
+			mode: 'cors',
+			body: formData,
+		})
+		.then(response => console.log(response))
+
 	}
 
 	renderTagSelectionsToDOM() {
@@ -67,7 +95,7 @@ class AddMarketplaceItemForm extends Component {
 
 	render() {
 		return(
-			<Form onSubmit={this.handleSubmit} >
+			<Form onSubmit={this.fileUploadHandler} >
 				<Segment raised>
 					<Message> 
 						Create a descriptive name for your item listing
@@ -89,6 +117,11 @@ class AddMarketplaceItemForm extends Component {
 							onChange={e => this.handleChange('itemPrice', e.target.value)}
 						/>
 					</Message>
+						<Form.Input
+							type='file'
+							name='marketplaceItems'
+							onChange={this.imageSelectedHandler}
+						/>
 					<Message>
 						Please upload an image to be shown when users look at your listing
 						<Form.Input
