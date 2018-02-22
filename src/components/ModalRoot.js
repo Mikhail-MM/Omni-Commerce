@@ -27,7 +27,8 @@ const MODAL_COMPONENTS = {
 	'MODIFY_ITEMS_SCREEN_MODAL': ModifyItemScreenModal,
 	'MODIFY_ITEM_FORM_MODAL': ModifyItemFormModal,
 	'ADD_MARKETPLACE_ITEM': AddMarketplaceItemModal,
-	'ADD_MARKETPLACE_ITEM_SUCCESS': AddMarketplaceItemSuccessModal
+	'ADD_MARKETPLACE_ITEM_SUCCESS': AddMarketplaceItemSuccessModal,
+	'MODIFY_STORE_ITEM_FORM_MODAL': ModifyMyStoreItemsModal
 }
 
 

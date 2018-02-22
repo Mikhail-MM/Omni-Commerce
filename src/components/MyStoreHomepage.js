@@ -13,6 +13,7 @@ import OnlineStorefrontBrowser from './OnlineStorefrontBrowser'
 import OnlineStoreMarketplaceSpecificItemBrowser from './OnlineStoreMarketplaceSpecificItemBrowser'
 import ShoppingCartSidebar from './ShoppingCartSidebar'
 import TagFilterSearch from './TagFilterSearch'
+import ModifyMyStoreItemsScreen from './ModifyMyStoreItemsScreen'
 
 function mapStateToProps(state) {
 	const { allMarketplaces, currentMarketplace } = state.marketplaceBrowserReducer
@@ -73,7 +74,7 @@ class MyStoreHomepage extends Component {
 						<Icon className='my-store-left-sidebar_button_icon _last_icon' name='shopping cart' size='huge'/>
 						<h5 className='my-store-left-sidebar_button_heading'> My Cart </h5>					
 					</div>
-					<div className='my-store-left-sidebar_button' >
+					<div className='my-store-left-sidebar_button' onClick={() => this.setContentVisible("ModifyMyItems")} >
 						<Icon className='my-store-left-sidebar_button_icon' name='cube' size='huge'/>
 						<h5 className='my-store-left-sidebar_button_heading'> Manage Stock </h5>					
 					</div>
@@ -95,7 +96,9 @@ class MyStoreHomepage extends Component {
 	
 						{ this.state.mainContentVisible === "AllMarketplaces" && <OnlineStorefrontBrowser changeVisibility={this.setContentVisible} /> }
 
-						{ this.state.mainContentVisible === "StoreItems" && <OnlineStoreMarketplaceSpecificItemBrowser />}
+						{ this.state.mainContentVisible === "StoreItems" && <OnlineStoreMarketplaceSpecificItemBrowser /> }
+
+						{ this.state.mainContentVisible === "ModifyMyItems" && <ModifyMyStoreItemsScreen />}
 
 					</div>
 

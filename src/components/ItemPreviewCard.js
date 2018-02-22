@@ -11,6 +11,7 @@ class ItemPreviewCard extends Component {
 	}
 	render() {
 		return(
+			// Add props based differentiation on success dialog
 			<div> Item added successfully </div>
 		)
 	}

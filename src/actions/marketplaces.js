@@ -181,6 +181,28 @@ export function retrieveShoppingCart(token) {
 	}
 }
 
+export function updateMarketplaceItem(token, itemId, itemdata) {
+	const url = 'http://localhost:3001/storeItem/' + itemId;
+	return dispatch => {
+		return fetch(url, {
+			headers: {
+				'Content-Type': 'application/json',
+				'x-access-token': token
+			},
+			method: 'PUT',
+			mode: 'cors',
+			body: JSON.stringify(itemdata)
+		})
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+		.then(json => {
+			dispatch(receiveCurrentItem(json))
+			// Pass along modifier to accept differences in Add/Update dialogs
+			dispatch(showModal('ADD_MARKETPLACE_ITEM_SUCCESS', {...json}))
+		})
+		.catch(err => console.log(err))
+	}
+}
+
 // We can abstract out this into Switch statements or just abstract out and decide whether to use amountThatCanBeFulfilled vs amountRequested
 export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountAlreadyInCart) {
 	const url = 'http://localhost:3001/storeItem/' + itemId
