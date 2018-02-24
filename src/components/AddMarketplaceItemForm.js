@@ -6,7 +6,13 @@ import { Form, Button, Segment, Message, Label } from 'semantic-ui-react'
 import { postItemToMarketplace } from '../actions/marketplaces'
 
 // Should be a form that uses the authroken to route to Client's Marketplace - upload a new item via a POST request
+function importAll(r) {
+  return r.keys().map(r);
+}
 
+const images = importAll(require.context('../assets', false, /\.(png|jpe?g|svg)$/));
+
+console.log(images)
 function mapStateToProps(state) {
 	const { token } = state.authReducer;
 	return { token }

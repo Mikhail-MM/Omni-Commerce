@@ -11,9 +11,17 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 
 const multer = require('multer');
-const storage = multer.memoryStorage()
+// Can conditionally change storage destination based on original file field 
 
-const upload = multer({ dest: 'uploads/', storage: storage })
+const storage = multer.diskStorage({
+	destination: function(req, file, cb) {
+		cb(null, 
+			'C:/Users/mikem/OneDrive/Desktop/ecommerce-platform/Omni-Commerce/public/assets/marketplaceItems'
+		)
+	}
+})
+
+const upload = multer({ storage: storage })
 
 const config = require('./models/config');
 

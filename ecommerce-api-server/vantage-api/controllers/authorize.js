@@ -1,73 +1,107 @@
+const moment = require('moment')
+
 const Client = require('../models/schemas/client');
 const jwt = require('jwt-simple');
 const config = require('../models/config');
 
 
-exports.login = function(req, res, next) {
-	if (!req.body.email)
-		return res.status(404).send("Please input your Email to log in.");
-	if(!req.body.password)
-		return res.status(404).send("Please input your Password to log in.");
 
-	Client.findOne({email: req.body.email}, function(err, client){
-		if (err) return next(err);
-		if(!client) return res.status(404).send("No client with that email");
-		client.comparePassword(req.body.password, function(err, pwMatches) {
-			if (err) return next(err);
-			if (!pwMatches) return res.status(403).send("Invalid Password");
-			client.token = null;
+exports.login = async function(req, res, next) {
+	try{
+		
+		if (!req.body.email)
+			return res.status(404).send("Please input your Email to log in.");
+		if (!req.body.password)
+			return res.status(404).send("Please input your Password to log in.");
 
-			var payload = client; 
+		const authorizedClient = await Client.findOne({email: req.body.email})
+			if (!authorizedClient) { return res.status(404).send("Account with this email does not exist")}
+
+		authorizedClient.comparePassword(req.body.password, async (err, passwordMatch) => {
+		
+		if (!passwordMatch) { return res.status(403).send("Invalid Password") }
 			
-			client.token = jwt.encode(payload, config.secret);
+			const payload = {
+				_id							: authorizedClient._id,
+				email 						: authorizedClient.email,
+				mongoCollectionKey 			: authorizedClient.mongoCollectionKey,
+				accountType					: authorizedClient.accountType,
+			}
 
-			client.save(function(err){
-				if(err) return next(err);
+			const token = jwt.encode(payload, config.secret)
+			const tokenCreatedAt = Date.now()
+			
+			authorizedClient.tokenCreatedAt = tokenCreatedAt
+			authorizedClient.token = token;
+
+			// Do not need await, can send login response even if client is not yet saved - remove later, keep now for validation
+
+			const savedClient = await authorizedClient.save()
+			
 				return res.json({
-					token: client.token,
-					accountType: client.accountType
+					token: token,
+					accountType: authorizedClient.accountType,
 				});
-			});
+		
 		});
-	});
+	
+	} catch(err) { next(err) }
 };
 
-function validateToken(req, res, next, authReq) {
-	var token = req.body.token || req.query.token || req.headers['x-access-token'];
+async function validateToken(req, res, next, authReq) {
 
-	if (!token) return res.status(403).send("Access token required.");
+	try{
+		
+		var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
-	try {
-		var decoded = jwt.decode(token, config.secret)
-	} catch(err) {
-		return res.status(403).send("Could not verify access token.")
-	}
+		if (!token) return res.status(403).send("Access token required.");
 
-	Client.findById(decoded._id, function(err, client) {
-		if (err) return next(err);
-		if (!client) return res.status(403).send("Invalid client.");
-		if (token !== client.token)
+		
+		try {
+			const decoded = jwt.decode(token, config.secret)
+		} catch(err) {
+			return res.status(403).send("Could not verify access token.")
+		}
+
+		const validatedClient = await Client.findById(decoded._id)
+
+		if (!validatedClient) 
+			return res.status(403).send("Invalid Client.")
+		if (token !== client.token) 
+			return res.status(403).send("Expired Token")
+
+			const currentDate = moment().format()
+			const tokenCreatedAt = moment(validatedClient).format() 
+			
+			const timeDifference = currentDate.diff(tokenCreatedAt, 'hours', true)
+
+		if (timeDifference >= 2) 
+			return res.status(403).send("Token expired after 2 hours elapsed, please log-in again to refresh your token.")
+		
+		/* No longer storing admin status on Token
+		if (decoded.isAdmin !== validatedClient.isAdmin || decoded.isSuperAdmin !== validatedClient.isSuperAdmin)
 			return res.status(403).send("Expired token");
-		if (decoded.isAdmin !== client.isAdmin || decoded.isSuperAdmin !== client.isSuperAdmin)
-			return res.status(403).send("Expired token");
-
-		if (!client.isAdmin && !client.isSuperAdmin && authReq.adminRequired)
+		*/
+		
+		if (!validatedClient.isAdmin && !validatedClient.isSuperAdmin && authReq.adminRequired)
 			return res.status(403).send("Admin privileges required");
-		if (!client.isSuperAdmin && authReq.superAdminRequired)
+			
+		if (!validatedClient.isSuperAdmin && authReq.superAdminRequired)
 			return res.status(403).send("Super Admin privileges required");
-
-		//SUCCESS:
-
-		// This would be the place to have your MongoDB Collections finding info
-		req.body.client = decoded
-		req.headers['x-mongo-key'] = decoded.mongoCollectionKey
-		next();
-
-	});
+			
+		if (authReq.attachMongoCollectionKeyHeaders) {
+			console.log("Routing Employee to Appropriate Mongo Collection")
+			req.body.client = validatedClient;
+			req.headers['x-mongo-key'] = validatedClient.mongoCollectionKey;
+			req.headers['x-user-id'] = validatedClient._id;
+		}
+		
+			next();
+	   
+	   } catch(err) { next(err) }
 };
 
 exports.adminRequired = function(req, res, next) {
-	console.log("Authorization function running: looking for admin privileges...");
 	validateToken(req, res, next, { adminRequired: true });
 };
 
@@ -75,42 +109,9 @@ exports.superAdminRequired = function(req, res, next) {
 	validateToken(req, res, next, { superAdminRequired: true });
 };
 
-
-exports.routeEmployeeToMongoCollection = async function(req, res, next) {
-	var token = req.body.token || req.query.token || req.headers['x-access-token'];
-	console.log("Routing Employee to Appropriate Mongo Collection")
-	console.log("Employee Token:")
-	console.log(token)
-	if (!token) return res.status(403).send("Access token required.")
-	try { 
-		var decoded = jwt.decode(token, config.secret)
-		console.log("Token Decoded")
-		console.log(decoded) 
-
-	} catch(err) {
-		return res.status(403).send("Could not verify access token.")
-	}
-	Client.findById(decoded._id, function(err, client) {
-		console.log("Looking for Employee via his _id: Querying Database Now.")
-		if (err) return next(err);
-		if (!client) return res.status(403).send("Invalid client.")
-		if (token !== client.token)
-			return res.status(403).send("Expired token")
-
-		console.log("Trying to set req.body.client to decoded value")
-		console.log("decoded:")
-		console.log(decoded);
-		console.log(client);
-		req.body.client = client;
-		console.log("req.body.client:")
-		console.log(req.body.client)
-		console.log("Attaching headers to request")
-		req.headers['x-mongo-key'] = decoded.mongoCollectionKey
-		req.headers['x-user-id'] = decoded._id
-		next();
-	});
-
-};
+exports.routeEmployeeToMongoCollection = function(req, res, next) {
+	validateToken(req, res,  next, { attachMongoCollectionKeyHeaders: true })
+}
 
 exports.sendStripeTokenMetadataToClient = function(req, res, next) {
 	const data = {

@@ -6,7 +6,6 @@ import { Card, Image, Button, Icon } from 'semantic-ui-react'
 import { retrieveAllItemsForSale, retrieveItemById, pushItemIntoShoppingCart } from '../actions/marketplaces'
 import { showModal } from '../actions/modals'
 
-import blouseImage from '../assets/marketBlouse.jpg'
 
 import CartInvalidationAlert from './CartInvalidationAlert'
 import TagFilterSearch from './TagFilterSearch'
@@ -37,7 +36,7 @@ class OnlineStoreGlobalItemBrowser extends Component {
 		return marketplaceItems.map(item => {
 			return (<div className='cardContainer'>
 						<Card >
-							<Image src={blouseImage} />
+							<Image src={'/assets/marketBlouse.jpg'} />
 							<Card.Content>
 								<Card.Header> {item.itemName} </Card.Header>
 								<Card.Meta> In-Stock: { item.numberInStock } </Card.Meta>

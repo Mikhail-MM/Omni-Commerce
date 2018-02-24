@@ -133,6 +133,17 @@ stripe.customers.create({
 })
 }
 
+module.exports.buildSubscription = async function(req, res, next) {
+  
+  const plan = stripe.plans.create({
+    product: { name: "Vantage Point-of-Sale Business Class"},
+    currency: 'usd',
+    interval: 'month',
+    nickname: 'Basic Monthly',
+    amount: 100
+  });
+
+}
 
 /* Example of what a Stripe Token Object sent as req.body looks like:
 
