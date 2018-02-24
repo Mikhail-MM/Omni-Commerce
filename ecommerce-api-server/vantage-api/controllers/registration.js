@@ -38,6 +38,7 @@ module.exports.configureNewUser = function(req, res, next) {
 	if (req.body.isEmployee) {
 		req.body.isMaster = false;
 		req.body.accountType = "Employee"
+		req.body.employeeAuthorization = false;
 		findMasterAndTagChild(req, res, next)		
 	}
 }

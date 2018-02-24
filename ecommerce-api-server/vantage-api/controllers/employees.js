@@ -11,7 +11,7 @@ module.exports.findMyEmployees = async function(req, res, next) {
 
 module.exports.approveEmployeeSignUp = async function(req, res, next) {
 	try {
-		const employeeToUpdate = await Client.findOneAndUpdate({_id: req.body._id}, {employeeApproved: true}, {new: true})
+		const employeeToUpdate = await Client.findOneAndUpdate({_id: req.body._id}, {employeeAuthorization: true}, {new: true})
 		if (!employeeToUpdate) return res.status(404).send("Could not find the employee you were looking for")
 		res.json(employeeToUpdate)
 	} catch(err) { next(err) }
@@ -19,7 +19,7 @@ module.exports.approveEmployeeSignUp = async function(req, res, next) {
 
 module.exports.disableEmployeeAccess = async function(req, res, next) {
 	try {
-		const employeeToUpdate = await Client.findOneAndUpdate({_id: req.body._id}, {employeeApproved: false}, {new: true})
+		const employeeToUpdate = await Client.findOneAndUpdate({_id: req.body._id}, {employeeAuthorization: false}, {new: true})
 		if (!employeeToUpdate) return res.status(404).send("Could not find the employee you were looking for")
 		res.json(employeeToUpdate)
 	} catch(err) { next(err) }

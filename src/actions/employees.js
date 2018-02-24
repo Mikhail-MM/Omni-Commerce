@@ -49,6 +49,42 @@ export function fetchLoggedUsers(token) {
 	}
 }
 
+
+// Can abstract out these next 2 into modifyEmployeePrivileges and export handlers like we did in the auth function
+export function authorizeEmployeePrivileges(token, employeeId) {
+	return dispatch => {
+		return fetch('http://localhost:3001/employees/authorize', {
+			headers: {
+				'Content-Type': 'application/json',
+				'x-access-token': token,
+			},
+			method: 'POST',
+			mode: 'cors'
+			body: JSON.stringify({_id: employeeId})
+		})
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+		.then(json => console.log(json))
+		.catch(err => console.log(err))
+	}
+}
+
+export function invalidateEmployeePrivileges(token, employeeId) {
+	return dispatch => {
+		return fetch('http://localhost:3001/employees/invalidate', {
+			headers: {
+				'Content-Type': 'application/json',
+				'x-access-token': token,
+			},
+			method: 'POST',
+			mode: 'cors'
+			body: JSON.stringify({_id: employeeId})
+		})
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+		.then(json => console.log(json))
+		.catch(err => console.log(err))
+	}
+}
+
 function receiveLoggedUsers(loggedUsers) {
 	console.log(loggedUsers)
 	return {

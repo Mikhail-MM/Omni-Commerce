@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Icon, Item, Button } from 'semantic-ui-react'
-import { fetchAllEmployees } from '../actions/employees'
+import { fetchAllEmployees, authorizeEmployeePrivileges } from '../actions/employees'
 
 import employeeFace from '../assets/image-2.png'
 function mapStateToProps(state) {
@@ -23,6 +23,15 @@ class EmployeeManagement extends Component {
 
 	}
 
+	validateEmployee(employeeId){
+		const { dispatch, token } = this.props;
+		dispatch(authorizeEmployeePrivileges(token, employeeId))
+	}
+	invalidateEmployee(employeeId){
+		const { dispatch, token } = this.props;
+		dispatch(invalidateEmployeePrivileges(token, employeeId))
+	}
+
 	drawEmployeeMenu() {
 		const { employees } = this.props
 		return employees.map(employee => {
@@ -35,7 +44,8 @@ class EmployeeManagement extends Component {
 							<Item.Meta> Waiter </Item.Meta>
 							<Item.Description> <Icon name=""/>Some sort of description stuff</Item.Description>
 							<Item.Extra>
-								<Button> Approve Employee </Button>
+								<Button onClick={this.validateEmployee.bind(this, employee._id)}> Approve Employee </Button>
+								<Button onClick={this.invalidateEmployee.bind(this, employee._id)}> Remove Employee </Button>
 							</Item.Extra>
 					</Item.Content>
 				</Item>

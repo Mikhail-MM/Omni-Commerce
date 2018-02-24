@@ -104,6 +104,10 @@ router.route('/announcements')
 
 router.route('/employees/find_all')
 	.get(authorize.routeEmployeeToMongoCollection, employees.findMyEmployees);
+router.route('/employees/authorize')
+	.post(authorize.adminRequired, employees.approveEmployeeSignUp)
+router.route('/employees/invalidate')
+	.post(authorize.adminRequired, employees.disableEmployeeAccess)
 
 router.route('/menus/noIDhack/:id')
 	.get(authorize.routeEmployeeToMongoCollection, menus.getMenuItemByIdNoReturnId);
@@ -139,6 +143,8 @@ router.route('/salesReports/aggregate')
 router.route('/salesReports')
 	.get(authorize.routeEmployeeToMongoCollection, salesReports.getAllSalesReports)
 	.post(authorize.routeEmployeeToMongoCollection, salesReports.tabulateDailyTicketSales);
+router.route('/salesReports/:id')
+	.get(authorize.routeEmployeeToMongoCollection, salesReports.getSalesReportById);
 
 router.route('/marketplace/:id')
 	.get(marketplaces.getMarketplaceById)
@@ -149,39 +155,39 @@ router.route('/marketplace')
 
 // Note: Still need to divvy up purchase orders and arrange them to sellers
 router.route('/shoppingCart/payment/')
-	.post(authorize.routeEmployeeToMongoCollection, shoppingCarts.validateMarketplacePayment, shoppingCarts.calculatePricing, payments.saveStripeCustomerInformation);
+	.post(authorize.routeMarketplaceClient, shoppingCarts.validateMarketplacePayment, shoppingCarts.calculatePricing, payments.saveStripeCustomerInformation);
 router.route('/shoppingCart/checkOut/')
-	.post(authorize.routeEmployeeToMongoCollection, shoppingCarts.validateCartStock, shoppingCarts.calculatePricing);
+	.post(authorize.routeMarketplaceClient, shoppingCarts.validateCartStock, shoppingCarts.calculatePricing);
 router.route('/shoppingCart/userLookup/')
-	.get(authorize.routeEmployeeToMongoCollection, shoppingCarts.getShoppingCartByClientRef);
+	.get(authorize.routeMarketplaceClient, shoppingCarts.getShoppingCartByClientRef);
 router.route('/shoppingCart/addItem/')
-	.put(authorize.routeEmployeeToMongoCollection, shoppingCarts.pushItemIntoShoppingCart, shoppingCarts.calculatePricing);
+	.put(authorize.routeMarketplaceClient, shoppingCarts.pushItemIntoShoppingCart, shoppingCarts.calculatePricing);
 router.route('/shoppingCart/removeItem/')
-	.put(authorize.routeEmployeeToMongoCollection, shoppingCarts.removeItemFromShoppingCart, shoppingCarts.calculatePricing);
+	.put(authorize.routeMarketplaceClient, shoppingCarts.removeItemFromShoppingCart, shoppingCarts.calculatePricing);
 router.route('/shoppingCart/:id')
-	.get(authorize.routeEmployeeToMongoCollection, shoppingCarts.getShoppingCartById)
-	.put(authorize.routeEmployeeToMongoCollection, shoppingCarts.updateShoppingCartById, shoppingCarts.calculatePricing);
+	.get(authorize.routeMarketplaceClient, shoppingCarts.getShoppingCartById)
+	.put(authorize.routeMarketplaceClient, shoppingCarts.updateShoppingCartById, shoppingCarts.calculatePricing);
 router.route('/shoppingCart')
-	.get(authorize.routeEmployeeToMongoCollection, shoppingCarts.getAllShoppingCarts)
-	.post(authorize.routeEmployeeToMongoCollection, shoppingCarts.createShoppingCart);
+	.get(authorize.routeMarketplaceClient, shoppingCarts.getAllShoppingCarts)
+	.post(authorize.routeMarketplaceClient, shoppingCarts.createShoppingCart);
 
 router.route('/purchaseorders/userLookup/')
-	.get(authorize.routeEmployeeToMongoCollection, purchaseOrders.getMyPurchaseOrders);
+	.get(authorize.routeMarketplaceClient, purchaseOrders.getMyPurchaseOrders);
 router.route('/purchaseorders')
-	.get(authorize.routeEmployeeToMongoCollection, purchaseOrders.getAllPurchaseOrders)
-	.post(authorize.routeEmployeeToMongoCollection, purchaseOrders.createNewPurchaseOrder);
+	.get(authorize.routeMarketplaceClient, purchaseOrders.getAllPurchaseOrders)
+	.post(authorize.routeMarketplaceClient, purchaseOrders.createNewPurchaseOrder);
 router.route('/purchaseorders/:id')
-	.get(authorize.routeEmployeeToMongoCollection, purchaseOrders.getPurchaseOrderById)
-	.put(authorize.routeEmployeeToMongoCollection, purchaseOrders.updatePurchasOrderById);
+	.get(authorize.routeMarketplaceClient, purchaseOrders.getPurchaseOrderById)
+	.put(authorize.routeMarketplaceClient, purchaseOrders.updatePurchasOrderById);
 
 router.route('/sellorders/userLookup/')
-	.get(authorize.routeEmployeeToMongoCollection, sellOrders.getMySellOrders);
+	.get(authorize.routeMarketplaceClient, sellOrders.getMySellOrders);
 router.route('/sellorders')
-	.get(authorize.routeEmployeeToMongoCollection, sellOrders.getAllSellOrders)
-	.post(authorize.routeEmployeeToMongoCollection, sellOrders.createNewSellOrder);
+	.get(authorize.routeMarketplaceClient, sellOrders.getAllSellOrders)
+	.post(authorize.routeMarketplaceClient, sellOrders.createNewSellOrder);
 router.route('/sellorders/:id')
-	.get(authorize.routeEmployeeToMongoCollection, sellOrders.getSellOrderById)
-	.put(authorize.routeEmployeeToMongoCollection, sellOrders.updateSellOrderById);
+	.get(authorize.routeMarketplaceClient, sellOrders.getSellOrderById)
+	.put(authorize.routeMarketplaceClient, sellOrders.updateSellOrderById);
 
 
 router.route('/storeItem/marketplaceLookup/:id')
@@ -193,10 +199,8 @@ router.route('/storeItem/:id')
 	.put(storeItems.updateStoreItemById);
 router.route('/storeItem')
 	.get(storeItems.getAllStoreItems)
-	.post(authorize.routeEmployeeToMongoCollection, storeItems.createNewStoreItem);
+	.post(authorize.routeMarketplaceClient, storeItems.createNewStoreItem);
 
-router.route('/salesReports/:id')
-	.get(authorize.routeEmployeeToMongoCollection, salesReports.getSalesReportById);
 
 router.route('/storeconfig')
 	.get(authorize.routeEmployeeToMongoCollection, storeConfig.getLoggedUsers);
@@ -210,6 +214,7 @@ router.route('/payments/cash')
 	.post(authorize.routeEmployeeToMongoCollection, payments.createCashCharge, transactions.updateTransactionById);
 router.route('/test')
 	.get(shoppingCarts.test);
+
 app.use('/', router);
 
 

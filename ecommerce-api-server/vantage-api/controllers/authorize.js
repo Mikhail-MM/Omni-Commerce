@@ -90,10 +90,20 @@ async function validateToken(req, res, next, authReq) {
 			return res.status(403).send("Super Admin privileges required");
 			
 		if (authReq.attachMongoCollectionKeyHeaders) {
-			console.log("Routing Employee to Appropriate Mongo Collection")
+			if (validatedClient.accountType === "OnlineMerchant") 
+				return res.status(403).send("Invalid endpoint request.")
+			if (!validatedClient.employeeAuthorization)
+				return res.status(403).send("Sorry, your employer has not approved your access to the terminal yet.")
+
+				req.body.client = validatedClient;
+				req.headers['x-mongo-key'] = validatedClient.mongoCollectionKey;
+				req.headers['x-user-id'] = validatedClient._id;
+		}
+
+		if (authreq.attachClientDataToRequest) {
 			req.body.client = validatedClient;
 			req.headers['x-mongo-key'] = validatedClient.mongoCollectionKey;
-			req.headers['x-user-id'] = validatedClient._id;
+			req.headers['x-user-id'] = validatedClient._id;	
 		}
 		
 			next();
@@ -113,6 +123,9 @@ exports.routeEmployeeToMongoCollection = function(req, res, next) {
 	validateToken(req, res,  next, { attachMongoCollectionKeyHeaders: true })
 }
 
+exports.routeMarketplaceClient = function(req, res, next) {
+	validateToken(req, res, next, { attachClientDataToRequest: true })
+}
 exports.sendStripeTokenMetadataToClient = function(req, res, next) {
 	const data = {
 		name: req.body.client.firstName.concat(' ', req.body.client.lastName),

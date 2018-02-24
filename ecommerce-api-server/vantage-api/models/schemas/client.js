@@ -19,8 +19,8 @@ const clientSchema = new Schema({
 	shipping_address_zip: String,
 	shipping_address_state: String,
 	isMaster: Boolean,
-	masterSubscriptionApproved: Boolean,
-	employeeApproved: Boolean,
+	employeeAuthorization: Boolean,
+	organizationAuthorization: Boolean,
 	employeeCounter: Number,
 	masterLookupIdentifier: String, // This might just be Organization name to make it easier. Think about scale
 	organizationName: String, // Used in the autocomplete to point Employees to the right way
@@ -29,6 +29,7 @@ const clientSchema = new Schema({
 	isAdmin: { type: Boolean, index: true },
 	hash: { type: String, required: true },
 	token: String,
+	tokenCreatedAt: Date,
 	clockInNumber: String,
 	accountType: String, 
 	status: String, // PendingApproval[Pending] - Registered
