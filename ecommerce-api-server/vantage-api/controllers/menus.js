@@ -2,62 +2,87 @@ const mongoose = require('mongoose');
 const Schemas = require('../models/schemas/transaction')
 const menuSchema = Schemas.menuSchema
 
-module.exports.createNewMenuItem = function(req, res, next) {
-	const MenuItem = mongoose.model('MenuItem', menuSchema, req.headers['x-mongo-key'] + '_MenuItems');
-	const newMenu = new MenuItem(req.body);
+module.exports.createNewMenuItem = async function(req, res, next) {
+	try{ 
+		
+		const MenuItemModel = mongoose.model('MenuItem', menuSchema,'MenuItems_' + req.headers['x-mongo-key'])
+		const newMenu = new MenuItemModel(req.body);
+		
+		const savedMenuItem = await newMenu.save()
+
+			res.json(savedMenuItem)
 	
-	newMenu.save(function(err, menu) {
-		if (err) return next(err);
-		return res.json(menu);
-	});
-}
-
-module.exports.getMenuItemByIdNoReturnId = function (req, res, next) {
-	const MenuItem = mongoose.model('MenuItem', menuSchema, req.headers['x-mongo-key'] + '_MenuItems')
-	MenuItem.findOne({_id: req.params.id}, '-_id', function(err, menuItem) {
-		if(err) return next(err);
-		if(!menuItem) res.status(404).send("Could not find Menu item with that ID");
-		console.log("Returning Menu Item WITHOUT ID:")
-		console.log(menuItem)
-		return res.json(menuItem);
-	})
+	} catch(err) { next(err) }
 }
 
 
+module.exports.getMenuItemByIdNoReturnId = async function (req, res, next) {
+	try { 
+		
+		const MenuItemModel = mongoose.model('MenuItem', menuSchema,'MenuItems_' + req.headers['x-mongo-key'])
+		const menuItem = await MenuItemModel.findOne({_id: req.params.id}, '-_id')
 
-module.exports.getAllMenuItems = function (req, res, next) {
-	const MenuItem = mongoose.model('MenuItem', menuSchema, req.headers['x-mongo-key'] + '_MenuItems')
-	MenuItem.find({}, function(err, menuItems) {
-		if (err) return next(err);
-		if (!menuItems) res.status(404).send("Could not locate any Menu Items in database");
-		return res.json(menuItems);
-	})
+		if (!menuItem) return res.status(404).send("Could not find item with that ID")
+
+			return res.json(menuItem)
+
+	} catch(err) { next(err) }
+
 }
 
-module.exports.getMenuItemById = function(req, res, next) {
-	const MenuItem = mongoose.model('MenuItem', menuSchema, req.headers['x-mongo-key'] + '_MenuItems')
-	MenuItem.findOne({_id: req.params.id}, function(err, menuItem) {
-		if(err) return next(err);
-		if(!menuItem) res.status(404).send("Could not find Menu item with that ID");
-		return res.json(menuItem);
-	})
+
+module.exports.getAllMenuItems = async function (req, res, next) {
+	try { 
+		
+		const MenuItemModel = mongoose.model('MenuItem', menuSchema,'MenuItems_' + req.headers['x-mongo-key'])
+		const menuItems = await MenuItemModel.find({})
+
+		if (!menuItems) return res.status(404).send("Could not find items in this directory")
+
+			return res.json(menuItems)
+
+	} catch(err) { next(err) }
 }
 
-module.exports.updateMenuItemById = function (req, res, next) {
-	const MenuItem = mongoose.model('MenuItem', menuSchema, req.headers['x-mongo-key'] + '_MenuItems')
-	MenuItem.findOneAndUpdate({_id: req.params.id}, req.body, 
-		{ new: true }, function(err, menuItem) {
-		if (err) return next(err);
-		if (!menuItem) res.status(404).send("No menu item with that ID!")
-		res.json(menuItem);
-	})
+
+module.exports.getMenuItemById = async function(req, res, next) {
+	try { 
+		
+		const MenuItemModel = mongoose.model('MenuItem', menuSchema,'MenuItems_' + req.headers['x-mongo-key'])
+		const menuItem = await MenuItemModel.findOne({_id: req.params.id})
+
+		if (!menuItem) return res.status(404).send("Could not find item with that ID") 
+
+			return res.json(menuItem)
+
+	} catch(err) { next(err) }
 }
+
+
+module.exports.updateMenuItemById = async function (req, res, next) {
+	try { 
+		
+		const MenuItemModel = mongoose.model('MenuItem', menuSchema,'MenuItems_' + req.headers['x-mongo-key'])
+		const menuItem = await MenuItemModel.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
+
+		if (!menuItem) return res.status(404).send("Could not find item with that ID")
+
+			return res.json(menuItem)
+
+	} catch(err) { next(err) }
+}
+
+
 module.exports.deleteMenuItemById = function (req, res, next) {
-	const MenuItem = mongoose.model('MenuItem', menuSchema, req.headers['x-mongo-key'] + '_MenuItems')
-	MenuItem.findOneAndRemove({_id: req.params.id}, function(err, menuItem) {
-		if (err) return next(err);
-		if (!menuItem) res.status(404).send("No menu item with that ID!");
-		res.status(200).send("Deleted menu item");
-	})
+	try{ 
+		
+		const MenuItemModel = mongoose.model('MenuItem', menuSchema,'MenuItems_' + req.headers['x-mongo-key'])
+		const menuItem = await MenuItemModel.findOneAndRemove({_id: req.params.id})
+
+		if (!menuItem) return res.status(404).send("No menu item with that ID!")
+
+			return res.status(200).send("Deleted menu item.")
+
+	} catch(err) { next(err) }
 }
 

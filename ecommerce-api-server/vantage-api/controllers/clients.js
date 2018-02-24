@@ -11,8 +11,6 @@ const ShoppingCartModel = MarketPlaceModels.ShoppingCartModel
 //CREATE
 
 module.exports.createClient = async function(req, res, next) {
-	console.log("req.body recieved by CREATE CLIENT Function:")
-	console.log(req.body)
 
 	try {
 	// Object assign data from req.data - assign some registration middleware to alter the request
@@ -123,43 +121,51 @@ module.exports.autoCompleteClientOrgName = function (req, res, next) {
 		
 }
 
-module.exports.getAllClients = function(req, res, next) {
-	Client.find({}, function(err, clients) {
-		if (err) return next(err);
+
+module.exports.getAllClients = async function(req, res, next) {
+	try {
+		
+		const clients = await Client.find({});
+		
 		return res.json(clients)
-	})
+	
+	} catch(err) { next(err) }
 }
 
-module.exports.findMasterAndTagChild = function(req, res, next) {
-	Client.findOne({
-		isMaster: true,
-		organizationName: req.body.organizationName
-	}, 
-			function(err, client) {
-				if (err) return next(err);
-				req.body.mongoCollectionKey = client.mongoCollectionKey;
-			})
+module.exports.findMasterAndTagChild = async function(req, res, next) {
+	try{ 
+		
+		const client = await Client.findOne({
+			isMaster: true,
+			organizationName: req.body.organizationName,
+		})
+
+		req.body.mongoCollectionKey = client.mongoCollectionKey;
+
+	} catch(err) { next(err) }
 }
 
-module.exports.updateClient = function(req, res, next) {
-	Client.findOneAndUpdate({_id: req.params.id}, req.body, 
-		{ new: true }, function(err, client) {
-			if(err) return next(err);
-			if(!client) return res.status(404).send("No client with that ID");
-			return res.json(client);
-		});
+
+module.exports.updateClient = async function(req, res, next) {
+	try{ 
+		
+		const client = await Client.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
+
+		if (!client) return res.status(404).send("No client with that ID")
+
+		return res.json(client)
+
+	} catch(err) { next(err) }
 }
 
-module.exports.deleteClientById = function(req, res, next) {
-	Coupon.findOneAndRemove({_id: req.params.id}, function(err, client){
-		if (err) return next(err);
-		if (!client) return res.status(404).send("No client with that ID");
-		return res.sendStatus(200);
-	});
-}
+module.exports.deleteClientById = async function(req, res, next) {
+	try{ 
 
-module.exports.findAllEmployees = function(req, res, next) {
-	// Should use req.body.client and find the employees using the adminClient's orgname
-	console.log(req.body.client)
-	res.json({TODO: "YOU GOTTA FINISH EMPLOYEE LOOKUP METHOD"})
+		const client = await Client.findOneAndRemove({_id: req.params.id})
+
+		if (!client) return res.json(404).send("No client with that ID")
+
+		return res.sendStatus(200)
+
+	} catch(err) { next(err) }
 }

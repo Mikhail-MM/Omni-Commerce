@@ -16,8 +16,8 @@ module.exports.calculatePricing = function(req, res, next) {
 	const totalTaxDisplay = (subTotalBigNumber.times(taxRate)).round(2).toNumber()
 	const total = (subTotalBigNumber.plus(totalTax)).toNumber()
 	const totalDisplay = (subTotalBigNumber.plus(totalTax)).round(2).toNumber()
-	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
-	Transaction.findOneAndUpdate({_id: req.params.id }, 
+	const TransactionModel = mongoose.model('Transaction', TicketTransaction, 'Transactions_' + req.headers['x-mongo-key']
+	TransactionModel.findOneAndUpdate({_id: req.params.id }, 
 		{ subTotalReal: subTotal,
 		  subTotal: subTotalDisplay,
 		  taxReal: totalTax,
@@ -25,102 +25,134 @@ module.exports.calculatePricing = function(req, res, next) {
 		  totalReal: total,
 		  total: totalDisplay, }, {new: true}, function(err, transaction){
 		  	if(err) next(err)
-		  	if(!transaction) res.status(404).send("No transaction item with that ID!")
-		  	res.json(transaction)
+		  	if(!TransactionModel) res.status(404).send("No transaction item with that ID!")
+		  	res.json(TransactionModel)
 	});
 }	
 
 
-module.exports.createNewTransaction = function(req, res, next) {
-	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
-	const newTransaction = new Transaction(req.body);
-	newTransaction.save(function(err, transaction) {
-		if (err) return next(err);
-		res.json(transaction);
-	})	
+module.exports.createNewTransaction = async function(req, res, next) {
+	try{ 
+
+		const TransactionModel = mongoose.model('Transaction', TicketTransaction, 'Transactions_' + req.headers['x-mongo-key'])
+		const newTransaction = new TransactionModel(req.body)
+
+		const savedTransaction = await newTransaction.save()
+
+			return res.json(savedTransaction)
+
+
+	} catch(err) { next(err) }
 }
 
 module.exports.updatePushTransactionById = async function(req, res, next) {
-	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
 	try {
-		const updatedTransactionWithNewSubdoc = await Transaction.findOneAndUpdate(
-		{_id: req.params.id}, { $push: { items: req.body } }, { new: true });
-			if (!updatedTransactionWithNewSubdoc) return res.status(404).send("No transaction item with that ID!")
+
+		const TransactionModel = mongoose.model('Transaction', TicketTransaction, 'Transactions_' + req.headers['x-mongo-key'])
+		const updatedTransactionWithNewSubdoc = await TransactionModel.findOneAndUpdate(
+			{_id: req.params.id},
+			{ $push: { items: req.body } },
+			{ new: true }
+		);
+			if (!updatedTransactionWithNewSubdoc) return res.status(404).send("No transaction item with that ID.")
 		
-		req.body.menuItemSubdocs = updatedTransactionWithNewSubdoc.items;		
-		next();
+			req.body.menuItemSubdocs = updatedTransactionWithNewSubdoc.items;		
+				
+				next();
 
 	} catch(err) { next(err) }
 }
 
 module.exports.pullItemFromArray = async function(req, res, next) {
-	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
-	console.log("Client requesting subdoc removal")
-	console.log("MenuItem _id should be contents of req.body - may need JSON parse")
-	console.log(req.body)
-	console.log(req.body.subdoc_id)
 	try {
-		const updatedTransactionWithPulledSubdoc = await Transaction.findOneAndUpdate(
-			{_id: req.params.id}, { $pull: { items: { _id: req.body.subdoc_Id } } }, { new: true }); 
-			if (!updatedTransactionWithPulledSubdoc) return res.status(404).send("No transaction item with that ID!")
 		
-		req.body.menuItemSubdocs = updatedTransactionWithPulledSubdoc.items;
-		next()
-	
+		const TransactionModel = mongoose.model('Transaction', TicketTransaction, 'Transactions_' + req.headers['x-mongo-key'])
+		const updatedTransaction = await TransactionModel.findOneAndUpdate(
+			{_id: req.params.id},
+			{ $pull: { items: { _id: req.body.subdoc_Id } } },
+			{ new: true }
+		); 
+		
+			if (!updatedTransaction) return res.status(404).send("No transaction item with that ID.")
+		
+		
+			req.body.menuItemSubdocs = updatedTransaction.items;
+		
+				next()
+
 	} catch(err) { next(err) }
 }
 
 module.exports.pushCustomerAddon = async function(req, res, next) {
-	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
-	const MenuItem = mongoose.model('MenuItem', MenuSchema, req.headers['x-mongo-key'] + '_MenuItems');
-	const addOn = new MenuItem(req.body)
 	try{
-		const updatedTransactionWithNewAddonSubdoc = await Transaction.findOneAndUpdate(
-			{_id: req.params.id}, { $push: { items:addOn } }, { new: true });
-			if (!updatedTransactionWithNewAddonSubdoc) return res.status(404).send("No transaction item with that ID!")
+
+		const TransactionModel = mongoose.model('Transaction', TicketTransaction, 'Transactions_' + req.headers['x-mongo-key'])
+		const MenuItemModel = mongoose.model('MenuItem', MenuSchema,'MenuItems_' + req.headers['x-mongo-key'])
+		const addOn = new MenuItemModel(req.body)
 		
-		req.body.menuItemSubdocs = updatedTransactionWithNewAddonSubdoc.items
-		next()
+		const updatedTransaction = await TransactionModel.findOneAndUpdate(
+			{_id: req.params.id},
+			{ $push: { items:addOn } },
+			{ new: true }
+		);
+			if (!updatedTransaction) return res.status(404).send("No transaction item with that ID.")
+		
+				req.body.menuItemSubdocs = updatedTransaction.items
+					
+					next()
 
 	} catch(err) { next(err) }
 }
-module.exports.getTransactionById = function (req, res, next) {
-	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
-	Transaction.findOne({_id: req.params.id}, function(err, transaction) {
-		if (err) return next(err)
-		 if(!transaction) return res.status(404).send("Could not locate transaction with ID " + req.params.id);
-		  return res.json(transaction);
-	});
+module.exports.getTransactionById = async function (req, res, next) {
+	try{ 
+
+		const TransactionModel = mongoose.model('Transaction', TicketTransaction, 'Transactions_' + req.headers['x-mongo-key'])
+		const transaction = await TransactionModel.findOne({_id: req.params.id})
+
+			if (!transaction) return res.status(404).send("No transaction item with that ID.")
+
+				return res.json(transaction)
+
+	} catch(err) { next(err) }
 }
 
 module.exports.getAllTransactions = function (req, res, next) {
-	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
-	Transaction.find({}, function(err, transactions) {
-		if (err) return next(err);
-		 if (!transactions) return res.status(404).send("Could not locate any transaction Items in database");
-		  return res.json(transactions);
-	});
+	try{ 
+
+		const TransactionModel = mongoose.model('Transaction', TicketTransaction, 'Transactions_' + req.headers['x-mongo-key'])
+		const transactions = await TransactionModel.find({})
+
+			if (!transactions) return res.status(404).send("No transactions in this directory")
+
+				return res.json(transactions)
+
+	} catch(err) { next(err) }
 }
 
 module.exports.updateTransactionById = function (req, res, next) {
-	console.log("Updating Transaction BY ID!")
-	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
-	Transaction.findOneAndUpdate({_id: req.params.id}, req.body, 
-		{ new: true }, function(err, transaction) {
-		 if (err) return next(err);
-		  if (!transaction) return res.status(404).send("No transaction item with that ID!")
-		   console.log(req.body);
-		    return res.status(200).send(transaction);
-	});
+	try{ 
+
+		const TransactionModel = mongoose.model('Transaction', TicketTransaction, 'Transactions_' + req.headers['x-mongo-key'])
+		const transaction = await TransactionModel.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
+
+			if (!transaction) return res.status(404).send("No transaction item with that ID")
+
+				return res.json(transaction)
+
+	} catch(err) { next(err) }
 }
 
 module.exports.deleteTransactionById = function (req, res, next) {
-	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
-	Transaction.findOneAndRemove({_id: req.params.id}, function(err, transaction) {
-		if (err) return next(err);
-		if (!transaction) return res.status(404).send("No transaction item with that ID!");
-		return res.status(200).send("Deleted transaction item");
-	});
+	try{ 
+
+		const TransactionModel = mongoose.model('Transaction', TicketTransaction, 'Transactions_' + req.headers['x-mongo-key'])
+		const transaction = await TransactionModel.findOneAndRemove({_id: req.params.id})
+
+			if (!transaction) return res.status(404).send("No transaction item with that ID")
+
+				return res.status(200).("Deleted Transaction Item")
+
+	} catch(err) { next(err) }
 }
 
 //May need exception for creating new transaction
