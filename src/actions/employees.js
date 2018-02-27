@@ -59,7 +59,7 @@ export function authorizeEmployeePrivileges(token, employeeId) {
 				'x-access-token': token,
 			},
 			method: 'POST',
-			mode: 'cors'
+			mode: 'cors',
 			body: JSON.stringify({_id: employeeId})
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
@@ -76,7 +76,7 @@ export function invalidateEmployeePrivileges(token, employeeId) {
 				'x-access-token': token,
 			},
 			method: 'POST',
-			mode: 'cors'
+			mode: 'cors',
 			body: JSON.stringify({_id: employeeId})
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))

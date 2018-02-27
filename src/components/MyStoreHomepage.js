@@ -54,7 +54,7 @@ class MyStoreHomepage extends Component {
 		return(
 			<Sidebar.Pushable>
 			<ModalRoot/>
-			<Sidebar className="shopping-cart-sidebar-wrapper" as={Menu} animation='overlay' width='very wide' visible={this.state.sidebarVisible} icon='labeled' inverted>
+			<Sidebar className="shopping-cart-sidebar-wrapper" as={Menu} direction='right' animation='overlay' width='very wide' visible={this.state.sidebarVisible} icon='labeled' inverted>
 				<ShoppingCartSidebar />
 			</Sidebar>
 			
@@ -70,7 +70,7 @@ class MyStoreHomepage extends Component {
 						<h5 className='my-store-left-sidebar_button_heading'> Messages </h5>					
 					</div>
 
-					<div className='my-store-left-sidebar_button my-store-left-sidebar_bottom-button'>
+					<div className='my-store-left-sidebar_button my-store-left-sidebar_bottom-button' onClick={this.toggleSidebar}>
 						<Icon className='my-store-left-sidebar_button_icon _last_icon' name='shopping cart' size='huge'/>
 						<h5 className='my-store-left-sidebar_button_heading'> My Cart </h5>					
 					</div>
@@ -121,7 +121,6 @@ class MyStoreHomepage extends Component {
 						<Button color="black" fluid onClick={() => this.setContentVisible("AllMarketplaces")}> Browse All Marketplaces </Button>
 						<Button color="black" fluid onClick={() => this.setContentVisible("AllItems")}> Browse All Items </Button>
 						<Button color="black" fluid onClick={this.dispatchMarketplaceItemAddModal}> Add Item To My Marketplace </Button>
-						<Button color="black" fluid onClick={this.toggleSidebar}> Shopping Cart Sidebar </Button>
 						<div className='itemFilterFormWrapper'>
 							{ marketplaceItems && <TagFilterSearch /> }
 						</div>

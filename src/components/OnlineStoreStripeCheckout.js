@@ -38,7 +38,9 @@ handleSubmit = (event) => {
 
 		const { authToken, activeTicket, dispatch } = this.props;
 
-		fetch('http://localhost:3001/client/gatherClientToken', {
+		// This can be moved to a new thunk in actions
+
+		fetch('http://localhost:3001/client/metadata', {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': authToken,
@@ -47,9 +49,21 @@ handleSubmit = (event) => {
 			mode: 'cors',	
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
-		.then(customerInfoJSON => {
-			console.log(customerInfoJSON)
-			this.props.stripe.createToken(customerInfoJSON)
+		.then(json => {
+			
+			const { address_line1, address_line2, address_city, address_state, address_zip, address_country } = json
+			
+			this.props.stripe.createToken({
+				
+				name: json.name,
+				address_line1,
+				address_line2,
+				address_city,
+				address_state,
+				address_zip,
+				address_country,
+
+			})
 			.then(({token}) => {
 				dispatch(beginCartPaymentValidationCascade(authToken, token));
 			});

@@ -51,6 +51,7 @@ class AddMarketplaceItemForm extends Component {
 
 	fileUploadHandler(event) {
 		event.preventDefault()
+		const { dispatch, token } = this.props
 
 		const formData = new FormData()
 		
@@ -60,13 +61,7 @@ class AddMarketplaceItemForm extends Component {
 		formData.append('numberInStock', this.state.numberInStock)
 		formData.append('tags', this.state.tags)
 		
-		fetch('http://localhost:3001/images', {
-			method: 'POST',
-			mode: 'cors',
-			body: formData,
-		})
-		.then(response => console.log(response))
-
+		dispatch(postItemToMarketplace(token, formData))
 	}
 
 	renderTagSelectionsToDOM() {
@@ -90,13 +85,6 @@ class AddMarketplaceItemForm extends Component {
 			})
 		}
 		
-	}
-
-	handleSubmit(event) {
-		event.preventDefault()
-		const { dispatch, token } = this.props
-		dispatch(postItemToMarketplace(token, this.state))
-
 	}
 
 	render() {

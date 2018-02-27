@@ -16,7 +16,7 @@ module.exports.calculatePricing = function(req, res, next) {
 	const totalTaxDisplay = (subTotalBigNumber.times(taxRate)).round(2).toNumber()
 	const total = (subTotalBigNumber.plus(totalTax)).toNumber()
 	const totalDisplay = (subTotalBigNumber.plus(totalTax)).round(2).toNumber()
-	const TransactionModel = mongoose.model('Transaction', TicketTransaction, 'Transactions_' + req.headers['x-mongo-key']
+	const TransactionModel = mongoose.model('Transaction', TicketTransaction, 'Transactions_' + req.headers['x-mongo-key'])
 	TransactionModel.findOneAndUpdate({_id: req.params.id }, 
 		{ subTotalReal: subTotal,
 		  subTotal: subTotalDisplay,
@@ -116,7 +116,7 @@ module.exports.getTransactionById = async function (req, res, next) {
 	} catch(err) { next(err) }
 }
 
-module.exports.getAllTransactions = function (req, res, next) {
+module.exports.getAllTransactions = async function (req, res, next) {
 	try{ 
 
 		const TransactionModel = mongoose.model('Transaction', TicketTransaction, 'Transactions_' + req.headers['x-mongo-key'])
@@ -129,7 +129,7 @@ module.exports.getAllTransactions = function (req, res, next) {
 	} catch(err) { next(err) }
 }
 
-module.exports.updateTransactionById = function (req, res, next) {
+module.exports.updateTransactionById = async function (req, res, next) {
 	try{ 
 
 		const TransactionModel = mongoose.model('Transaction', TicketTransaction, 'Transactions_' + req.headers['x-mongo-key'])
@@ -142,7 +142,7 @@ module.exports.updateTransactionById = function (req, res, next) {
 	} catch(err) { next(err) }
 }
 
-module.exports.deleteTransactionById = function (req, res, next) {
+module.exports.deleteTransactionById = async function (req, res, next) {
 	try{ 
 
 		const TransactionModel = mongoose.model('Transaction', TicketTransaction, 'Transactions_' + req.headers['x-mongo-key'])
@@ -150,7 +150,7 @@ module.exports.deleteTransactionById = function (req, res, next) {
 
 			if (!transaction) return res.status(404).send("No transaction item with that ID")
 
-				return res.status(200).("Deleted Transaction Item")
+				return res.status(200).send("Deleted Transaction Item")
 
 	} catch(err) { next(err) }
 }

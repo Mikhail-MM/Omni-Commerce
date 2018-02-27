@@ -73,7 +73,7 @@ module.exports.updateMenuItemById = async function (req, res, next) {
 }
 
 
-module.exports.deleteMenuItemById = function (req, res, next) {
+module.exports.deleteMenuItemById = async function (req, res, next) {
 	try{ 
 		
 		const MenuItemModel = mongoose.model('MenuItem', menuSchema,'MenuItems_' + req.headers['x-mongo-key'])

@@ -15,6 +15,11 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
 	destination: function(req, file, cb) {
+		console.log("Logging from multer storage function")
+		console.log("req.body", req.body)
+		console.log("req.file", req.file)
+		console.log("file", file)
+		console.log("file.fieldname, use this to route to proper PUBLIC/{dest} depending on how we title the key of the formdata per form", file.fieldname)
 		cb(null, 
 			'C:/Users/mikem/OneDrive/Desktop/ecommerce-platform/Omni-Commerce/public/assets/marketplaceItems'
 		)
@@ -74,9 +79,11 @@ app.use('/*', function(req, res, next) {
 
 
 
-
+/*
 router.route('/clients/lookupEmployees')
 	.get(authorize.adminRequired, clients.findAllEmployees)
+*/
+
 router.route('/clients/lookup')
 	.post(clients.autoCompleteClientOrgName);
 router.route('/clients')
@@ -86,7 +93,7 @@ router.route('/clients/:id')
 	.put(clients.updateClient)
 	.delete(clients.deleteClientById);
 
-router.route('/client/gatherClientToken') 
+router.route('/client/metadata') 
 	.get(authorize.routeEmployeeToMongoCollection, authorize.sendStripeTokenMetadataToClient)
 
 router.route('/images')
@@ -199,7 +206,7 @@ router.route('/storeItem/:id')
 	.put(storeItems.updateStoreItemById);
 router.route('/storeItem')
 	.get(storeItems.getAllStoreItems)
-	.post(authorize.routeMarketplaceClient, storeItems.createNewStoreItem);
+	.post(authorize.routeMarketplaceClient, upload.single('marketplaceItems'), images.uploadNewImage, storeItems.createNewStoreItem);
 
 
 router.route('/storeconfig')

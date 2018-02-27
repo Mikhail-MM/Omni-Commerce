@@ -122,16 +122,18 @@ function receiveCurrentItem(item) {
 		item
 	}
 }
-export function postItemToMarketplace(token, itemData) {
+export function postItemToMarketplace(token, formData) {
+
+	// SWITCH FROM JSON TO FORM DATA ALONGSIDE IMAGE UPLOAD
+
 	return dispatch => {
-		return fetch('http://localhost:3001/storeItem', {
+		fetch('http://localhost:3001/images', {
 			headers:{
-				'Content-Type': 'application/json',
-				'x-access-token': token,
+				'x-access-token': token
 			},
 			method: 'POST',
 			mode: 'cors',
-			body: JSON.stringify(itemData)
+			body: formData,
 		})
 		.then(response => response.ok ? response.json() : new Error(response.statusText))
 		.then(json => { 

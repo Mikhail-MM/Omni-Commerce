@@ -127,6 +127,8 @@ exports.routeMarketplaceClient = function(req, res, next) {
 	validateToken(req, res, next, { attachClientDataToRequest: true })
 }
 exports.sendStripeTokenMetadataToClient = function(req, res, next) {
+	// FIND STRIPE CUSTOMER IN DB HERE!! SEND CUSTOMER ID BACK!!
+
 	const data = {
 		name: req.body.client.firstName.concat(' ', req.body.client.lastName),
 		address_line1: req.body.client.billing_address_line1,

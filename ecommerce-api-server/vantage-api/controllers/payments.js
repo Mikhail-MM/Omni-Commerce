@@ -38,99 +38,131 @@ module.exports.createStripeCharge = function(req, res, next) {
 
 // TODO: Comprehensive Error Handling using Stripe API Error Test
 module.exports.saveStripeCustomerInformation = async function(req, res, next) {
-const token = req.body.stripeToken.id
-// Need to get shopping cart info and acquire Cart total!
-console.log("Tabulating amount to be paid ")
-const stripeAmount = new BigNumber(req.body.validatedPurchaseOrderToProcess.validatedCart.totalReal).times(100).round().toNumber()
-stripe.customers.create({
-  email: req.body.client.email,
-  source: token,
-}).then(async (customer) => {
-  console.log("Creating Stripe Customer...")
-  console.log(customer) // TODO: Save Customer and make routes. While we can use the natural customer here, if exporting this feature to POS system we must use Model with custom Mongo Key prefix in collection
-  const data = Object.assign({}, customer, {clientRef_id: req.body.client._id})
-  const newCustomerDataModel = new StripeCustomerModel(data)
-  // we will need to manage this - add to DB only if customer not already existing? 
-  console.log("Saving customer...")
-  const savedCustomerEntity = await newCustomerDataModel.save()
-  console.log(savedCustomerEntity);
-  stripe.charges.create({
-    amount: stripeAmount,
-    currency: "usd",
-    customer: customer.id
-  }).then(async (charge) => {
-    console.log("Stripe Charge Created...")
-    console.log(charge)
-    // const { itemsBought } = req.body.validatedPurchaseOrderToProcess.validatedCart
-    const data = Object.assign({}, {itemsBought: req.body.validatedPurchaseOrderToProcess.validatedCart.itemsBought}, {
-      customerRef_id: savedCustomerEntity._id,
-      charge: charge
-    });
-    console.log("Building new purchase order")
-    const newPurchaseOrder = new PurchaseOrderModel(data)
-    const savedPurchaseOrder = await newPurchaseOrder.save()
-    console.log(savedPurchaseOrder);
-    req.body.validatedPurchaseOrderToProcess.savedPurchaseOrder = savedPurchaseOrder
-    console.log("grouping")
-    const sellerSpecificShippingOrders = _.groupBy(savedPurchaseOrder.itemsBought, "sellerRef_id")
-    console.log(sellerSpecificShippingOrders)
-    const arrayOfReceiptsForBuyers = []
-    console.log("TYPEDEF", typeof(sellerSpecificShippingOrders))
-    for (const seller_id in sellerSpecificShippingOrders) {
+  try { 
+    
+    const token = req.body.stripeToken.id
+    const stripeAmount = new BigNumber(req.body.validatedPurchaseOrderToProcess.validatedCart.totalReal).times(100).round().toNumber()
 
-      console.log("seller_id", seller_id)
-      console.log("sellerSpecificShippingOrders", sellerSpecificShippingOrders)
-      console.log("sellerSpecificShippingOrders[seller_id]", sellerSpecificShippingOrders[seller_id])
-      console.log(typeof(sellerSpecificShippingOrders[seller_id]))
-        // Determine localized pricing for each seller
-        const bigNumberPrices = sellerSpecificShippingOrders[seller_id].map(item => {
-          return { 
-            itemPrice: new BigNumber(item.itemPrice),
-            multipleRequest: new BigNumber(item.numberRequested),
-          }
-        });
+      console.log("Check for existing customers with matching Client._id")
+
+    const existingCustomer = StripeCustomerModel.findOne({clientRef_id: reeq.body.client._id})
+
+      const createNewCustomer = async () => {
+              
+              console.log("Previous customer not found. Creating new customer")
+
+              stripe.customers.create({
+                email: req.body.client.email,
+                shipping: {
+                  address: {
+                    line1: req.body.client.shipping_address_line1,
+                    line2: req.body.client.shipping_address_line2,
+                    city: req.body.client.shipping_address_city,
+                    postal_code: req.body.client.shipping_zip,
+                    state: req.body.client.shipping_address_state,
+                  },
+                  name: req.body.client.firstName.concat(' ', req.body.client.lastName),
+                  phone: req.body.client.phoneNumber,
+                },
+              })
+              .then( async(customer) => {
+
+                console.log("New Stripe Customer Created:", customer)
+                
+                const customerData = Object.assign({}, customer, {clientRef_id: req.body.client._id});
+                const newCustomerModel = new StripeCustomerModel(customerData);
+                const savedCustomerEntity = await newCustomerDataModel.save();
+
+                    return savedCustomerEntity;
+              })
+          
+      }
+
+    const customer = (existingCustomer) ? existingCustomer : createNewCustomer
+
+    console.log('Using this customer:', customer)
+
+      stripe.charges.create({
+        amount: stripeAmount,
+        currency: "usd",
+        customer: customer.id,
+        source: token,
+        shipping: customer.shipping,
+        statement_descriptor: "Omni Online Market",
+      }).then( async (charge) => {
+
+        console.log("Stripe Charge Created:", charge)
         
-        const subTotalBigNumber =  bigNumberPrices.reduce( (acc, cur) => { 
+        const purchaseOrderData = Object.assign({}, {itemsBought: req.body.validatedPurchaseOrderToProcess.validatedCart.itemsBought}, {
+          customerRef_id: savedCustomerEntity._id,
+          charge: charge
+         });
+
+        const newPurchaseOrder = new PurchaseOrderModel(purchaseOrderData);
+        const savedPurchaseOrder = await newPurchaseOrder.save();
+
+        console.log("Built new purchase order for buyer:", savedPurchaseOrder)
+
+        req.body.validatedPurchaseOrderToProcess.savedPurchaseOrder = savedPurchaseOrder;
+
+        const groupedShippingOrders = _.groupBy(savedPurchaseOrder.itemsBought, "sellerRef_id");
+        const arrayOfShippingOrders = [];
+
+        for (const seller_id in sellerSpecificShippingOrders) {
+
+          // EXPORT THIS INTO NEW FUNCTION TO CALCULATE PRICING
+
+          const bigNumberPrices = sellerSpecificShippingOrders[seller_id].map(item => {
+            return { 
+              itemPrice: new BigNumber(item.itemPrice),
+              multipleRequest: new BigNumber(item.numberRequested),
+            }
+          });
+
+          const subTotalBigNumber =  bigNumberPrices.reduce( (acc, cur) => { 
           return acc.plus((cur.itemPrice.times(cur.multipleRequest))) }, new BigNumber(0)
-        )
-        
-        // Can be improved with abstraction to our other pricing function in shoppingcarts and smarter use of the ... spread operator
+          )
+             
+              const taxRate = new BigNumber(0.07) 
+              const subtotalReal = subTotalBigNumber.toNumber()
+              const subtotalDisplay = subTotalBigNumber.round(2).toNumber()
+              const taxReal = subTotalBigNumber.times(taxRate).toNumber()
+              const taxDisplay = subTotalBigNumber.times(taxRate).round(2).toNumber()
+              const totalReal = subTotalBigNumber.plus(taxReal).toNumber()
+              const totalDisplay = subTotalBigNumber.plus(taxReal).round(2).toNumber()
+            
+                  const receiptObject = Object.assign({
+                    sellerRef_id: seller_id,
+                    masterOrderRef_id: savedPurchaseOrder._id,
+                    itemsBought: sellerSpecificShippingOrders.seller_id,
+                    subtotalReal: subtotalReal,
+                    subtotalDisplay: subtotalDisplay,
+                    taxReal: taxReal,
+                    taxDisplay: taxDisplay,
+                    totalReal: totalReal,
+                    totalDisplay: totalDisplay,
+                  })
 
-        const taxRate = new BigNumber(0.07) 
-        const subtotalReal = subTotalBigNumber.toNumber()
-        const subtotalDisplay = subTotalBigNumber.round(2).toNumber()
-        const taxReal = subTotalBigNumber.times(taxRate).toNumber()
-        const taxDisplay = subTotalBigNumber.times(taxRate).round(2).toNumber()
-        const totalReal = subTotalBigNumber.plus(taxReal).toNumber()
-        const totalDisplay = subTotalBigNumber.plus(taxReal).round(2).toNumber()
+                    arrayOfShippingOrders.push(receiptObject)
+        }
+
+                 req.body.validatedPurchaseOrderToProcess.arrayOfShippingOrders = arrayOfShippingOrders;
+                  
+                  for (const receipt of arrayOfReceiptsForBuyers) {
+                    
+                    const newSellerSpecificPurchaseOrder = new sellerSpecificPurchaseOrderModel(receipt);
+                    const savedSellerSpecificPurchaseOrder = await newSellerSpecificPurchaseOrder.save()
+                    console.log(savedSellerSpecificPurchaseOrder);
+                  
+                  }
+
+                  res.json(req.body.validatedPurchaseOrderToProcess);
+
+      })
+
+
+  } catch(err) { next(err) }
   
-        const receiptObject = Object.assign({
-          sellerRef_id: seller_id,
-          masterOrderRef_id: savedPurchaseOrder._id,
-          itemsBought: sellerSpecificShippingOrders.seller_id,
-          subtotalReal: subtotalReal,
-          subtotalDisplay: subtotalDisplay,
-          taxReal: taxReal,
-          taxDisplay: taxDisplay,
-          totalReal: totalReal,
-          totalDisplay: totalDisplay,
-        })
-
-        arrayOfReceiptsForBuyers.push(receiptObject)
-      
-    }
-
-    req.body.validatedPurchaseOrderToProcess.arrayOfReceiptsForBuyers = arrayOfReceiptsForBuyers;
-
-    for (const receipt of arrayOfReceiptsForBuyers) {
-      const newSellerSpecificPurchaseOrder = new sellerSpecificPurchaseOrderModel(receipt);
-      const savedSellerSpecificPurchaseOrder = await newSellerSpecificPurchaseOrder.save()
-      console.log(savedSellerSpecificPurchaseOrder);
-    }
-
-    res.json(req.body.validatedPurchaseOrderToProcess);
-  })
-})
 }
 
 module.exports.buildSubscription = async function(req, res, next) {

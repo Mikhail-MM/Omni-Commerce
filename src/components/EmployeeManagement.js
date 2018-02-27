@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Icon, Item, Button } from 'semantic-ui-react'
-import { fetchAllEmployees, authorizeEmployeePrivileges } from '../actions/employees'
+import { fetchAllEmployees, authorizeEmployeePrivileges, invalidateEmployeePrivileges } from '../actions/employees'
 
 import employeeFace from '../assets/image-2.png'
 function mapStateToProps(state) {

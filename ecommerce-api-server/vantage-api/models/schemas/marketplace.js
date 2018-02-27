@@ -13,7 +13,8 @@ const storeItemSchema = new Schema({
 	itemName: String,
 	itemPrice: Number,
 	mongoCollectionKey: String,
-	imageURL: String, 
+	imageURL: String,
+	description: String, 
 	category: String, // Consider consolidating with tags
 	options: [String],
 	tags: [String],
