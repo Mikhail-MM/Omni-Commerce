@@ -31,7 +31,6 @@ class AddMarketplaceItemForm extends Component {
 			
 		}
 		this.handleChange = this.handleChange.bind(this)
-		this.handleSubmit = this.handleSubmit.bind(this)
 		this.renderTagSelectionsToDOM = this.renderTagSelectionsToDOM.bind(this)
 		this.handleTagChange = this.handleTagChange.bind(this)
 		this.imageSelectedHandler = this.imageSelectedHandler.bind(this)
@@ -111,21 +110,12 @@ class AddMarketplaceItemForm extends Component {
 							onChange={e => this.handleChange('itemPrice', e.target.value)}
 						/>
 					</Message>
+						Please upload an image to be shown when users look at your listing!
 						<Form.Input
 							type='file'
 							name='marketplaceItems'
 							onChange={this.imageSelectedHandler}
 						/>
-					<Message>
-						Please upload an image to be shown when users look at your listing
-						<Form.Input
-							fluid
-							placeholder="URL"
-							type='text'
-							value={this.state.imageURL} 
-							onChange={e => this.handleChange('imageURL', e.target.value)} 
-						/>
-					</Message>
 					<Message>
 						What kind of item are you selling?
 						<div className="tagSelectionContainer">

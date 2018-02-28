@@ -57,11 +57,17 @@ module.exports.createClient = async function(req, res, next) {
 				
 				if (req.body.accountType === "OnlineMerchant") {
 
+					if (!req.body.imageURL) {
+						// set default market image
+					}
+
 				const storeData = {
 					storeName: req.body.shopName,
 					ownerName: req.body.userName,
 					mongoCollectionKey: req.body.mongoCollectionKey,
+					imageURL: req.body.imageURL
 				}
+
 				console.log("Store Data: ")
 				console.log(storeData)
 
@@ -101,6 +107,7 @@ module.exports.createClient = async function(req, res, next) {
 				}
 		};
 	
+	console.log(response)
 	res.json(response);
 
 	} catch(err) { next(err) }

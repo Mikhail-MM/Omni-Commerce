@@ -15,14 +15,18 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
 	destination: function(req, file, cb) {
-		console.log("Logging from multer storage function")
-		console.log("req.body", req.body)
-		console.log("req.file", req.file)
-		console.log("file", file)
-		console.log("file.fieldname, use this to route to proper PUBLIC/{dest} depending on how we title the key of the formdata per form", file.fieldname)
-		cb(null, 
-			'C:/Users/mikem/OneDrive/Desktop/ecommerce-platform/Omni-Commerce/public/assets/marketplaceItems'
-		)
+			console.log(file.fieldname)
+		if (file.fieldname === 'marketplaceItems') {
+			cb(null, 
+				config.imgUploadDestination.marketplaceItem
+			)	
+		}
+		else if (file.fieldname === 'marketplaceAvatar') {
+			cb(null, 
+				config.imgUploadDestination.marketplaceAvatar
+			)
+		}
+
 	}
 })
 
@@ -73,6 +77,7 @@ app.use('/*', function(req, res, next) {
 
 
 
+
 ////////////////////////////////////////////////////////////
 //					Routes								  //
 ////////////////////////////////////////////////////////////
@@ -84,6 +89,8 @@ router.route('/clients/lookupEmployees')
 	.get(authorize.adminRequired, clients.findAllEmployees)
 */
 
+router.route('/clients/marketplace')
+	.post(upload.single('marketplaceAvatar'), images.uploadNewImage, register.configureNewUser, clients.createClient)
 router.route('/clients/lookup')
 	.post(clients.autoCompleteClientOrgName);
 router.route('/clients')
@@ -95,9 +102,6 @@ router.route('/clients/:id')
 
 router.route('/client/metadata') 
 	.get(authorize.routeEmployeeToMongoCollection, authorize.sendStripeTokenMetadataToClient)
-
-router.route('/images')
-	.post(upload.single('marketplaceItems'), images.uploadNewImage)
 
 router.route('/messages')
 	.get(authorize.routeEmployeeToMongoCollection, messages.getAllMyMessages)
@@ -204,7 +208,7 @@ router.route('/storeItem/noIDhack/:id')
 router.route('/storeItem/:id')
 	.get(storeItems.getStoreItemById)
 	.put(storeItems.updateStoreItemById);
-router.route('/storeItem')
+router.route('/storeItem/')
 	.get(storeItems.getAllStoreItems)
 	.post(authorize.routeMarketplaceClient, upload.single('marketplaceItems'), images.uploadNewImage, storeItems.createNewStoreItem);
 

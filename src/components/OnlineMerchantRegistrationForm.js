@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import fetch from 'cross-fetch'
 import { Button, Icon, Form, Grid, Header, Image, Message, Segment, Label, Divider, Checkbox } from 'semantic-ui-react'
 
 import ModalRoot from './ModalRoot'
@@ -33,13 +32,20 @@ class OnlineMerchantRegistrationForm extends Component {
 			shopName: '',
 			userName: '',
 			isOnlineMerchant: true, // Decide whether it is necessary to differentiate between buyers and sellers or simply give all new clients an empty store
+			selectedFile: null,
 		}
 		this.state = Object.assign({}, this.initialState, {hasError: false, validationErrors: []})
 	
 	this.handleSubmit = this.handleSubmit.bind(this)
 	this.handleChange = this.handleChange.bind(this)
 	this.handleAutofill = this.handleAutofill.bind(this)
+	this.imageSelectedHandler = this.imageSelectedHandler.bind(this)
 	
+	}
+
+	imageSelectedHandler(event) {
+		console.log(event.target.files[0])
+		this.setState({selectedFile: event.target.files[0]}, console.log(this.state.selectedFile))
 	}
 
 	componentDidMount() {
@@ -49,6 +55,7 @@ class OnlineMerchantRegistrationForm extends Component {
 		this.setState({
 			[input]: value
 		})
+		console.log(this.state)
 	}
 	handleAutofill(){
 		this.setState({sameAddress: !this.state.sameAddress}, () => {
@@ -80,6 +87,7 @@ class OnlineMerchantRegistrationForm extends Component {
 		const { dispatch } = this.props
 
 		// Clear Errors in State
+
 		this.setState({ hasError: false, validationErrors: [] }) 
 
 
@@ -110,27 +118,61 @@ class OnlineMerchantRegistrationForm extends Component {
 				isOnlineMerchant: this.state.isOnlineMerchant,
 			}
 
+			const formData = new FormData()
+
+				formData.append('firstName', this.state.firstName)
+				formData.append('lastName', this.state.lastName)
+				formData.append('phoneNumber', this.state.phoneNumber)
+				formData.append('email', this.state.email)
+				formData.append('password', this.state.password)
+				formData.append('billing_address_line1', this.state.billing_address_line1)
+				formData.append('billing_address_line2', this.state.billing_address_line2)
+				formData.append('billing_address_city', this.state.billing_address_city)
+				formData.append('billing_address_zip', this.state.billing_address_zip)
+				formData.append('billing_address_state', this.state.billing_address_state)
+				formData.append('shipping_address_line1', this.state.shipping_address_line1)
+				formData.append('shipping_address_line2', this.state.shipping_address_line2)
+				formData.append('shipping__address_city', this.state.shipping__address_city)
+				formData.append('shipping_address_zip', this.state.shipping_address_zip)
+				formData.append('shipping_address_state', this.state.shipping_address_state)
+				formData.append('shopName', this.state.shopName)
+				formData.append('userName', this.state.userName)
+				formData.append('isOnlineMerchant', this.state.isOnlineMerchant)
+				formData.append('marketplaceAvatar', this.state.selectedFile)
+
+
 		if(localValidationErrors.length === 0) {
 
-				await fetch('http://localhost:3001/clients', {
-					headers:{
-						'Content-Type': 'application/json'
-					},
+
+				const body = (this.state.selectedFile) ? formData : JSON.stringify(data)
+				const headers = (this.state.selectedFile) ? {} : {'Content-Type': 'application/json'}
+				const url = (this.state.selectedFile) ? 'http://localhost:3001/clients/marketplace/' : 'http://localhost:3001/clients/'
+
+				console.log(body, headers, url)
+
+				await fetch(url, {
+					headers: headers,
 					method: 'POST',
 					mode: 'cors', 
-					body: JSON.stringify(data)
+					body: body,
 					})
-					.then(response => response.ok ? response.json() : throwError(response.statusText.concat(' - ').concat(response._bodyText)))
+					.then(response => response.ok ? response.json() : console.log(response))
 					.then(json => {
+						console.log(json)
 						const modalProps = Object.assign({}, json, {registrationModalMode: 'Marketplace'}) 
 						dispatch(showModal('REGISTRATION_CONFIRMATION_MODAL', {...modalProps}))
 					})
 					.catch(err => {
-						localValidationErrors.push(err.message);
+						console.log("have Errors")
+						console.log(err)
 					})
 			}
 
-		if (localValidationErrors.length > 0) { this.setState({hasError: true, validationErrors: localValidationErrors}) }
+		if (localValidationErrors.length > 0) { 
+			console.log("have Errors")
+			console.log(localValidationErrors)
+			this.setState({hasError: true, validationErrors: localValidationErrors}) 
+		}
 	}
 
 	render() {
@@ -199,6 +241,15 @@ class OnlineMerchantRegistrationForm extends Component {
 				<Form.Input  label={<Label>UserName</Label>} placeholder="Display Name" width={8} value={this.state.userName} onChange={e => this.handleChange('userName', e.target.value)} />
 				<Form.Input  label={<Label>Marketplace Display Name</Label>} placeholder="My Marketplace" width={8} value={this.state.shopName} onChange={e => this.handleChange('shopName', e.target.value)} />
 				</Form.Group>
+				<Message>
+					Add an image to use as your marketplace avatar. If you do not upload an image, a default avatar will be used instead
+						<Form.Input
+							type='file'
+							name='marketplaceAvatar'
+							onChange={this.imageSelectedHandler}
+						/>
+				</Message>
+
 				<Form.Button className='merchant-registration-submit-button' size='large' content='Submit'>Register</Form.Button>
 			</Form>
 			</Segment>

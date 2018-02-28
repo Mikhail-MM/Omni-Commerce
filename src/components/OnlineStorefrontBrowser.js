@@ -28,20 +28,17 @@ class OnlineStorefrontBrowser extends Component {
 	renderMarketplaces() {
 		const { allMarketplaces } = this.props 
 		return allMarketplaces.map(marketplace => {
-		const styles = {backgroundColor: '#eee', display: 'flex', flexDirection: 'row', maxWidth: '100%', marginBottom: '30px'}	
 			return(
-				<Item style={styles} key={ marketplace._id }>
-					<Item.Image size='medium' src={marketImage} />
-
-					<Item.Content>
-							<Item.Header> {marketplace.storeName} </Item.Header>
-							<Item.Meta> Apparel Salesman </Item.Meta>
-							<Item.Description> <Icon name=""/>We stock all sorts of...blouses!</Item.Description>
-							<Item.Extra>
-								<Button onClick={this.bringMarketplaceIntoFocus.bind(this, marketplace._id)}> Visit! </Button>
-							</Item.Extra>
-					</Item.Content>
-				</Item>
+				<div className="marketplace-wrapper">
+					<div className="marketplace-avatar-container">
+						<img src={marketplace.imageURL} />
+					</div>
+					<div className="marketplace-card-content">
+						<h3> {marketplace.storeName} </h3>
+						<p> Catchy description here! </p>
+						<Button onClick={this.bringMarketplaceIntoFocus.bind(this, marketplace._id)}> Visit! </Button>
+					</div>
+				</div>
 			)
 		});
 	}

@@ -31,19 +31,15 @@ class OnlineStoreMarketplaceSpecificItemBrowser extends Component {
 		
 
 		return marketplaceItems.map(item => {
-			return (<div className='cardContainer'>
-						<Card>
-							<Image src={blouseImage} />
-							<Card.Content>
-								<Card.Header> {item.itemName} </Card.Header>
-								<Card.Meta> In-Stock: { item.numberInStock } </Card.Meta>
-								<Card.Description> A classy top that is sure to turn heads! </Card.Description>
-								<Card.Header> $ 16.99 </Card.Header>
-							</Card.Content>
-							<Card.Content extra>
-								<Button color='black' onClick={this.confirmOrder.bind(this, item._id)} disabled={item.numberInStock === 0}> <Icon name='add to cart' /> Add To Cart </Button>
-							</Card.Content>
-						</Card>
+			return (<div className="ui_card_mockup">
+						<div className='ui_card_image'>
+							<img src={item.imageURL} />
+						</div>
+						<div className='ui_card_content'>
+							<p> Mirror </p>
+							<p> $ 300 </p>
+							<p> 1 in stock </p>
+						</div>
 					</div>
 					)
 
@@ -59,7 +55,7 @@ class OnlineStoreMarketplaceSpecificItemBrowser extends Component {
 	render() {
 		const { marketplaceItems } = this.props
 		return(
-			<div> {marketplaceItems && this.renderMarketplaceItems()} </div>
+			<div className="dynamic_cards"> {marketplaceItems && this.renderMarketplaceItems()} </div>
 		)
 	}
 }

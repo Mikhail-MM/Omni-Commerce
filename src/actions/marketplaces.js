@@ -1,5 +1,5 @@
 import { showModal } from '../actions/modals'
-
+import axios from 'axios'
 // Promise.reject(response.statusText) will take to catch handlers
 
 // Build a general util function for handling errors - pop up a global modal, or put in a marker for errorType which current components would mapStateToProps to, showing pertinent info
@@ -127,19 +127,20 @@ export function postItemToMarketplace(token, formData) {
 	// SWITCH FROM JSON TO FORM DATA ALONGSIDE IMAGE UPLOAD
 
 	return dispatch => {
-		fetch('http://localhost:3001/images', {
-			headers:{
-				'x-access-token': token
-			},
-			method: 'POST',
-			mode: 'cors',
-			body: formData,
+		axios({
+ 		url: 'http://localhost:3001/storeItem',
+  		method: 'POST',
+  		data: formData,
+ 		headers: {
+    	Accept: 'application/json',
+    	'Content-Type': 'multipart/form-data',
+    	'x-access-token': token
+  		},
+  		mode: 'cors'
 		})
-		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => { 
 
-			// TODO: HANDLE ERRORS BEFORE THEY GO ONTO REDUCER!!!
-			if (json.__proto__.name === "Error") { return console.log("We got an error here, boys!")}
 			dispatch(receiveCurrentItem(json)) 
 			dispatch(showModal('ADD_MARKETPLACE_ITEM_SUCCESS', {...json}))
 		})

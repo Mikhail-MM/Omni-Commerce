@@ -56,24 +56,30 @@ async function validateToken(req, res, next, authReq) {
 
 		if (!token) return res.status(403).send("Access token required.");
 
-		
-		try {
+
 			const decoded = jwt.decode(token, config.secret)
-		} catch(err) {
-			return res.status(403).send("Could not verify access token.")
-		}
+
+			console.log(decoded)
+
+
+
+		console.log("Looking for validated client")
 
 		const validatedClient = await Client.findById(decoded._id)
 
+		console.log(validatedClient)
+
 		if (!validatedClient) 
 			return res.status(403).send("Invalid Client.")
-		if (token !== client.token) 
+		if (token !== validatedClient.token) 
 			return res.status(403).send("Expired Token")
 
-			const currentDate = moment().format()
-			const tokenCreatedAt = moment(validatedClient).format() 
+			const currentDate = moment(new Date())
+			const tokenCreatedAt = moment(validatedClient.tokenCreatedAt)
 			
 			const timeDifference = currentDate.diff(tokenCreatedAt, 'hours', true)
+
+			console.log("Time Difference", timeDifference)
 
 		if (timeDifference >= 2) 
 			return res.status(403).send("Token expired after 2 hours elapsed, please log-in again to refresh your token.")
@@ -100,12 +106,14 @@ async function validateToken(req, res, next, authReq) {
 				req.headers['x-user-id'] = validatedClient._id;
 		}
 
-		if (authreq.attachClientDataToRequest) {
+		if (authReq.attachClientDataToRequest) {
 			req.body.client = validatedClient;
 			req.headers['x-mongo-key'] = validatedClient.mongoCollectionKey;
 			req.headers['x-user-id'] = validatedClient._id;	
+			req.headers['x-marketplace-ref'] = validatedClient.marketplaceRef_id
 		}
 		
+			console.log('reqbodyclient', req.body.client)
 			next();
 	   
 	   } catch(err) { next(err) }

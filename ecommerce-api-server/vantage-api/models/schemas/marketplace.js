@@ -6,7 +6,8 @@ const marketplaceSchema = new Schema({
 	ownerName: String,
 	mongoCollectionKey: String,
 	tags: [String],
-	ownerRef_id: {type: Schema.Types.ObjectId, ref: 'Client'}
+	ownerRef_id: {type: Schema.Types.ObjectId, ref: 'Client'},
+	imageURL: String
 
 });
 const storeItemSchema = new Schema({

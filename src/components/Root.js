@@ -22,6 +22,9 @@ import TerminalActionScreenMockup from './TerminalActionScreenMockup'
 import PurchaseOrderViewScreen from './PurchaseOrderViewScreen'
 import ShippingOrderViewScreen from './ShippingOrderViewScreen'
 
+
+import CardMockup from './CardMockup'
+
 import Algo from './Algo'
 
 const loggerMiddleware = createLogger()
@@ -58,6 +61,7 @@ export default class Root extends Component {
 				<Route path="/marketplace/purchase_orders" component={PurchaseOrderViewScreen} />
 				<Route path="/marketplace/sell_orders" component={ShippingOrderViewScreen} />
 				<Route path="/algo" component={Algo} />
+				<Route path="/cardMockup" component={CardMockup} />
 
 		</Switch>
 	</ConnectedRouter>

@@ -6,13 +6,14 @@ const StoreItemModel = MarketplaceModels.StoreItemModel
 
 module.exports.createNewStoreItem = async function(req, res, next) { 
 		try {
+			console.log("headers for info", req.headers['x-user-id'], req.headers['x-marketplace-ref'])
 			const data = Object.assign({}, req.body, {
-				sellerRef_id: req.body.client._id,
-				marketplaceRef_id: req.body.client.marketplaceRef_id
+				sellerRef_id: req.headers['x-user-id'],
+				marketplaceRef_id: req.headers['x-marketplace-ref']
 			});
 				const newStoreItem = new StoreItemModel(data)
 				const savedModel = await newStoreItem.save()
-					res.json(savedModel)
+				res.json(savedModel)
 		} catch(err) { next(err) }
 }
 module.exports.getAllStoreItems = async function(req, res, next) {
