@@ -475,12 +475,12 @@ table {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	height: 500px;
+	height: 550px;
 	width: 300px;
 	/*
 	background-color: rgba(64, 14, 113, .5); */
 	border: 1px solid black;
-	border-radius: 5px;
+	border-bottom: none;
 	margin-bottom: 20px;
 	position: relative;
 }
@@ -498,7 +498,8 @@ table {
 	flex-direction: column;
 	border-top: 1px solid black;
 	width: 100%;
-	min-height: 100px;
+	min-height: 150px;
+	background-color: rgb(34, 35, 39);
 }
 
 
@@ -508,6 +509,42 @@ table {
 	flex-wrap: wrap;
 	justify-content: space-around;
 }
+
+.StoreItem-Header-Name {
+	font-size: 18px;
+	line-height: 23.15px;
+	margin-top: -3.85px !important;
+	color: rgb(255, 255, 255);
+	padding-top: 5px;
+	padding-left: 10px;
+	font-weight: 700;
+	margin-bottom: 0px;
+}
+.stock-count {
+	line-height: 20px;
+	color: rgba(255, 255, 255, 0.5);
+	padding-left: 10px;
+	margin-bottom: 0px;
+}
+.store-pricing{
+	font-weight: 700;
+	color: rgba(255, 255, 255);
+	font-size: 20px;
+	padding-left: 10px;
+	margin-bottom: 0px;
+	padding-top: 10px;
+	padding-bottom: 30px;
+}
+.button_no_border_radius {
+	border-radius: 0px !important;
+	border-bottom: 1px solid black !important;
+}
+.cart-button-container {
+	height: 50px;
+	width: 100%;
+	background-color: red;
+}
+
 
 .ui_card_mockup_fat {
 	display: flex;

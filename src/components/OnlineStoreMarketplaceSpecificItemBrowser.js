@@ -36,9 +36,10 @@ class OnlineStoreMarketplaceSpecificItemBrowser extends Component {
 							<img src={item.imageURL} />
 						</div>
 						<div className='ui_card_content'>
-							<p> Mirror </p>
-							<p> $ 300 </p>
-							<p> 1 in stock </p>
+							<h3 className="StoreItem-Header-Name"> {item.itemName} </h3>
+							<p className="stock-count"> In Stock: {item.numberInStock} </p>
+							<p className="store-pricing"> ${item.itemPrice} </p>
+							<Button className="button_no_border_radius" fluid><Icon name='add to cart' /> Add To Cart </Button>
 						</div>
 					</div>
 					)

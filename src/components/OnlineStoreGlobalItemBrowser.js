@@ -34,19 +34,16 @@ class OnlineStoreGlobalItemBrowser extends Component {
 		// Placeholder function to mock styling for real data to be retrieved from API
 		const { marketplaceItems } = this.props
 		return marketplaceItems.map(item => {
-			return (<div className='cardContainer'>
-						<Card >
-							<Image src={'/assets/marketBlouse.jpg'} />
-							<Card.Content>
-								<Card.Header> {item.itemName} </Card.Header>
-								<Card.Meta> In-Stock: { item.numberInStock } </Card.Meta>
-								<Card.Description> A classy top that is sure to turn heads! </Card.Description>
-								<Card.Header> $ 16.99 </Card.Header>
-							</Card.Content>
-							<Card.Content extra>
-								<Button color='black' onClick={this.confirmOrder.bind(this, item._id)} disabled={item.numberInStock === 0}> <Icon name='add to cart' /> Add To Cart </Button>
-							</Card.Content>
-						</Card>
+			return (<div className="ui_card_mockup">
+						<div className='ui_card_image'>
+							<img src={item.imageURL} />
+						</div>
+						<div className='ui_card_content'>
+							<h3 className="StoreItem-Header-Name"> {item.itemName} </h3>
+							<p className="stock-count"> In Stock: {item.numberInStock} </p>
+							<p className="store-pricing"> ${item.itemPrice} </p>
+							<Button className="button_no_border_radius" fluid><Icon name='add to cart' /> Add To Cart </Button>
+						</div>
 					</div>
 					)
 
