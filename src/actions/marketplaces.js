@@ -1,5 +1,7 @@
 import { showModal } from '../actions/modals'
 import axios from 'axios'
+var FormData = require('form-data');
+
 // Promise.reject(response.statusText) will take to catch handlers
 
 // Build a general util function for handling errors - pop up a global modal, or put in a marker for errorType which current components would mapStateToProps to, showing pertinent info
@@ -122,27 +124,67 @@ function receiveCurrentItem(item) {
 		item
 	}
 }
-export function postItemToMarketplace(token, formData) {
 
-	// SWITCH FROM JSON TO FORM DATA ALONGSIDE IMAGE UPLOAD
+export function postItemToMarketplace(token, jsonData, imageFile) {
 
 	return dispatch => {
-		axios({
- 		url: 'http://localhost:3001/storeItem',
-  		method: 'POST',
-  		data: formData,
- 		headers: {
-    	Accept: 'application/json',
-    	'Content-Type': 'multipart/form-data',
-    	'x-access-token': token
-  		},
-  		mode: 'cors'
+
+		fetch('http://localhost:3001/storeItem', {
+			headers: {
+				'Content-Type': 'application/json',
+				'x-access-token': token,
+			},
+			method: 'POST',
+			mode: 'cors',
+			body: JSON.stringify(jsonData)
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
-		.then(json => { 
+		.then(newItemJSON => {
+			console.log("New Item JSON data", newItemJSON)
+			
+			const formData = new FormData()
 
-			dispatch(receiveCurrentItem(json)) 
-			dispatch(showModal('ADD_MARKETPLACE_ITEM_SUCCESS', {...json}))
+			formData.append('marketplaceItems', imageFile)
+			/*
+				axios({
+ 					url: 'http://localhost:3001/images/marketplace-item',
+  					method: 'POST',
+  					data: formData,
+ 					headers: {
+    				Accept: 'application/json',
+    				'Content-Type': 'multipart/form-data',
+    				'x-access-token': token
+  					},
+  					mode: 'cors'
+				})
+			*/
+				fetch('http://localhost:3001/images/marketplace-item', {
+					method: 'POST',
+					mode: 'cors',
+					body: formData
+				})
+				.then(response => response.ok ? response.json() : console.log(response))
+				.then(imageJSON => {
+					console.log("Receive image metadata")
+					console.log(imageJSON)
+					const updatedImageSourceJSON = { imageURL: imageJSON.imageURL }
+
+					const url = 'http://localhost:3001/storeItem/' +  newItemJSON._id
+					return fetch(url, {
+						headers: {
+							'Content-Type': 'application/json',
+							'x-access-token': token,
+						},
+						method: 'PUT',
+						mode: 'cors',
+						body: JSON.stringify(updatedImageSourceJSON)
+					})
+					.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+					.then(newItemJSONWithImageURL => {
+						console.log(newItemJSONWithImageURL)
+					})
+
+				})
 		})
 		.catch(err => console.log(err))
 	}

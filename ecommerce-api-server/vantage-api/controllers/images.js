@@ -1,10 +1,10 @@
 const Image = require('../models/schemas/image')
-const fs = require('fs');
 
 module.exports.uploadNewImage = function(req, res, next) {
 	try {
-		console.log(req.file)
 		
+		console.log("reqbody", req.body)
+		console.log("reqfile", req.file)
 		/* 
 			// Code for saving raw buffer data into database instead of storing images to disk
 
@@ -12,18 +12,21 @@ module.exports.uploadNewImage = function(req, res, next) {
 		const savedThang = await newModel.save()
 
 		*/
+		const imgSrcJSON = {}
+		if (req.file.fieldname === 'marketplaceItems') {
+			
+			imgSrcJSON.imageURL = '/assets/marketplace-items/' + req.file.filename 
+				
+				res.json(imgSrcJSON)
+		}
 
-		console.log(req.body)
+		else if (req.file.fieldname === 'marketplaceAvatar') {
 
-		if (req.file.fieldname === "marketplaceItems") { req.body.imageURL = '/assets/marketplace-items/' + req.file.filename }
-		if (req.file.fieldname === "marketplaceAvatar") { req.body.imageURL = '/assets/marketplace-avatars/' + req.file.filename }
-
-		console.log("Storing image on disk, saving filesystem source URL to DB (Appending to req.body.imageURL")
-
-		console.log(req.body.imageURL)
-		console.log(req.body)
-
-	next() 
+			req.body.imageURL = '/assets/marketplace-items/' + req.file.filename
+			
+				next()
+		}
+		
 	} catch(err) { next(err) }
 
 }

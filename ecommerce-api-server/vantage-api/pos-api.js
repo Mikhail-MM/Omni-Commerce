@@ -15,18 +15,9 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
 	destination: function(req, file, cb) {
-			console.log(file.fieldname)
-		if (file.fieldname === 'marketplaceItems') {
-			cb(null, 
-				config.imgUploadDestination.marketplaceItem
-			)	
-		}
-		else if (file.fieldname === 'marketplaceAvatar') {
-			cb(null, 
-				config.imgUploadDestination.marketplaceAvatar
-			)
-		}
-
+		cb(null, 
+			config.imgUploadDestination.marketplaceItem
+		)	
 	}
 })
 
@@ -66,7 +57,6 @@ if(app.get('env') === 'production') {
 };
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded( {extended: false }));
 
 app.use('/*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -99,6 +89,9 @@ router.route('/clients')
 router.route('/clients/:id')
 	.put(clients.updateClient)
 	.delete(clients.deleteClientById);
+
+router.route('/images/marketplace-item')
+	.post(upload.single('marketplaceItems'), images.uploadNewImage)
 
 router.route('/client/metadata') 
 	.get(authorize.routeEmployeeToMongoCollection, authorize.sendStripeTokenMetadataToClient)
@@ -210,7 +203,7 @@ router.route('/storeItem/:id')
 	.put(storeItems.updateStoreItemById);
 router.route('/storeItem/')
 	.get(storeItems.getAllStoreItems)
-	.post(authorize.routeMarketplaceClient, upload.single('marketplaceItems'), images.uploadNewImage, storeItems.createNewStoreItem);
+	.post(authorize.routeMarketplaceClient, storeItems.createNewStoreItem);
 
 
 router.route('/storeconfig')

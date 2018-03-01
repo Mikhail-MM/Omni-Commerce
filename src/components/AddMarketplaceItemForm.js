@@ -5,14 +5,7 @@ import { Form, Button, Segment, Message, Label } from 'semantic-ui-react'
 
 import { postItemToMarketplace } from '../actions/marketplaces'
 
-// Should be a form that uses the authroken to route to Client's Marketplace - upload a new item via a POST request
-function importAll(r) {
-  return r.keys().map(r);
-}
 
-const images = importAll(require.context('../assets', false, /\.(png|jpe?g|svg)$/));
-
-console.log(images)
 function mapStateToProps(state) {
 	const { token } = state.authReducer;
 	return { token }
@@ -24,7 +17,6 @@ class AddMarketplaceItemForm extends Component {
 		this.state = {
 			itemName: '',
 			itemPrice: '',
-			imageURL: '',
 			numberInStock: 1,
 			tags: [],
 			selectedFile: null,
@@ -51,16 +43,16 @@ class AddMarketplaceItemForm extends Component {
 	fileUploadHandler(event) {
 		event.preventDefault()
 		const { dispatch, token } = this.props
+		const { itemName, itemPrice, numberInStock, tags } = this.state
+		const jsonData = {
+			itemName,
+			itemPrice,
+			numberInStock,
+			tags
+		}
 
-		const formData = new FormData()
 		
-		formData.append('itemName', this.state.itemName)
-		formData.append('itemPrice', this.state.itemPrice)
-		formData.append('marketplaceItems', this.state.selectedFile)
-		formData.append('numberInStock', this.state.numberInStock)
-		formData.append('tags', this.state.tags)
-		
-		dispatch(postItemToMarketplace(token, formData))
+		dispatch(postItemToMarketplace(token, jsonData, this.state.selectedFile))
 	}
 
 	renderTagSelectionsToDOM() {

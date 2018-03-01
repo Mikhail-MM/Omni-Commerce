@@ -56,18 +56,17 @@ async function validateToken(req, res, next, authReq) {
 
 		if (!token) return res.status(403).send("Access token required.");
 
+		try { 
 
 			const decoded = jwt.decode(token, config.secret)
 
-			console.log(decoded)
+			console.log("decoded", decoded)
 
+			console.log("Looking for validated client")
 
+			const validatedClient = await Client.findById(decoded._id)
 
-		console.log("Looking for validated client")
-
-		const validatedClient = await Client.findById(decoded._id)
-
-		console.log(validatedClient)
+			console.log(validatedClient)
 
 		if (!validatedClient) 
 			return res.status(403).send("Invalid Client.")
@@ -113,8 +112,13 @@ async function validateToken(req, res, next, authReq) {
 			req.headers['x-marketplace-ref'] = validatedClient.marketplaceRef_id
 		}
 		
-			console.log('reqbodyclient', req.body.client)
 			next();
+
+		 } catch(err) { res.status(403).send("Could not validate token")}
+
+
+
+		
 	   
 	   } catch(err) { next(err) }
 };
@@ -135,7 +139,7 @@ exports.routeMarketplaceClient = function(req, res, next) {
 	validateToken(req, res, next, { attachClientDataToRequest: true })
 }
 exports.sendStripeTokenMetadataToClient = function(req, res, next) {
-	// FIND STRIPE CUSTOMER IN DB HERE!! SEND CUSTOMER ID BACK!!
+
 
 	const data = {
 		name: req.body.client.firstName.concat(' ', req.body.client.lastName),

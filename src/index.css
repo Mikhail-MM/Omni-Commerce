@@ -283,12 +283,14 @@ body {
 	width: 54vw;
 	flex-grow: 1;
 	flex-direction: row;
+	/*
 	background-image: radial-gradient(
       circle at center,
       #4C1D3B,
       #340D27 50%,
       #040003
     );;
+    */
 	overflow: auto;
 	
 	/* background-color: rgb(221, 221, 221); */
@@ -342,20 +344,19 @@ body {
 	width: 95%;
 	height: 350px;
 	align-self: center;
-	border: 1px solid white;
-	background-color: rgba(0,0,0,.87);
+	border: 1px solid gray;
 	align-content: space-around;
 	margin-bottom: 30px;
 	box-shadow: rgb(212, 212, 213) 0px 1px 3px 0px, rgb(212, 212, 213) 0px 0px 0px 1px;
 }
 .marketplace-avatar-container {
-	height: 345px;
+	height: 100%;
 	width: 450px;
-	border-right: 1px solid white;
 }
 .marketplace-card-content {
 	flex-grow:1;
 	color: white;
+	background-color: rgb(0, 0, 0, .7);
 }
 
 /* 
