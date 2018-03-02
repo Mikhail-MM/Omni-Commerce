@@ -1,80 +1,50 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { Checkbox, Form, Button } from 'semantic-ui-react'
-const allTags = ["Clothes", "Mens", "Womens", "Tops", "Bottoms", "Accessories", "Shoes", "Art", "Computers", "Electronics", "Appliances", "Cars", "Motorcycles", "Furniture"]
+import { filterStoreResults } from '../actions/filter'
+
+import { Checkbox, Form, Button, Label } from 'semantic-ui-react'
+const allTags = ["Clothes", "Mens", "Womens", "Tops", "Bottoms", "Accessories", "Shoes", "Art", "Computers", "Electronics", "Appliances", "Cameras", "Cars", "Motorcycles", "Furniture"]
 
 function mapStateToProps(state) {
 	const { marketplaceItems } = state.marketplaceItemsReducer
-	return { marketplaceItems }
+	const filter = state.marketplaceFilterReducer
+	return { marketplaceItems, filter }
 } 
 
 class TagFilterSearch extends Component {
 	constructor(props) {
 		super(props)
-		this.state = {
-			Clothes: false,
-			Mens: false,
-			Womens: false,
-			Tops: false,
-			Bottoms: false,
-			Accessories: false,
-			Shoes: false,
-			Art: false,
-			Computers: false,
-			Electronics: false,
-			Appliances: false,
-			Cars: false,
-			Motorcycles: false,
-			Furniture: false,
-			selected: []
-		}
-		this.generateCheckboxInputs = this.generateCheckboxInputs.bind(this)
+		this.generateFilter = this.generateFilter.bind(this)
 		this.handleTagChange = this.handleTagChange.bind(this)
-		this.filterStoredItems = this.filterStoredItems.bind(this)
 	}
 
-	generateCheckboxInputs() {
+	generateFilter() {
+		
+		const { filter } = this.props
+
 		return allTags.map(tag => {
-			console.log(this.state[tag])
-			return <Checkbox color="white" label={tag} checked={this.state[tag] === true } onChange={() => this.handleTagChange(tag)} />
+			if (!filter.selected.includes(tag)) return <Label style={{width: 85, marginTop: 5}} onClick={ () => this.handleTagChange(tag) }> {tag} </Label>
+			else if (filter.selected.includes(tag)) return <Label style={{width: 85, marginTop: 5}} color='red' onClick={ () => this.handleTagChange(tag) }> {tag} </Label>
 		})
+
 	}
 
 	handleTagChange(tagName){
-		// We need to create a global reducer/action to load active filters into redux state
-		// So new items will be filtered by tag when navigating between stores
-		this.setState({
-			[tagName]: !this.state[tagName]
-		})
 
-		if (!this.state.selected.includes(tagName)) {
-			this.setState({
-				selected: this.state.selected.concat([tagName])	
-			})
-		}
-		if (this.state.selected.includes(tagName)) {
-			this.setState({
-				selected: this.state.selected.filter(item => item !== tagName)
-			})
-		}
+		const { dispatch } = this.props;
+		
+			dispatch(filterStoreResults(tagName))
 		
 	}
 
 
-	filterStoredItems(filter) {
-		const { marketplaceItems } = this.props
-		console.log(filter)
 
-
-
-	}
 
 	render() {
 		return(
-			<div className="checkboxFormContainer" >
-				{this.generateCheckboxInputs()}
-				<Button onClick={ () => this.filterStoredItems(this.state.selected)}>Filter Items </Button>
+			<div className="filter-container">
+				{this.generateFilter()}
 			</div>
 		)
 	}

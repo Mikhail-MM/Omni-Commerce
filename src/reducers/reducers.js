@@ -220,6 +220,47 @@ const purchaseOrderReducer = (state = { purchaseOrders: [], salesOrders: [] }, a
 	}
 }
 
+const initialFilterState = {
+			Clothes: false,
+			Mens: false,
+			Womens: false,
+			Tops: false,
+			Bottoms: false,
+			Accessories: false,
+			Shoes: false,
+			Art: false,
+			Computers: false,
+			Electronics: false,
+			Appliances: false,
+			Cars: false,
+			Motorcycles: false,
+			Furniture: false,
+			selected: []
+}
+const marketplaceFilterReducer = (state = initialFilterState, action ) => {
+	switch(action.type) {
+		case('RECEIVE_FILTER_INPUT'):
+			let selected;
+			
+			if (!state.selected.includes(action.tag)) {
+				selected = state.selected.concat([action.tag])	
+			}
+			else if (state.selected.includes(action.tag)) {
+				selected = state.selected.filter(tag => tag !== action.tag)
+			}
+			console.log(selected)
+			return {
+				...state,
+				[action.tag]: !state[action.tag],
+				selected
+			}
+		case('CLEAR_FILTER'):
+			return initialFilterState
+		default:
+			return state
+		}
+	}
+
 const rootReducer = combineReducers({
 	authReducer,
 	employeeReducer,
@@ -233,9 +274,8 @@ const rootReducer = combineReducers({
 	shoppingCartReducer,
 	modalReducer,
 	purchaseOrderReducer,
+	marketplaceFilterReducer,
 	routerReducer
 })
 
 export default rootReducer
-
-

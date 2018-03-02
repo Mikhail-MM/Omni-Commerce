@@ -299,15 +299,6 @@ body {
 	/* background-color: rgba(69, 27, 54, 0.77); */
 }
 
-.checkboxFormContainer {
-	border: 1px solid white;
-	color: white;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	flex-wrap: wrap;
-}
-
 .my-store-main-content-border {
 	display: flex;
 	flex-direction: column;
@@ -414,6 +405,13 @@ body {
 	text-shadow: 0 0 0.2em #fff;
 }
 
+.filter-container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin-top: 150px;
+}
 /*
 	Store - Left Overlay ShoppingCart Sidebar
 */

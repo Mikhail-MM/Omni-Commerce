@@ -41,6 +41,7 @@ class AddMarketplaceItemForm extends Component {
 	}
 
 	fileUploadHandler(event) {
+		// Can set this.props and dispatch POST/PUT request depending on whether we want to call this form to modify, or update stock
 		event.preventDefault()
 		const { dispatch, token } = this.props
 		const { itemName, itemPrice, numberInStock, tags } = this.state
@@ -56,7 +57,7 @@ class AddMarketplaceItemForm extends Component {
 	}
 
 	renderTagSelectionsToDOM() {
-		const allTags = ["Clothes", "Men's", "Women's", "Tops", "Bottoms", "Accessories", "Shoes", "Art", "Computers", "Electronics", "Appliances", "Cars", "Motorcycles", "Furniture" ]
+		const allTags = ["Clothes", "Men's", "Women's", "Tops", "Bottoms", "Accessories", "Shoes", "Art", "Computers", "Electronics", "Appliances", "Cameras", "Cars", "Motorcycles", "Furniture" ]
 
 		return allTags.map(tag => {
 			if (!this.state.tags.includes(tag))return <Label onClick={ () => this.handleTagChange(tag) }>{tag}</Label>
