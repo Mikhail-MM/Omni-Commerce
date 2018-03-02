@@ -97,7 +97,7 @@ async function validateToken(req, res, next, authReq) {
 		if (authReq.attachMongoCollectionKeyHeaders) {
 			if (validatedClient.accountType === "OnlineMerchant") 
 				return res.status(403).send("Invalid endpoint request.")
-			if (!validatedClient.employeeAuthorization)
+			if (!validatedClient.employeeAuthorization && !validatedClient.isMaster)
 				return res.status(403).send("Sorry, your employer has not approved your access to the terminal yet.")
 
 				req.body.client = validatedClient;

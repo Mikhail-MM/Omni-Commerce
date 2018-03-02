@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const registrationValidationSchema = new Schema({
-	type: String
-	accessCode: String
+	type: String,
+	accessCode: String,
 	clientRef: { type: Schema.Types.ObjectId, ref: 'Client' }
 })
 

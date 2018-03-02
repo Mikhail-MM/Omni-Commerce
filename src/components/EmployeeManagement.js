@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Icon, Item, Button } from 'semantic-ui-react'
 import { fetchAllEmployees, authorizeEmployeePrivileges, invalidateEmployeePrivileges } from '../actions/employees'
 
-import employeeFace from '../assets/image-2.png'
+
 function mapStateToProps(state) {
 	const { token } = state.authReducer
 	const { employees } = state.employeeReducer
@@ -34,21 +34,19 @@ class EmployeeManagement extends Component {
 
 	drawEmployeeMenu() {
 		const { employees } = this.props
-		return employees.map(employee => {
-			return(
-				<Item>
-					<Item.Image avatar size='tiny' src={employeeFace} />
+		return employees.map( (employee, index) => {
+			const stockAvatarUrl = "/assets/employees/image-" + (index + 2 % 20) + ".png"
 
-					<Item.Content>
-							<Item.Header> {employee.firstName} {employee.lastName} </Item.Header>
-							<Item.Meta> Waiter </Item.Meta>
-							<Item.Description> <Icon name=""/>Some sort of description stuff</Item.Description>
-							<Item.Extra>
-								<Button onClick={this.validateEmployee.bind(this, employee._id)}> Approve Employee </Button>
-								<Button onClick={this.invalidateEmployee.bind(this, employee._id)}> Remove Employee </Button>
-							</Item.Extra>
-					</Item.Content>
-				</Item>
+			return(
+				<div className="employee-window">
+					<div className="employee-avatar-container">
+						<img className="employee-avatar" src={stockAvatarUrl} />
+					</div>
+					<div className="employee-metadata-table">
+						<Button onClick={this.validateEmployee.bind(this, employee._id)}> Approve Employee </Button>
+						<Button onClick={this.invalidateEmployee.bind(this, employee._id)}> Remove Employee </Button>
+					</div>
+				</div>
 			)
 		});
 	}

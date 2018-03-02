@@ -1,6 +1,9 @@
 const uuid4 = require('uuid/v4');
 const bcrypt = require('bcrypt');
 const Client = require('../models/schemas/client');
+const storeConfig = require('../models/schemas/storeConfig')
+const storeConfigSchema = storeConfig.storeConfigSchema
+const mongoose = require('mongoose')
 
 updateEmployerEmployeeCount = function(req, res, next) {
 		Client.findByIdAndUpdate(req.body.master_id, { employeeCounter: req.body.newEmployeeCount }, {new: true}, function(err, newBoss) { 
@@ -43,35 +46,47 @@ module.exports.configureNewUser = function(req, res, next) {
 
 
 
-createTerminalAccount = function(req, res, next) {
-	data = {
-		email: req.body.mongoCollectionKey + '@terminal.com',
-		isMaster: false,
-		isAdmin: false,
-		mongoCollectionKey: req.body.mongoCollectionKey, 
-		password: req.body.mongoCollectionKey, // change later
-		accountType: "Terminal"
-	}
+createTerminalAccount = async function(req, res, next) {
+	try {
+		data = {
+			email: req.body.mongoCollectionKey + '@terminal.com',
+			isMaster: false,
+			isAdmin: false,
+			mongoCollectionKey: req.body.mongoCollectionKey, 
+			password: req.body.mongoCollectionKey, // change later
+			accountType: "Terminal"
+		}
 
-	var newTerminal = new Client(data);
-	if (!newTerminal.hash) {
-			var plaintext = data.password;
-			const saltRounds = 10;
-			
-			bcrypt.hash(plaintext, saltRounds).then(async (hash) => {
-				
-				newTerminal.hash = hash;
-				
-				// convert to async/await try/catch
-				const savedTerminal = await newTerminal.save()
-				// Add Terminal Acc. to Store Config of logged users:
-				const StoreConfig = mongoose.model('StoreConfig', storeConfigSchema, req.body.mongoCollectionKey + '_StoreConfig');
-				const terminalDaemon = await StoreConfig.findOneAndUpdate({mongoKey: req.body.mongoCollectionKey}, {$addToSet: {loggedInUsers: "Terminal"}}, {upsert: true, new: true});
-				console.log("Ensure Terminal Daemon can create new transactions", terminalDaemon)
-				next();
-		});
-	};
 
+			// Add Terminal Acc. to Store Config of logged users:
+		const StoreConfig = mongoose.model('StoreConfig', storeConfigSchema, req.body.mongoCollectionKey + '_StoreConfig');
+		const newStoreConfig = new StoreConfig({
+			mongoKey: req.body.mongoCollectionKey,
+			loggedInUsers: ["Terminal"]
+
+		})
+		console.log(newStoreConfig);
+		const savedStoreConfig = await newStoreConfig.save()
+		console.log("StoreConfig", savedStoreConfig);
+
+
+		var newTerminal = new Client(data);
+		if (!newTerminal.hash) {
+				var plaintext = data.password;
+				const saltRounds = 10;
+				
+				bcrypt.hash(plaintext, saltRounds).then(async (hash) => {
+					
+					newTerminal.hash = hash;
+					
+
+					const savedTerminal = await newTerminal.save()
+
+					next();
+
+			});
+		};
+	} catch(err) { next(err)}
 }
 
 findMasterAndTagChild = async function(req, res, next) {
