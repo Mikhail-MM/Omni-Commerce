@@ -63,8 +63,25 @@ class TerminalActionScreenMockup extends Component {
 	iterateThruObject(currentKey) {
 		const { menuItems, token, activeTicket, dispatch } = this.props
 		const selector = currentKey
-  			return menuItems[selector].map(item => <Button color="black" className={selector} key={item._id} onClick={this.handleClicktoFetch.bind(this, token, item._id, activeTicket._id, dispatch)}>{item.itemName}</Button>)
+  			return menuItems[selector].map(item => {
+  				return (
+  					<div className="ui-pos-item" key={item._id} onClick={this.handleClicktoFetch.bind(this, token, item._id, activeTicket._id, dispatch)}>
+  						<div className="ui-pos-item_image">
+  							<img src={item.imageURL} />
+  						</div>
+  						<div className="ui-pos-item_content">
+  							<div className="ui-pos-item-name">
+  								{item.itemName}
+  							</div>
+  							<div className="ui-pos-item-price">
+  								{item.itemPrice}
+  							</div>
+  						</div>
+  					</div>
+  				)
+  			})
 	}
+
 
 	handleClicktoFetch(token, menuItem_Id, currentTransaction_Id, dispatch) { 
 		dispatch(updateTransactionWithMenuItem(token, menuItem_Id, currentTransaction_Id))
@@ -117,6 +134,7 @@ class TerminalActionScreenMockup extends Component {
 	displayPricingFromActiveTicket() {
 		const { activeTicket, menuItems } = this.props
 		return(
+		<Table>
 		 <Table.Footer> 
 		  <Table.Row>
 		   <Table.HeaderCell colSpan="3">SubTotal</Table.HeaderCell>
@@ -135,6 +153,7 @@ class TerminalActionScreenMockup extends Component {
 		   <Table.Cell>$0.00</Table.Cell>
 		  </Table.Row>
 		  </Table.Footer>
+		</Table>
 		)
 	}
 	render() {
@@ -146,9 +165,8 @@ class TerminalActionScreenMockup extends Component {
 
 			<div className="left-40" >
 				{!isAuthenticated && <Redirect to='/login' />}
-
+				{ activeTicket && this.displayPricingFromActiveTicket() }
 				<Table celled inverted selectable>
-					
 					<Table.Header>
 						<Table.Row>
 							<Table.HeaderCell> Remove Item </Table.HeaderCell>
@@ -160,7 +178,7 @@ class TerminalActionScreenMockup extends Component {
 					<Table.Body>
 						{ activeTicket && this.generateLedgerFromActiveTicket() }
 					</Table.Body>
-						{activeTicket && this.displayPricingFromActiveTicket()}
+						
 				</Table>
 			</div>
 			

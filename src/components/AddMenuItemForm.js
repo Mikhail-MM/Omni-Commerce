@@ -15,42 +15,41 @@ class AddMenuItemForm extends Component {
 		this.initialState = {
 			itemName: '',
 			itemPrice: '',
-			category: ''
+			category: '',
+			selectedFile: null
 		}
 
 		this.state = this.initialState
 
-		this.handleItemNameChange = this.handleItemNameChange.bind(this);
-		this.handleItemPriceChange = this.handleItemPriceChange.bind(this);
-		this.handleCategoryChange = this.handleCategoryChange.bind(this);
+		this.handleChange = this.handleChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.imageSelectedHandler = this.imageSelectedHandler.bind(this)
 	}
 
-	handleItemNameChange(event) {
-		event.preventDefault()
-		this.setState(
-			Object.assign({}, ...this.state, {itemName: event.target.value}))
+	handleChange(input, value) {
+		this.setState({
+			[input]: value
+		})
 	}
 
-	handleItemPriceChange(event) {
-		event.preventDefault()
-		this.setState(
-			Object.assign({}, ...this.state, {itemPrice: event.target.value}))
-	}
 
-	handleCategoryChange(event) {
-		event.preventDefault()
-		this.setState(
-			Object.assign({}, ...this.state, {category: event.target.value}))
+	imageSelectedHandler(event) {
+		console.log(event.target.files[0])
+		this.setState({selectedFile: event.target.files[0]}, console.log(this.state.selectedFile))
 	}
 
 	handleSubmit(event) {
 		const { token, dispatch } = this.props
+		const { itemName, itemPrice, category } = this.state
 		event.preventDefault()
-		console.log(this.state);
-		const data = JSON.stringify(this.state)
-		dispatch(createNewMenuItem(token, data))
+		const jsonData = { 
+			itemName,
+			itemPrice,
+			category
+		}
+		dispatch(createNewMenuItem(token, jsonData))
 		this.setState(this.initialState)
+
 	}
 
 	render() {
@@ -62,21 +61,26 @@ class AddMenuItemForm extends Component {
 				placeholder='Item Name'
 				type='text'
 				value={this.state.itemName} 
-				onChange={this.handleItemNameChange}
+				onChange={(e) => this.handleChange('itemName', e.target.value)}
 			/>
 			<Form.Input
 				fluid
 				placeholder='Item Price'
 				type='text'
 				value={this.state.itemPrice} 
-				onChange={this.handleItemPriceChange}
+				onChange={(e) => this.handleChange('itemPrice', e.target.value)}
 			/>
 			<Form.Input
 				fluid
 				placeholder='Category'
 				type='text'
 				value={this.state.category} 
-				onChange={this.handleCategoryChange}
+				onChange={(e) => this.handleChange('category', e.target.value)}
+			/>
+			<Form.Input
+				type='file'
+				name='menuItems'
+				onChange={this.imageSelectedHandler}
 			/>
 			<Form.Button fluid size='large' content='Submit'>Add Item</Form.Button>
 			</Segment>

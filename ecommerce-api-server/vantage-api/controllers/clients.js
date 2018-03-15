@@ -27,6 +27,7 @@ module.exports.createClient = async function(req, res, next) {
 			clockInNumber			: req.body.clockInNumber,
 			accountType				: req.body.accountType,
 			master_id				: req.body.master_id,
+			employeeAuthorization	: req.body.employeeAuthorization,
 			billing_address_line1	: req.body.billing_address_line1,
 			billing_address_line2	: req.body.billing_address_line2,
 			billing_address_city	: req.body.billing_address_city,

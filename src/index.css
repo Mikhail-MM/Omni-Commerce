@@ -124,6 +124,7 @@ body {
 	box-sizing: content-box;
 	border: 1px solid white;
 	display: flex;
+	min-width: 1000px;
 }
 .employee-avatar-container {
 	box-sizing: content-box;
@@ -133,6 +134,22 @@ body {
 .employee-metadata-table {
 	height: 100%;
 	flex-grow: 1;
+	display: flex;
+	min-width: 800px;
+}
+.employee-metadata-container-1 {
+	width: 50%;
+	border-right: 1px solid white;
+	display: flex;
+	flex-direction: column;
+}
+.employee-metadata-container-2 {
+	width: 50%;
+	display: flex;
+	flex-direction: column;
+}
+.employee-contact-section{
+	padding-left: 5px;
 }
 .employee-avatar{
 	width: 100%;
@@ -582,3 +599,89 @@ table {
 }
 
 img { object-fit: cover; height: 100%; width: 100%;}
+
+
+/*
+
+	Splash page
+
+*/
+
+.splash-page-wrapper {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.main-nav {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+	background-color: transparent;
+	min-height: 25px;
+	border-bottom: 1px solid black;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 5;
+
+}
+
+.jumbo-image-container {
+	width: 100%;
+	height: 100vh;
+	position: relative;
+	overflow: hidden;
+}
+.container-overlay-content {
+	position: absolute;
+	top: 30%;
+	width: 100%;
+	text-align: center;
+}
+
+.jumbo-image-blurred {
+	filter: blur(3px);
+	transform: scale(1.02)
+}
+
+.splash-intro {
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+    justify-content: center;
+	background-color: rgb(49, 60, 69);
+	color: white;
+	width: 100%;
+	min-height: 200px;
+	font-weight: 700;
+}
+
+.splash-animated-infographic {
+	width: 100%;
+	min-height: 300px;
+	display: flex;
+}
+
+.splash-1-2-col {
+	height: 100%;
+	width: 50%;
+}
+.splash-register{
+	width: 400px;
+	height: 300px;
+}
+
+.splash-footer-sitemap{
+	min-height: 100px;
+	width: 100%;
+	color: white;
+	background-color: black;
+}
+.vh100{
+	position: relative;
+	min-height: 100vh;
+}

@@ -61,7 +61,7 @@ export function updateMenuItemProperties(token, item_id, newProps) {
 	}
 }
 
-export function createNewMenuItem(token, data) {
+export function createNewMenuItem(token, data, imageFile) {
 	return dispatch => {
 		return fetch('http://localhost:3001/menus', {
 			headers:{
@@ -70,17 +70,54 @@ export function createNewMenuItem(token, data) {
 			},
 				method: 'POST',
 				mode: 'cors',
-				body: data,
+				body: JSON.stringify(data),
 		})
 		.then(response => response.ok ? response.json() : new Error(response.statusText))
-		.then(json => dispatch(fetchMenuItems(token)))
+		.then(newMenuItemJSON => {
+
+			console.log("New Item JSON data", newMenuItemJSON)
+			
+			const formData = new FormData()
+
+			formData.append('menuItems', imageFile) 
+			
+			dispatch(fetchMenuItems(token))
+
+			fetch('http://localhost:3001/images/marketplace-item', {
+					method: 'POST',
+					mode: 'cors',
+					body: formData
+				})
+				.then(response => response.ok ? response.json() : console.log(response))
+				.then(imageJSON => {
+					
+					console.log("Receive image metadata")
+					console.log(imageJSON)
+
+					const updatedImageSourceJSON = { imageURL: imageJSON.imageURL }
+
+					const url = 'http://localhost:3001/menus/' +  newMenuItemJSON._id
+					return fetch(url, {
+						headers: {
+							'Content-Type': 'application/json',
+							'x-access-token': token,
+						},
+						method: 'PUT',
+						mode: 'cors',
+						body: JSON.stringify(updatedImageSourceJSON)
+					})
+					.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+					.then(newItemJSONWithImageURL => {
+						console.log(newItemJSONWithImageURL)
+						dispatch(fetchMenuItems(token))
+					})
+				})
+		})
 		.catch(err => console.log(err))
 	}
 }
 // Need to pass in a TOKEN!
 export function fetchMenuItems(token) {
-	console.log("Looking for Employee Token within fetchMenuItems action")
-	console.log(token)
 	return dispatch => {
 		return fetch('http://localhost:3001/menus', {
 			headers:{ 

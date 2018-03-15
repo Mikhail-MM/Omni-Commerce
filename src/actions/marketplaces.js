@@ -183,7 +183,6 @@ export function postItemToMarketplace(token, jsonData, imageFile) {
 					.then(newItemJSONWithImageURL => {
 						console.log(newItemJSONWithImageURL)
 					})
-
 				})
 		})
 		.catch(err => console.log(err))

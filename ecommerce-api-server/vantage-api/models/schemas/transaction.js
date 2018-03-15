@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 var menuItemSchema = new Schema({
 	itemName: String,
 	itemPrice: Number,
-	category: String
+	category: String,
+	imageURL: String
 })
 
 var ticketSchema = new Schema ({

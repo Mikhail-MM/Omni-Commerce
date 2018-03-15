@@ -92,6 +92,8 @@ router.route('/clients/:id')
 
 router.route('/images/marketplace-item')
 	.post(upload.single('marketplaceItems'), images.uploadNewImage)
+router.route('/images/point-of-sale-item')
+	.post(upload.single('menuItems'), images.uploadNewImage)
 
 router.route('/client/metadata') 
 	.get(authorize.routeEmployeeToMongoCollection, authorize.sendStripeTokenMetadataToClient)

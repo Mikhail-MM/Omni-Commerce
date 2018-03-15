@@ -43,8 +43,26 @@ class EmployeeManagement extends Component {
 						<img className="employee-avatar" src={stockAvatarUrl} />
 					</div>
 					<div className="employee-metadata-table">
-						<Button onClick={this.validateEmployee.bind(this, employee._id)}> Approve Employee </Button>
-						<Button onClick={this.invalidateEmployee.bind(this, employee._id)}> Remove Employee </Button>
+						<div className="employee-metadata-container-1">
+							<section className="employee-contact-section" >
+								<h3 className="employee-name">{employee.firstName} {employee.lastName} </h3>
+								<p className="employee-phone">Phone: {employee.phoneNumber} </p>
+								<p className="employee-mail">E-Mail: {employee.email}</p>
+							</section>
+						</div>
+						<div className="employee-metadata-container-2">
+							<section className="employee-contact-section" >
+								{employee.isMaster && 
+									<p> Manager </p>
+								}
+								{!employee.isMaster && 
+									<p> Employee </p>
+								}
+								<Button onClick={this.validateEmployee.bind(this, employee._id)}> Approve Employee </Button>
+								<Button onClick={this.invalidateEmployee.bind(this, employee._id)}> Remove Employee </Button>
+							</section>
+						</div>
+
 					</div>
 				</div>
 			)
@@ -54,9 +72,9 @@ class EmployeeManagement extends Component {
 	render() {
 		const { employees } = this.props;
 		return(
-			<Item.Group divided className='employee-management-ui-container'>
+			<div className='employee-management-ui-container'>
 				{employees && this.drawEmployeeMenu()}
-			</Item.Group>
+			</div>
 		)
 	}
 }

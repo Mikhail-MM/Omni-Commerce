@@ -21,11 +21,10 @@ import MyStoreHomepage from './MyStoreHomepage'
 import TerminalActionScreenMockup from './TerminalActionScreenMockup'
 import PurchaseOrderViewScreen from './PurchaseOrderViewScreen'
 import ShippingOrderViewScreen from './ShippingOrderViewScreen'
-
+import Splash from './Splash'
 
 import CardMockup from './CardMockup'
 
-import Algo from './Algo'
 
 const loggerMiddleware = createLogger()
 const history = createHistory()
@@ -49,7 +48,7 @@ export default class Root extends Component {
 	<ConnectedRouter history={history}>
 		<Switch>
 				<Redirect exact="true" from="/" to="/login"/>
-				<Route path="/splash" render={() => <div> Marketing Splash </div> } />
+				<Route path="/splash" component={Splash} />
 				<Route exact path="/login" component={LoginForm} />
 				<Route path="/terminal" component={Terminal} />
 				<Route path="/marketplaceDashboard" component={OnlineMerchantDashboard} />
@@ -60,7 +59,6 @@ export default class Root extends Component {
 				<Route path="/marketplace_landing" component={MyStoreHomepage} />
 				<Route path="/marketplace/purchase_orders" component={PurchaseOrderViewScreen} />
 				<Route path="/marketplace/sell_orders" component={ShippingOrderViewScreen} />
-				<Route path="/algo" component={Algo} />
 				<Route path="/cardMockup" component={CardMockup} />
 
 		</Switch>

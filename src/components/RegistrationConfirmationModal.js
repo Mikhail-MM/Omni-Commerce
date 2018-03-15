@@ -71,6 +71,7 @@ class RegistrationConfirmationModal extends Component {
 				  	<h1>Employee Registration Successful! </h1>
 				  	<p> Thanks for registering with us, {this.props.createdClient.firstName}. </p>
 				  	<p> Once your employer confirms your credentials, you'll be able to log in and use Omni! </p>
+				  	<button onClick={this.deactivateModal}> Confirm </button>
 				  </Segment>
 				}
 				{ this.props.registrationModalMode === "Marketplace" && 
