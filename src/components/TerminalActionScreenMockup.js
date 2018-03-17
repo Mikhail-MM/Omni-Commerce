@@ -134,7 +134,7 @@ class TerminalActionScreenMockup extends Component {
 	displayPricingFromActiveTicket() {
 		const { activeTicket, menuItems } = this.props
 		return(
-		<Table>
+		<Table celled inverted selectable>
 		 <Table.Footer> 
 		  <Table.Row>
 		   <Table.HeaderCell colSpan="3">SubTotal</Table.HeaderCell>

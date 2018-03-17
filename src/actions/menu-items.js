@@ -1,4 +1,3 @@
-import fetch from 'cross-fetch'
 import { push } from 'react-router-redux'
 import { groupBy } from 'underscore'
 
@@ -63,7 +62,7 @@ export function updateMenuItemProperties(token, item_id, newProps) {
 
 export function createNewMenuItem(token, data, imageFile) {
 	return dispatch => {
-		return fetch('http://localhost:3001/menus', {
+		fetch('http://localhost:3001/menus', {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token
@@ -83,7 +82,7 @@ export function createNewMenuItem(token, data, imageFile) {
 			
 			dispatch(fetchMenuItems(token))
 
-			fetch('http://localhost:3001/images/marketplace-item', {
+			fetch('http://localhost:3001/images/point-of-sale-item', {
 					method: 'POST',
 					mode: 'cors',
 					body: formData
@@ -108,7 +107,9 @@ export function createNewMenuItem(token, data, imageFile) {
 					})
 					.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 					.then(newItemJSONWithImageURL => {
-						console.log(newItemJSONWithImageURL)
+						
+						console.log("updated item", newItemJSONWithImageURL)
+
 						dispatch(fetchMenuItems(token))
 					})
 				})

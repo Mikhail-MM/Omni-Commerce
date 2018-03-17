@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
-    "cross-fetch": "^1.1.1",
+    "cross-fetch": "^2.1.0",
     "d3-scale": "^1.0.7",
     "d3-time": "^1.0.8",
     "form-data": "^2.3.2",

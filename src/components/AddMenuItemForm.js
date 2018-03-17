@@ -47,7 +47,7 @@ class AddMenuItemForm extends Component {
 			itemPrice,
 			category
 		}
-		dispatch(createNewMenuItem(token, jsonData))
+		dispatch(createNewMenuItem(token, jsonData, this.state.selectedFile))
 		this.setState(this.initialState)
 
 	}
