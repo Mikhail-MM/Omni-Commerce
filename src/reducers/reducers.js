@@ -261,6 +261,21 @@ const marketplaceFilterReducer = (state = initialFilterState, action ) => {
 		}
 	}
 
+const initialSearchState = { searchTerm: "" }
+
+const searchItemsReducer = (state = initialSearchState, action) => {
+	switch(action.type) {
+		case('INITIATE_SEARCH'):
+			return Object.assign({}, state, {
+				searchTerm: action.searchTerm
+			})
+		case('CLEAR_SEARCH_TERMS'):
+			return initialSearchState
+		default:
+			return state
+	}
+}
+
 const rootReducer = combineReducers({
 	authReducer,
 	employeeReducer,
