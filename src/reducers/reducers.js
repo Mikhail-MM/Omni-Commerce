@@ -248,7 +248,6 @@ const marketplaceFilterReducer = (state = initialFilterState, action ) => {
 			else if (state.selected.includes(action.tag)) {
 				selected = state.selected.filter(tag => tag !== action.tag)
 			}
-			console.log(selected)
 			return {
 				...state,
 				[action.tag]: !state[action.tag],

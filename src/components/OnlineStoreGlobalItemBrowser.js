@@ -13,9 +13,10 @@ import TagFilterSearch from './TagFilterSearch'
 function mapStateToProps(state) {
 	const { token } = state.authReducer
 	const { marketplaceItems, currentMarketplaceItem } = state.marketplaceItemsReducer
+	const { selected } = state.marketplaceFilterReducer
 	
  
-	return { token, marketplaceItems, currentMarketplaceItem }
+	return { token, marketplaceItems, currentMarketplaceItem, selected }
 }
 
 class OnlineStoreGlobalItemBrowser extends Component {
@@ -31,9 +32,25 @@ class OnlineStoreGlobalItemBrowser extends Component {
 
 
 	renderMarketplaceItems() {
-		// Placeholder function to mock styling for real data to be retrieved from API
-		const { marketplaceItems } = this.props
-		return marketplaceItems.map(item => {
+
+		const { marketplaceItems, selected } = this.props
+		let filteredItems
+		if (selected.length > 0 ) {
+			filteredItems = marketplaceItems.filter(item => {
+				let filterMatch;
+				let tag;
+				for (tag of item.tags) {
+					if (selected.includes(tag)) {
+						return true
+					}
+				}
+				return false
+			})
+		} else {
+			filteredItems = marketplaceItems
+		}
+
+		return filteredItems.map(item => {
 			return (<div className="ui_card_mockup">
 						<div className='ui_card_image'>
 							<img src={item.imageURL} />

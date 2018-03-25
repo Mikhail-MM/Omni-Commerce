@@ -5,13 +5,12 @@ import { Card, Icon, Button, Image } from 'semantic-ui-react'
 import { retrieveItemsFromMarketplace, retrieveItemById } from '../actions/marketplaces'
 import { showModal } from '../actions/modals'
 
-import blouseImage from '../assets/marketBlouse.jpg'
-
 function mapStateToProps(state) {
 	const { token } = state.authReducer
 	const { currentMarketplace } = state.marketplaceBrowserReducer
 	const { marketplaceItems } = state.marketplaceItemsReducer
-	return { token, currentMarketplace, marketplaceItems }
+	const { selected } = state.marketplaceFilterReducer
+	return { token, currentMarketplace, marketplaceItems, selected }
 }
 
 class OnlineStoreMarketplaceSpecificItemBrowser extends Component {
@@ -26,11 +25,25 @@ class OnlineStoreMarketplaceSpecificItemBrowser extends Component {
 
 	
 	renderMarketplaceItems() {
-		// Placeholder function to mock styling for real data to be retrieved from API
-		const { marketplaceItems } = this.props
-		
+		const { marketplaceItems, selected } = this.props
+		let filteredItems
 
-		return marketplaceItems.map(item => {
+		if (selected.length > 0 ) {
+			filteredItems = marketplaceItems.filter(item => {
+				let filterMatch;
+				let tag;
+				for (tag of item.tags) {
+					if (selected.includes(tag)) {
+						return true
+					}
+				}
+				return false
+			})
+		} else {
+			filteredItems = marketplaceItems
+		}
+
+		return filteredItems.map(item => {
 			return (<div className="ui_card_mockup">
 						<div className='ui_card_image'>
 							<img src={item.imageURL} />
