@@ -10,7 +10,8 @@ function mapStateToProps(state) {
 	const { currentMarketplace } = state.marketplaceBrowserReducer
 	const { marketplaceItems } = state.marketplaceItemsReducer
 	const { selected } = state.marketplaceFilterReducer
-	return { token, currentMarketplace, marketplaceItems, selected }
+	const { searchTerm } = state.searchItemsReducer
+	return { token, currentMarketplace, marketplaceItems, selected, searchTerm }
 }
 
 class OnlineStoreMarketplaceSpecificItemBrowser extends Component {
@@ -25,8 +26,10 @@ class OnlineStoreMarketplaceSpecificItemBrowser extends Component {
 
 	
 	renderMarketplaceItems() {
-		const { marketplaceItems, selected } = this.props
-		let filteredItems
+		const { marketplaceItems, selected, searchTerm } = this.props
+
+		let filteredItems;
+		let filteredSearchItems;
 
 		if (selected.length > 0 ) {
 			filteredItems = marketplaceItems.filter(item => {
@@ -43,7 +46,18 @@ class OnlineStoreMarketplaceSpecificItemBrowser extends Component {
 			filteredItems = marketplaceItems
 		}
 
-		return filteredItems.map(item => {
+		if (searchTerm) {
+			filteredSearchItems = filteredItems.filter(item => {
+				if (item.itemName.toLowerCase().indexOf(searchTerm) !== -1) {
+					return true
+				}
+				return false
+			})
+		}
+
+		const toRender = (searchTerm !== null) ? filteredSearchItems : filteredItems
+
+		return toRender.map(item => {
 			return (<div className="ui_card_mockup">
 						<div className='ui_card_image'>
 							<img src={item.imageURL} />

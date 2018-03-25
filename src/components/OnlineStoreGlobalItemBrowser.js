@@ -6,7 +6,6 @@ import { Card, Image, Button, Icon } from 'semantic-ui-react'
 import { retrieveAllItemsForSale, retrieveItemById, pushItemIntoShoppingCart } from '../actions/marketplaces'
 import { showModal } from '../actions/modals'
 
-
 import CartInvalidationAlert from './CartInvalidationAlert'
 import TagFilterSearch from './TagFilterSearch'
 
@@ -14,9 +13,10 @@ function mapStateToProps(state) {
 	const { token } = state.authReducer
 	const { marketplaceItems, currentMarketplaceItem } = state.marketplaceItemsReducer
 	const { selected } = state.marketplaceFilterReducer
+	const { searchTerm } = state.searchItemsReducer
 	
  
-	return { token, marketplaceItems, currentMarketplaceItem, selected }
+	return { token, marketplaceItems, currentMarketplaceItem, selected, searchTerm }
 }
 
 class OnlineStoreGlobalItemBrowser extends Component {
@@ -32,9 +32,10 @@ class OnlineStoreGlobalItemBrowser extends Component {
 
 
 	renderMarketplaceItems() {
-
-		const { marketplaceItems, selected } = this.props
-		let filteredItems
+		const { marketplaceItems, selected, searchTerm } = this.props
+		let filteredItems;
+		let filteredSearchItems;
+		
 		if (selected.length > 0 ) {
 			filteredItems = marketplaceItems.filter(item => {
 				let filterMatch;
@@ -50,7 +51,18 @@ class OnlineStoreGlobalItemBrowser extends Component {
 			filteredItems = marketplaceItems
 		}
 
-		return filteredItems.map(item => {
+		if (searchTerm) {
+			filteredSearchItems = filteredItems.filter(item => {
+				if (item.itemName.toLowerCase.indexOf(searchTerm) !== -1) {
+					return true
+				}
+				return false
+			})
+		}
+
+		const toRender = (searchTerm !== null) ? filteredSearchItems : filteredItems
+
+		return toRender.map(item => {
 			return (<div className="ui_card_mockup">
 						<div className='ui_card_image'>
 							<img src={item.imageURL} />

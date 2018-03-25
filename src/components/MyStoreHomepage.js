@@ -14,6 +14,7 @@ import OnlineStoreMarketplaceSpecificItemBrowser from './OnlineStoreMarketplaceS
 import ShoppingCartSidebar from './ShoppingCartSidebar'
 import TagFilterSearch from './TagFilterSearch'
 import ModifyMyStoreItemsScreen from './ModifyMyStoreItemsScreen'
+import SearchItems from './SearchItems'
 
 function mapStateToProps(state) {
 	const { allMarketplaces, currentMarketplace } = state.marketplaceBrowserReducer
@@ -89,6 +90,7 @@ class MyStoreHomepage extends Component {
 
 				</div> 
 				<div className='my-store-homepage-main-content' >
+					<SearchItems/>
 					<div className='my-store-main-content-border'>
 
 				

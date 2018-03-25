@@ -260,7 +260,7 @@ const marketplaceFilterReducer = (state = initialFilterState, action ) => {
 		}
 	}
 
-const initialSearchState = { searchTerm: "" }
+const initialSearchState = { searchTerm: null }
 
 const searchItemsReducer = (state = initialSearchState, action) => {
 	switch(action.type) {
@@ -289,6 +289,7 @@ const rootReducer = combineReducers({
 	modalReducer,
 	purchaseOrderReducer,
 	marketplaceFilterReducer,
+	searchItemsReducer,
 	routerReducer
 })
 
