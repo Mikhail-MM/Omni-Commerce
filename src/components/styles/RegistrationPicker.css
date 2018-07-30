@@ -1,0 +1,74 @@
+.registration-picker-wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	height: 100%;
+	width: 100%;
+
+	background-color: #525f7f;
+	color: white;
+}
+
+.picker-header-container {
+	text-align: center;
+	margin-bottom: 25px;
+}
+
+.centered-rectangle {
+	display: flex;
+	flex-direction: column;
+
+	width: 1136px;
+	height: 500px;
+
+	padding: 25px 75px;
+	border: 2px #9bacc8 solid;
+	border-radius: 10px;
+}
+
+.picker-button-container {
+	display: flex;
+	justify-content: space-around;
+
+	padding: 0px 25px;
+}
+
+.icon-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	width: 200px;
+	height: 200px;
+
+	background-color: rgb(255, 255, 255, 0.50);
+	border-radius: 100px;
+
+	transition: background-color 0.8s;
+}
+
+.icon-container:hover {
+	background-color: rgb(96, 84, 130);
+}
+
+.point-sale-icon {
+	margin-left: 20px;
+}
+.icon-container img {
+	width: 125px;
+	height: 125px;
+}
+
+.notification-box {
+	margin: 25px 0px;
+
+	text-align: center;
+
+	color: rgb(145, 168, 170);
+}
+
+.notification-box div {
+	margin: 10px 0px;
+}

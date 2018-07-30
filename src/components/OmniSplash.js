@@ -4,11 +4,19 @@ import './styles/OmniSplash.css'
 
 import { routeToNode } from '../actions/routing'
 
+import { push } from 'react-router-redux'
+
 const mapDispatchToProps = (dispatch) => ({
-	route: (event, node) => routeToNode(event, node)
+	route: (event, node) => routeToNode(dispatch, event, node)
 })
 
 class OmniSplash extends Component {
+
+	navigateAway = (url) => {
+		const {dispatch} = this.props
+		dispatch(push(url)) 
+	}
+
 	render() { 
 		return(
 			<div className="splash-page-wrapper">

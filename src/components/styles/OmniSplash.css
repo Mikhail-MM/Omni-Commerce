@@ -16,18 +16,30 @@
 	width: 750px;
 	height: 500px;
 
+	padding: 75px 75px;
 	border: 2px #9bacc8 solid;
-	border-radius: 2px;
+	border-radius: 10px;
+
 }
 
 .splash-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
 	width: calc(100% - 30px);
 	height: 40px;
+
+	margin: 20px 0px;
 	
 	border-radius: 20px;
 	
 	background-color: rgb(252, 214, 105);
-	color: rgb(82, 95, 127);;
+	color: rgb(82, 95, 127);
+
+	outline: none;
+	border-style: none;
 	
 	cursor: pointer;
+
 }

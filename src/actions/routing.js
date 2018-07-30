@@ -1,9 +1,5 @@
-import { push } from 'connected-react-router'
+import { push } from 'react-router-redux'
 
-export function routeToNode(event, node) {
-	console.log(event)
-	console.log(node)
-	return dispatch => {
-		dispatch(push(node))
-	}
+export function routeToNode(dispatch, event, node) {
+	dispatch(push(node))
 }
