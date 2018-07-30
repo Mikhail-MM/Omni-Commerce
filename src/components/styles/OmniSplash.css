@@ -1,0 +1,33 @@
+.splash-page-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	height: 100%;
+	width: 100%;
+
+	background-color: #525f7f;
+}
+
+.centered-box {
+	display: flex;
+	flex-direction: column;
+
+	width: 750px;
+	height: 500px;
+
+	border: 2px #9bacc8 solid;
+	border-radius: 2px;
+}
+
+.splash-button {
+	width: calc(100% - 30px);
+	height: 40px;
+	
+	border-radius: 20px;
+	
+	background-color: rgb(252, 214, 105);
+	color: rgb(82, 95, 127);;
+	
+	cursor: pointer;
+}

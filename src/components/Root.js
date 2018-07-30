@@ -11,20 +11,23 @@ import rootReducer from '../reducers/reducers'
 
 
 
-import LoginForm from './LoginForm'
-import RegisterForm from './RegisterForm'
-import OnlineMerchantRegistrationForm from './OnlineMerchantRegistrationForm'
-import Terminal from './Terminal'
-import OnlineMerchantDashboard from './OnlineMerchantDashboard'
-import AdminTerminal from './AdminTerminal'
-import MyStoreHomepage from './MyStoreHomepage'
-import TerminalActionScreenMockup from './TerminalActionScreenMockup'
-import PurchaseOrderViewScreen from './PurchaseOrderViewScreen'
-import ShippingOrderViewScreen from './ShippingOrderViewScreen'
-import Splash from './Splash'
+import LoginForm from './v1/LoginForm'
+import RegisterForm from './v1/RegisterForm'
+import OnlineMerchantRegistrationForm from './v1/OnlineMerchantRegistrationForm'
+import Terminal from './v1/Terminal'
+import OnlineMerchantDashboard from './v1/OnlineMerchantDashboard'
+import AdminTerminal from './v1/AdminTerminal'
+import MyStoreHomepage from './v1/MyStoreHomepage'
+import TerminalActionScreenMockup from './v1/TerminalActionScreenMockup'
+import PurchaseOrderViewScreen from './v1/PurchaseOrderViewScreen'
+import ShippingOrderViewScreen from './v1/ShippingOrderViewScreen'
+import Splash from './v1/Splash'
 
-import CardMockup from './CardMockup'
+import CardMockup from './v1/CardMockup'
 
+
+import EssosMarket from './EssosMarket'
+import OmniSplash from './OmniSplash'
 
 const loggerMiddleware = createLogger()
 const history = createHistory()
@@ -44,26 +47,16 @@ const store = createStore(
 export default class Root extends Component {
 	render() {
 		return (
-<Provider store={store}>
-	<ConnectedRouter history={history}>
-		<Switch>
-				<Redirect exact="true" from="/" to="/login"/>
-				<Route path="/splash" component={Splash} />
-				<Route exact path="/login" component={LoginForm} />
-				<Route path="/terminal" component={Terminal} />
-				<Route path="/marketplaceDashboard" component={OnlineMerchantDashboard} />
-				<Route exact path="/ticket" component={TerminalActionScreenMockup} />
-				<Route path="/register_business_organization" component={RegisterForm} />
-				<Route path="/register_merchant" component={OnlineMerchantRegistrationForm} />
-				<Route path="/admin" component={AdminTerminal} />
-				<Route path="/marketplace_landing" component={MyStoreHomepage} />
-				<Route path="/marketplace/purchase_orders" component={PurchaseOrderViewScreen} />
-				<Route path="/marketplace/sell_orders" component={ShippingOrderViewScreen} />
-				<Route path="/cardMockup" component={CardMockup} />
+			<Provider store={store}>
+				<ConnectedRouter history={history}>
+					<Switch>
+						
+                  		<Route exact path='/' component={OmniSplash} />
+                 		<Route exact path="/essos" component={EssosMarket} />
 
-		</Switch>
-	</ConnectedRouter>
-</Provider>
+					</Switch>
+				</ConnectedRouter>
+			</Provider>
 		)
 	}
 }
