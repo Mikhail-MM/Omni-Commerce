@@ -17,6 +17,8 @@ class OmniSplash extends Component {
 					<button onClick={event => this.props.route(event, '/essos')} className="splash-button"> Essos Marketplace </button>
 					<button onClick={event => this.props.route(event, '/register')} className="splash-button"> Register </button>
 					<button onClick={event => this.props.route(event, '/login')} className="splash-button"> Log In </button>
+					<button onClick={event => this.props.route(event, '/omni/terminal')} className="splash-button"> View Terminal </button>
+					<button onClick={event => this.props.route(event, '/omni/terminal/tickets')} className="splash-button"> View Terminal Action Screen </button>
 				</div>
 			</div>
 		)

@@ -11,6 +11,10 @@ import rootReducer from '../reducers/reducers'
 
 import EssosMarket from './EssosMarket'
 import OmniSplash from './OmniSplash'
+
+import OmniTerminal from './terminal/OmniTerminal'
+import TerminalActionScreen from './terminal/TerminalActionScreen'
+
 import RegistrationPicker from './forms/RegistrationPicker'
 import OmniRegistration from './forms/registration/OmniRegistration'
 
@@ -39,7 +43,10 @@ export default class Root extends Component {
                   		<Route exact path='/' component={OmniSplash} />
                  		<Route exact path='/essos' component={EssosMarket} />
                  		<Route exact path='/register' component={RegistrationPicker} />
-                 		<Route exact path='/register/omni' component={OmniRegistration} />
+                 		<Route exact path='/register/omni' render={() => <OmniRegistration regpath='omnimaster'/>} />
+                 		<Route exact path='/register/essos' render={() => <OmniRegistration regpath='essos'/>} />
+                 		<Route exact path='/omni/terminal' component={OmniTerminal} />
+                 		<Route exact path='/omni/terminal/tickets' component={TerminalActionScreen} />
 
 					</Switch>
 				</ConnectedRouter>
