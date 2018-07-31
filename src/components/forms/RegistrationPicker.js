@@ -1,11 +1,19 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 import '../styles/RegistrationPicker.css'
+
+import { routeToNode } from '../../actions/routing'
+
+const mapDispatchToProps = (dispatch) => ({
+	route: (event, node) => routeToNode(dispatch, event, node)
+})
+
+
 class RegistrationPicker extends Component {
 	render() {
 		return(
 			<div className='registration-picker-wrapper'>
-
 				
 				<div className='centered-rectangle'>
 
@@ -14,10 +22,10 @@ class RegistrationPicker extends Component {
 					</div>
 					
 					<div className='picker-button-container'>
-						<div className='icon-container'>
+						<div onClick={event => this.props.route(event, '/register/omni') } className='icon-container'>
 							<img className="online-market-icon" src='./assets/registration/online-shop.svg' />
 						</div>
-						<div className='icon-container'>
+						<div onClick={event => this.props.route(event, '/register/omni')} className='icon-container'>
 							<img className="point-sale-icon" src='./assets/registration/point-of-service.svg' />
 						</div>
 					</div>
@@ -30,10 +38,11 @@ class RegistrationPicker extends Component {
 							Register to use our Point-of-Sale management service for your retail storefront. Accept cash and card payments, manage employees, and gain access to valuable statistics and analytics.
 						</div>
 					</div>
+
 				</div>
 			</div>
 		)
 	}
 }
 
-export default RegistrationPicker
+export default connect(null, mapDispatchToProps)(RegistrationPicker)

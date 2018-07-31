@@ -12,6 +12,7 @@ import rootReducer from '../reducers/reducers'
 import EssosMarket from './EssosMarket'
 import OmniSplash from './OmniSplash'
 import RegistrationPicker from './forms/RegistrationPicker'
+import OmniRegistration from './forms/registration/OmniRegistration'
 
 const loggerMiddleware = createLogger()
 const history = createHistory()
@@ -38,6 +39,7 @@ export default class Root extends Component {
                   		<Route exact path='/' component={OmniSplash} />
                  		<Route exact path='/essos' component={EssosMarket} />
                  		<Route exact path='/register' component={RegistrationPicker} />
+                 		<Route exact path='/register/omni' component={OmniRegistration} />
 
 					</Switch>
 				</ConnectedRouter>

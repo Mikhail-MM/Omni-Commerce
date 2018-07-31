@@ -97,7 +97,6 @@ h1, h2, h3, h4, h5, h6 {
   height: 300px;
   width: 300px;
 
-  background-color: red;
 }
 
 .storybook-container {
@@ -115,7 +114,6 @@ h1, h2, h3, h4, h5, h6 {
   width: 458px;
   height: 550px;
 
-  background-color: blue;
 }
 
 .search-bar-container {
