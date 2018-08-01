@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import '../../styles/RegistrationForms.css'
 
-class OmniRegistration extends Component {
+class AuthenticationForm extends Component {
 	state = {
 		email: '',
 		pass: '',
@@ -23,7 +23,7 @@ class OmniRegistration extends Component {
 		if (!emailRegex.test(this.state.email)) return console.log("Error, Enter a valid e-mail.")
 		
 		
-		if (this.state.pass !== this.state.confpass) return console.log("Passwords do not match")
+		if ((this.props.regpathOmniMaster || this.props.regpathEssos) && (this.state.pass !== this.state.confpass)) return console.log("Passwords do not match")
 		
 		console.log(emailRegex.test('doodoo'))
 		console.log(emailRegex.test('aa@asd.asdasdasfsaf'))
@@ -36,10 +36,24 @@ class OmniRegistration extends Component {
 		if (this.validateFormData()) {
 			console.log("Truth Received")
 		}
+		if (this.props.login) return this.handleLogin()
+		if (this.props.regpathOmniMaster) return this.handleOmniBusinessRegistration()
+		if (this.props.regpathEssos) return this.handleEssosMarketplaceRegistration()
 		console.log('Received Form State')
-		console.log(this.state)
+		console.log(this.state)		
 
-		
+	}
+
+	handleLogin = () => {
+		console.log('Handle Login')
+	}
+
+	handleOmniBusinessRegistration = () => {
+		console.log('Handle POS Registration')
+	}
+
+	handleEssosMarketplaceRegistration = () => {
+		console.log('Handle Essos Registration')
 	}
 
 	render() {
@@ -68,18 +82,20 @@ class OmniRegistration extends Component {
 							onChange={ event => this.handleChange('pass', event.target.value) }
 							/>
 						</div>
-					<div className='form-row'>
-						<label> 
-							Confirm Password
-						</label> 
-						<input 
-							className='form-input'
-							type='password'
-							value={this.state.confpass}
-							onChange={ event => this.handleChange('confpass', event.target.value) }
-							/>
-					</div>
-					<input className='splash-button' value='Register' type='submit' />
+					{(this.props.regpathOmniMaster || this.props.regpathEssos) &&
+						<div className='form-row'>
+							<label> 
+								Confirm Password
+							</label> 
+							<input 
+								className='form-input'
+								type='password'
+								value={this.state.confpass}
+								onChange={ event => this.handleChange('confpass', event.target.value) }
+								/>
+						</div>
+					}
+					<input className='splash-button' value={this.props.login ? 'Log In' : 'Register'} type='submit' />
 
 				</form>
 			</div>
@@ -87,4 +103,4 @@ class OmniRegistration extends Component {
 	}
 }
 
-export default OmniRegistration
+export default AuthenticationForm

@@ -21,7 +21,7 @@ import AdminTerminal from './terminal/admin/AdminTerminal'
 
 
 import RegistrationPicker from './forms/RegistrationPicker'
-import OmniRegistration from './forms/registration/OmniRegistration'
+import AuthenticationForm from './forms/registration/AuthenticationForm'
 
 const loggerMiddleware = createLogger()
 const history = createHistory()
@@ -47,9 +47,11 @@ export default class Root extends Component {
 						
                   		<Route exact path='/' component={OmniSplash} />
                  		<Route exact path='/essos' component={EssosMarket} />
+                 		<Route exact path='/login' render={() => <AuthenticationForm login /> } />
                  		<Route exact path='/register' component={RegistrationPicker} />
-                 		<Route exact path='/register/omni' render={() => <OmniRegistration regpath='omnimaster'/>} />
-                 		<Route exact path='/register/essos' render={() => <OmniRegistration regpath='essos'/>} />
+                 		<Route exact path='/register/omni' render={() => <AuthenticationForm regpathOmniMaster/>} />
+                 		<Route exact path='/register/essos' render={() => <AuthenticationForm regpathEssos/>} />
+
                  		<Route exact path='/omni/terminal' component={OmniTerminal} />
                  		<Route exact path='/omni/terminal/tickets' component={TerminalActionScreen} />
                  		<Route exact path='/essos/user' component={UserPage} />
