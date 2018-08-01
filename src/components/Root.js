@@ -9,11 +9,16 @@ import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory'
 import rootReducer from '../reducers/reducers'
 
-import EssosMarket from './EssosMarket'
 import OmniSplash from './OmniSplash'
+
+import EssosMarket from './EssosMarket'
+import UserPage from './essos/UserPage'
 
 import OmniTerminal from './terminal/OmniTerminal'
 import TerminalActionScreen from './terminal/TerminalActionScreen'
+import AdminTerminal from './terminal/admin/AdminTerminal'
+
+
 
 import RegistrationPicker from './forms/RegistrationPicker'
 import OmniRegistration from './forms/registration/OmniRegistration'
@@ -47,6 +52,8 @@ export default class Root extends Component {
                  		<Route exact path='/register/essos' render={() => <OmniRegistration regpath='essos'/>} />
                  		<Route exact path='/omni/terminal' component={OmniTerminal} />
                  		<Route exact path='/omni/terminal/tickets' component={TerminalActionScreen} />
+                 		<Route exact path='/essos/user' component={UserPage} />
+                 		<Route exact path='/admin' component={AdminTerminal} />
 
 					</Switch>
 				</ConnectedRouter>

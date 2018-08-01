@@ -1,0 +1,27 @@
+.product-page-wrapper {
+	display: flex;
+	flex-direction: column;
+
+	width: 100%;
+	height: 100%;
+}
+
+.main-user-header {
+	display: flex;
+
+	width: 100%;
+	height: 275px;
+
+	background-color: red;
+}
+
+.user-content-wrapper{
+	display: flex;
+
+	width: 100%;
+	height: auto;
+
+	min-height: calc(100% - 275px);
+
+	background-color: blue;
+}
