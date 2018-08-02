@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { fetchMenuItems } from '../../actions/terminalItems'
 import { fetchTickets } from '../../actions/tickets-transactions'
 import { fetchLoggedUsers } from '../../actions/employees'
+import { showModal } from '../actions/modals'
 
 import  '../styles/OmniTerminal.css'
 
@@ -20,7 +21,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
 	fetchMenuItems: (token) => dispatch(fetchMenuItems(token)),
 	fetchTickets: (token) => dispatch(fetchTickets(token)),
-	fetchLoggedUsers: (token) => dispatch(fetchLoggedUsers(token))
+	fetchLoggedUsers: (token) => dispatch(fetchLoggedUsers(token)),
+	showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps)),
 })
 
 class OmniTerminal extends Component {
@@ -47,10 +49,10 @@ class OmniTerminal extends Component {
 						</div> 
 						<div className='foursquare-container'>
 							<div className='row__buttons'>
-								<div className='button'>
+								<div className='button' onClick={() => this.props.showModal('EMPLOYEE_PUNCH_CLOCK_FORM_MODAL', {formSelector: "Clock In"})}>
 									Clock In
 								</div>
-								<div className='button' >
+								<div className='button' onClick={() => this.props.showModal('EMPLOYEE_PUNCH_CLOCK_FORM_MODAL', {formSelector: "Clock Out"})}>
 									Clock Out
 								</div>
 							</div>
