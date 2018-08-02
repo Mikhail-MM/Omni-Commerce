@@ -7,13 +7,19 @@ import WaiterCallScreenModal from './modals/WaiterCallScreenModal'
 import AddTerminalItemModal from './modals/AddTerminalItemModal'
 import TransactionHistoryModal  from './modals/TransactionHistoryModal'
 
-import TransactionHistoryModal  from './'
+import CashPaymentModal  from './modals/CashPaymentModal'
+import CardPaymentModal from './modals/CardPaymentModal'
+import CustomAddonModal from './modals/CustomAddonModal'
 
 const MODAL_COMPONENTS = {
 	'EMPLOYEE_PUNCH_CLOCK_FORM_MODAL': EmployeePunchClockFormModal,
 	'ADD_POINT_SALE_ITEM': AddTerminalItemModal,
 	'DISPLAY_ALL_TRANSACTIONS': TransactionHistoryModal, 
 	'SELECT_EMPLOYEE_OPENING_TICKET': WaiterCallScreenModal, 
+
+	'CASH_PAYMENT_MODAL': CashPaymentModal, // Gets CashPaymentForm
+	'CARD_PAYMENT_MODAL': CardPaymentModal, // Gets Checkout
+	'CUSTOM_ADDON_MODAL': CustomAddonModal,
 }
 
 

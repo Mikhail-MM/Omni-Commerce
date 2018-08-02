@@ -11,6 +11,13 @@ function organizeTicketsByStatus(ArrayOfAllTicketObjects) {
 	}
 }
 
+export function setVisibleCategory(category) {
+	return {
+		type: 'SET_VISIBLE_CATEGORY',
+		visibleCategory: category
+	}
+}
+
 export function fetchTickets(token) {
 	return dispatch => {
 		return fetch('http://localhost:3001/transactions', {
@@ -65,5 +72,54 @@ export function fetchCurrentTicketDetails(token, ticket_Id) {
 		.then(json => dispatch(receiveCurrentTicket(json)))
 		.then(() => dispatch(push('/ticket')))
 		.catch(err => console.log(err))
+	}
+}
+
+export function updateTransactionWithMenuItem(token, menuItem_Id, currentTransaction_Id) {
+	const url = 'http://localhost:3001/menus/noIDhack/' + menuItem_Id;
+	return dispatch => {
+		return fetch(url, {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': token,
+			},
+			method: 'GET',
+			mode: 'cors',
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => {
+			const url = 'http://localhost:3001/transactions/addItem/' + currentTransaction_Id;
+			return fetch(url, {
+				headers:{
+					'Content-Type': 'application/json',
+					'x-access-token': token,
+				},
+				method: 'PUT',
+				mode: 'cors',
+				body: JSON.stringify(json),
+			})
+			.then(response => response.ok ? response.json() : new Error(response.statusText))
+			.then(json => dispatch(receiveCurrentTicket(json)))
+		})
+		.catch(err => console.log(err))
+	}
+}
+
+
+export function updateTicketStatus(token, ticket_Id, ticketStatus) {
+	const url = 'http://localhost:3001/transactions/' + ticket_Id
+	const data = { status: ticketStatus }
+	return dispatch => {
+		return fetch(url, {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': token,
+			},
+			method: 'PUT',
+			mode: 'cors',
+			body: JSON.stringify(data),
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => dispatch(receiveCurrentTicket(json)))
 	}
 }
