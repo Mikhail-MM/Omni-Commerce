@@ -1,16 +1,184 @@
 const uuid4 = require('uuid/v4');
 const bcrypt = require('bcrypt');
+
 const Client = require('../models/schemas/client');
+const Users = require('../models/schemas/users');
+
+const OmniUser = Users.OmniUser;
+const EssosUser = Users.EssosUser;
+
 const storeConfig = require('../models/schemas/storeConfig')
 const storeConfigSchema = storeConfig.storeConfigSchema
+
+const MarketPlaceModels = require('../models/schemas/marketplace')
+
+const Marketplace = MarketPlaceModels.marketplaceSchema
+const MarketplaceModel = mongoose.model('Marketplace', Marketplace)
+
+const ShoppingCartSchema = MarketPlaceModels.storeItemSchema
+const ShoppingCartModel = MarketPlaceModels.ShoppingCartModel
+
 const mongoose = require('mongoose')
 
-updateEmployerEmployeeCount = function(req, res, next) {
-		Client.findByIdAndUpdate(req.body.master_id, { employeeCounter: req.body.newEmployeeCount }, {new: true}, function(err, newBoss) { 
-			console.log("Employer's Employer Counter Updated: ")
-				console.log(newBoss)
-				return;
-			})
+module.exports.registerOmniMaster = async (req, res, next) => {
+	try {
+		
+		const mongoCollectionKey = uuid4().slice(0, 13);
+
+		const hashedPass = await bcrypt.hash(req.body.password, 10);
+		const terminalHash = await bcrypt.hash(mongoCollectionKey);
+		
+		
+		const userData = {
+			
+			email: req.body.email,
+			hash: hashedPass,
+			
+			accountType: 'Master',
+			isMaster: true,
+			isAdmin: true,
+
+			teminalIDNumber: 1,
+			employeeCounter: 2,
+
+			mongoCollectionKey: mongoCollectionKey,
+
+		};
+
+		const terminalData = {
+			email: `${mongoCollectionKey}@terminal.com`,
+			hash: terminalHash,
+			
+			accountType: 'Terminal',
+			isAdmin: false,
+			isMaster: false,
+
+			teminalIDNumber: 0,
+
+			mongoCollectionKey: mongoCollectionKey,
+
+		};
+
+		const newOmniMaster = new OmniUser(userData);
+		const newOmniTerminal = new OmniUser(terminalData);
+
+		const savedOmniMaster = await newOmniMaster.save();
+		const savedOmniTerminal = await newOmniTerminal.save();
+
+		const StoreConfig = mongoose.model('StoreConfig', storeConfigSchema, req.body.mongoCollectionKey + '_StoreConfig');
+		
+		const newStoreConfig = new StoreConfig({
+
+			mongoKey: req.body.mongoCollectionKey,
+			loggedInUsers: ["Terminal"]
+
+		});
+
+		const savedStoreConfig = await newStoreConfig.save();
+
+		const response = {
+			
+			savedOmniMaster,
+			savedOmniTerminal,
+			savedStoreConfig,
+
+		};
+
+		res.json(response);
+
+	} catch(err) { next(err); }
+
+}
+
+module.exports.registerEssosUser = async (req, res, next) => {
+	try {
+		
+		const mongoCollectionKey = uuid4().slice(0, 13);
+		const hashedPass = await bcrypt.hash(req.body.password, 10);
+
+		const userData = {
+			email: req.body.email,
+			hash: hashedPass,
+
+			accountType: 'Essos'
+			
+			firstName: req.body.firstName,
+			lastName: req.body.lastName,
+			phoneNumber: req.body.phoneNumber,
+
+			billing_address_line1	: req.body.billing_address_line1,
+			billing_address_line2	: req.body.billing_address_line2,
+			billing_address_city	: req.body.billing_address_city,
+			billing_address_zip		: req.body.billing_address_zip,
+			billing_address_state	: req.body.billing_address_state,
+			shipping_address_line1	: req.body.shipping_address_line1,
+			shipping_address_line2	: req.body.shipping_address_line2,
+			shipping__address_city	: req.body.shipping__address_city,
+			shipping_address_zip	: req.body.shipping_address_zip,
+			shipping_address_state	: req.body.shipping_address_state,
+
+			mongoCollectionKey: mongoCollectionKey,
+
+		};
+
+		// Build new Marketplace for User
+		const marketplaceData = {
+
+			storeOwnerName: `${req.body.firstName} ${req.body.lastName}`,
+			mongoCollectionKey: mongoCollectionKey,
+		
+		};
+
+		const newMarketplace = new MarketplaceModel(marketplaceData);
+		const savedMarketplace = await newMarketplace.save();
+
+		// Bind reference between User and Marketplace 
+		userData.marketplaceRef_id = savedMarketplace._id;
+
+		const newEssosUser = new EssosUser(userData);
+		const savedEssosUser = await newEssosUser.save();
+
+		const newShoppingCart = new ShoppingCartModel({ 
+						
+			ownerRef_id			: savedEssosUser._id,
+			subtotalDisplay		: 0,
+			subtotalReal		: 0,
+			taxDisplay			: 0,
+			taxReal				: 0,
+			totalDisplay		: 0,
+			totalReal			: 0,
+		
+		});
+
+		
+		const savedShoppingCart = await newShoppingCartForClient.save();
+
+		const updatedMarketplaceWithClientRef = await MarketplaceModel.findOneAndUpdate(
+			
+			{ _id: savedMarketplace._id }, 
+			{ ownerRef_id: savedEssosUser._id}, 
+			{ new: true }
+
+		);
+
+		const response = {
+
+			savedEssosUser,
+			savedShoppingCart,
+			updatedMarketplaceWithClientRef,
+
+		};
+
+		res.json(response);
+
+	} catch(err) { next(err) }
+
+}
+module.exports.registerOmniChild = async (req, res, next) => {
+	try {
+		
+	} catch(err) { next(err) }
+
 }
 
 
@@ -63,7 +231,6 @@ createTerminalAccount = async function(req, res, next) {
 		const newStoreConfig = new StoreConfig({
 			mongoKey: req.body.mongoCollectionKey,
 			loggedInUsers: ["Terminal"]
-
 		})
 		console.log(newStoreConfig);
 		const savedStoreConfig = await newStoreConfig.save()
@@ -127,4 +294,12 @@ findMasterAndTagChild = async function(req, res, next) {
 	catch (err) {
 		next(err)
 	}
+}
+
+updateEmployerEmployeeCount = function(req, res, next) {
+		Client.findByIdAndUpdate(req.body.master_id, { employeeCounter: req.body.newEmployeeCount }, {new: true}, function(err, newBoss) { 
+			console.log("Employer's Employer Counter Updated: ")
+				console.log(newBoss)
+				return;
+			})
 }

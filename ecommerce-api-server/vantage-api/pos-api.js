@@ -25,6 +25,7 @@ const upload = multer({ storage: storage })
 
 const config = require('./models/config');
 
+
 const clients = require('./controllers/clients');
 const images = require('./controllers/images')
 const employees = require('./controllers/employees');
@@ -78,6 +79,14 @@ app.use('/*', function(req, res, next) {
 router.route('/clients/lookupEmployees')
 	.get(authorize.adminRequired, clients.findAllEmployees)
 */
+
+
+// New Registration Pathways
+
+router.route('/omni-master/')
+	.post(register.registerOmniMaster)
+router.route('/essos-user/')
+	.post(register.registerEssosUser)
 
 router.route('/clients/marketplace')
 	.post(upload.single('marketplaceAvatar'), images.uploadNewImage, register.configureNewUser, clients.createClient)

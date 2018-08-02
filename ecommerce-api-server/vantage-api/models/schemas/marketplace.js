@@ -2,8 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const marketplaceSchema = new Schema({
-	storeName: String,
-	ownerName: String,
+	storeOwnerName: String,
 	mongoCollectionKey: String,
 	tags: [String],
 	ownerRef_id: {type: Schema.Types.ObjectId, ref: 'Client'},

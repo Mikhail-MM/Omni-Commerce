@@ -5,7 +5,7 @@ import './styles/OmniSplash.css'
 import { routeToNode } from '../actions/routing'
 
 const mapDispatchToProps = (dispatch) => ({
-	route: (event, node) => routeToNode(dispatch, event, node)
+	route: (event, node) => dispatch(routeToNode(event, node))
 })
 
 class OmniSplash extends Component {

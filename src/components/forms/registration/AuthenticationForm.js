@@ -1,6 +1,12 @@
 import React, { Component } from 'react'
 import '../../styles/RegistrationForms.css'
 
+import { attemptLogIn, attemptRegistration } from '../../../actions/auth'
+
+const mapDispatchToProps = dispatch => ({
+	attemptLogin: (credentials) => dispatch(attemptLogIn(credentials)),
+	registerOmniMaster: (credentials) =>  dispatch(attemptRegistration(credentials)),
+})
 class AuthenticationForm extends Component {
 	state = {
 		email: '',
@@ -25,8 +31,6 @@ class AuthenticationForm extends Component {
 		
 		if ((this.props.regpathOmniMaster || this.props.regpathEssos) && (this.state.pass !== this.state.confpass)) return console.log("Passwords do not match")
 		
-		console.log(emailRegex.test('doodoo'))
-		console.log(emailRegex.test('aa@asd.asdasdasfsaf'))
 		return true
 	}
 
@@ -36,24 +40,31 @@ class AuthenticationForm extends Component {
 		if (this.validateFormData()) {
 			console.log("Truth Received")
 		}
-		if (this.props.login) return this.handleLogin()
-		if (this.props.regpathOmniMaster) return this.handleOmniBusinessRegistration()
-		if (this.props.regpathEssos) return this.handleEssosMarketplaceRegistration()
-		console.log('Received Form State')
-		console.log(this.state)		
+		if (this.props.loginOmni) return this.handleLogin('omni')
+		if (this.props.loginEssos) return this.handleLogin('essos')
+		if (this.props.regpathOmniMaster) return this.handleRegistration('omni')
+		if (this.props.regpathEssos) return this.handleRegistration('essos')
 
 	}
 
-	handleLogin = () => {
-		console.log('Handle Login')
+	handleLogin = (pathway) => {
+		const credentials = {
+			
+			email: this.state.email,
+			password: this.state.password,
+			loginPath: pathway,
+
+		}
+
+		return this.props.attemptLogin(credentials)
+
 	}
 
-	handleOmniBusinessRegistration = () => {
-		console.log('Handle POS Registration')
-	}
-
-	handleEssosMarketplaceRegistration = () => {
-		console.log('Handle Essos Registration')
+	handleRegistration = (pathway) => {
+		const credentials = {
+			...this.state,
+			registrationPath: pathway
+		}
 	}
 
 	render() {
@@ -103,4 +114,4 @@ class AuthenticationForm extends Component {
 	}
 }
 
-export default AuthenticationForm
+export default connect(null, mapDispatchToProps)(AuthenticationForm)

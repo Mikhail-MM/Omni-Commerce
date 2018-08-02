@@ -1,20 +1,32 @@
 const moment = require('moment')
 
 const Client = require('../models/schemas/client');
+
+const Users = require('../models/schemas/users');
+
+const OmniUser = Users.OmniUser;
+const EssosUser = Users.EssosUser;
+
 const jwt = require('jwt-simple');
 const config = require('../models/config');
 
 
 
-exports.login = async function(req, res, next) {
+
+exports.login = async (req, res, next) => {
 	try{
-		
 		if (!req.body.email)
 			return res.status(404).send("Please input your Email to log in.");
 		if (!req.body.password)
 			return res.status(404).send("Please input your Password to log in.");
 
-		const authorizedClient = await Client.findOne({email: req.body.email})
+		if (req.body.loginPath === 'omni') const 
+		if (req.body.loginPath === 'essos')
+
+		const userCollection = (req.body.loginPath === 'omni') ? OmniUser : EssosUser 
+
+
+		const authorizedClient = await userCollection.findOne({email: req.body.email})
 			if (!authorizedClient) { return res.status(404).send("Account with this email does not exist")}
 
 		authorizedClient.comparePassword(req.body.password, async (err, passwordMatch) => {
