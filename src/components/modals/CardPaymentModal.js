@@ -17,7 +17,7 @@ const CardPaymentModal = props => {
 				>
 
 				<Checkout />
-				<button color='black' onClick={() => this.props.hideModal()}> Cancel </button>
+				<button onClick={() => this.props.hideModal()}> Cancel </button>
 
 			</Modal>
 		</div>

@@ -141,3 +141,22 @@ export function updateTransactionWithRequestedAddon(token, currentTransaction_Id
 		.catch(err => console.log(err))
 	}
 }
+
+export function updateTransactionWithSubdocRemoval(token, subdoc_Id, currentTransaction_Id) {
+	const url = 'http://localhost:3001/transactions/removeItem/' + currentTransaction_Id
+	const data = { subdoc_Id: subdoc_Id }
+	return dispatch => {
+		return fetch(url, {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': token,
+			},
+			method: 'PUT',
+			mode: 'cors',
+			body: JSON.stringify(data),
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => dispatch(receiveCurrentTicket(json)))
+		.catch(err => console.log(err))
+	}
+}
