@@ -22,9 +22,9 @@ const mapStateToProps = state => {
 
 const TransactionHistoryDisplay = props => {
 
-		const { token, tickets, activeTicket, fetchCurrentTicketDetails } = props
+	const { token, tickets, activeTicket, fetchCurrentTicketDetails } = props
 
-		const mapTicketsToDOMByStatus = ticketStatus => {
+	mapTicketsToDOMByStatus = ticketStatus => {
 			tickets[ticketStatus].map(ticket => {
 				return(
 					<tr key={ticket._id} onClick={() => fetchCurrentTicketDetails(token, ticket._id)}>
@@ -37,7 +37,7 @@ const TransactionHistoryDisplay = props => {
 			})
 		}
 
-		const generateTicketStatusMappings = () => {
+		generateTicketStatusMappings = () => {
 			return( Object.keys(tickets).map(ticketStatus => {
 				return( mapTicketsToDOMByStatus(ticketStatus) )
 			}))

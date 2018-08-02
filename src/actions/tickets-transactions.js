@@ -122,4 +122,22 @@ export function updateTicketStatus(token, ticket_Id, ticketStatus) {
 		.then(response => response.ok ? response.json() : new Error(response.statusText))
 		.then(json => dispatch(receiveCurrentTicket(json)))
 	}
+
+
+export function updateTransactionWithRequestedAddon(token, currentTransaction_Id, addOn) {
+	const url = 'http://localhost:3001/transactions/requestAddon/' + currentTransaction_Id
+	return dispatch => {
+		return fetch(url, {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': token,
+			},
+			method: 'PUT',
+			mode: 'cors',
+			body: addOn,
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => dispatch(receiveCurrentTicket(json)))
+		.catch(err => console.log(err))
+	}
 }

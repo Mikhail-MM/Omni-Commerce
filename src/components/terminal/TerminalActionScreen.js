@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import '../styles/TerminalActionScreen.css'
 
+import { showModal } from '../actions/modals'
 
 import { 
 	setVisibleCategory, 
@@ -20,10 +21,10 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-
+	showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps)),
 	setVisibleCategory: (category) => dispatch(setVisibleCategory(category)),
-	updateTransactionWithMenuItem: (token, itemId, ticketId) => dispatch(updateTransactionWithMenuItem(token, itemId, ticketId))
-
+	updateTransactionWithMenuItem: (token, itemId, ticketId) => dispatch(updateTransactionWithMenuItem(token, itemId, ticketId)),
+	updateTicketStatus: (token, ticketId, status) => dispatch(updateTicketStatus(token, ticketId, status)),
 })
 
 class TerminalActionScreen extends Component {
@@ -89,6 +90,11 @@ class TerminalActionScreen extends Component {
 							{ menuItems && activeTicket && this.generateCategoryContainersByVisibility() }
 						</div>
 						<div className='action-buttons'>
+							<button onClick={() => this.props.updateTicketStatus(token, activeTicket._id, "Active")}>Fire Ticket</button>
+							<button onClick={() => this.props.updateTicketStatus(token, activeTicket._id, "Void")}>Void Ticket</button>
+							<button onClick={() => this.props.updateTicketStatus(token, activeTicket._id, "Delivered")}>Order Delivered</button>
+							<button onClick={() => this.props.showModal('CASH_PAYMENT_FORM')}>Pay With Cash</button>
+							<button onClick={() => this.props.showModal('CARD_PAYMENT_FORM')}>Pay With Stripe</button>
 						</div>
 					</div>
 					<div className='category-select-footer' >

@@ -5,6 +5,8 @@ import Modal from 'react-modal';
 import { modalStyle } from '../config';
 import { hideModal } from '../../actions/modals';
 
+import Checkout from '../stripe/Checkout'
+
 const CardPaymentModal = props => {
 	return(
 		<div>
@@ -14,7 +16,7 @@ const CardPaymentModal = props => {
 				contentLabel="Example Modal"
 				>
 
-				<AddTerminalItemForm />
+				<Checkout />
 				<button color='black' onClick={() => this.props.hideModal()}> Cancel </button>
 
 			</Modal>
