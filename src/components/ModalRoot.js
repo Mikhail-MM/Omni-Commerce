@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import EmployeePunchClockFormModal from './EmployeePunchClockFormModal'
+import EmployeePunchClockFormModal from './modals/EmployeePunchClockFormModal'
 
 const MODAL_COMPONENTS = {
 	'EMPLOYEE_PUNCH_CLOCK_FORM_MODAL': EmployeePunchClockFormModal,
