@@ -15,5 +15,7 @@ export function routeUserAfterLogin(accountType) {
 }
 
 export function routeToNode(event, node) {
-	dispatch(push(node))
+	return dispatch => {
+		dispatch(push(node))
+	}
 }

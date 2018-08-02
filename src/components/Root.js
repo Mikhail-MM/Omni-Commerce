@@ -47,7 +47,8 @@ export default class Root extends Component {
 						
                   		<Route exact path='/' component={OmniSplash} />
                  		<Route exact path='/essos' component={EssosMarket} />
-                 		<Route exact path='/login' render={() => <AuthenticationForm login /> } />
+                 		<Route exact path='/essos/login' render={() => <AuthenticationForm loginEssos /> } />
+                 		<Route exact path='/omni/login' render={() => <AuthenticationForm loginOmni /> } />
                  		<Route exact path='/register' component={RegistrationPicker} />
                  		<Route exact path='/register/omni' render={() => <AuthenticationForm regpathOmniMaster/>} />
                  		<Route exact path='/register/essos' render={() => <AuthenticationForm regpathEssos/>} />

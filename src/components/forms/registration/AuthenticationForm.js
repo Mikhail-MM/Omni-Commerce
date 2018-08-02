@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+
 import '../../styles/RegistrationForms.css'
 
 import { attemptLogIn, attemptRegistration } from '../../../actions/auth'
@@ -10,7 +12,7 @@ const mapDispatchToProps = dispatch => ({
 class AuthenticationForm extends Component {
 	state = {
 		email: '',
-		pass: '',
+		password: '',
 		confpass: '',
 	}
 
@@ -24,12 +26,12 @@ class AuthenticationForm extends Component {
 		// source: (http://emailregex.com/)
 		const emailRegex = RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
 		
-		if (!this.state.email || !this.state.pass || !this.state.confpass) return console.log("Please fill out missing fields")
+		if ((this.props.regpathOmniMaster || this.props.regpathEssos) && (!this.state.email || !this.state.password || !this.state.confpass)) return console.log("Please fill out missing fields")
 		
 		if (!emailRegex.test(this.state.email)) return console.log("Error, Enter a valid e-mail.")
 		
 		
-		if ((this.props.regpathOmniMaster || this.props.regpathEssos) && (this.state.pass !== this.state.confpass)) return console.log("Passwords do not match")
+		if ((this.props.regpathOmniMaster || this.props.regpathEssos) && (this.state.password !== this.state.confpass)) return console.log("Passwords do not match")
 		
 		return true
 	}
@@ -62,9 +64,13 @@ class AuthenticationForm extends Component {
 
 	handleRegistration = (pathway) => {
 		const credentials = {
+
 			...this.state,
 			registrationPath: pathway
+
 		}
+
+		return this.props.attemptRegistration(credentials)
 	}
 
 	render() {
@@ -89,8 +95,8 @@ class AuthenticationForm extends Component {
 						<input 
 							className='form-input'
 							type='password'
-							value={this.state.pass}
-							onChange={ event => this.handleChange('pass', event.target.value) }
+							value={this.state.password}
+							onChange={ event => this.handleChange('password', event.target.value) }
 							/>
 						</div>
 					{(this.props.regpathOmniMaster || this.props.regpathEssos) &&

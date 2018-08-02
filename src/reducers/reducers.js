@@ -1,12 +1,12 @@
 import { routerReducer } from 'react-router-redux'
 import { combineReducers } from 'redux'
 
-const initialStates {
+const stateMap = {
 	authReducer: {
 
 	}
 }
-const authReducer = (state = initialStates.authReducer, action) => {
+const authReducer = (state = stateMap.authReducer, action) => {
 	switch(action.type){
 	case ('USER_AUTHENTICATED'): { 
 		console.log(action.userInfo);
@@ -28,7 +28,7 @@ const authReducer = (state = initialStates.authReducer, action) => {
 		) 
 	}
 	case ('LOG_OUT'): { 
-		return initialState 
+		return stateMap.authReducer 
 	}
 	default: 
 		return state
