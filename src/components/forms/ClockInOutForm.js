@@ -3,33 +3,40 @@ import { connect } from 'react-redux'
 
 import { clockEmployeeIn, clockEmployeeOut } from '../../actions/timesheets'
 
+const mapStateToProps = state => {
 
-
-const mapStateToProps = (state) => {
 	const { token } = state.authReducer;
 	return { token };
+
 }
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
+	
 	clockEmployeeIn: (event, token, employeeNumber) => {
 		event.preventDefault();
 		return dispatch(clockEmployeeIn(token, employeeNumber))
 	},
+
 	clockEmployeeOut: (token, employeeNumber) => {
 		event.preventDefault();
 		return dispatch(clockEmployeeOut(token, employeeNumber))
 	},
+
 })
 class ClockInOutForm extends Component {
+
 	state = {
 		employeeNumber: ''
 	};
 
 	handleChange = (event) => {
+
 		event.preventDefault();
+
 		this.setState({
 			employeeNumber: event.target.value
 		});
+		
 	};
 
 	

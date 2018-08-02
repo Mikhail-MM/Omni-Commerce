@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import Modal from 'react-modal';
+import { modalStyle } from '../config';
+import { hideModal } from '../../actions/modals';
 
 import ClockInOutForm from '../forms/ClockInOutForm'
 
-import { hideModal } from '../../actions/modals'
-
-import { modalStyle } from '../config'
-
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
 	hideModal: () => dispatch(hideModal())
 })
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
 	const { modalType } = state.modalReducer
 	return { modalType }
 }

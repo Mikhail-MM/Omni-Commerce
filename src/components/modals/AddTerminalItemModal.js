@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import Modal from 'react-modal';
+import { modalStyle } from '../config';
+import { hideModal } from '../../actions/modals';
 
-import ClockInOutForm from './ClockInOutForm'
-
-import { hideModal } from '../../actions/modals'
-
-import { modalStyle } from '../config'
+import AddTerminalItemForm from '../../forms/AddTerminalItemForm'
 
 const mapDispatchToProps = (dispatch) => ({
 	hideModal: () => dispatch(hideModal())
@@ -26,8 +25,8 @@ const AddTerminalItemModal = props => {
 				contentLabel="Example Modal"
 				>
 
-				<AddMenuItemForm />
-				<button fluid color='black' onClick={() => this.props.hideModal()}> Cancel </button>
+				<AddTerminalItemForm />
+				<button color='black' onClick={() => this.props.hideModal()}> Cancel </button>
 
 			</Modal>
 		</div>

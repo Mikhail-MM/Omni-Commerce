@@ -26,3 +26,26 @@ export function fetchTickets(token) {
 		.catch(err => console.log(err))
 	}
 }
+
+export function createNewTicket(token, createdBy) {
+	const data = { createdBy: createdBy, createdAt: Date.now(), status: "Open"}
+	return dispatch => {
+		return fetch('http://localhost:3001/transactions', {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': token
+			},
+			method: 'POST',
+			mode: 'cors',
+			body: JSON.stringify(data),
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => {
+			dispatch(fetchTickets(token))
+			dispatch(receiveCurrentTicket(json))
+			dispatch(push('/ticket')) 			
+			}
+		)
+		.catch(err => console.log(err))
+	}
+}

@@ -4,9 +4,12 @@ import { connect } from 'react-redux'
 import EmployeePunchClockFormModal from './modals/EmployeePunchClockFormModal'
 import AddTerminalItemModal from './modals/AddTerminalItemModal'
 
+import WaiterCallScreenModal from './modals/WaiterCallScreenModal'
+
 const MODAL_COMPONENTS = {
 	'EMPLOYEE_PUNCH_CLOCK_FORM_MODAL': EmployeePunchClockFormModal,
 	'ADD_POINT_SALE_ITEM': AddTerminalItemModal,
+	'SELECT_EMPLOYEE_OPENING_TICKET': WaiterCallScreenModal, 
 }
 
 
