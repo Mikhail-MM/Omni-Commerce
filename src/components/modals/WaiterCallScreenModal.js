@@ -26,7 +26,7 @@ const mapStateToProps = state => {
 const WaiterCallScreenMenu = props => {
 	
 	const generateWaiterCallScreen = () => {
-		if (props.loggedInUsers) return loggedInUsers.map(employee => <button key={employee} onClick={props.createNewTicket(props.token, employee)}> {employee} </button>)
+		if (props.loggedInUsers) return loggedInUsers.map(employee => <button key={employee} onClick={() => props.createNewTicket(props.token, employee)}> {employee} </button>)
 	}
 
 	return(

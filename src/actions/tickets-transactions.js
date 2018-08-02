@@ -49,3 +49,21 @@ export function createNewTicket(token, createdBy) {
 		.catch(err => console.log(err))
 	}
 }
+
+export function fetchCurrentTicketDetails(token, ticket_Id) {
+	const url = 'http://localhost:3001/transactions/' + ticket_Id;
+	return dispatch => {
+		return fetch(url, {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': token,
+			},
+			method: 'GET',
+			mode: 'cors',
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => dispatch(receiveCurrentTicket(json)))
+		.then(() => dispatch(push('/ticket')))
+		.catch(err => console.log(err))
+	}
+}

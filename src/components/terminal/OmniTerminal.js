@@ -70,7 +70,7 @@ class OmniTerminal extends Component {
 						<div className='button__lower' onClick={() => this.props.showModal('SELECT_EMPLOYEE_OPENING_TICKET', {})}>
 							New Transaction
 						</div>
-						<div className='button__lower'>
+						<div className='button__lower' onClick={() => this.props.showModal('DISPLAY_ALL_TRANSACTIONS', {})}>
 							View Transactions
 						</div>
 						<div className='button__lower'>
