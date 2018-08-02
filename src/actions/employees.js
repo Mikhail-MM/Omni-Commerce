@@ -1,3 +1,5 @@
+function throwError(errorMessage) { throw new Error(errorMessage) }
+
 function receiveLoggedUsers(loggedUsers) {
 	console.log(loggedUsers)
 	return {

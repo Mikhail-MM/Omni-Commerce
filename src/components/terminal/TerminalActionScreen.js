@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import '../styles/TerminalActionScreen.css'
 
-import { showModal } from '../actions/modals'
+import { showModal } from '../../actions/modals'
 
 import { 
 	setVisibleCategory, 
 	updateTransactionWithMenuItem, 
 	updateTicketStatus, 
 	updateTransactionWithSubdocRemoval 
-} from '../actions/tickets-transactions'
+} from '../../actions/tickets-transactions'
 
 const mapStateToProps = state => {
 
@@ -114,9 +115,11 @@ class TerminalActionScreen extends Component {
 		const { activeTicket, menuItems } = this.prop
 
 		return(
+			<div>
 			<div> {`SubTotal: ${activeTicket.subTotal}`} </div>
 			<div> {`Tax: ${activeTicket.tax}`} </div>
 			<div> {`Total: ${activeTicket.total}`} </div>
+			</div>
 		)
 	}
 

@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { fetchMenuItems } from '../../actions/terminalItems'
 import { fetchTickets } from '../../actions/tickets-transactions'
 import { fetchLoggedUsers } from '../../actions/employees'
-import { showModal } from '../actions/modals'
+import { showModal } from '../../actions/modals'
 
 import  '../styles/OmniTerminal.css'
 
@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
 	const { tickets, activeTicket } = state.ticketTrackingReducer; 
 	const { loggedInUsers } = state.employeeReducer
 
-	return { isAuthenticated, token, menuITems, visibleCategory, tickets, activeTicket, loggedInUsers }
+	return { isAuthenticated, token, menuItems, visibleCategory, tickets, activeTicket, loggedInUsers }
 }
 
 

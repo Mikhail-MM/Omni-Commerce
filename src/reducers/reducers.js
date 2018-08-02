@@ -59,7 +59,7 @@ const modalReducer = (state = stateMap.modalReducer, action) => {
 				modalProps: action.modalProps
 			}
 		case('HIDE_MODAL'):
-			return initialModalState
+			return stateMap.modalReducer
 		default:
 			return state
 	}

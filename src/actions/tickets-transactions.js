@@ -1,6 +1,14 @@
 import { push } from 'react-router-redux'
 import { groupBy } from 'underscore'
 
+
+export function receiveCurrentTicket(ticket) {
+	return {
+		type: 'RECEIVE_CURRENT_TICKET',
+		ticket
+	}
+}
+
 function organizeTicketsByStatus(ArrayOfAllTicketObjects) {
 
 	const categorizedTicketsByStatus = groupBy(ArrayOfAllTicketObjects, 'status');
@@ -122,6 +130,7 @@ export function updateTicketStatus(token, ticket_Id, ticketStatus) {
 		.then(response => response.ok ? response.json() : new Error(response.statusText))
 		.then(json => dispatch(receiveCurrentTicket(json)))
 	}
+}
 
 
 export function updateTransactionWithRequestedAddon(token, currentTransaction_Id, addOn) {
