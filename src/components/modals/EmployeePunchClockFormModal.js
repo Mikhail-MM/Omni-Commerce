@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
 
-import ClockInOutForm from './ClockInOutForm'
+import ClockInOutForm from '../forms/ClockInOutForm'
 
 import { hideModal } from '../../actions/modals'
 
@@ -35,4 +35,4 @@ const EmployeePunchClockFormModal = props => {
 	)
 }
 
-export default connect(mapStateToProps)(EmployeePunchClockFormModal)
+export default connect(mapStateToProps, mapDispatchToProps)(EmployeePunchClockFormModal)

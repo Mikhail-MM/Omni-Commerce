@@ -57,7 +57,7 @@ class OmniTerminal extends Component {
 								</div>
 							</div>
 							<div className='row__buttons'>
-								<div className='button'>
+								<div className='button' onClick={() => this.props.showModal('ADD_POINT_SALE_ITEM', {})}>
 									Add New Item
 								</div>
 								<div className='button' >
