@@ -1,7 +1,37 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+
+import { fetchMenuItems } from '../../actions/terminalItems'
+import { fetchTickets } from '../../actions/tickets-transactions'
+import { fetchLoggedUsers } from '../../actions/employees'
+
 import  '../styles/OmniTerminal.css'
 
+const mapStateToProps = (state) => {
+	const { isAuthenticated, token } = state.authReducer;
+	const { menuItems, visibleCategory } = state.terminalItemsReducer;
+	const { tickets, activeTicket } = state.ticketTrackingReducer; 
+	const { loggedInUsers } = state.employeeReducer
+
+	return { isAuthenticated, token, menuITems, visibleCategory, tickets, activeTicket, loggedInUsers }
+}
+
+
+const mapDispatchToProps = (dispatch) => ({
+	fetchMenuItems: (token) => dispatch(fetchMenuItems(token)),
+	fetchTickets: (token) => dispatch(fetchTickets(token)),
+	fetchLoggedUsers: (token) => dispatch(fetchLoggedUsers(token))
+})
+
 class OmniTerminal extends Component {
+
+	componentDidMount() {
+		const { token } = this.props;
+
+		this.props.fetchMenuItems(token);
+		this.props.fetchTickets(token);
+		this.props.fetchLoggedUsers(token);
+	}
 
 	render() {
 		return(
@@ -51,4 +81,4 @@ class OmniTerminal extends Component {
 	}
 }
 
-export default OmniTerminal
+export default connect(mapStateToProps, mapDispatchToProps)(OmniTerminal)

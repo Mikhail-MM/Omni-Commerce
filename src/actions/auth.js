@@ -1,6 +1,5 @@
 import { routeUserAfterLogin } from './routing'
 
-
 function throwError(errorMessage) { throw new Error(errorMessage) }
 
 function authSuccess (userInfo) {
