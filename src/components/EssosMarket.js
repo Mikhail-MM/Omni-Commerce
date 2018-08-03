@@ -1,7 +1,23 @@
 import React, { Component } from 'react'
 import './styles/EssosMarket.css';
 
+import { retrieveAllItemsForSale, retrieveShoppingCart } from '../actions/marketplace'
+const mapStateToProps = state => {
+	const { token, isAuthenticated } = state.authReducer
+	const { marketplaceItems } = state.marketplaceItemsReducer
+}
+
+const mapDispatchToProps = dispatch => ({
+	retrieveAllMarketplaceItems: () => dispatch(retrieveAllItemsForSale())
+	retrieveShoppingCart: (token) => dispatch(retrieveShoppingCart(token))
+})
+
 class EssosMarket extends Component {
+	componentDidMount() {
+		const { isAuthenticated, token } = this.props
+		this.props.retrieveAllMarketplaceItems()
+		if (isAuthenticated) this.props.retrieveShoppingCart(token)
+	}
 	render() {
 		return(
 			<div className='app-root'>  

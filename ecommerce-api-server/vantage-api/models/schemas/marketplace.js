@@ -20,6 +20,7 @@ const storeItemSchema = new Schema({
 	tags: [String],
 	numberInStock: Number,
 	numberRequested: Number, // we NEED to split these shoppingCartOnly values out
+	storeOwnerName: String,
 	status: String, // inStock/ outOfStock
 	sellerRef_id: {type: Schema.Types.ObjectId, ref: 'Client'},
 	marketplaceRef_id: {type: Schema.Types.ObjectId, ref: 'Marketplace'},

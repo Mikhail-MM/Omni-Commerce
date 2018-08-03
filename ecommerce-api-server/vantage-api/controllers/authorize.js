@@ -20,9 +20,6 @@ exports.login = async (req, res, next) => {
 		if (!req.body.password)
 			return res.status(404).send("Please input your Password to log in.");
 
-		if (req.body.loginPath === 'omni') const 
-		if (req.body.loginPath === 'essos')
-
 		const userCollection = (req.body.loginPath === 'omni') ? OmniUser : EssosUser 
 
 
@@ -75,8 +72,9 @@ async function validateToken(req, res, next, authReq) {
 			console.log("decoded", decoded)
 
 			console.log("Looking for validated client")
-
-			const validatedClient = await Client.findById(decoded._id)
+			const userCollection = (req.body.loginPath === 'omni') ? OmniUser : EssosUser 
+			
+			const validatedClient = await userCollection.findById(decoded._id)
 
 			console.log(validatedClient)
 

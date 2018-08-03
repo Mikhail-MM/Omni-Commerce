@@ -14,12 +14,21 @@ const stateMap = {
 		isFetching: false,		
 	},
 	employeeReducer: { 
-		loggedInUsers: [ 'Terminal' ] 
+		loggedInUsers: [ 'Terminal' ],
 	},
+	marketplaceItemsReducer: { 
+		marketplaceItems: [], 
+		currentMarketplaceItem: {}, 
+	},
+	shoppingCartReducer: {
+		shoppingCart: { 
+			itemsBought: [], 
+		}, 
+	}
 	modalReducer: {
 		modalType: null,
 		modalProps: {}
-	}
+	},
 }
 
 const authReducer = (state = stateMap.authReducer, action) => {
@@ -123,7 +132,41 @@ const employeeReducer = (state = stateMap.employeeReducer, action) => {
 	}
 }
 
+const marketplaceItemsReducer = (state = stateMap.marketplaceItemsReducer, action) => {
+	switch(action.type) {
+		case('RECEIVE_MARKETPLACE_GOODS'):
+			return Object.assign({}, state, {
+				marketplaceItems: action.items
+			})
+		case('RECEIVE_CURRENT_ITEM'):
+			return Object.assign({}, state, {
+				currentMarketplaceItem: action.item
+			})
+		default: 
+			return state
+	}
+}
 
+const shoppingCartReducer = (state = stateMap.shoppingCartReducer, action) => {
+	switch(action.type){
+		case('RECEIVE_SHOPPING_CART'):
+			return Object.assign({}, state, {
+				shoppingCart: action.shoppingCart
+			})
+		case('INVALID_CART_ORDER'):
+			return Object.assign({}, state, {
+				invalidatedItems: action.invalidatedItems,
+				notifyUserOfCartInvalidation: action.notifyUserOfCartInvalidation
+			})
+		case('DISREGARD_INVALIDATION'):
+			return Object.assign({}, state, {
+				invalidatedItems: action.invalidatedItems,
+				notifyUserOfCartInvalidation: action.notifyUserOfCartInvalidation
+			})
+		default:
+			return state
+	}
+}
 
 
 const rootReducer = combineReducers({

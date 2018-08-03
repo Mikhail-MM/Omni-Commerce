@@ -9,6 +9,8 @@
 .sidebar-column {
 	display: flex;
 
+	padding: 25px 25px;
+
 	width: 250px;
 	height: 100%;
 

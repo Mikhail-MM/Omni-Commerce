@@ -6,6 +6,17 @@ class AdminTerminal extends Component {
 		return(
 			<div className='admin-page-wrapper'>
 				<div className='sidebar-column'>
+					<div className='menu-box'>
+						<div className='admin-button'>
+							Access Point-Of-Sale
+						</div>
+						<div className='admin-button'>
+							Manage Employees
+						</div>
+						<div className='admin-button'>
+							View Statistics
+						</div>					
+					</div>
 				</div>
 				<div className='action-column'>
 				</div>
