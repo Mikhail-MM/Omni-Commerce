@@ -24,7 +24,7 @@ const stateMap = {
 		shoppingCart: { 
 			itemsBought: [], 
 		}, 
-	}
+	},
 	modalReducer: {
 		modalType: null,
 		modalProps: {}
@@ -96,7 +96,7 @@ const terminalItemsReducer = (state = stateMap.terminalItemsReducer, action) => 
 	}	
 }
 
-const ticketTrackingReducer = (state = state.ticketTrackingReducer, action) => {
+const ticketTrackingReducer = (state = stateMap.ticketTrackingReducer, action) => {
 	switch(action.type){
 	case('RECEIVE_TICKETS'):
 		return Object.assign({}, state, {

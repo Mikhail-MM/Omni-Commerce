@@ -8,7 +8,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-	retrieveAllMarketplaceItems: () => dispatch(retrieveAllItemsForSale())
+	retrieveAllMarketplaceItems: () => dispatch(retrieveAllItemsForSale()),
 	retrieveShoppingCart: (token) => dispatch(retrieveShoppingCart(token))
 })
 
@@ -62,4 +62,4 @@ class EssosMarket extends Component {
 	}
 }
 
-export default EssosMarket
+export default connect(mapStateToProps, mapDispatchToProps)(EssosMarket)

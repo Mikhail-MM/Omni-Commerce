@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { createNewMenuItem } from '../../actions/menu-items'
+import { createNewMenuItem } from '../../actions/terminalItems'
 
 const initialState = {
 	itemName: '',
@@ -10,14 +10,14 @@ const initialState = {
 	selectedFile: null
 }
 
-mapStateToProsp = (state) => {
+const mapStateToProps = (state) => {
 	const { token } = state.authReducer
 	return { token }
 
 }
 
-mapDispatchToProps = (dispatch) => ({
-	addItemToTerminal: (token, itemData, imageFile) => dispatch(createNewMenuItem(token, itemData, imageFile));
+const mapDispatchToProps = (dispatch) => ({
+	addItemToTerminal: (token, itemData, imageFile) => dispatch(createNewMenuItem(token, itemData, imageFile))
 })
 
 class AddMenuItemForm extends Component {

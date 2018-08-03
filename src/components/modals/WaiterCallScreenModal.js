@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 import { modalStyle } from '../config';
 import { hideModal } from '../../actions/modals';
 
-import { createNewTicket } from '../actions/tickets-transactions';
+import { createNewTicket } from '../../actions/tickets-transactions';
 
 const mapDispatchToProps = dispatch => ({
 
@@ -24,11 +24,10 @@ const mapStateToProps = state => {
 };
 
 const WaiterCallScreenMenu = props => {
-	
-	generateWaiterCallScreen = () => {
-		if (props.loggedInUsers) return loggedInUsers.map(employee => <button key={employee} onClick={() => props.createNewTicket(props.token, employee)}> {employee} </button>)
+		const { loggedInUsers } = props
+		const generateWaiterCallScreen = () => {
+			if (loggedInUsers) return loggedInUsers.map(employee => <button key={employee} onClick={() => props.createNewTicket(props.token, employee)}> {employee} </button>)
 	}
-
 	return(
 		<div>
 			{ props.loggedInUsers && generateWaiterCallScreen() }

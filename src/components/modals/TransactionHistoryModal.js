@@ -6,7 +6,7 @@ import Modal from 'react-modal';
 import { modalStyle } from '../config';
 import { hideModal } from '../../actions/modals';
 
-import { fetchCurrentTicketDetails } from '../actions/tickets-transactions'
+import { fetchCurrentTicketDetails } from '../../actions/tickets-transactions'
 
 const mapDispatchToProps = dispatch => ({
 	hideModal: () => dispatch(hideModal()),
@@ -24,8 +24,8 @@ const TransactionHistoryDisplay = props => {
 
 	const { token, tickets, activeTicket, fetchCurrentTicketDetails } = props
 
-	mapTicketsToDOMByStatus = ticketStatus => {
-			tickets[ticketStatus].map(ticket => {
+	const mapTicketsToDOMByStatus = ticketStatus => {
+			return tickets[ticketStatus].map(ticket => {
 				return(
 					<tr key={ticket._id} onClick={() => fetchCurrentTicketDetails(token, ticket._id)}>
 						<td> {ticket.status} </td>
@@ -37,7 +37,7 @@ const TransactionHistoryDisplay = props => {
 			})
 		}
 
-		generateTicketStatusMappings = () => {
+		const generateTicketStatusMappings = () => {
 			return( Object.keys(tickets).map(ticketStatus => {
 				return( mapTicketsToDOMByStatus(ticketStatus) )
 			}))
@@ -54,7 +54,7 @@ const TransactionHistoryDisplay = props => {
 					</tr>
 				</thead>
 				<tbody>
-					{ tickets && iterateThruTicketStatusCategories() }
+					{ tickets && generateTicketStatusMappings() }
 				</tbody>
 			</table>
 	)

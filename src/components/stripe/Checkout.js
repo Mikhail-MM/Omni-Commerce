@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { Elements, CardElement, StripeProvider, injectStripe} from 'react-stripe-elements';
 
-import { sendStripeTokenToApi } from '../actions/payments'
+import { sendStripeTokenToApi } from '../../actions/payments'
 
 const mapStateToProps = state => {
 
@@ -12,7 +12,7 @@ const mapStateToProps = state => {
 
 }
 
-const mapDispatchToProps = dispatch = ({
+const mapDispatchToProps = dispatch => ({
 	sendStripeTokenToApi: (authToken, stripeToken, ticketId) => {
 		dispatch(sendStripeTokenToApi(authToken, stripeToken, ticketId))
 	}
@@ -32,7 +32,7 @@ const PaymentCheckoutForm = props => {
 	const { authToken, activeTicket } = props
 	const { sendStripeTokenToApi } = props
 
-	handleSubmit = event => {
+	const handleSubmit = event => {
 		event.preventDefault()
 		// TODO : Inject form to get Customer's Name at Checkout by Cashier
 		// Will need to convert to Class Component.

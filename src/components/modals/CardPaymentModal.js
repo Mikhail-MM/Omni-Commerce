@@ -24,4 +24,4 @@ const CardPaymentModal = props => {
 	)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CardPaymentModal)
+export default CardPaymentModal

@@ -12,11 +12,12 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => {
-	const { modalType } = state.modalReducer
-	return { modalType }
+	const { modalType, modalProps } = state.modalReducer
+	return { modalType, modalProps }
 }
 
 const EmployeePunchClockFormModal = props => {
+	const { modalProps } = props
 	return(
 		<div>
 			<Modal
@@ -25,8 +26,8 @@ const EmployeePunchClockFormModal = props => {
 				contentLabel="Example Modal"
 				>
 					<div>
-						{ (props.formSelector === "Clock In" ) && <ClockInOutForm option={formSelector}/> }
-						{ (props.formSelector === "Clock Out" ) && <ClockInOutForm option={formSelector}/> }
+						{ (modalProps.formSelector === "Clock In" ) && <ClockInOutForm option={modalProps.formSelector}/> }
+						{ (modalProps.formSelector === "Clock Out" ) && <ClockInOutForm option={modalProps.formSelector}/> }
 						<button fluid color='black' onClick={() => this.props.hideModal()}> Cancel </button>
 					</div>
 			</Modal>

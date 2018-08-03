@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 import { modalStyle } from '../config';
 import { hideModal } from '../../actions/modals';
 
-import AddTerminalItemForm from '../../forms/AddTerminalItemForm'
+import AddTerminalItemForm from '../forms/AddTerminalItemForm'
 
 const mapDispatchToProps = (dispatch) => ({
 	hideModal: () => dispatch(hideModal())

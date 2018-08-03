@@ -16,9 +16,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-	sendCashPaymentToApi: (event, authToken, amount, transactionId) => {
-		event.preventDefault()
-		// Throw error if amount is a string or empty 
+	sendCashPaymentToApi: (authToken, amount, transactionId) => {
 		dispatch(sendCashPaymentToApi(authToken, amount, transactionId))
 	}
 })
@@ -37,9 +35,14 @@ class CashPaymentForm extends Component {
 		})
 	}
 
+	handleSubmit = (event, authToken, amount, transactionId) => {
+		// Throw error if amount is a string or empty 
+		event.preventDefault()
+		this.props.sendCashPaymentToApi(authToken, amount, transactionId)
+	}
 	render() {
 		const { authToken, activeTicket } = this.props
-		const { sendCashPaymentToApi } = this.props
+		
 		return(
 			<form onSubmit={(event) => sendCashPaymentToApi(authToken, this.state.amount, activeTicket._id)}>
 				<label>

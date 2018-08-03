@@ -46,3 +46,10 @@ function receiveCurrentItem(item) {
 		item
 	}
 }
+
+function receiveShoppingCart(shoppingCart) {
+	return {
+		type: 'RECEIVE_SHOPPING_CART',
+		shoppingCart
+	}
+}

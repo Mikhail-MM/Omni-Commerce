@@ -23,6 +23,8 @@ import AdminTerminal from './terminal/admin/AdminTerminal'
 import RegistrationPicker from './forms/RegistrationPicker'
 import AuthenticationForm from './forms/registration/AuthenticationForm'
 
+import ModalRoot from './ModalRoot'
+
 const loggerMiddleware = createLogger()
 const history = createHistory()
 

@@ -12,13 +12,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
 	
-	clockEmployeeIn: (event, token, employeeNumber) => {
-		event.preventDefault();
+	clockEmployeeIn: (token, employeeNumber) => {
 		return dispatch(clockEmployeeIn(token, employeeNumber))
 	},
 
 	clockEmployeeOut: (token, employeeNumber) => {
-		event.preventDefault();
 		return dispatch(clockEmployeeOut(token, employeeNumber))
 	},
 
@@ -39,29 +37,34 @@ class ClockInOutForm extends Component {
 		
 	};
 
-	
+	handleSubmit = (event, token, employeeNumber) => {
+		event.preventDefault();
+
+		if (this.props.option === 'Clock In') return this.props.clockEmployeeIn(token, employeeNumber)
+		if (this.props.option === 'Clock Out') return this.props.clockEmployeeOut(token, employeeNumber)
+	}
 	render() {
 		const { token } = this.props;
 
 		return(
 			<div>
 			{ this.props.option === 'Clock In' && 
-				<form onSubmit={(event) => this.props.clockEmployeeIn(event, token, this.state.employeeNumber)}>
+				<form onSubmit={(e) => this.props.clockEmployeeIn(e, token, this.state.employeeNumber)}>
 					<input
 						placeholder='Employee Number'
 						type='text'
 						value={this.state.employeeNumber} 
-						onChange={(event) => this.handleChange}
+						onChange={(e) => this.handleChange(e)}
 					/>
 					<button content='Submit'>Clock In</button>
 				</form> }
 			{ this.props.option === 'Clock Out' && 
-				<form onSubmit={(event) => this.props.clockEmployeeOut(event, token, this.state.employeeNumber)}>
+				<form onSubmit={(e) => this.props.clockEmployeeOut(e, token, this.state.employeeNumber)}>
 					<input
 						placeholder='Employee Number'
 						type='text'
 						value={this.state.employeeNumber} 
-						onChange={this.handleChange}
+						onChange={(e) => this.handleChange(e)}
 					/>
 					<button content='Submit'>Clock Out</button>
 				</form>

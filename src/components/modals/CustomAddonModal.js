@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 import { modalStyle } from '../config';
 import { hideModal } from '../../actions/modals';
 
-import { updateTransactionWithRequestedAddon } from '../actions/tickets-transactions'
+import { updateTransactionWithRequestedAddon } from '../../actions/tickets-transactions'
 
 const mapStateToProps = state => {
 
