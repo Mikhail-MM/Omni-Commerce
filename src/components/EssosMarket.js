@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import './styles/EssosMarket.css';
 
 import { retrieveAllItemsForSale, retrieveShoppingCart } from '../actions/marketplace'
