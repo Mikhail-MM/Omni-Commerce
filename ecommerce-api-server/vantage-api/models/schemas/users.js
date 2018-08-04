@@ -4,17 +4,25 @@ const bcrypt = require('bcrypt');
 
 const omniUserSchema = new Schema({
 	email: {type: String, required: true, unique: true },
+
+	firstName: String,
+	lastName: String,
+	phone: String,
+	
 	hash: { type: String, required: true },
 	accountType: String,
+	role: String,
+
+	avatarURL: String,
 
 	isMaster: Boolean,
 	master_id: { type: Schema.Types.ObjectId, ref: 'OmniUser' },
 
-	mongoCollectionKey: { type: String, required: true },
+	mongoCollectionKey: { type: String, index: true, required: true },
 
 	teminalIDNumber: Number,
 	 	
-	isAdmin: { type: Boolean, index: true },
+	isAdmin: Boolean,
 	
 	employeeCounter: Number,
 	
@@ -31,6 +39,7 @@ const essosUserSchema = new Schema({
 	hash: { type: String, required: true },
 	
 	accountType: String,
+	avatarURL: String,
 	
 	firstName: String,
 	lastName: String,
@@ -47,7 +56,7 @@ const essosUserSchema = new Schema({
 	shipping_address_zip: String,
 	shipping_address_state: String,
 
-	mongoCollectionKey: { type: String, required: true },
+	mongoCollectionKey: { type: String, index: true, required: true },
 
 	token: String,
 	tokenCreatedAt: Date,

@@ -32,9 +32,15 @@ module.exports.registerOmniMaster = async (req, res, next) => {
 		const userData = {
 			
 			email: req.body.email,
+
+			firstName: req.body.firstName,
+			lastName: req.body.lastName,
+			phone: req.body.phone,
+
 			hash: hashedPass,
 			
 			accountType: 'Master',
+			role: 'Administrator',
 			isMaster: true,
 			isAdmin: true,
 
@@ -176,7 +182,41 @@ module.exports.registerEssosUser = async (req, res, next) => {
 }
 module.exports.registerOmniChild = async (req, res, next) => {
 	try {
+		const masterAccount = await OmniUser.findOne({mongoCollectionKey: req.body.client.mongoCollectionKey})
+
+		if (!masterAccount) { 
+			console.log("Master Account does not exist - Delete client and abort ! ")
+			return res.status(400).send("Could not find a Master account with that organization name - Retry please") 
+		}
+
+		const hashedPass = await bcrypt.hash(req.body.password, 10);
 		
+		const childData = {
+			email: req.body.email,
+			
+			firstName: req.body.firstName,
+			lastName: req.body.lastName,
+			phone: req.body.phone,
+
+			hash: hashedPass,
+			
+			accountType: 'Child',
+			role: req.body.role,
+			isMaster: false,
+			isAdmin: false,
+
+			terminalIDNumber: masterAccount.employeeCounter,
+
+			mongoCollectionKey: req.body.client.mongoCollectionKey,
+		}
+
+		const iteratedBossEmployeeCounter = masterAccount.employeeCounter + 1
+	
+		const newEssosChild = new EssosUser(childData);
+		const savedEssosUser = await newEssosUser.save();
+
+		const iteratedBoss = await OmniUser.findByIdAndUpdate(masterAccount._id, { employeeCounter: req.body.newEmployeeCount }, { new: true }) 
+	
 	} catch(err) { next(err) }
 
 }

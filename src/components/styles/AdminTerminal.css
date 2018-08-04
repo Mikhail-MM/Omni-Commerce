@@ -121,15 +121,17 @@
 	border-radius: 100px;
 }
 
-tbody tr:nth-child(even) {
+tbody tr:nth-child(even) td {
 	background-color: #ebf1f5;
 	color: #5b6f84;
 }
 
-tbody tr:nth-child(odd) {
+tbody tr:nth-child(odd) td {
 	background-color: #f2f6fa;
 	color: #5b6f84;
 }
+
+
 
 .feed-column {
 	display: flex;
@@ -140,4 +142,9 @@ tbody tr:nth-child(odd) {
 	background-color: #f2f6fa;
 	border-left: 1px solid gray;
 	overflow-y: scroll;
+}
+
+td {
+	border-radius: 10px;
+	overflow:hidden;
 }

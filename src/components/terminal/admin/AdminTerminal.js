@@ -1,5 +1,12 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import '../../styles/AdminTerminal.css'
+
+import { showModal } from '../../../actions/modals'
+
+const mapDispatchToProps = dispatch => ({
+	showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps)),
+})
 
 class AdminTerminal extends Component {
 	state = {
@@ -47,7 +54,7 @@ class AdminTerminal extends Component {
 					</div>
 					<div className='action-column'>
 						<div className='employee-actions-bar'>
-							<div className='add-employee-button'>
+							<div className='add-employee-button' onClick={() => this.props.showModal('ADD_EMPLOYEE_MODAL', {regpathOmniChild: true})}>
 								<img className='admin-menu-icon' src='./assets/icons/add-user.svg' />
 								Add Employee
 							</div>
@@ -222,4 +229,4 @@ class AdminTerminal extends Component {
 	}
 }
 
-export default AdminTerminal
+export default connect(null, mapDispatchToProps)(AdminTerminal)

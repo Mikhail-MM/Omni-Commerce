@@ -5,6 +5,12 @@ import '../../styles/RegistrationForms.css'
 
 import { attemptLogIn, attemptRegistration } from '../../../actions/auth'
 
+const mapStateToProps = state => {
+	const { token } = state.authReducer
+
+	return { token }
+}
+
 const mapDispatchToProps = dispatch => ({
 	attemptLogin: (credentials) => dispatch(attemptLogIn(credentials)),
 	registerOmniMaster: (credentials) =>  dispatch(attemptRegistration(credentials)),
@@ -14,6 +20,11 @@ class AuthenticationForm extends Component {
 		email: '',
 		password: '',
 		confpass: '',
+		firstName: '',
+		lastName: '',
+		role: '',
+		phone: '',
+
 	}
 
 	handleChange = (key, value) => {
@@ -46,6 +57,7 @@ class AuthenticationForm extends Component {
 		if (this.props.loginEssos) return this.handleLogin('essos')
 		if (this.props.regpathOmniMaster) return this.handleRegistration('omni')
 		if (this.props.regpathEssos) return this.handleRegistration('essos')
+		if (this.props.regpathOmniChild) return this.handleRegistration('omniChild')
 
 	}
 
@@ -66,6 +78,7 @@ class AuthenticationForm extends Component {
 		const credentials = {
 
 			...this.state,
+			token: this.props.token,
 			registrationPath: pathway
 
 		}
@@ -99,7 +112,7 @@ class AuthenticationForm extends Component {
 							onChange={ event => this.handleChange('password', event.target.value) }
 							/>
 						</div>
-					{(this.props.regpathOmniMaster || this.props.regpathEssos) &&
+					{(this.props.regpathOmniMaster || this.props.regpathEssos || this.props.regpathOmniChild) &&
 						<div className='form-row'>
 							<label> 
 								Confirm Password
@@ -112,6 +125,58 @@ class AuthenticationForm extends Component {
 								/>
 						</div>
 					}
+					{(this.props.regpathOmniMaster || this.props.regPathEssos || this.props.regpathOmniChild) &&
+						<div className='form-row'>
+							<label> 
+								First Name
+							</label> 
+							<input 
+								className='form-input'
+								type='text'
+								value={this.state.firstName}
+								onChange={ event => this.handleChange('firstName', event.target.value) }
+								/>
+						</div>
+					}
+					{(this.props.regpathOmniMaster || this.props.regPathEssos || this.props.regpathOmniChild) &&
+						<div className='form-row'>
+							<label> 
+								Last Name
+							</label> 
+							<input 
+								className='form-input'
+								type='text'
+								value={this.state.lastName}
+								onChange={ event => this.handleChange('lastName', event.target.value) }
+								/>
+						</div>
+					}
+					{(this.props.regpathOmniMaster || this.props.regPathEssos || this.props.regpathOmniChild) &&
+						<div className='form-row'>
+							<label> 
+								Phone Number (###)-###-####
+							</label> 
+							<input 
+								className='form-input'
+								type='text'
+								value={this.state.phone}
+								onChange={ event => this.handleChange('phone', event.target.value) }
+								/>
+						</div>
+					}
+					{(this.props.regpathOmniChild) &&
+						<div className='form-row'>
+							<label> 
+								Role
+							</label> 
+							<input 
+								className='form-input'
+								type='text'
+								value={this.state.role}
+								onChange={ event => this.handleChange('role', event.target.value) }
+								/>
+						</div>
+					}
 					<input className='splash-button' value={this.props.login ? 'Log In' : 'Register'} type='submit' />
 
 				</form>
@@ -120,4 +185,4 @@ class AuthenticationForm extends Component {
 	}
 }
 
-export default connect(null, mapDispatchToProps)(AuthenticationForm)
+export default connect(mapStateToProps, mapDispatchToProps)(AuthenticationForm)

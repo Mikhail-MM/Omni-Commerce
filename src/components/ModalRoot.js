@@ -11,6 +11,8 @@ import CashPaymentModal  from './modals/CashPaymentModal'
 import CardPaymentModal from './modals/CardPaymentModal'
 import CustomAddonModal from './modals/CustomAddonModal'
 
+import AuthenticationForm from './forms/registration/AuthenticationForm'
+
 const MODAL_COMPONENTS = {
 	'EMPLOYEE_PUNCH_CLOCK_FORM_MODAL': EmployeePunchClockFormModal,
 	'ADD_POINT_SALE_ITEM': AddTerminalItemModal,
@@ -20,6 +22,8 @@ const MODAL_COMPONENTS = {
 	'CASH_PAYMENT_MODAL': CashPaymentModal, // Gets CashPaymentForm
 	'CARD_PAYMENT_MODAL': CardPaymentModal, // Gets Checkout
 	'CUSTOM_ADDON_MODAL': CustomAddonModal,
+
+	'ADD_EMPLOYEE_MODAL': AuthenticationForm,
 }
 
 
