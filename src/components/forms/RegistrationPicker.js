@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 
 import '../styles/RegistrationPicker.css'
 
-import { routeToNode } from '../../actions/routing'
+import { push } from 'react-router-redux'
 
 const mapDispatchToProps = (dispatch) => ({
-	route: (event, node) => routeToNode(dispatch, event, node)
+	route: (node) => dispatch(push(node))
 })
 
 
@@ -22,10 +22,10 @@ class RegistrationPicker extends Component {
 					</div>
 					
 					<div className='picker-button-container'>
-						<div onClick={event => this.props.route(event, '/register/omni') } className='icon-container'>
+						<div onClick={(event) => this.props.route('/register/essos') } className='icon-container'>
 							<img className="online-market-icon" src='./assets/registration/online-shop.svg' />
 						</div>
-						<div onClick={event => this.props.route(event, '/register/omni')} className='icon-container'>
+						<div onClick={(event) => this.props.route('/register/omni')} className='icon-container'>
 							<img className="point-sale-icon" src='./assets/registration/point-of-service.svg' />
 						</div>
 					</div>

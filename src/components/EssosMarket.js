@@ -6,6 +6,8 @@ import { retrieveAllItemsForSale, retrieveShoppingCart } from '../actions/market
 const mapStateToProps = state => {
 	const { token, isAuthenticated } = state.authReducer
 	const { marketplaceItems } = state.marketplaceItemsReducer
+
+	return { token, isAuthenticated, marketplaceItems }
 }
 
 const mapDispatchToProps = dispatch => ({

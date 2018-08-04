@@ -15,6 +15,7 @@
   height: 50px;
 
   background-image: linear-gradient(to right, #525f7f, #A0A7B8);
+  border-bottom: 1px solid white;
 
 }
 

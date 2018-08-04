@@ -14,7 +14,7 @@ import {
 const mapStateToProps = state => {
 
 	const { token, isAuthenticated } = state.authReducer
-	const { menuItems, visibleCategory } = state.menuItemsReducer 
+	const { menuItems, visibleCategory } = state.terminalItemsReducer 
 	const { activeTicket } = state.ticketTrackingReducer
 
 	return { token, menuItems, visibleCategory, isAuthenticated, activeTicket }
@@ -128,47 +128,70 @@ class TerminalActionScreen extends Component {
 
 		return(
 			<div className='action-page-wrapper' >
-				<div className='picker-column' >
-					<div className='touchpad' >
-						<div className='menu-item-buttons'>
-							{ menuItems && activeTicket && this.generateCategoryContainersByVisibility() }
-						</div>
-						<div className='action-buttons'>
-							<button onClick={() => this.props.updateTicketStatus(token, activeTicket._id, "Active")}>Fire Ticket</button>
-							<button onClick={() => this.props.updateTicketStatus(token, activeTicket._id, "Void")}>Void Ticket</button>
-							<button onClick={() => this.props.updateTicketStatus(token, activeTicket._id, "Delivered")}>Order Delivered</button>
-							<button onClick={() => this.props.showModal('CASH_PAYMENT_FORM', {})}>Pay With Cash</button>
-							<button onClick={() => this.props.showModal('CARD_PAYMENT_FORM', {})}>Pay With Stripe</button>
-						</div>
-					</div>
-					<div className='category-select-footer' >
-						{ menuItems && this.generateItemCategoryVisibilityMenu() }
-					</div>
+					
+				<div className='app-header__terminal-action'>
 				</div>
-			{ /* Need to switch classNames from DIVS to the Table elements */ }
-				<div className='ledger'>
-					<div className='ledger-header'>
-						<table>
-							<thead>
-								<tr>
-									<tr> Remove Item </tr>
-									<tr> Add-On </tr>
-									<tr> Item Name </tr>
-									<tr> Price </tr>
-								</tr>
-							</thead>
-							<tbody>
-								{ activeTicket && this.generateLedgerFromActiveTicket() }
-							</tbody>
-						</table>
-					</div>
-					<div className='ledger-body'>
+					
+				<div className='main-action-wrapper'>
+					
+					<div className='picker-column' >
+						
+						<div className='touchpad' >
+								{ menuItems && activeTicket && this.generateCategoryContainersByVisibility() }
+								{/* 
+								<div className='action-buttons'>
+									<button onClick={() => this.props.updateTicketStatus(token, activeTicket._id, "Active")}>Fire Ticket</button>
+									<button onClick={() => this.props.updateTicketStatus(token, activeTicket._id, "Void")}>Void Ticket</button>
+								<button onClick={() => this.props.updateTicketStatus(token, activeTicket._id, "Delivered")}>Order Delivered</button>
+								<button onClick={() => this.props.showModal('CASH_PAYMENT_FORM', {})}>Pay With Cash</button>
+								<button onClick={() => this.props.showModal('CARD_PAYMENT_FORM', {})}>Pay With Stripe</button>
+									</div>
+								*/}
+						</div>
 
+						<div className='category-selection-buttons' >
+							{ menuItems && this.generateItemCategoryVisibilityMenu() }
+						</div>
 					</div>
-					<div className='ledger-footer'>
-						{ activeTicket && this.displayPricingFromActiveTicket() }
-					</div>
+
+								{ /* Need to switch classNames from DIVS to the Table elements */ }
+						<div className='ledger'>
+							<div className='table-container'>
+								<table className='ledger-table'>
+									<thead className='ledger-table__header'>
+										<tr>
+											<td> Item Name </td>
+											<td> Price </td>
+											<td> Remove </td>
+											<td> Add-On </td>
+										</tr>
+									</thead>
+									<tbody>
+										{ activeTicket && this.generateLedgerFromActiveTicket() }
+									</tbody>
+								</table>
+							</div>
+							<div className='ledger-footer'>
+								{ activeTicket && this.displayPricingFromActiveTicket() }
+								<div className='footer-buttons-pricing'>
+									<div className='action-button-container'>
+										<div style={{ backgroundColor: 'blue', marginBottom: 10 }}className='action-button'> Fire Order </div>
+										<div style={{ backgroundColor: 'red' }} className='action-button'> Void Ticket </div>
+									</div>
+									<div className='pricing-container'>
+										<div> SubTotal </div>
+										<div> Tax </div>
+										<div> Total </div>
+									</div>
+								</div>
+
+								<div className='checkout-button'>
+									Payment
+								</div>
+							</div>
+						</div>
 				</div>
+
 			</div>
 		)
 	}

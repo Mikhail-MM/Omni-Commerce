@@ -175,6 +175,8 @@ const rootReducer = combineReducers({
 	terminalItemsReducer,
 	ticketTrackingReducer,
 	employeeReducer,
+	marketplaceItemsReducer,
+	shoppingCartReducer,
 	routerReducer
 })
 
