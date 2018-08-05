@@ -15,6 +15,11 @@ const TerminalSchemas = require('../models/schemas/transaction')
 const MenuItemSchema = TerminalSchemas.menuSchema
 
 
+const storeConfig = require('../models/schemas/storeConfig')
+const storeConfigSchema = storeConfig.storeConfigSchema
+
+
+
 module.exports.seedOmniUsers = async (req, res, next,) => {
 	try {
 		const savedChildren = [];
@@ -210,7 +215,7 @@ const omniChildren = [
 		// Iterate through employees & seed
 
 		for (let itemData of terminalItems) {
-			const ItemModel = mongoose.model('Transaction', TicketTransaction, 'Transactions_' + seedMongoKey);
+			const ItemModel =  mongoose.model('MenuItem', MenuItemSchema, 'MenuItems_' + seedMongoKey);
 			
 			const newItemModel = new ItemModel(itemData);
 			const savedItem = await newItemModel.save();
