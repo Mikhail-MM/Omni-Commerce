@@ -43,6 +43,7 @@ const storeItems = require('./controllers/storeItems')
 const shoppingCarts = require('./controllers/shoppingCarts')
 const purchaseOrders = require('./controllers/purchaseOrders')
 const sellOrders = require('./controllers/sellOrders')
+const seed = require('./seed/seed')
 
 var app = express();
 var router = express.Router(); 
@@ -87,6 +88,11 @@ router.route('/omni-master/')
 	.post(register.registerOmniMaster)
 router.route('/essos-user/')
 	.post(register.registerEssosUser)
+router.route('/omni-child/')
+	.post(register.registerOmniChild)
+
+router.route('/seed/omni/')
+	.post(seed.seedOmniUsers)
 
 router.route('/clients/marketplace')
 	.post(upload.single('marketplaceAvatar'), images.uploadNewImage, register.configureNewUser, clients.createClient)

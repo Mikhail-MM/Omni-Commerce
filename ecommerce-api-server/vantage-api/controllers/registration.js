@@ -1,5 +1,6 @@
 const uuid4 = require('uuid/v4');
 const bcrypt = require('bcrypt');
+const mongoose = require('mongoose')
 
 const Client = require('../models/schemas/client');
 const Users = require('../models/schemas/users');
@@ -18,7 +19,6 @@ const MarketplaceModel = mongoose.model('Marketplace', Marketplace)
 const ShoppingCartSchema = MarketPlaceModels.storeItemSchema
 const ShoppingCartModel = MarketPlaceModels.ShoppingCartModel
 
-const mongoose = require('mongoose')
 
 module.exports.registerOmniMaster = async (req, res, next) => {
 	try {
@@ -106,7 +106,7 @@ module.exports.registerEssosUser = async (req, res, next) => {
 			email: req.body.email,
 			hash: hashedPass,
 
-			accountType: 'Essos'
+			accountType: 'Essos',
 			
 			firstName: req.body.firstName,
 			lastName: req.body.lastName,
