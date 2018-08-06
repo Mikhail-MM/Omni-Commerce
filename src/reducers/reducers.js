@@ -19,6 +19,7 @@ const stateMap = {
 	marketplaceItemsReducer: { 
 		marketplaceItems: [], 
 		currentMarketplaceItem: {}, 
+
 	},
 	shoppingCartReducer: {
 		shoppingCart: { 

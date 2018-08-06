@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import './styles/EssosMarket.css';
 
 import { retrieveAllItemsForSale, retrieveShoppingCart } from '../actions/marketplace'
+import { routeToNode } from '../actions/routing'
+
 const mapStateToProps = state => {
 	const { token, isAuthenticated } = state.authReducer
 	const { marketplaceItems } = state.marketplaceItemsReducer
@@ -12,7 +14,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
 	retrieveAllMarketplaceItems: () => dispatch(retrieveAllItemsForSale()),
-	retrieveShoppingCart: (token) => dispatch(retrieveShoppingCart(token))
+	retrieveShoppingCart: (token) => dispatch(retrieveShoppingCart(token)),
+	routeToMarketPlace: (node) => dispatch(routeToNode(node)),
 })
 
 class EssosMarket extends Component {
@@ -21,6 +24,27 @@ class EssosMarket extends Component {
 		this.props.retrieveAllMarketplaceItems()
 		if (isAuthenticated) this.props.retrieveShoppingCart(token)
 	}
+
+	generateItemDOM = () => {
+		const { marketplaceItems } = this.props
+
+		return marketplaceItems.map(item => {
+			return(
+				<div className="ui_card_mockup">
+					<div className='ui_card_image'>
+						<img src={item.imageURL} />
+					</div>
+					<div className='ui_card_content'>
+						<h3 className="StoreItem-Header-Name"> {item.itemName} </h3>
+						<p className="store-link" onClick={() => this.props.routeToMarketplace(`/essos/user/${item._sellerRef_id}`)}}> Posted By: {item.postedBy} </p>
+						<p className="store-pricing"> ${item.itemPrice} </p>
+						<button className="button_no_border_radius" ><span> Add To Cart Icon </span> </Button>
+					</div>
+				</div>
+			)
+		})
+	}
+
 	render() {
 		return(
 			<div className='app-root'>  
@@ -60,6 +84,8 @@ class EssosMarket extends Component {
 
 	          <div className='search-bar-container'>
 	          </div>
+
+	          { marketPlaceItems && generateItemDOM()}
 	      </div>
 		)
 	}

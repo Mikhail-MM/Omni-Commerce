@@ -14,7 +14,8 @@ const storeItemSchema = new Schema({
 	itemPrice: Number,
 	mongoCollectionKey: String,
 	imageURL: String,
-	description: String, 
+	description: String,
+	postedBy: {type: String, required: true }
 	category: String, // Consider consolidating with tags
 	options: [String],
 	tags: [String],
@@ -22,9 +23,9 @@ const storeItemSchema = new Schema({
 	numberRequested: Number, // we NEED to split these shoppingCartOnly values out
 	storeOwnerName: String,
 	status: String, // inStock/ outOfStock
-	sellerRef_id: {type: Schema.Types.ObjectId, ref: 'Client'},
+	sellerRef_id: {type: Schema.Types.ObjectId, ref: 'EssosUser', required: true},
 	marketplaceRef_id: {type: Schema.Types.ObjectId, ref: 'Marketplace'},
-	itemRef_id: {type: Schema.Types.ObjectId, ref:'StoreItem'}, // only used within shopping cart
+	itemRef_id: {type: Schema.Types.ObjectId, ref:'StoreItem',}, // only used within shopping cart
 });
 
 // A reusable schema representing transactions in different states and instantiations
@@ -40,7 +41,7 @@ const salesManifest = {
 
 const stripeCustomerSchema = new Schema({
 	id: {type: String, required: true},
-	clientRef_id: {type: Schema.Types.ObjectId, ref: 'Client', required: true},
+	clientRef_id: {type: Schema.Types.ObjectId, ref: 'EssosUser', required: true},
 	created: Date,
 	account_balance: Number,
 	currency: String,
@@ -76,17 +77,17 @@ const stripeCustomerSchema = new Schema({
 })
 
 const shoppingCartSchema = new Schema(Object.assign({}, salesManifest, {
-	ownerRef_id: {type: Schema.Types.ObjectId, ref: 'Client'},
+	ownerRef_id: {type: Schema.Types.ObjectId, ref: 'EssosUser'},
 }));
 
 const purchaseOrderSchema = new Schema(Object.assign({}, salesManifest, { 
-	buyerRef_id: {type: Schema.Types.ObjectId, ref: 'Client'},
+	buyerRef_id: {type: Schema.Types.ObjectId, ref: 'EssosUser'},
 	customerRef_id: {type: Schema.Types.ObjectId, ref: 'StripeCustomer'},
 	charge: {type: Schema.Types.Mixed},
 }));
 
 const sellerSpecificPurchaseOrder = new Schema(Object.assign({}, salesManifest, {
-	sellerRef_id: {type: Schema.Types.ObjectId, ref: 'Client'},
+	sellerRef_id: {type: Schema.Types.ObjectId, ref: 'EssosUser'},
 	masterOrderRef_id: {type: Schema.Types.ObjectId, ref: 'PurchaseOrder'},
 	customerRef_id: {type: Schema.Types.ObjectId, ref: 'StripeCustomer'},
 }));
