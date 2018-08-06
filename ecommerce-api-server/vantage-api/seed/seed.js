@@ -18,6 +18,8 @@ const MenuItemSchema = TerminalSchemas.menuSchema
 const storeConfig = require('../models/schemas/storeConfig')
 const storeConfigSchema = storeConfig.storeConfigSchema
 
+const StoreItemModel = MarketPlaceModels.StoreItemModel
+const ShoppingCartModel = MarketPlaceModels.ShoppingCartModel
 
 
 module.exports.seedOmniUsers = async (req, res, next) => {
@@ -28,140 +30,140 @@ module.exports.seedOmniUsers = async (req, res, next) => {
 		const seedMongoKey = uuid4().slice(0, 13);
 		const hashedPass = await bcrypt.hash('12345', 10);
 
-const omniChildren = [
-	{
-		email: 'swasserman@omni.com',
+		const omniChildren = [
+			{
+				email: 'swasserman@omni.com',
 
-		firstName: 'Sarah',
-		lastName: 'Wasserman',
-		phone: '(423)-231-5123',
+				firstName: 'Sarah',
+				lastName: 'Wasserman',
+				phone: '(423)-231-5123',
 
-		accountType: 'Child',
-		role: 'Hostess',
-		isMaster: false,
-		isAdmin: false,
+				accountType: 'Child',
+				role: 'Hostess',
+				isMaster: false,
+				isAdmin: false,
 
-		avatarURL: './assets/seed/omni-avatars/2.jpg',
+				avatarURL: './assets/seed/omni-avatars/2.jpg',
 
-		mongoCollectionKey: seedMongoKey,
-		hash: hashedPass,
+				mongoCollectionKey: seedMongoKey,
+				hash: hashedPass,
 
-		terminalIDNumber: 2,
-	},
-	{
-		email: 'jpalmer@omni.com',
+				terminalIDNumber: 2,
+			},
+			{
+				email: 'jpalmer@omni.com',
 
-		firstName: 'Jared',
-		lastName: 'Palmer',
-		phone: '(561)-231-4142',
+				firstName: 'Jared',
+				lastName: 'Palmer',
+				phone: '(561)-231-4142',
 
-		accountType: 'Child',
-		role: 'Bartender',
-		isMaster: false,
-		isAdmin: false,
+				accountType: 'Child',
+				role: 'Bartender',
+				isMaster: false,
+				isAdmin: false,
 
-		avatarURL: './assets/seed/omni-avatars/3.jpg',
+				avatarURL: './assets/seed/omni-avatars/3.jpg',
 
-		mongoCollectionKey: seedMongoKey,
-		hash: hashedPass,
+				mongoCollectionKey: seedMongoKey,
+				hash: hashedPass,
 
-		terminalIDNumber: 3,
-	},
-	{
-		email: 'gwaller@omni.com',
+				terminalIDNumber: 3,
+			},
+			{
+				email: 'gwaller@omni.com',
 
-		firstName: 'Gina',
-		lastName: 'Waller',
-		phone: '(423)-231-5123',
+				firstName: 'Gina',
+				lastName: 'Waller',
+				phone: '(423)-231-5123',
 
-		accountType: 'Child',
-		role: 'Waitstaff',
-		isMaster: false,
-		isAdmin: false,
+				accountType: 'Child',
+				role: 'Waitstaff',
+				isMaster: false,
+				isAdmin: false,
 
-		avatarURL: './assets/seed/omni-avatars/4.jpg',
+				avatarURL: './assets/seed/omni-avatars/4.jpg',
 
-		mongoCollectionKey: seedMongoKey,
-		hash: hashedPass,
+				mongoCollectionKey: seedMongoKey,
+				hash: hashedPass,
 
-		terminalIDNumber: 4,
-	},
-	{
-		email: 'fguzman@omni.com',
+				terminalIDNumber: 4,
+			},
+			{
+				email: 'fguzman@omni.com',
 
-		firstName: 'Francisco',
-		lastName: 'Guzman',
-		phone: '(522)-223-1156',
+				firstName: 'Francisco',
+				lastName: 'Guzman',
+				phone: '(522)-223-1156',
 
-		accountType: 'Child',
-		role: 'Sous Chef',
-		isMaster: false,
-		isAdmin: false,
+				accountType: 'Child',
+				role: 'Sous Chef',
+				isMaster: false,
+				isAdmin: false,
 
-		avatarURL: './assets/seed/omni-avatars/5.jpg',
+				avatarURL: './assets/seed/omni-avatars/5.jpg',
 
-		mongoCollectionKey: seedMongoKey,
-		hash: hashedPass,
+				mongoCollectionKey: seedMongoKey,
+				hash: hashedPass,
 
-		terminalIDNumber: 5,
-	},
-	{
-		email: 'tfred@omni.com',
+				terminalIDNumber: 5,
+			},
+			{
+				email: 'tfred@omni.com',
 
-		firstName: 'Theo',
-		lastName: 'Friedrich',
-		phone: '(987)-513-2222',
+				firstName: 'Theo',
+				lastName: 'Friedrich',
+				phone: '(987)-513-2222',
 
-		accountType: 'Child',
-		role: 'Cook',
-		isMaster: false,
-		isAdmin: false,
+				accountType: 'Child',
+				role: 'Cook',
+				isMaster: false,
+				isAdmin: false,
 
-		avatarURL: './assets/seed/omni-avatars/6.jpg',
+				avatarURL: './assets/seed/omni-avatars/6.jpg',
 
-		mongoCollectionKey: seedMongoKey,
-		hash: hashedPass,
+				mongoCollectionKey: seedMongoKey,
+				hash: hashedPass,
 
-		terminalIDNumber: 6,
-	},
-	{
-		email: 'jfranco@omni.com',
+				terminalIDNumber: 6,
+			},
+			{
+				email: 'jfranco@omni.com',
 
-		firstName: 'James',
-		lastName: 'Franco',
-		phone: '(423)-231-5123',
+				firstName: 'James',
+				lastName: 'Franco',
+				phone: '(423)-231-5123',
 
-		accountType: 'Child',
-		role: 'Waitstaff',
-		isMaster: false,
-		isAdmin: false,
+				accountType: 'Child',
+				role: 'Waitstaff',
+				isMaster: false,
+				isAdmin: false,
 
-		avatarURL: './assets/seed/omni-avatars/7.jpg',
+				avatarURL: './assets/seed/omni-avatars/7.jpg',
 
-		mongoCollectionKey: seedMongoKey,
-		hash: hashedPass,
+				mongoCollectionKey: seedMongoKey,
+				hash: hashedPass,
 
-		terminalIDNumber: 7,
-	},
-	{
-		email: 'ekim@omni.com',
+				terminalIDNumber: 7,
+			},
+			{
+				email: 'ekim@omni.com',
 
-		firstName: 'Elena',
-		lastName: 'Kim',
-		phone: '(888)-212-4444',
+				firstName: 'Elena',
+				lastName: 'Kim',
+				phone: '(888)-212-4444',
 
-		accountType: 'Child',
-		role: 'Bartender',
-		isMaster: false,
-		isAdmin: false,
+				accountType: 'Child',
+				role: 'Bartender',
+				isMaster: false,
+				isAdmin: false,
 
-		avatarURL: './assets/seed/omni-avatars/8.jpg',
+				avatarURL: './assets/seed/omni-avatars/8.jpg',
 
-		mongoCollectionKey: seedMongoKey,
-		hash: hashedPass,
+				mongoCollectionKey: seedMongoKey,
+				hash: hashedPass,
 
-		terminalIDNumber: 8,
-	},
+				terminalIDNumber: 8,
+			},
 ]
 
 		
@@ -247,9 +249,16 @@ const omniChildren = [
 
 module.exports.seedEssosMarket = async (req, res, next) => {
 	try {
+
+		const savedChildren = [];
+		const savedShoppingCarts = [];
+		const savedItems = [];
+
+		const hashedPass = await bcrypt.hash('12345', 10);
 		const essosSeeds = [
 			{
 				email: 'aturner@sneakerheadz.com',
+				hash: hashedPass,
 
 				firstName: 'Aaron',
 				lastName: 'Turner',
@@ -268,313 +277,446 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 				shipping__address_city: 'Wynnewood',
 				shipping_address_zip: '19096',
 				shipping_address_state: 'PA',
-		
-
+				
+				mongoCollectionKey: uuid4().slice(0, 13),
 
 				marketplaceItems: [
-					{},
-					{},
+					{
+						itemName: 'Purple Jordans',
+						itemPrice: 120,
+						tags: [`Men's Shoes`],
+						numberInStock: 1,
+						imageURL: './assets/seed/marketplace/pjordan.jpg',
+					},
+					{
+						itemName: 'Charcoal Adidas',
+						itemPrice: 59,
+						tags: [`Men's Shoes`],
+						numberInStock: 4,
+						imageURL: './assets/seed/marketplace/chadidas.jpg',
+					},
+					{
+						itemName: 'Felt Slip-Ons',
+						itemPrice: 39,
+						numberInStock: 2,
+						tags: [`Men's Shoes`, `Women's Shoes`],
+						imageURL: './assets/seed/marketplace/fslip.jpg'
+					},
+					{
+						itemName: 'Butterfly Boots',
+						itemPrice: 60,
+						numberInStock: 3, 
+						tags: [`Women's Shoes`],
+						imageURL: './assets/seed/marketplace/bboots.jpg',
+					},
+					{
+						itemName: 'Black Yeezys',
+						itemPrice: 435,
+						numberInStock: 2,
+						tags: [`Men's Shoes`, `Women's Shoes`],
+						imageURL: './assets/seed/marketplace/bfeezy.jpg',
+					},
+					{
+						itemName: 'Black Levis',
+						itemPrice: 30,
+						numberInStock: 10,
+						tags: [`Men's Shoes`, `Women's Shoes`],
+						imageURL: './assets/seed/marketplace/blevi.jpg'
+
+					},
+					{
+						itemName: 'Pink Nike Airs',
+						itemPrice: 50,
+						numberInStock: 2,
+						tags: [`Women's Shoes`],
+						imageURL: './assets/seed/marketplace/pnike.jpg',
+					},
+					{
+						itemName: 'Black Adidas',
+						itemPrice: 100,
+						numberInStock: 1,
+						tags: [`Men's Shoes`],
+						imageURL: './assets/seed/marketplace/badidas.jpg',
+					},
+					{
+						itemName: 'Black Leather Hi-Tops',
+						itemPrice: 100,
+						numberInStock: 2, 
+						tags: [`Men's Shoes`],
+						imageURL: './assets/seed/marketplace/btop.jpg',
+					},
+					{
+						itemName: 'Original Air Jordan 1',
+						itemPrice: 570,
+						numberInStock: 1,
+						tags: [`Men's Shoes`],
+						imageURL: './assets/seed/marketplace/j1.jpg',
+					},
+					{
+						itemName: 'Tribal Canvas Vans',
+						itemPrice: 88,
+						numberInStock: 1,
+						tags: [`Men's Shoes`, `Women's Shoes`],
+						imageURL: './assets/seed/marketplace/tribals.jpg'
+					},
+					{
+						itemName: 'Loafmaster Loafers',
+						itemPrice: 90,
+						numberInStock: 2,
+						tags: [`Men's Shoes`],
+						imageURL: './assets/seed/marketplace/loafman.jpg',
+					},
 				],
 			},
+			{
+				email: 'pwatch@timepiece.com',
+				hash: hashedPass,
+
+				firstName: 'Philippe',
+				lastName: 'Arnaud',
+				phone: '(551)-412-2312',
+
+				accountType: 'Essos',
+				avatarURL: './assets/seed/essos-avatars/fil.jpg',
+				// dont forget the hash u cucklord
+
+
+				billing_address_line1: '303 Washington St',
+				billing_address_city: 'Hempstead',
+				billing_address_zip: '11550',
+				billing_address_state: 'NY',
+				shipping_address_line1: '303 Washington St',
+				shipping__address_city: 'Hempstead',
+				shipping_address_zip: '11550',
+				shipping_address_state: 'NY',
+				
+				mongoCollectionKey: uuid4().slice(0, 13),
+
+				marketplaceItems: [
+					{
+						itemName: 'Panerai Luminor Marina',
+						itemPrice: 1650,
+						numberInStock: 1,
+						tags: [`Watches`],
+						imageURL: './assets/seed/marketplace/lumi.jpg',
+					},
+					{
+						itemName: 'Breitling Chronometre Certifie',
+						itemPrice: itemPrice: 4162,
+						numberInStock: 1,
+						tags: [`Watches`],
+						imageURL: './assets/seed/marketplace/bling.jpg',
+					},
+					{
+						itemName: 'Wood-Grain Orient Mako',
+						itemPrice: 300,
+						numberInStock: 2,
+						tags: [`Watches`],
+						imageURL: './assets/seed/marketplace/mako.jpg',
+					},
+					{
+						itemName: 'Sekonda Mens Classic',
+						itemPrice: 450,
+						numberInStock: 2,
+						tags: [`Watches`],
+						imageURL: './assets/seed/marketplace/sekonda.jpg',
+					},
+				],
+			},
+			{
+				email: 'sb@thred.com',
+				hash: hashedPass,
+
+				firstName: 'Sarah',
+				lastName: 'Franko',
+				phone: '(222)-314-4444',
+
+				accountType: 'Essos',
+				avatarURL: './assets/seed/essos-avatars/sara.jpg',
+				// dont forget the hash u cucklord
+
+				billing_address_line1: '553 Washington St',
+				billing_address_city: 'Hempstead',
+				billing_address_zip: '11550',
+				billing_address_state: 'NY',
+				shipping_address_line1: '553 Washington St',
+				shipping__address_city: 'Hempstead',
+				shipping_address_zip: '11550',
+				shipping_address_state: 'NY',
+				
+				mongoCollectionKey: uuid4().slice(0, 13),
+
+				marketplaceItems: [
+					{
+						itemName: 'Sweater-ish CropTop',
+						itemPrice: 39,
+						numberInStock: 1,
+						tags: [`Women's Clothing`, `Tops`],
+						imageURL: './assets/seed/marketplace/gcrop.jpg',
+					},
+					{
+						itemName: 'Navy Peacoat',
+						itemPrice: 140,
+						numberInStock: 1,
+						tags: [`Women's Clothing`, `Tops`],
+						imageURL: './assets/seed/marketplace/bcoat.jpg',
+					},
+					{
+						itemName: 'Shein Bodysuit',
+						itemPrice: 40,
+						numberInStock: 1,
+						tags: [`Women's Clothing`, `Tops`, `Bottoms`],
+						imageURL: './assets/seed/marketplace/shein.jpg',
+					},
+					{
+						itemName: 'Pink J.Crew Coat',
+						itemPrice: 70,
+						numberInStock: 1,
+						tags: [`Women's Clothing`, `Tops`],
+						imageURL: './assets/seed/marketplace/pink.jpg',
+					},
+
+				],
+			},
+			{
+				email: 'md@beautiful.com',
+				hash: hashedPass,
+
+				firstName: 'Monica',
+				lastName: 'Bailey',
+				phone: '(213)-231-4131',
+
+				accountType: 'Essos',
+				avatarURL: './assets/seed/essos-avatars/sara.jpg',
+				// dont forget the hash u cucklord
+
+				billing_address_line1: '600 Washington St',
+				billing_address_city: 'Hempstead',
+				billing_address_zip: '11550',
+				billing_address_state: 'NY',
+				shipping_address_line1: '600 Washington St',
+				shipping__address_city: 'Hempstead',
+				shipping_address_zip: '11550',
+				shipping_address_state: 'NY',
+				
+				mongoCollectionKey: uuid4().slice(0, 13),
+
+				marketplaceItems:[
+					{
+						itemName:'Marie Veronique Skincare Set',
+						itemPrice: 150,
+						numberInStock: 1, 
+						tags: [`Beauty`],
+						imageURL: './assets/seed/marketplace/mv.jpg',
+					},
+					{
+						itemName: 'Miss Dior Fragrance',
+						itemPrice: 50,
+						numberInStock: 30,
+						tags: [`Beauty`],
+						imageURL: './assets/seed/marketplace/mdior.jpg',
+					},
+					{
+						itemName: 'Makeup Brush Set',
+						itemPrice: 29,
+						numberInStock: 1,
+						tags: [`Beauty`],
+						imageURL: './assets/seed/marketplace/brushset.jpg',
+					},
+					{
+						itemName: 'Chanel No. 5',
+						itemPrice: 69,
+						numberInStock: 20,
+						tags: [`Beauty`],
+						imageURL: './assets/seed/marketplace/chanel.jpg',
+					},
+					{
+						itemName: 'Glossier Blush Kit'
+						itemPrice: 40,
+						numberInStock: 1, 
+						tags: [`Beauty`],
+						imageURL: './assets/seed/marketplace/glossier.jpg',
+					},
+					{
+						itemName: 'Prestige Mens Pomade',
+						itemPrice: 29,
+						numberInStock: 2,
+						tags: [`Beauty`],
+						imageURL: './assets/seed/marketplace/pomade.jpg',		
+					},
+					{
+						itemName: 'Nude By Nature Concealer',
+						itemPrice: 15,
+						numberInStock: 1,
+						tags: [`Beauty`],
+						imageURL: './assets/seed/marketplace/concealer.jpg',
+					},
+				],	
+			},
 		]
+
+		for (essosUser of essosSeeds) {
+			// Create new User Entry in DB
+			const { 
+				email, 
+				hash, 
+				accountType, 
+				firstName, 
+				lastName, 
+				phone, 
+				billing_address_line1,
+				billing_address_line2,
+				billing_address_city,
+				billing_address_zip,
+				billing_address_state,
+				shipping_address_line1,
+				shipping_address_line2,
+				shipping__address_city,
+				shipping_address_zip,
+				shipping_address_state,
+				mongoCollectionKey,
+			} = essosUser
+
+			const userData = {
+				email, 
+				hash, 
+				accountType, 
+				firstName, 
+				lastName, 
+				phone, 
+				billing_address_line1,
+				billing_address_line2,
+				billing_address_city,
+				billing_address_zip,
+				billing_address_state,
+				shipping_address_line1,
+				shipping_address_line2,
+				shipping__address_city,
+				shipping_address_zip,
+				shipping_address_state,
+				mongoCollectionKey,
+			}
+
+			const newEssosUser = new EssosUserModel(userData)
+			const savedEssosUser = await newEssosUser.save()
+
+			savedChildren.push(savedEssosUser)
+			// Build shopping cart for User
+
+			const newShoppingCart = new ShoppingCartModel({ 
+							
+				ownerRef_id			: savedEssosUser._id,
+				subtotalDisplay		: 0,
+				subtotalReal		: 0,
+				taxDisplay			: 0,
+				taxReal				: 0,
+				totalDisplay		: 0,
+				totalReal			: 0,
+			
+			});
+
+			
+			const savedShoppingCart = await newShoppingCart.save();
+
+			savedShoppingCarts.push(savedShoppingCart);
+
+			for (item of essosUser.marketplaceItems) {
+				const {
+					itemName,
+					itemPrice,
+					numberInStock,
+					category,
+					imageURL
+				} = item
+
+				const itemData = {
+					itemName,
+					itemPrice,
+					numberInStock,
+					category,
+					imageURL
+				}
+
+				const newMarketplaceItem = new StoreItemModel(itemData)
+				const savedMarketplaceItem = await newMarketplaceItem.save()
+
+				savedItems.push(savedMarketplaceItem)
+			}
+		}
+
+		const response = {
+			savedChildren,
+			savedShoppingCarts,
+			savedItems
+		}
+
+		res.send(response)
+		
 	} catch(err) { next(err) }
 }
-const essosSeeds = [
-	{
-		email: 'aturner@sneakerheadz.com',
-
-		firstName: 'Aaron',
-		lastName: 'Turner',
-		phone: '(411)-789-4131',
-
-		accountType: 'Essos',
-		avatarURL: './assets/seed/essos-avatars/aturner.jpg',
-		// dont forget the hash u cucklord
 
 
-		billing_address_line1: '919 Cedar Grove Rd',
-		billing_address_city: 'Wynnewood',
-		billing_address_zip: '19096',
-		billing_address_state: 'PA',
-		shipping_address_line1: '919 Cedar Grove Rd',
-		shipping__address_city: 'Wynnewood',
-		shipping_address_zip: '19096',
-		shipping_address_state: 'PA',
+module.exports.registerEssosUser = async (req, res, next) => {
+	try {
 		
-		mongoCollectionKey: uuid4().slice(0, 13);
+		const mongoCollectionKey = uuid4().slice(0, 13);
+		const hashedPass = await bcrypt.hash(req.body.password, 10);
 
-		marketplaceItems: [
-			{
-				itemName: 'Purple Jordans',
-				itemPrice: 120,
-				tags: [`Men's Shoes`],
-				numberInStock: 1,
-				imageURL: './assets/seed/marketplace/pjordan.jpg',
-			},
-			{
-				itemName: 'Charcoal Adidas',
-				itemPrice: 59,
-				tags: [`Men's Shoes`],
-				numberInStock: 4,
-				imageURL: './assets/seed/marketplace/chadidas.jpg',
-			},
-			{
-				itemName: 'Felt Slip-Ons',
-				itemPrice: 39,
-				numberInStock: 2,
-				tags: [`Men's Shoes`, `Women's Shoes`],
-				imageURL: './assets/seed/marketplace/fslip.jpg'
-			},
-			{
-				itemName: 'Butterfly Boots',
-				itemPrice: 60,
-				numberInStock: 3, 
-				tags: [`Women's Shoes`],
-				imageURL: './assets/seed/marketplace/bboots.jpg',
-			},
-			{
-				itemName: 'Black Yeezys',
-				itemPrice: 435,
-				numberInStock: 2,
-				tags: [`Men's Shoes`, `Women's Shoes`],
-				imageURL: './assets/seed/marketplace/bfeezy.jpg',
-			},
-			{
-				itemName: 'Black Levis',
-				itemPrice: 30,
-				numberInStock: 10,
-				tags: [`Men's Shoes`, `Women's Shoes`],
-				imageURL: './assets/seed/marketplace/blevi.jpg'
+		const userData = {
+			email: req.body.email,
+			hash: hashedPass,
 
-			},
-			{
-				itemName: 'Pink Nike Airs',
-				itemPrice: 50,
-				numberInStock: 2,
-				tags: [`Women's Shoes`],
-				imageURL: './assets/seed/marketplace/pnike.jpg',
-			},
-			{
-				itemName: 'Black Adidas',
-				itemPrice: 100,
-				numberInStock: 1,
-				tags: [`Men's Shoes`],
-				imageURL: './assets/seed/marketplace/badidas.jpg',
-			},
-			{
-				itemName: 'Black Leather Hi-Tops',
-				itemPrice: 100,
-				numberInStock: 2, 
-				tags: [`Men's Shoes`],
-				imageURL: './assets/seed/marketplace/btop.jpg',
-			},
-			{
-				itemName: 'Original Air Jordan 1',
-				itemPrice: 570,
-				numberInStock: 1,
-				tags: [`Men's Shoes`],
-				imageURL: './assets/seed/marketplace/j1.jpg',
-			},
-			{
-				itemName: 'Tribal Canvas Vans',
-				itemPrice: 88,
-				numberInStock: 1,
-				tags: [`Men's Shoes`, `Women's Shoes`],
-				imageURL: './assets/seed/marketplace/tribals.jpg'
-			},
-			{
-				itemName: 'Loafmaster Loafers',
-				itemPrice: 90,
-				numberInStock: 2,
-				tags: [`Men's Shoes`],
-				imageURL: './assets/seed/marketplace/loafman.jpg',
-			},
-		],
-	},
-	{
-		email: 'pwatch@timepiece.com',
+			accountType: 'Essos',
+			
+			firstName: req.body.firstName,
+			lastName: req.body.lastName,
+			phoneNumber: req.body.phoneNumber,
 
-		firstName: 'Philippe',
-		lastName: 'Arnaud',
-		phone: '(551)-412-2312',
+			billing_address_line1	: req.body.billing_address_line1,
+			billing_address_line2	: req.body.billing_address_line2,
+			billing_address_city	: req.body.billing_address_city,
+			billing_address_zip		: req.body.billing_address_zip,
+			billing_address_state	: req.body.billing_address_state,
+			shipping_address_line1	: req.body.shipping_address_line1,
+			shipping_address_line2	: req.body.shipping_address_line2,
+			shipping__address_city	: req.body.shipping__address_city,
+			shipping_address_zip	: req.body.shipping_address_zip,
+			shipping_address_state	: req.body.shipping_address_state,
 
-		accountType: 'Essos',
-		avatarURL: './assets/seed/essos-avatars/fil.jpg',
-		// dont forget the hash u cucklord
+			mongoCollectionKey: mongoCollectionKey,
+
+		};
 
 
-		billing_address_line1: '303 Washington St',
-		billing_address_city: 'Hempstead',
-		billing_address_zip: '11550',
-		billing_address_state: 'NY',
-		shipping_address_line1: '303 Washington St',
-		shipping__address_city: 'Hempstead',
-		shipping_address_zip: '11550',
-		shipping_address_state: 'NY',
+
+		const newEssosUser = new EssosUser(userData);
+		const savedEssosUser = await newEssosUser.save();
+
+		const newShoppingCart = new ShoppingCartModel({ 
+						
+			ownerRef_id			: savedEssosUser._id,
+			subtotalDisplay		: 0,
+			subtotalReal		: 0,
+			taxDisplay			: 0,
+			taxReal				: 0,
+			totalDisplay		: 0,
+			totalReal			: 0,
 		
-		hash:
-		mongoCollectionKey: 
+		});
 
-		marketplaceItems: [
-			{
-				itemName: 'Panerai Luminor Marina',
-				itemPrice: 1650,
-				numberInStock: 1,
-				tags: [`Watches`],
-				imageURL: './assets/seed/marketplace/lumi.jpg',
-			},
-			{
-				itemName: 'Breitling Chronometre Certifie',
-				itemPrice: itemPrice: 4162,
-				numberInStock: 1,
-				tags: [`Watches`],
-				imageURL: './assets/seed/marketplace/bling.jpg',
-			},
-			{
-				itemName: 'Wood-Grain Orient Mako',
-				itemPrice: 300,
-				numberInStock: 2,
-				tags: [`Watches`],
-				imageURL: './assets/seed/marketplace/mako.jpg',
-			},
-			{
-				itemName: 'Sekonda Mens Classic',
-				itemPrice: 450,
-				numberInStock: 2,
-				tags: [`Watches`],
-				imageURL: './assets/seed/marketplace/sekonda.jpg',
-			},
-		],
-	},
-	{
-		email: 'sb@thred.com',
-
-		firstName: 'Sarah',
-		lastName: 'Franko',
-		phone: '(222)-314-4444',
-
-		accountType: 'Essos',
-		avatarURL: './assets/seed/essos-avatars/sara.jpg',
-		// dont forget the hash u cucklord
-
-		billing_address_line1: '553 Washington St',
-		billing_address_city: 'Hempstead',
-		billing_address_zip: '11550',
-		billing_address_state: 'NY',
-		shipping_address_line1: '553 Washington St',
-		shipping__address_city: 'Hempstead',
-		shipping_address_zip: '11550',
-		shipping_address_state: 'NY',
 		
-		mongoCollectionKey: 
+		const savedShoppingCart = await newShoppingCart.save();
 
-		marketplaceItems: [
-			{
-				itemName: 'Sweater-ish CropTop',
-				itemPrice: 39,
-				numberInStock: 1,
-				tags: [`Women's Clothing`, `Tops`],
-				imageURL: './assets/seed/marketplace/gcrop.jpg',
-			},
-			{
-				itemName: 'Navy Peacoat',
-				itemPrice: 140,
-				numberInStock: 1,
-				tags: [`Women's Clothing`, `Tops`],
-				imageURL: './assets/seed/marketplace/bcoat.jpg',
-			},
-			{
-				itemName: 'Shein Bodysuit',
-				itemPrice: 40,
-				numberInStock: 1,
-				tags: [`Women's Clothing`, `Tops`, `Bottoms`],
-				imageURL: './assets/seed/marketplace/shein.jpg',
-			},
-			{
-				itemName: 'Pink J.Crew Coat',
-				itemPrice: 70,
-				numberInStock: 1,
-				tags: [`Women's Clothing`, `Tops`],
-				imageURL: './assets/seed/marketplace/pink.jpg',
-			},
 
-		],
-	},
-],
+		const response = {
 
-const essosUserSchema = new Schema({
-	email: {type: String, required: true, unique: true },
-	hash: { type: String, required: true },
-	
-	accountType: String,
-	avatarURL: String,
-	
-	firstName: String,
-	lastName: String,
-	phone: String,
-	
-	billing_address_line1: String,
-	billing_address_line2: String,
-	billing_address_city: String,
-	billing_address_zip: String,
-	billing_address_state: String,
-	shipping_address_line1: String,
-	shipping_address_line2: String,
-	shipping__address_city: String,
-	shipping_address_zip: String,
-	shipping_address_state: String,
+			savedEssosUser,
+			savedShoppingCart,
 
-	mongoCollectionKey: { type: String, index: true, required: true },
+		};
 
-	token: String,
-	tokenCreatedAt: Date,
+		res.json(response);
 
-	marketplaceRef_id: { type: Schema.Types.ObjectId, ref: 'Marketplace' }
-	},
-	{
-		toObject:{ getters : true }	
-	}
-);
-
-const clientSchema = new Schema({
-	firstName: String,
-	lastName: String,
-	userName: String,
-	phoneNumber: String,
-	email: {type: String, required: true, unique: true },
-	billing_address_line1: String,
-	billing_address_line2: String,
-	billing_address_city: String,
-	billing_address_zip: String,
-	billing_address_state: String,
-	shipping_address_line1: String,
-	shipping_address_line2: String,
-	shipping__address_city: String,
-	shipping_address_zip: String,
-	shipping_address_state: String,
-	isMaster: Boolean,
-	employeeAuthorization: Boolean,
-	organizationAuthorization: Boolean,
-	employeeCounter: Number,
-	masterLookupIdentifier: String, // This might just be Organization name to make it easier. Think about scale
-	organizationName: String, // Used in the autocomplete to point Employees to the right way
-	rosterJob: String,
-	mongoCollectionKey: { type: String, required: true },
-	isAdmin: { type: Boolean, index: true },
-	hash: { type: String, required: true },
-	token: String,
-	tokenCreatedAt: Date,
-	clockInNumber: String,
-	accountType: String, 
-	status: String, // PendingApproval[Pending] - Registered
-	master_id: { type: Schema.Types.ObjectId, ref: 'Client' },
-	marketplaceRef_id: { type: Schema.Types.ObjectId, ref: 'Marketplace' }
-	},
-	{
-		toObject:{ getters : true }	
-	}
-);
-module.exports.seedEssosMarket = async (req, res, next) => {
+	} catch(err) { next(err) }
 
 }
-*/

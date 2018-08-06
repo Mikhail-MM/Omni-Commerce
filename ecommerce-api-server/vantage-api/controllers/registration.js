@@ -16,7 +16,6 @@ const MarketPlaceModels = require('../models/schemas/marketplace')
 const Marketplace = MarketPlaceModels.marketplaceSchema
 const MarketplaceModel = mongoose.model('Marketplace', Marketplace)
 
-const ShoppingCartSchema = MarketPlaceModels.storeItemSchema
 const ShoppingCartModel = MarketPlaceModels.ShoppingCartModel
 
 
@@ -110,7 +109,7 @@ module.exports.registerEssosUser = async (req, res, next) => {
 			
 			firstName: req.body.firstName,
 			lastName: req.body.lastName,
-			phoneNumber: req.body.phoneNumber,
+			phone: req.body.phoneNumber,
 
 			billing_address_line1	: req.body.billing_address_line1,
 			billing_address_line2	: req.body.billing_address_line2,
@@ -127,19 +126,6 @@ module.exports.registerEssosUser = async (req, res, next) => {
 
 		};
 
-		// Build new Marketplace for User
-		const marketplaceData = {
-
-			storeOwnerName: `${req.body.firstName} ${req.body.lastName}`,
-			mongoCollectionKey: mongoCollectionKey,
-		
-		};
-
-		const newMarketplace = new MarketplaceModel(marketplaceData);
-		const savedMarketplace = await newMarketplace.save();
-
-		// Bind reference between User and Marketplace 
-		userData.marketplaceRef_id = savedMarketplace._id;
 
 		const newEssosUser = new EssosUser(userData);
 		const savedEssosUser = await newEssosUser.save();
@@ -157,15 +143,8 @@ module.exports.registerEssosUser = async (req, res, next) => {
 		});
 
 		
-		const savedShoppingCart = await newShoppingCartForClient.save();
+		const savedShoppingCart = await newShoppingCart.save();
 
-		const updatedMarketplaceWithClientRef = await MarketplaceModel.findOneAndUpdate(
-			
-			{ _id: savedMarketplace._id }, 
-			{ ownerRef_id: savedEssosUser._id}, 
-			{ new: true }
-
-		);
 
 		const response = {
 
