@@ -379,7 +379,6 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 
 				accountType: 'Essos',
 				avatarURL: '/assets/seed/essos-avatars/fil.jpg',
-				// dont forget the hash u cucklord
 
 
 				billing_address_line1: '303 Washington St',
@@ -434,7 +433,6 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 
 				accountType: 'Essos',
 				avatarURL: '/assets/seed/essos-avatars/sara.jpg',
-				// dont forget the hash u cucklord
 
 				billing_address_line1: '553 Washington St',
 				billing_address_city: 'Hempstead',
@@ -489,7 +487,6 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 
 				accountType: 'Essos',
 				avatarURL: '/assets/seed/essos-avatars/sara.jpg',
-				// dont forget the hash u cucklord
 
 				billing_address_line1: '600 Washington St',
 				billing_address_city: 'Hempstead',
@@ -635,7 +632,9 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 					itemPrice,
 					numberInStock,
 					category,
-					imageURL
+					imageURL,
+					sellerRef_id: savedEssosUser._id,
+					postedBy: `${essosUser.firstName} ${essosUser.lastName}`
 				}
 
 				const newMarketplaceItem = new StoreItemModel(itemData)

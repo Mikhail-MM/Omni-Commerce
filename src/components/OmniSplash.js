@@ -7,7 +7,8 @@ import { seedOmniDatabase, seedEssosMarketplace } from '../actions/seed'
 
 const mapDispatchToProps = (dispatch) => ({
 	route: (node) => dispatch(routeToNode(node)),
-	seedOmniDatabase: () => dispatch(seedOmniDatabase())
+	seedOmniDatabase: () => dispatch(seedOmniDatabase()),
+	seedEssosMarketplace: () => dispatch(seedEssosMarketplace())
 })
 
 class OmniSplash extends Component {
