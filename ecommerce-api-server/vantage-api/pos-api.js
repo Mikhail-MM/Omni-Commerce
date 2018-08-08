@@ -93,6 +93,8 @@ router.route('/omni-child/')
 
 router.route('/seed/omni/')
 	.post(seed.seedOmniUsers)
+router.route('/seed/essos/')
+	.post(seed.seedEssosMarket)
 
 router.route('/clients/marketplace')
 	.post(upload.single('marketplaceAvatar'), images.uploadNewImage, register.configureNewUser, clients.createClient)
