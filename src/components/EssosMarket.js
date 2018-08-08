@@ -86,8 +86,9 @@ class EssosMarket extends Component {
 
 	          <div className='search-bar-container'>
 	          </div>
-
-	          { marketplaceItems && this.generateItemDOM()}
+	          < div className='main-items-container' >
+	          	{ marketplaceItems && this.generateItemDOM()}
+	          </div>
 	      </div>
 		)
 	}
