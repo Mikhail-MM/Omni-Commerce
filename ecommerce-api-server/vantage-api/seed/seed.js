@@ -18,8 +18,9 @@ const MenuItemSchema = TerminalSchemas.menuSchema
 const storeConfig = require('../models/schemas/storeConfig')
 const storeConfigSchema = storeConfig.storeConfigSchema
 
-const StoreItemModel = MarketPlaceModels.StoreItemModel
-const ShoppingCartModel = MarketPlaceModels.ShoppingCartModel
+const MarketplaceModels = require('../models/schemas/marketplace')
+const StoreItemModel = MarketplaceModels.StoreItemModel
+const ShoppingCartModel = MarketplaceModels.ShoppingCartModel
 
 
 module.exports.seedOmniUsers = async (req, res, next) => {
@@ -402,7 +403,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 					},
 					{
 						itemName: 'Breitling Chronometre Certifie',
-						itemPrice: itemPrice: 4162,
+						itemPrice: 4162,
 						numberInStock: 1,
 						tags: [`Watches`],
 						imageURL: './assets/seed/marketplace/bling.jpg',
@@ -531,7 +532,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 						imageURL: './assets/seed/marketplace/chanel.jpg',
 					},
 					{
-						itemName: 'Glossier Blush Kit'
+						itemName: 'Glossier Blush Kit',
 						itemPrice: 40,
 						numberInStock: 1, 
 						tags: [`Beauty`],

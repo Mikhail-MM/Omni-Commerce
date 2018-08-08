@@ -36,7 +36,7 @@ class EssosMarket extends Component {
 					</div>
 					<div className='ui_card_content'>
 						<h3 className="StoreItem-Header-Name"> {item.itemName} </h3>
-						<p className="store-link" onClick={() => this.props.routeToMarketplace(`/essos/user/${item._sellerRef_id}`)}}> Posted By: {item.postedBy} </p>
+						<p className="store-link" onClick={() => this.props.routeToMarketplace(`/essos/user/${item._sellerRef_id}`)}> Posted By: {item.postedBy} </p>
 						<p className="store-pricing"> ${item.itemPrice} </p>
 						<button className="button_no_border_radius" ><span> Add To Cart Icon </span> </button>
 					</div>
@@ -46,6 +46,8 @@ class EssosMarket extends Component {
 	}
 
 	render() {
+		const { marketplaceItems } = this.props
+		
 		return(
 			<div className='app-root'>  
 	          <header className='app-header'>
@@ -85,7 +87,7 @@ class EssosMarket extends Component {
 	          <div className='search-bar-container'>
 	          </div>
 
-	          { marketPlaceItems && generateItemDOM()}
+	          { marketplaceItems && this.generateItemDOM()}
 	      </div>
 		)
 	}

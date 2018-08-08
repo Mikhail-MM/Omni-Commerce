@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import '../styles/UserPage.css'
 
 const filterItemsBySeller = (items, sellerID) => {
-	return items.filter(item => item.)
+	return items.filter(item => item._id == sellerID)
 }
 
 const mapStateToProps = (state, ownprops) => {
@@ -20,7 +20,7 @@ class UserPage extends Component {
 		userAvatarURL: ''
 	}
 
-	const generateItemDOM = () => {
+	generateItemDOM = () => {
 		
 		const { sellerItems } = this.props
 
@@ -32,7 +32,7 @@ class UserPage extends Component {
 					</div>
 					<div className='ui_card_content'>
 						<h3 className="StoreItem-Header-Name"> {item.itemName} </h3>
-						<p className="store-link" onClick={() => this.props.routeToMarketplace(`/essos/user/${item._sellerRef_id}`)}}> Posted By: {item.postedBy} </p>
+						<p className="store-link" onClick={() => this.props.routeToMarketplace(`/essos/user/${item._sellerRef_id}`)}> Posted By: {item.postedBy} </p>
 						<p className="store-pricing"> ${item.itemPrice} </p>
 						<button className="button_no_border_radius" ><span> Add To Cart Icon </span> </button>
 					</div>

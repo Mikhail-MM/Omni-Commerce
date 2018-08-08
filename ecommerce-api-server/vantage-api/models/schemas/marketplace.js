@@ -15,7 +15,7 @@ const storeItemSchema = new Schema({
 	mongoCollectionKey: String,
 	imageURL: String,
 	description: String,
-	postedBy: {type: String, required: true }
+	postedBy: {type: String, required: true },
 	category: String, // Consider consolidating with tags
 	options: [String],
 	tags: [String],
