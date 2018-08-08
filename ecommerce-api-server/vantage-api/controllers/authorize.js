@@ -1,4 +1,5 @@
 const moment = require('moment')
+const bcrypt = require('bcrypt');
 
 const Client = require('../models/schemas/client');
 
@@ -15,6 +16,7 @@ const config = require('../models/config');
 
 exports.login = async (req, res, next) => {
 	try{
+		console.log(req.body)
 		if (!req.body.email)
 			return res.status(404).send("Please input your Email to log in.");
 		if (!req.body.password)
@@ -26,32 +28,30 @@ exports.login = async (req, res, next) => {
 		const authorizedClient = await userCollection.findOne({email: req.body.email})
 			if (!authorizedClient) { return res.status(404).send("Account with this email does not exist")}
 
-		authorizedClient.comparePassword(req.body.password, async (err, passwordMatch) => {
-		
-		if (!passwordMatch) { return res.status(403).send("Invalid Password") }
-			
-			const payload = {
+		console.log(authorizedClient)
+
+		const pwMatch = await bcrypt.compare(req.body.password, authorizedClient.hash);
+
+		if(!pwMatch)  return res.status(403).send("Invalid Password")
+
+		const payload = {
 				_id							: authorizedClient._id,
 				email 						: authorizedClient.email,
 				mongoCollectionKey 			: authorizedClient.mongoCollectionKey,
 				accountType					: authorizedClient.accountType,
-			}
+		}
 
-			const token = jwt.encode(payload, config.secret)
-			const tokenCreatedAt = Date.now()
+		const token = jwt.encode(payload, config.secret)
+		const tokenCreatedAt = Date.now()
 			
-			authorizedClient.tokenCreatedAt = tokenCreatedAt
-			authorizedClient.token = token;
+		authorizedClient.tokenCreatedAt = tokenCreatedAt
+		authorizedClient.token = token;
 
-			// Do not need await, can send login response even if client is not yet saved - remove later, keep now for validation
+		const savedClient = await authorizedClient.save()
 
-			const savedClient = await authorizedClient.save()
-			
-				return res.json({
-					token: token,
-					accountType: authorizedClient.accountType,
-				});
-		
+		return res.json({
+			token: token,
+			accountType: authorizedClient.accountType,
 		});
 	
 	} catch(err) { next(err) }
@@ -72,7 +72,7 @@ async function validateToken(req, res, next, authReq) {
 			console.log("decoded", decoded)
 
 			console.log("Looking for validated client")
-			const userCollection = (req.body.loginPath === 'omni') ? OmniUser : EssosUser 
+			const userCollection = (decoded.accountType === 'Essos') ? EssosUser : OmniUser 
 			
 			const validatedClient = await userCollection.findById(decoded._id)
 
@@ -105,10 +105,13 @@ async function validateToken(req, res, next, authReq) {
 			return res.status(403).send("Super Admin privileges required");
 			
 		if (authReq.attachMongoCollectionKeyHeaders) {
+			/*
 			if (validatedClient.accountType === "OnlineMerchant") 
 				return res.status(403).send("Invalid endpoint request.")
 			if (!validatedClient.employeeAuthorization && !validatedClient.isMaster)
 				return res.status(403).send("Sorry, your employer has not approved your access to the terminal yet.")
+
+			*/
 
 				req.body.client = validatedClient;
 				req.headers['x-mongo-key'] = validatedClient.mongoCollectionKey;

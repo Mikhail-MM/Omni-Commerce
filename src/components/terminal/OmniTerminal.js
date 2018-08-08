@@ -6,6 +6,8 @@ import { fetchTickets } from '../../actions/tickets-transactions'
 import { fetchLoggedUsers } from '../../actions/employees'
 import { showModal } from '../../actions/modals'
 
+import ModalRoot from '../ModalRoot'
+
 import  '../styles/OmniTerminal.css'
 
 const mapStateToProps = (state) => {
@@ -38,6 +40,7 @@ class OmniTerminal extends Component {
 	render() {
 		return(
 			<div className='page-wrapper'>
+				<ModalRoot />
 				<div className='omni-terminal__centered-rectangle' >
 					<div className='row-1-big'>
 						<div className='mainframe-container'>

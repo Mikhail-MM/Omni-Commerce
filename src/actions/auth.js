@@ -1,6 +1,5 @@
 import { routeUserAfterLogin } from './routing'
 
-function throwError(errorMessage) { throw new Error(errorMessage) }
 
 function authSuccess (userInfo) {
 	console.log(userInfo)
@@ -12,6 +11,7 @@ function authSuccess (userInfo) {
 } 
 
 function authFail (err) {
+	console.log('sending error text to auth reducer... why is it not found? ')
 	return {
 	type: 'INVALID_CREDENTIALS',
 	errorText: err,
@@ -25,6 +25,7 @@ export function logOut() {
 }
 
 export function attemptLogIn(credentials) {
+	console.log(credentials)
 	return dispatch => {
 		return fetch('http://localhost:3001/authorize', {
 		headers:{
@@ -34,7 +35,7 @@ export function attemptLogIn(credentials) {
 		mode: 'cors', 
 		body: JSON.stringify(credentials)
 		})
-		.then(response => response.ok ? response.json() : throwError(response.statusText))
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
 			dispatch(authSuccess(json))
 			dispatch(routeUserAfterLogin(json.accountType))

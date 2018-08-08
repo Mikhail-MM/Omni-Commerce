@@ -25,9 +25,11 @@ const mapStateToProps = state => {
 
 const WaiterCallScreenMenu = props => {
 		const { loggedInUsers } = props
+		console.log(loggedInUsers)
 		const generateWaiterCallScreen = () => {
 			if (loggedInUsers) return loggedInUsers.map(employee => <button key={employee} onClick={() => props.createNewTicket(props.token, employee)}> {employee} </button>)
-	}
+		}
+	
 	return(
 		<div>
 			{ props.loggedInUsers && generateWaiterCallScreen() }
@@ -44,8 +46,8 @@ const WaiterCallScreenModal = props => {
 				style={modalStyle}
 				contentLabel="Employee Manifest"
 				>
-				<WaiterCallScreenMenu token={token} loggedInusers={loggedInUsers} createNewTicket={createNewTicket}/>
-				<button fluid color='black' onClick={() => this.props.hideModal()}> Cancel </button>
+				<WaiterCallScreenMenu token={token} loggedInUsers={loggedInUsers} createNewTicket={createNewTicket}/>
+				<button onClick={() => props.hideModal()}> Cancel </button>
 			</Modal>
 		</div>
 	)

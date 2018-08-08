@@ -77,7 +77,7 @@ const CustomAddonModal = props => {
 					activeTicket={activeTicket}
 					updateTransaction={updateTransaction}
 				/>
-				<button color='black' onClick={() => this.props.hideModal()}> Cancel </button>
+				<button onClick={() => props.hideModal()}> Cancel </button>
 
 			</Modal>
 		</div>

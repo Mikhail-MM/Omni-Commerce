@@ -6,7 +6,7 @@ const BigNumber = require('bignumber.js');
 
 
 
-module.exports.calculatePricing = function(req, res, next) {
+module.exports.calculatePricing = async function(req, res, next) {
 	const arrayOfBigNumberMenuItemPrices = req.body.menuItemSubdocs.map(subdoc => new BigNumber(subdoc.itemPrice))
 	const subTotalBigNumber = arrayOfBigNumberMenuItemPrices.reduce( (acc, curr) => acc.plus(curr))
 	const taxRate = new BigNumber(0.07)
@@ -16,18 +16,25 @@ module.exports.calculatePricing = function(req, res, next) {
 	const totalTaxDisplay = (subTotalBigNumber.times(taxRate)).round(2).toNumber()
 	const total = (subTotalBigNumber.plus(totalTax)).toNumber()
 	const totalDisplay = (subTotalBigNumber.plus(totalTax)).round(2).toNumber()
+	
 	const TransactionModel = mongoose.model('Transaction', TicketTransaction, 'Transactions_' + req.headers['x-mongo-key'])
-	TransactionModel.findOneAndUpdate({_id: req.params.id }, 
-		{ subTotalReal: subTotal,
+	
+	const updatedTransaction = await TransactionModel.findOneAndUpdate(
+		{_id: req.params.id },
+		{
+		  subTotalReal: subTotal,
 		  subTotal: subTotalDisplay,
 		  taxReal: totalTax,
 		  tax: totalTaxDisplay,
 		  totalReal: total,
-		  total: totalDisplay, }, {new: true}, function(err, transaction){
-		  	if(err) next(err)
-		  	if(!TransactionModel) res.status(404).send("No transaction item with that ID!")
-		  	res.json(TransactionModel)
-	});
+		  total: totalDisplay,
+		},
+		{ new: true }
+	)
+
+	console.log(updatedTransaction)
+
+	res.json(updatedTransaction)
 }	
 
 

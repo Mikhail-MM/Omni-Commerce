@@ -26,7 +26,7 @@ const AddTerminalItemModal = props => {
 				>
 
 				<AddTerminalItemForm />
-				<button color='black' onClick={() => this.props.hideModal()}> Cancel </button>
+				<button onClick={() => props.hideModal()}> Cancel </button>
 
 			</Modal>
 		</div>

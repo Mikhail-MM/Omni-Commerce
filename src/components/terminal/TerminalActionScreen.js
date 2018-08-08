@@ -55,7 +55,7 @@ class TerminalActionScreen extends Component {
 			
 			const classCheck = (visibleCategory == category) ? 'Show' : 'Hide'
 
-			return <div key={category} className={`${classCheck} ${category}`}> {this.mapTerminalItemsToDOM()} </div> 
+			return <div key={category} className={`${classCheck} ${category} touchpad-subcategory`}> {this.mapTerminalItemsToDOM(category)} </div> 
 		
 		})
 	}
@@ -65,7 +65,7 @@ class TerminalActionScreen extends Component {
 	mapTerminalItemsToDOM = category => {
 		const { token, menuItems, activeTicket } = this.props
 
-		menuItems[category].map(item => {
+		return menuItems[category].map(item => {
 			return(
   				<div className="ui-pos-item" key={item._id} onClick={() => this.props.updateTransactionWithMenuItem(token, item._id, activeTicket._id)}>
   					<div className="ui-pos-item_image">
@@ -112,7 +112,7 @@ class TerminalActionScreen extends Component {
 	}
 
 	displayPricingFromActiveTicket = () => {
-		const { activeTicket, menuItems } = this.prop
+		const { activeTicket, menuItems } = this.props
 
 		return(
 			<div>

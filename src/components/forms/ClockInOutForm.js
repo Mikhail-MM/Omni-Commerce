@@ -74,4 +74,4 @@ class ClockInOutForm extends Component {
 	}
 }
 
-export default connect(mapStateToProps)(ClockInOutForm)
+export default connect(mapStateToProps, mapDispatchToProps)(ClockInOutForm)

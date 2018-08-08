@@ -32,7 +32,7 @@ td {
 .main-action-wrapper {
 	display: flex;
 
-	height: 100%;
+	height: calc(100% - 60px);
 	width: 100%;
 
 	background-color: #525f7f;
@@ -50,12 +50,25 @@ td {
 .touchpad {
 	display: flex;
 	justify-content: space-around;
-	flex-direction: flex-start;
 	flex-wrap: wrap;
 
 	flex-grow: 1;
 
-	width: 100%;
+
+	padding: 25px 25px;
+
+	background-color: green;
+
+	overflow-y: scroll;
+}
+
+.touchpad-subcategory {
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+
+	flex-grow: 1;
+
 
 	padding: 25px 25px;
 
@@ -139,3 +152,7 @@ td {
 
 	border-radius: 10px;
 }
+
+.Hide { 
+	display: none;
+ }

@@ -58,7 +58,7 @@ export function createNewTicket(token, createdBy) {
 		.then(json => {
 			dispatch(fetchTickets(token))
 			dispatch(receiveCurrentTicket(json))
-			dispatch(push('/ticket')) 			
+			dispatch(push('/omni/terminal/tickets')) 			
 			}
 		)
 		.catch(err => console.log(err))
@@ -78,7 +78,7 @@ export function fetchCurrentTicketDetails(token, ticket_Id) {
 		})
 		.then(response => response.ok ? response.json() : new Error(response.statusText))
 		.then(json => dispatch(receiveCurrentTicket(json)))
-		.then(() => dispatch(push('/ticket')))
+		.then(() => dispatch(push('/omni/terminal/tickets')))
 		.catch(err => console.log(err))
 	}
 }

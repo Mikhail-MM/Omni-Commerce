@@ -44,7 +44,7 @@ module.exports.seedOmniUsers = async (req, res, next) => {
 				isMaster: false,
 				isAdmin: false,
 
-				avatarURL: './assets/seed/omni-avatars/2.jpg',
+				avatarURL: '/assets/seed/omni-avatars/2.jpg',
 
 				mongoCollectionKey: seedMongoKey,
 				hash: hashedPass,
@@ -63,7 +63,7 @@ module.exports.seedOmniUsers = async (req, res, next) => {
 				isMaster: false,
 				isAdmin: false,
 
-				avatarURL: './assets/seed/omni-avatars/3.jpg',
+				avatarURL: '/assets/seed/omni-avatars/3.jpg',
 
 				mongoCollectionKey: seedMongoKey,
 				hash: hashedPass,
@@ -82,7 +82,7 @@ module.exports.seedOmniUsers = async (req, res, next) => {
 				isMaster: false,
 				isAdmin: false,
 
-				avatarURL: './assets/seed/omni-avatars/4.jpg',
+				avatarURL: '/assets/seed/omni-avatars/4.jpg',
 
 				mongoCollectionKey: seedMongoKey,
 				hash: hashedPass,
@@ -101,7 +101,7 @@ module.exports.seedOmniUsers = async (req, res, next) => {
 				isMaster: false,
 				isAdmin: false,
 
-				avatarURL: './assets/seed/omni-avatars/5.jpg',
+				avatarURL: '/assets/seed/omni-avatars/5.jpg',
 
 				mongoCollectionKey: seedMongoKey,
 				hash: hashedPass,
@@ -120,7 +120,7 @@ module.exports.seedOmniUsers = async (req, res, next) => {
 				isMaster: false,
 				isAdmin: false,
 
-				avatarURL: './assets/seed/omni-avatars/6.jpg',
+				avatarURL: '/assets/seed/omni-avatars/6.jpg',
 
 				mongoCollectionKey: seedMongoKey,
 				hash: hashedPass,
@@ -139,7 +139,7 @@ module.exports.seedOmniUsers = async (req, res, next) => {
 				isMaster: false,
 				isAdmin: false,
 
-				avatarURL: './assets/seed/omni-avatars/7.jpg',
+				avatarURL: '/assets/seed/omni-avatars/7.jpg',
 
 				mongoCollectionKey: seedMongoKey,
 				hash: hashedPass,
@@ -158,7 +158,7 @@ module.exports.seedOmniUsers = async (req, res, next) => {
 				isMaster: false,
 				isAdmin: false,
 
-				avatarURL: './assets/seed/omni-avatars/8.jpg',
+				avatarURL: '/assets/seed/omni-avatars/8.jpg',
 
 				mongoCollectionKey: seedMongoKey,
 				hash: hashedPass,
@@ -180,7 +180,7 @@ module.exports.seedOmniUsers = async (req, res, next) => {
 			isMaster: true,
 			isAdmin: true,
 
-			avatarURL: './assets/seed/omni-avatars/1.jpg',
+			avatarURL: '/assets/seed/omni-avatars/1.jpg',
 
 			mongoCollectionKey: seedMongoKey,
 			hash: hashedPass,
@@ -266,7 +266,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 				phone: '(411)-789-4131',
 
 				accountType: 'Essos',
-				avatarURL: './assets/seed/essos-avatars/aturner.jpg',
+				avatarURL: '/assets/seed/essos-avatars/aturner.jpg',
 				// dont forget the hash u cucklord
 
 
@@ -287,42 +287,42 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 						itemPrice: 120,
 						tags: [`Men's Shoes`],
 						numberInStock: 1,
-						imageURL: './assets/seed/marketplace/pjordan.jpg',
+						imageURL: '/assets/seed/marketplace/pjordan.jpg',
 					},
 					{
 						itemName: 'Charcoal Adidas',
 						itemPrice: 59,
 						tags: [`Men's Shoes`],
 						numberInStock: 4,
-						imageURL: './assets/seed/marketplace/chadidas.jpg',
+						imageURL: '/assets/seed/marketplace/chadidas.jpg',
 					},
 					{
 						itemName: 'Felt Slip-Ons',
 						itemPrice: 39,
 						numberInStock: 2,
 						tags: [`Men's Shoes`, `Women's Shoes`],
-						imageURL: './assets/seed/marketplace/fslip.jpg'
+						imageURL: '/assets/seed/marketplace/fslip.jpg'
 					},
 					{
 						itemName: 'Butterfly Boots',
 						itemPrice: 60,
 						numberInStock: 3, 
 						tags: [`Women's Shoes`],
-						imageURL: './assets/seed/marketplace/bboots.jpg',
+						imageURL: '/assets/seed/marketplace/bboots.jpg',
 					},
 					{
 						itemName: 'Black Yeezys',
 						itemPrice: 435,
 						numberInStock: 2,
 						tags: [`Men's Shoes`, `Women's Shoes`],
-						imageURL: './assets/seed/marketplace/bfeezy.jpg',
+						imageURL: '/assets/seed/marketplace/bfeezy.jpg',
 					},
 					{
 						itemName: 'Black Levis',
 						itemPrice: 30,
 						numberInStock: 10,
 						tags: [`Men's Shoes`, `Women's Shoes`],
-						imageURL: './assets/seed/marketplace/blevi.jpg'
+						imageURL: '/assets/seed/marketplace/blevi.jpg'
 
 					},
 					{
@@ -330,42 +330,42 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 						itemPrice: 50,
 						numberInStock: 2,
 						tags: [`Women's Shoes`],
-						imageURL: './assets/seed/marketplace/pnike.jpg',
+						imageURL: '/assets/seed/marketplace/pnike.jpg',
 					},
 					{
 						itemName: 'Black Adidas',
 						itemPrice: 100,
 						numberInStock: 1,
 						tags: [`Men's Shoes`],
-						imageURL: './assets/seed/marketplace/badidas.jpg',
+						imageURL: '/assets/seed/marketplace/badidas.jpg',
 					},
 					{
 						itemName: 'Black Leather Hi-Tops',
 						itemPrice: 100,
 						numberInStock: 2, 
 						tags: [`Men's Shoes`],
-						imageURL: './assets/seed/marketplace/btop.jpg',
+						imageURL: '/assets/seed/marketplace/btop.jpg',
 					},
 					{
 						itemName: 'Original Air Jordan 1',
 						itemPrice: 570,
 						numberInStock: 1,
 						tags: [`Men's Shoes`],
-						imageURL: './assets/seed/marketplace/j1.jpg',
+						imageURL: '/assets/seed/marketplace/j1.jpg',
 					},
 					{
 						itemName: 'Tribal Canvas Vans',
 						itemPrice: 88,
 						numberInStock: 1,
 						tags: [`Men's Shoes`, `Women's Shoes`],
-						imageURL: './assets/seed/marketplace/tribals.jpg'
+						imageURL: '/assets/seed/marketplace/tribals.jpg'
 					},
 					{
 						itemName: 'Loafmaster Loafers',
 						itemPrice: 90,
 						numberInStock: 2,
 						tags: [`Men's Shoes`],
-						imageURL: './assets/seed/marketplace/loafman.jpg',
+						imageURL: '/assets/seed/marketplace/loafman.jpg',
 					},
 				],
 			},
@@ -378,7 +378,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 				phone: '(551)-412-2312',
 
 				accountType: 'Essos',
-				avatarURL: './assets/seed/essos-avatars/fil.jpg',
+				avatarURL: '/assets/seed/essos-avatars/fil.jpg',
 				// dont forget the hash u cucklord
 
 
@@ -399,28 +399,28 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 						itemPrice: 1650,
 						numberInStock: 1,
 						tags: [`Watches`],
-						imageURL: './assets/seed/marketplace/lumi.jpg',
+						imageURL: '/assets/seed/marketplace/lumi.jpg',
 					},
 					{
 						itemName: 'Breitling Chronometre Certifie',
 						itemPrice: 4162,
 						numberInStock: 1,
 						tags: [`Watches`],
-						imageURL: './assets/seed/marketplace/bling.jpg',
+						imageURL: '/assets/seed/marketplace/bling.jpg',
 					},
 					{
 						itemName: 'Wood-Grain Orient Mako',
 						itemPrice: 300,
 						numberInStock: 2,
 						tags: [`Watches`],
-						imageURL: './assets/seed/marketplace/mako.jpg',
+						imageURL: '/assets/seed/marketplace/mako.jpg',
 					},
 					{
 						itemName: 'Sekonda Mens Classic',
 						itemPrice: 450,
 						numberInStock: 2,
 						tags: [`Watches`],
-						imageURL: './assets/seed/marketplace/sekonda.jpg',
+						imageURL: '/assets/seed/marketplace/sekonda.jpg',
 					},
 				],
 			},
@@ -433,7 +433,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 				phone: '(222)-314-4444',
 
 				accountType: 'Essos',
-				avatarURL: './assets/seed/essos-avatars/sara.jpg',
+				avatarURL: '/assets/seed/essos-avatars/sara.jpg',
 				// dont forget the hash u cucklord
 
 				billing_address_line1: '553 Washington St',
@@ -453,28 +453,28 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 						itemPrice: 39,
 						numberInStock: 1,
 						tags: [`Women's Clothing`, `Tops`],
-						imageURL: './assets/seed/marketplace/gcrop.jpg',
+						imageURL: '/assets/seed/marketplace/gcrop.jpg',
 					},
 					{
 						itemName: 'Navy Peacoat',
 						itemPrice: 140,
 						numberInStock: 1,
 						tags: [`Women's Clothing`, `Tops`],
-						imageURL: './assets/seed/marketplace/bcoat.jpg',
+						imageURL: '/assets/seed/marketplace/bcoat.jpg',
 					},
 					{
 						itemName: 'Shein Bodysuit',
 						itemPrice: 40,
 						numberInStock: 1,
 						tags: [`Women's Clothing`, `Tops`, `Bottoms`],
-						imageURL: './assets/seed/marketplace/shein.jpg',
+						imageURL: '/assets/seed/marketplace/shein.jpg',
 					},
 					{
 						itemName: 'Pink J.Crew Coat',
 						itemPrice: 70,
 						numberInStock: 1,
 						tags: [`Women's Clothing`, `Tops`],
-						imageURL: './assets/seed/marketplace/pink.jpg',
+						imageURL: '/assets/seed/marketplace/pink.jpg',
 					},
 
 				],
@@ -488,7 +488,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 				phone: '(213)-231-4131',
 
 				accountType: 'Essos',
-				avatarURL: './assets/seed/essos-avatars/sara.jpg',
+				avatarURL: '/assets/seed/essos-avatars/sara.jpg',
 				// dont forget the hash u cucklord
 
 				billing_address_line1: '600 Washington St',
@@ -508,49 +508,49 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 						itemPrice: 150,
 						numberInStock: 1, 
 						tags: [`Beauty`],
-						imageURL: './assets/seed/marketplace/mv.jpg',
+						imageURL: '/assets/seed/marketplace/mv.jpg',
 					},
 					{
 						itemName: 'Miss Dior Fragrance',
 						itemPrice: 50,
 						numberInStock: 30,
 						tags: [`Beauty`],
-						imageURL: './assets/seed/marketplace/mdior.jpg',
+						imageURL: '/assets/seed/marketplace/mdior.jpg',
 					},
 					{
 						itemName: 'Makeup Brush Set',
 						itemPrice: 29,
 						numberInStock: 1,
 						tags: [`Beauty`],
-						imageURL: './assets/seed/marketplace/brushset.jpg',
+						imageURL: '/assets/seed/marketplace/brushset.jpg',
 					},
 					{
 						itemName: 'Chanel No. 5',
 						itemPrice: 69,
 						numberInStock: 20,
 						tags: [`Beauty`],
-						imageURL: './assets/seed/marketplace/chanel.jpg',
+						imageURL: '/assets/seed/marketplace/chanel.jpg',
 					},
 					{
 						itemName: 'Glossier Blush Kit',
 						itemPrice: 40,
 						numberInStock: 1, 
 						tags: [`Beauty`],
-						imageURL: './assets/seed/marketplace/glossier.jpg',
+						imageURL: '/assets/seed/marketplace/glossier.jpg',
 					},
 					{
 						itemName: 'Prestige Mens Pomade',
 						itemPrice: 29,
 						numberInStock: 2,
 						tags: [`Beauty`],
-						imageURL: './assets/seed/marketplace/pomade.jpg',		
+						imageURL: '/assets/seed/marketplace/pomade.jpg',		
 					},
 					{
 						itemName: 'Nude By Nature Concealer',
 						itemPrice: 15,
 						numberInStock: 1,
 						tags: [`Beauty`],
-						imageURL: './assets/seed/marketplace/concealer.jpg',
+						imageURL: '/assets/seed/marketplace/concealer.jpg',
 					},
 				],	
 			},

@@ -69,7 +69,7 @@ class AuthenticationForm extends Component {
 			loginPath: pathway,
 
 		}
-
+		console.log(credentials)
 		return this.props.attemptLogin(credentials)
 
 	}

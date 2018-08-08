@@ -73,7 +73,7 @@ const CashPaymentModal = props => {
 					activeTicket={activeTicket} 
 					sendCashPaymentToApi={sendCashPaymentToApi}
 				/>
-				<button onClick={() => this.props.hideModal()}> Cancel </button>
+				<button onClick={() => props.hideModal()}> Cancel </button>
 
 			</Modal>
 		</div>

@@ -28,7 +28,7 @@ const EmployeePunchClockFormModal = props => {
 					<div>
 						{ (modalProps.formSelector === "Clock In" ) && <ClockInOutForm option={modalProps.formSelector}/> }
 						{ (modalProps.formSelector === "Clock Out" ) && <ClockInOutForm option={modalProps.formSelector}/> }
-						<button fluid color='black' onClick={() => this.props.hideModal()}> Cancel </button>
+						<button onClick={() => props.hideModal()}> Cancel </button>
 					</div>
 			</Modal>
 		</div>
