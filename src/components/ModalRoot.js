@@ -11,6 +11,8 @@ import CashPaymentModal  from './modals/CashPaymentModal'
 import CardPaymentModal from './modals/CardPaymentModal'
 import CustomAddonModal from './modals/CustomAddonModal'
 
+import ConfirmCartModal from './modals/ConfirmCartModal'
+
 import AuthenticationForm from './forms/registration/AuthenticationForm'
 
 const MODAL_COMPONENTS = {
@@ -24,6 +26,8 @@ const MODAL_COMPONENTS = {
 	'CUSTOM_ADDON_MODAL': CustomAddonModal,
 
 	'ADD_EMPLOYEE_MODAL': AuthenticationForm,
+
+	'CONFIRM_CART_ADDITION': ConfirmCartModal,
 }
 
 

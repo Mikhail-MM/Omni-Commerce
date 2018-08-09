@@ -2,7 +2,12 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import './styles/EssosMarket.css';
 
-import { retrieveAllItemsForSale, retrieveShoppingCart } from '../actions/marketplace'
+import ModalRoot from './ModalRoot'
+
+import { retrieveAllItemsForSale } from '../actions/marketplace'
+import { retrieveShoppingCart } from '../actions/shopping-cart'
+
+import { showModal } from '../actions/modals'
 import { routeToNode } from '../actions/routing'
 
 const mapStateToProps = state => {
@@ -53,6 +58,9 @@ class EssosMarket extends Component {
 		
 		return(
 			<div className='app-root'>  
+
+			<ModalRoot />
+	        
 	          <header className='app-header'>
 	              <div className='logo-container'>
 	              </div>

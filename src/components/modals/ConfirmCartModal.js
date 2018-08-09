@@ -7,15 +7,16 @@ import { hideModal } from '../../actions/modals';
  
 import { pushItemIntoShoppingCart } from '../../actions/shopping-cart'
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
 	hideModal: () => dispatch(hideModal()),
-	pushItemIntoShoppingCart: () => dispatch(pushItemIntoShoppingCart(token, itemID, requestedAmount, existingCountInCart)),
+	pushItemIntoShoppingCart: (token, itemID, requestedAmount, existingCountInCart) => dispatch(pushItemIntoShoppingCart(token, itemID, requestedAmount, existingCountInCart)),
 })
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
 	const { token } = state.authReducer
 	const { modalType, modalProps } = state.modalReducer
-	return { token, modalType, modalProps }
+	const { shoppingCart } = state.shoppingCartReducer
+	return { token, modalType, modalProps, shoppingCart }
 }
 
 class ConfirmCartModal extends Component {
@@ -32,13 +33,13 @@ class ConfirmCartModal extends Component {
 	}
 
 	addItemToCart = (itemID) => {
-		const { token } = this.props
+		const { token, shoppingCart } = this.props
 		console.log("Looking if item is already in cart, before adding item to shopping cart, existingCountInCart defaulting to 0")
-		const existingCountInCart = 0
+		let existingCountInCart = 0
 		// WARNING: If we don't have a cached shopping cart, this check will fail and we will add too much to the cart. Could return a dispatch to fetch or just let failsafes take care of it
-		if (shoppingCart.itemsBought.find(element => element.itemRef_id == itemId)) {
+		if (shoppingCart.itemsBought.find(element => element.itemRef_id == itemID)) {
 			console.log("Item that user is adding to cart already exists as entity in their shopping cart by itemRef_id")
-			const itemIndex = shoppingCart.itemsBought.findIndex(element => element.itemRef_id == itemId)
+			const itemIndex = shoppingCart.itemsBought.findIndex(element => element.itemRef_id == itemID)
 			console.log("Sending Updating existingCountInCart To Dispatch: ")
 			existingCountInCart = shoppingCart.itemsBought[itemIndex].numberRequested
 			console.log(existingCountInCart);
@@ -51,7 +52,7 @@ class ConfirmCartModal extends Component {
 		return(
 			<div>
 				<Modal
-					isOpen={props.modalType === 'CONFIRM_CART_ADDITION'}
+					isOpen={this.props.modalType === 'CONFIRM_CART_ADDITION'}
 					style={modalStyle}
 					contentLabel="Example Modal"
 					>
@@ -61,7 +62,7 @@ class ConfirmCartModal extends Component {
 					<input type='number' value={this.state.requestedAmount} onChange={e => this.handleChange('requestedAmount', e.target.value)} />
 					<button onClick={this.addItemToCart(item._id)}>Add To Cart</button>
 
-					<button onClick={() => props.hideModal()}> Cancel </button>
+					<button onClick={() => this.props.hideModal()}> Cancel </button>
 
 				</Modal>
 			</div>

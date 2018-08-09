@@ -1,3 +1,23 @@
+export function retrieveShoppingCart(token) {
+	console.log("Sending token to server for shopping cart retrieval")
+	console.log(token)
+	return dispatch => {
+		return fetch('http://localhost:3001/shoppingCart/userLookup/', {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': token
+			},
+			method: 'GET',
+			mode: 'cors'
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => {
+			if (json.message) { return new Error(json.message) }
+			dispatch(receiveShoppingCart(json))})
+		.catch(err => console.log(err))
+	}
+}
+
 export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountAlreadyInCart) {
 	const url = 'http://localhost:3001/storeItem/' + itemId
 	console.log("Action Creator to Push Item into Shopping Cart Triggered - Pinging Item on tap in DB")
@@ -100,5 +120,28 @@ export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountA
 			}
 		});
 
+	}
+}
+
+function receiveShoppingCart(shoppingCart) {
+	return {
+		type: 'RECEIVE_SHOPPING_CART',
+		shoppingCart
+	}
+}
+
+function receiveInvalidatedShoppingCartItems(invalidatedItems) {
+	return{
+		type: 'INVALID_CART_ORDER',
+		notifyUserOfCartInvalidation: true,
+		invalidatedItems
+	}
+}
+
+export function disregardInvalidatedItems() {
+	return {
+	type: 'DISREGARD_INVALIDATION',
+	notifyUserOfCartInvalidation: false,
+	invalidatedItems: null
 	}
 }
