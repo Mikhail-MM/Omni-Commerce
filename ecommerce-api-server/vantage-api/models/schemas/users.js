@@ -20,7 +20,7 @@ const omniUserSchema = new Schema({
 
 	mongoCollectionKey: { type: String, index: true, required: true },
 
-	teminalIDNumber: Number,
+	terminalIDNumber: Number,
 	 	
 	isAdmin: Boolean,
 	
