@@ -187,7 +187,7 @@ module.exports.seedOmniUsers = async (req, res, next) => {
 
 			terminalIDNumber: 1,
 
-			employeeCounter: omniChildren.length + 1,
+			employeeCounter: omniChildren.length + 2,
 		}
 		const terminalData = {
 			email: `${seedMongoKey}@terminal.com`,
@@ -195,7 +195,7 @@ module.exports.seedOmniUsers = async (req, res, next) => {
 			accountType: 'Terminal',
 			isAdmin: false,
 			isMaster: false,
-			teminalIDNumber: 0,
+			terminalIDNumber: 0,
 			mongoCollectionKey: seedMongoKey,
 		};
 		

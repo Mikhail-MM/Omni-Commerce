@@ -49,7 +49,7 @@ class ClockInOutForm extends Component {
 		return(
 			<div>
 			{ this.props.option === 'Clock In' && 
-				<form onSubmit={(e) => this.props.clockEmployeeIn(e, token, this.state.employeeNumber)}>
+				<form onSubmit={(e) => this.handleSubmit(e, token, this.state.employeeNumber)}>
 					<input
 						placeholder='Employee Number'
 						type='text'
@@ -59,7 +59,7 @@ class ClockInOutForm extends Component {
 					<button content='Submit'>Clock In</button>
 				</form> }
 			{ this.props.option === 'Clock Out' && 
-				<form onSubmit={(e) => this.props.clockEmployeeOut(e, token, this.state.employeeNumber)}>
+				<form onSubmit={(e) => this.handleSubmit(e, token, this.state.employeeNumber)}>
 					<input
 						placeholder='Employee Number'
 						type='text'

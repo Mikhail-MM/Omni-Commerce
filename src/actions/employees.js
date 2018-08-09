@@ -1,4 +1,4 @@
-function throwError(errorMessage) { throw new Error(errorMessage) }
+
 
 function receiveLoggedUsers(loggedUsers) {
 	console.log(loggedUsers)
@@ -18,11 +18,10 @@ export function fetchLoggedUsers(token) {
 			method: 'GET',
 			mode: 'cors'
 		})
-		.then(response => response.ok ? response.json() : throwError("Error"))
+		.then(response => response.ok ? response.json() : Promise.reject(response.errorText))
 		.then(json => {
-			if (json === null) return console.log("No users currently logged in")
 			dispatch(receiveLoggedUsers(json))
 		})
-		.catch(err => console.log(err))
+		.catch(err => { throw new Error(err) })
 	}
 }
