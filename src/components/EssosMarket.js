@@ -72,6 +72,9 @@ class EssosMarket extends Component {
 	              <div className='account-control'>
 	             	<div className='my-cart-button'>
 	              		<img className='my-cart-icon' src='./assets/icons/my-cart.svg' />
+	              		<div className='my-cart-dropdown'>
+
+	              		</div>
 	              	</div>
 
 	              	<div className='my-store-button'>
