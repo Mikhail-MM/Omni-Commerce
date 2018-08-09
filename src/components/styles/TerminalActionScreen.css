@@ -57,9 +57,9 @@ td {
 
 	padding: 25px 25px;
 
-	background-color: green;
+	background-color: rgb(192, 192, 192);
 
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 .touchpad-subcategory {
@@ -72,7 +72,6 @@ td {
 
 	padding: 25px 25px;
 
-	background-color: green;
 }
 
 .category-selection-buttons {
@@ -82,9 +81,9 @@ td {
 
 	height: 120px;
 	width: 100%;
-	background-color: red;
+	background-color: rgb(172, 167, 167);
 
-	overflow-y: scroll;
+	overflow-y: auto;
 	padding: 10px 20px;
 }
 
@@ -108,7 +107,7 @@ td {
 	width: 100%;
 	background-color: black;
 
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 .ledger-footer {

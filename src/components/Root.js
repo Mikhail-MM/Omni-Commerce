@@ -57,7 +57,8 @@ export default class Root extends Component {
 
                  		<Route exact path='/omni/terminal' component={OmniTerminal} />
                  		<Route exact path='/omni/terminal/tickets' component={TerminalActionScreen} />
-                 		<Route exact path='/essos/user' component={UserPage} />
+                 		<Route exact path='/essos/user/:id' component={UserPage} />
+                 		<Route exact path='/essos/profile/:id' render={() => <UserPage selfProfileView />} />
                  		<Route exact path='/admin' component={AdminTerminal} />
 
 					</Switch>
