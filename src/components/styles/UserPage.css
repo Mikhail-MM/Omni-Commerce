@@ -42,6 +42,12 @@
 	padding: 25px 25px ;
 }
 
+.cart-button {
+	text-align: center;
+	padding-top: 10px;
+	height: 50px;
+	background-color: gray;
+}
 /* mockups */
 .user-avatar {
 	width: 200px;
@@ -70,6 +76,8 @@
 	background-color: gray;
 	animation: loadingOpacity 2s infinite;
 }
+
+
 
 @keyframes loadingOpacity {
 	0% { opacity: 0.5; }

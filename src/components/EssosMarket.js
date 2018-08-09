@@ -35,10 +35,12 @@ class EssosMarket extends Component {
 						<img src={item.imageURL} />
 					</div>
 					<div className='ui_card_content'>
-						<h3 className="StoreItem-Header-Name"> {item.itemName} </h3>
-						<p className="store-link" onClick={() => this.props.routeToMarketPlace(`/essos/user/${item.sellerRef_id}`)}> Posted By: {item.postedBy} </p>
-						<p className="store-pricing"> ${item.itemPrice} </p>
-						<button className="button_no_border_radius" ><span> Add To Cart Icon </span> </button>
+						<div className='ui-card-infotext'>
+							<h3 className="StoreItem-Header-Name"> {item.itemName} </h3>
+							<p className="store-link" onClick={() => this.props.routeToMarketplace(`/essos/user/${item._sellerRef_id}`)}> Posted By: {item.postedBy} </p>
+							<p className="store-pricing"> ${item.itemPrice} </p>
+						</div>
+						<div className="cart-button button_no_border_radius" ><span> Add To Cart Icon </span> </div>
 					</div>
 				</div>
 			)
@@ -54,6 +56,14 @@ class EssosMarket extends Component {
 	              <div className='logo-container'>
 	              </div>
 	              <div className='account-control'>
+	             	<div className='my-cart-button'>
+	              		<img className='my-cart-icon' src='./assets/icons/my-cart.svg' />
+	              	</div>
+
+	              	<div className='my-store-button'>
+	              		<img className='my-store-icon' src='./assets/icons/online-store.svg' />
+	              		<span> My Shop </span>
+	              	</div>
 	              </div>
 	          </header>
 	          
