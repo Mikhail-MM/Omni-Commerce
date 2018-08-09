@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 
 import '../styles/UserPage.css'
 
+import { routeToNode } from '../../actions/routing'
+
 const filterItemsBySeller = (items, sellerID) => {
 	// This fails if we do not ensure that the entire DB is loaded. If we refresh the page while the state is cleared (reset app and go straight to page without ladoing main essos splash) - it is empty
 	return items.filter(item => item.sellerRef_id == sellerID)
@@ -16,6 +18,9 @@ const mapStateToProps = (state, ownprops) => {
 	}
 }
 
+const mapDispatchToProps = dispatch => ({
+	routeToMarketPlace: (node) => dispatch(routeToNode(node)),
+})
 class UserPage extends Component {
 	state = {
 		loading: true,
@@ -36,7 +41,7 @@ class UserPage extends Component {
 					<div className='ui_card_content'>
 						<div className='ui-card-infotext'>
 							<h3 className="StoreItem-Header-Name"> {item.itemName} </h3>
-							<p className="store-link" onClick={() => this.props.routeToMarketplace(`/essos/user/${item._sellerRef_id}`)}> Posted By: {item.postedBy} </p>
+							<p className="store-link" onClick={() => this.props.routeToMarketPlace(`/essos/user/${item.sellerRef_id}`)}> Posted By: {item.postedBy} </p>
 							<p className="store-pricing"> ${item.itemPrice} </p>
 						</div>
 						<div className="cart-button button_no_border_radius" ><span> Add To Cart Icon </span> </div>
@@ -69,4 +74,4 @@ class UserPage extends Component {
 	}
 }
 
-export default connect(mapStateToProps)(UserPage)
+export default connect(mapStateToProps, mapDispatchToProps)(UserPage)

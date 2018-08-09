@@ -23,7 +23,6 @@ class OmniSplash extends Component {
 					<button onClick={event => this.props.route('/omni/login')} className="splash-button"> Omni Login </button>
 					<button onClick={event => this.props.route('/omni/terminal')} className="splash-button"> View Terminal </button>
 					<button onClick={event => this.props.route('/omni/terminal/tickets')} className="splash-button"> View Terminal Action Screen </button>
-					<button onClick={event => this.props.route('/essos/product')} className="splash-button"> Product Page </button>
 					<button onClick={event => this.props.route('/essos/user/:id')} className="splash-button"> User Page </button>
 					<button onClick={event => this.props.route('/admin')} className="splash-button"> Admin Page </button>
 					<button onClick={event => this.props.seedOmniDatabase()}> Seed Omni Database </button>

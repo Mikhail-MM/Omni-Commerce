@@ -38,12 +38,17 @@ class EssosMarket extends Component {
 			return(
 				<div className="ui_card_mockup">
 					<div className='ui_card_image'>
-						<img src={item.imageURL} />
+						<img className='card-image-source' src={item.imageURL} />
+						<div className='card-image__hoverover'>
+							<img className='info-icon' src='./assets/icons/search.svg' />
+							See Info
+
+						</div>
 					</div>
 					<div className='ui_card_content'>
 						<div className='ui-card-infotext'>
 							<h3 className="StoreItem-Header-Name"> {item.itemName} </h3>
-							<p className="store-link" onClick={() => this.props.routeToMarketplace(`/essos/user/${item._sellerRef_id}`)}> Posted By: {item.postedBy} </p>
+							<p className="store-link" onClick={() => this.props.routeToMarketPlace(`/essos/user/${item.sellerRef_id}`)}> Posted By: {item.postedBy} </p>
 							<p className="store-pricing"> ${item.itemPrice} </p>
 						</div>
 						<div className="cart-button button_no_border_radius" onClick={() => this.props.showModal('CONFIRM_CART_ADDITION', {item: item})} ><span> Add To Cart Icon </span> </div>

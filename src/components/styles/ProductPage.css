@@ -1,0 +1,14 @@
+.item-preview-container {
+	display: flex;
+
+	width: 1000px;
+	height: 600px;
+}
+
+.product-image-container {
+
+	margin: 15px 25px;
+
+	width: 430px;
+	height: 573px;
+}

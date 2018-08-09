@@ -178,3 +178,39 @@ h1, h2, h3, h4, h5, h6 {
 
   margin: 0 25px;
 }
+
+.card-image-source {
+  position: relative;
+}
+
+.card-image__hoverover {
+  position: absolute;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  width: 298.4px;
+  height: 400px;
+
+  top:0;
+  left: 0;
+
+  opacity: 0;
+  background-color: rgb(0, 0, 0, 0.45);
+
+  color: white;
+
+}
+
+.card-image__hoverover:hover {
+  opacity: 1;
+}
+
+.info-icon {
+  height: 50px;
+  width: 50px;
+
+  margin: 25px 0;
+}
