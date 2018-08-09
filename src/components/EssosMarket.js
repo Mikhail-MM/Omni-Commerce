@@ -16,6 +16,7 @@ const mapDispatchToProps = dispatch => ({
 	retrieveAllMarketplaceItems: () => dispatch(retrieveAllItemsForSale()),
 	retrieveShoppingCart: (token) => dispatch(retrieveShoppingCart(token)),
 	routeToMarketPlace: (node) => dispatch(routeToNode(node)),
+	showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps)),
 })
 
 class EssosMarket extends Component {
@@ -40,7 +41,7 @@ class EssosMarket extends Component {
 							<p className="store-link" onClick={() => this.props.routeToMarketplace(`/essos/user/${item._sellerRef_id}`)}> Posted By: {item.postedBy} </p>
 							<p className="store-pricing"> ${item.itemPrice} </p>
 						</div>
-						<div className="cart-button button_no_border_radius" ><span> Add To Cart Icon </span> </div>
+						<div className="cart-button button_no_border_radius" onClick={() => this.props.showModal('CONFIRM_CART_ADDITION', {item: item})} ><span> Add To Cart Icon </span> </div>
 					</div>
 				</div>
 			)
