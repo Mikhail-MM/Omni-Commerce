@@ -13,8 +13,9 @@ import { routeToNode } from '../actions/routing'
 const mapStateToProps = state => {
 	const { token, isAuthenticated } = state.authReducer
 	const { marketplaceItems } = state.marketplaceItemsReducer
+	const { shoppingCart } = state.shoppingCartReducer
 
-	return { token, isAuthenticated, marketplaceItems }
+	return { token, isAuthenticated, marketplaceItems, shoppingCart }
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -58,8 +59,35 @@ class EssosMarket extends Component {
 		})
 	}
 
+	generateShoppingCartDropdownContent = () => {
+		const { shoppingCart } = this.props
+		console.log("attempting to map those pesky shopping cart items")
+		console.log(shoppingCart)
+		console.log(shoppingCart.itemsBought)
+		return shoppingCart.itemsBought.map(item => {
+			return(
+				<div className='cart-item-container-row'>
+					<div className='cart-item-mini-image-container'>
+						<img className='cart-item-mini-image' src={item.imageURL} />
+					</div>
+					<div className='cart-item-descriptor-container'>
+						<div className='cart-item-name-container'>
+							{item.itemName}
+						</div>
+						<div className='cart-item-quant-container'>
+							{`Quantity Requested: ${item.numberRequested}`}
+						</div>
+						<div className='cart-item-price-container' >
+							{`Cost Per Unit: $${item.itemPrice}`}
+						</div>
+					</div>
+				</div>
+			)
+		})		
+	}
+
 	render() {
-		const { marketplaceItems } = this.props
+		const { marketplaceItems, shoppingCart } = this.props
 		
 		return(
 			<div className='app-root'>  
@@ -73,7 +101,12 @@ class EssosMarket extends Component {
 	             	<div className='my-cart-button'>
 	              		<img className='my-cart-icon' src='./assets/icons/my-cart.svg' />
 	              		<div className='my-cart-dropdown'>
-
+	              			<div className='shopping-cart-dropdown-container'>
+								{ shoppingCart && this.generateShoppingCartDropdownContent() }
+							</div>
+							<div className='shopping-cart-dropdown-pricing-container' >
+							</div>
+							<button> Check Out </button>
 	              		</div>
 	              	</div>
 
@@ -111,7 +144,7 @@ class EssosMarket extends Component {
 
 	          <div className='search-bar-container'>
 	          </div>
-	          < div className='main-items-container' >
+	          <div className='main-items-container'>
 	          	{ marketplaceItems && this.generateItemDOM()}
 	          </div>
 	      </div>
