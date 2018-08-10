@@ -96,6 +96,10 @@ router.route('/seed/omni/')
 router.route('/seed/essos/')
 	.post(seed.seedEssosMarket)
 
+// really need to consolidate this with our old client functions and make all our endpoints more REST ful...
+router.route('/users/essos/getProfileView/:id') 
+	.get(clients.getProfileMetadata)
+
 router.route('/clients/marketplace')
 	.post(upload.single('marketplaceAvatar'), images.uploadNewImage, register.configureNewUser, clients.createClient)
 router.route('/clients/lookup')

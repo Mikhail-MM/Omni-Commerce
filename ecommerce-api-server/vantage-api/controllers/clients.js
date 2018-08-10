@@ -1,6 +1,9 @@
 // Import client Mongoose Model
 const mongoose = require('mongoose');
 const Client = require('../models/schemas/client');
+const Users = require('../models/schemas/users');
+const EssosUser = Users.EssosUser;
+
 const bcrypt = require('bcrypt');
 const MarketPlaceModels = require('../models/schemas/marketplace')
 
@@ -9,6 +12,11 @@ const MarketplaceModel = mongoose.model('Marketplace', Marketplace)
 const ShoppingCartSchema = MarketPlaceModels.storeItemSchema
 const ShoppingCartModel = MarketPlaceModels.ShoppingCartModel
 //CREATE
+
+module.exports.getProfileMetadata = async function(req, res, next) {
+	const profileInfo = await EssosUser.findById(req.params.id, 'firstName lastName avatarURL')
+	res.json(profileInfo)
+}
 
 module.exports.createClient = async function(req, res, next) {
 
