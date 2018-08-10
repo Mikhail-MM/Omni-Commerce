@@ -110,7 +110,7 @@ class EssosMarket extends Component {
 	              		</div>
 	              	</div>
 
-	              	<div className='my-store-button'>
+	              	<div onClick={() => this.props.routeToMarketPlace('/essos/profile/')}className='my-store-button'>
 	              		<img className='my-store-icon' src='./assets/icons/online-store.svg' />
 	              		<span> My Shop </span>
 	              	</div>

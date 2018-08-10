@@ -12,10 +12,11 @@ const filterItemsBySeller = (items, sellerID) => {
 
 const mapStateToProps = (state, ownprops) => {
 	const { marketplaceItems } = state.marketplaceItemsReducer
+	console.log(ownprops)
 	console.log("Listing OwnProps in MapState of UserPage: ", ownprops)
 	return {
 		sellerItems: filterItemsBySeller(marketplaceItems, ownprops.match.params.id)
-	}
+	} 
 }
 
 const mapDispatchToProps = dispatch => ({

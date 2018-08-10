@@ -4,14 +4,69 @@ import '../../styles/AdminTerminal.css'
 
 import { showModal } from '../../../actions/modals'
 
+const mapStateToProps = state => {
+	const { token } = state.authReducer
+
+	return { token }
+}
 const mapDispatchToProps = dispatch => ({
 	showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps)),
 })
 
+
 class AdminTerminal extends Component {
 	state = {
 		visibleCategory: 'employees',
-		workerSearch: ''
+		workerSearch: '',
+
+		myEmployees: []
+	}
+
+	async componentDidMount() {
+		const { token } = this.props
+		console.log('token...:')
+		console.log(token)
+		const getEmployeesFunctionReturn = await this.findMyEmployees(token)
+		console.log("My Employees function return:")
+		console.log(getEmployeesFunctionReturn)
+		this.setState({
+			myEmployees: getEmployeesFunctionReturn
+		})
+	}
+
+	findMyEmployees = (token) => {
+		return fetch('http://localhost:3001/employees/find_all', {
+				headers:{
+					'Content-Type': 'application/json',
+					'x-access-token': token,
+				},
+				method: 'GET',
+				mode: 'cors'
+			})
+			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+			.then(json => {
+				console.log("employees found: ", json)
+				return json
+			})
+			.catch(err => console.log(err))
+	}
+
+	renderEmployeeTableToDOM = () => {
+		const { myEmployees } = this.state
+		console.log("What is my employees??: ", myEmployees)
+
+		return myEmployees.map(employee => {
+			if (employee.accountType === 'Terminal') return
+			return(
+				<tr>
+					<td> <img className='employee-avatar-image' src={employee.avatarURL}/> </td>
+						<td> {`${employee.firstName} ${employee.lastName}`}</td>
+						<td> {employee.phone} </td>
+						<td> {employee.email} </td>
+						<td> <div className='fireButton'> Revoke Access </div> </td>
+					</tr>
+			)
+		})
 	}
 
 	handleChange = (key, value) => {
@@ -75,132 +130,7 @@ class AdminTerminal extends Component {
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td> <img className='employee-avatar-image' src='./assets/avatars/44.jpg'/> </td>
-										<td> Emily Kim</td>
-										<td> (904)-751-4123 </td>
-										<td> eK41@gmail.com </td>
-										<td> <div className='fireButton'> Revoke Access </div> </td>
-									</tr>
-									<tr>
-										<td> <img className='employee-avatar-image' src='./assets/avatars/32.jpg'/> </td>
-										<td> Adrian Chavez </td>
-										<td> (904)-751-4123 </td>
-										<td> bigmUn3y@exxon.com </td>
-										<td> <div className='fireButton'> Revoke Access </div> </td>
-									</tr>
-									<tr>
-										<td> <img className='employee-avatar-image' src='./assets/avatars/44.jpg'/> </td>
-										<td> Emily Kim</td>
-										<td> (904)-751-4123 </td>
-										<td> eK41@gmail.com </td>
-										<td> <div className='fireButton'> Revoke Access </div> </td>
-									</tr>
-									<tr>
-										<td> <img className='employee-avatar-image' src='./assets/avatars/32.jpg'/> </td>
-										<td> Adrian Chavez </td>
-										<td> (904)-751-4123 </td>
-										<td> bigmUn3y@exxon.com </td>
-										<td> <div className='fireButton'> Revoke Access </div> </td>
-									</tr>
-									<tr>
-										<td> <img className='employee-avatar-image' src='./assets/avatars/44.jpg'/> </td>
-										<td> Emily Kim</td>
-										<td> (904)-751-4123 </td>
-										<td> eK41@gmail.com </td>
-										<td> <div className='fireButton'> Revoke Access </div> </td>
-									</tr>
-									<tr>
-										<td> <img className='employee-avatar-image' src='./assets/avatars/32.jpg'/> </td>
-										<td> Adrian Chavez </td>
-										<td> (904)-751-4123 </td>
-										<td> bigmUn3y@exxon.com </td>
-										<td> <div className='fireButton'> Revoke Access </div> </td>
-									</tr>
-									<tr>
-										<td> <img className='employee-avatar-image' src='./assets/avatars/44.jpg'/> </td>
-										<td> Emily Kim</td>
-										<td> (904)-751-4123 </td>
-										<td> eK41@gmail.com </td>
-										<td> <div className='fireButton'> Revoke Access </div> </td>
-									</tr>
-									<tr>
-										<td> <img className='employee-avatar-image' src='./assets/avatars/32.jpg'/> </td>
-										<td> Adrian Chavez </td>
-										<td> (904)-751-4123 </td>
-										<td> bigmUn3y@exxon.com </td>
-										<td> <div className='fireButton'> Revoke Access </div> </td>
-									</tr>
-									<tr>
-										<td> <img className='employee-avatar-image' src='./assets/avatars/44.jpg'/> </td>
-										<td> Emily Kim</td>
-										<td> (904)-751-4123 </td>
-										<td> eK41@gmail.com </td>
-										<td> <div className='fireButton'> Revoke Access </div> </td>
-									</tr>
-									<tr>
-										<td> <img className='employee-avatar-image' src='./assets/avatars/32.jpg'/> </td>
-										<td> Adrian Chavez </td>
-										<td> (904)-751-4123 </td>
-										<td> bigmUn3y@exxon.com </td>
-										<td> <div className='fireButton'> Revoke Access </div> </td>
-									</tr>
-									<tr>
-										<td> <img className='employee-avatar-image' src='./assets/avatars/44.jpg'/> </td>
-										<td> Emily Kim</td>
-										<td> (904)-751-4123 </td>
-										<td> eK41@gmail.com </td>
-										<td> <div className='fireButton'> Revoke Access </div> </td>
-									</tr>
-									<tr>
-										<td> <img className='employee-avatar-image' src='./assets/avatars/32.jpg'/> </td>
-										<td> Adrian Chavez </td>
-										<td> (904)-751-4123 </td>
-										<td> bigmUn3y@exxon.com </td>
-										<td> <div className='fireButton'> Revoke Access </div> </td>
-									</tr>
-									<tr>
-										<td> <img className='employee-avatar-image' src='./assets/avatars/44.jpg'/> </td>
-										<td> Emily Kim</td>
-										<td> (904)-751-4123 </td>
-										<td> eK41@gmail.com </td>
-										<td> <div className='fireButton'> Revoke Access </div> </td>
-									</tr>
-									<tr>
-										<td> <img className='employee-avatar-image' src='./assets/avatars/32.jpg'/> </td>
-										<td> Adrian Chavez </td>
-										<td> (904)-751-4123 </td>
-										<td> bigmUn3y@exxon.com </td>
-										<td> <div className='fireButton'> Revoke Access </div> </td>
-									</tr>
-									<tr>
-										<td> <img className='employee-avatar-image' src='./assets/avatars/44.jpg'/> </td>
-										<td> Emily Kim</td>
-										<td> (904)-751-4123 </td>
-										<td> eK41@gmail.com </td>
-										<td> <div className='fireButton'> Revoke Access </div> </td>
-									</tr>
-									<tr>
-										<td> <img className='employee-avatar-image' src='./assets/avatars/32.jpg'/> </td>
-										<td> Adrian Chavez </td>
-										<td> (904)-751-4123 </td>
-										<td> bigmUn3y@exxon.com </td>
-										<td> <div className='fireButton'> Revoke Access </div> </td>
-									</tr>
-									<tr>
-										<td> <img className='employee-avatar-image' src='./assets/avatars/44.jpg'/> </td>
-										<td> Emily Kim</td>
-										<td> (904)-751-4123 </td>
-										<td> eK41@gmail.com </td>
-										<td> <div className='fireButton'> Revoke Access </div> </td>
-									</tr>
-									<tr>
-										<td> <img className='employee-avatar-image' src='./assets/avatars/32.jpg'/> </td>
-										<td> Adrian Chavez </td>
-										<td> (904)-751-4123 </td>
-										<td> bigmUn3y@exxon.com </td>
-										<td> <div className='fireButton'> Revoke Access </div> </td>
-									</tr>
+									{ this.state.myEmployees && this.renderEmployeeTableToDOM() }
 									<tr>
 										<td> <img className='employee-avatar-image' src='./assets/avatars/44.jpg'/> </td>
 										<td> Emily Kim</td>
@@ -229,4 +159,4 @@ class AdminTerminal extends Component {
 	}
 }
 
-export default connect(null, mapDispatchToProps)(AdminTerminal)
+export default connect(mapStateToProps, mapDispatchToProps)(AdminTerminal)

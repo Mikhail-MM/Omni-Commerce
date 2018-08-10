@@ -1,9 +1,12 @@
 const Client = require('../models/schemas/client');
 
+const Users = require('../models/schemas/users');
+const OmniUser = Users.OmniUser;
+
 module.exports.findMyEmployees = async function(req, res, next) {
 	try {
 		console.log("Looking for employees")
-		const myEmployees = await Client.find({organizationName: req.body.client.organizationName})
+		const myEmployees = await OmniUser.find({mongoCollectionKey: req.headers['x-mongo-key']})
 		if (!myEmployees) return res.status(404).send("Could not find any employees in this organization")
 		res.json(myEmployees)
 	} catch(err) { next(err) }
