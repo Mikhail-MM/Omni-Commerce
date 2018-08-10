@@ -72,7 +72,7 @@ class TerminalActionScreen extends Component {
   						<img src={item.imageURL} />
   					</div>
   					<div className="ui-pos-item_content">
-  						<div className="ui-pos-item-name">
+  						<div className="ui-pos-item-name" style={(item.itemName.length > 20) ? {'marginTop': '2px','fontSize': '0.7em'} : {'marginTop': '2px'} }>
 							{item.itemName}
   						</div>
   						<div className="ui-pos-item-price">
@@ -93,19 +93,19 @@ class TerminalActionScreen extends Component {
 			if (index == array.length - 1) {
 				return (
 					<tr key={item._id}>
-					 <td><button  color="black" onClick={() => this.props.removeItemFromTicket(token, item._id, activeTicket._id)}>Remove</button></td>
-					 <td><button  color="black" onClick={() => this.props.showModal('CUSTOM_ADDON_MODAL', {})}>AddOn</button></td>
 					 <td>{item.itemName}</td>
 					 <td>${item.itemPrice}</td>
+					 <td><button  color="black" onClick={() => this.props.showModal('CUSTOM_ADDON_MODAL', {})}>AddOn</button></td>
+					 <td><button  color="black" onClick={() => this.props.removeItemFromTicket(token, item._id, activeTicket._id)}>Remove</button></td>	 
 					</tr>
 					)
 			}
 			return(
 				<tr key={item._id}>
-				 <td><button color="black" onClick={() => this.props.removeItemFromTicket(token, item._id, activeTicket._id)}>Remove</button></td>
-				 <td></td>
-				 <td>{item.itemName}</td>
-				 <td>${item.itemPrice}</td>
+					 <td>{item.itemName}</td>
+					 <td>${item.itemPrice}</td>
+					 <td></td>
+					 <td><button  color="black" onClick={() => this.props.removeItemFromTicket(token, item._id, activeTicket._id)}>Remove</button></td>	 
 				</tr>
 			)
 		})
@@ -115,10 +115,10 @@ class TerminalActionScreen extends Component {
 		const { activeTicket, menuItems } = this.props
 
 		return(
-			<div>
-			<div> {`SubTotal: ${activeTicket.subTotal}`} </div>
-			<div> {`Tax: ${activeTicket.tax}`} </div>
-			<div> {`Total: ${activeTicket.total}`} </div>
+			<div className='pricing-container'>
+				<div> {`SubTotal: ${activeTicket.subTotal}`} </div>
+				<div> {`Tax: ${activeTicket.tax}`} </div>
+				<div> {`Total: ${activeTicket.total}`} </div>
 			</div>
 		)
 	}
@@ -162,8 +162,8 @@ class TerminalActionScreen extends Component {
 										<tr>
 											<td> Item Name </td>
 											<td> Price </td>
-											<td> Remove </td>
 											<td> Add-On </td>
+											<td> Remove </td>
 										</tr>
 									</thead>
 									<tbody>
@@ -172,17 +172,14 @@ class TerminalActionScreen extends Component {
 								</table>
 							</div>
 							<div className='ledger-footer'>
-								{ activeTicket && this.displayPricingFromActiveTicket() }
 								<div className='footer-buttons-pricing'>
 									<div className='action-button-container'>
 										<div style={{ backgroundColor: 'blue', marginBottom: 10 }}className='action-button'> Fire Order </div>
 										<div style={{ backgroundColor: 'red' }} className='action-button'> Void Ticket </div>
 									</div>
-									<div className='pricing-container'>
-										<div> SubTotal </div>
-										<div> Tax </div>
-										<div> Total </div>
-									</div>
+									
+									{ activeTicket && this.displayPricingFromActiveTicket() }
+								
 								</div>
 
 								<div className='checkout-button'>
