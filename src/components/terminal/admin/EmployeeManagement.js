@@ -53,12 +53,12 @@ class EmployeeManagement extends Component {
 			if (employee.accountType === 'Terminal') return
 			return(
 				<tr>
-					<td> <img className='employee-avatar-image' src={employee.avatarURL}/> </td>
+						<td> <img className='employee-avatar-image' src={employee.avatarURL}/> </td>
 						<td> {`${employee.firstName} ${employee.lastName}`}</td>
 						<td> {employee.phone} </td>
 						<td> {employee.email} </td>
 						<td> <div className='fireButton'> Revoke Access </div> </td>
-					</tr>
+				</tr>
 			)
 		})
 	}

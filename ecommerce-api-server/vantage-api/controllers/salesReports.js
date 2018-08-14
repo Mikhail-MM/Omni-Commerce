@@ -15,13 +15,26 @@ module.exports.tabulateDailyTicketSales = async function(req, res, next) {
 		const allTicketsBySession = await Transaction.find({});
 		const beginDate = new Date(allTicketsBySession[0].createdAt)
 		const endDate = new Date(allTicketsBySession[allTicketsBySession.length - 1].createdAt)
-		console.log(beginDate)
-		console.log(endDate)
+
+		const allTicketsByCategory = _.groupBy(allTicketsBySession, 'status')
+
+		const allPaidTickets = allTicketsByCategory["Paid"]
+		
+		const grossSales = allPaidTickets
+			.map(ticket => new BigNumber(ticket.totalReal))
+			.reduce((acc, cur) => acc.plus(cur)).toNumber()
+
+		// MUST CONVERT ALL UNPAID TICKETS TO VOID
+
+
 		const newDailySalesReport = new DailySalesReports({
 			tickets: allTicketsBySession,
 			beginDate: beginDate,
-			endDate: endDate
+			endDate: endDate,
+			gross: grossSales,
 		})
+
+		console.log("Final Sales Report:", newDailySalesReport)
 
 		const salesNow = await newDailySalesReport.save()
 
@@ -33,13 +46,13 @@ module.exports.tabulateDailyTicketSales = async function(req, res, next) {
 module.exports.lookupByTimestamp = async function(req, res, next) {
 	const DailySalesReports = mongoose.model('SalesReport', SalesReportSchema, req.headers['x-mongo-key'] + '_SalesReports')
 	try {
-		console.log("Looking For Sales Reports - Listing Start and End Date : ")
-		console.log(req.body.beginDate);
-		console.log(req.body.endDate);
+
+
 		const arrayOfSalesReports = await DailySalesReports.find({ $and: [ {beginDate: {$gte: req.body.beginDate }}, {endDate: {$lte: req.body.endDate}} ] })
 		
 		//TODO: Abstract This Out To Accept An {ARRAY OF ARRAYS OF TICKET OBJECTS or A SINGLE ARRAY OF TICKET OBJECTS - Handle CONCAT conditionally}
 		// Get array of all menuItems
+
 		const allTicketsBySession = arrayOfSalesReports.map(salesReportData => salesReportData.tickets).reduce((acc, cur) => acc.concat(cur))
 
 
@@ -63,41 +76,51 @@ module.exports.lookupByTimestamp = async function(req, res, next) {
 		const grossSalesByMenuItemCategory = {}
 
 		const menuItemsGross = Object.keys(allMenuItemsSoldByItem)
-										.map(key => {
-										grossSalesByMenuItemObject[key] = allMenuItemsSoldByItem[key]
-										.map(arrayOfSoldMenuItemsInCategory => new BigNumber(arrayOfSoldMenuItemsInCategory.itemPrice))
-										.reduce((acc, cur) => acc.plus(cur)).toNumber()
-										return ({"dataKey":key, "dataValue":grossSalesByMenuItemObject[key]}) // For recharts may have to do ({name:[key], value: grossSalesByMenuItemObject[key]})
-								})
+			.map(key => {
+				grossSalesByMenuItemObject[key] = allMenuItemsSoldByItem[key]
+					.map(arrayOfSoldMenuItemsInCategory => new BigNumber(arrayOfSoldMenuItemsInCategory.itemPrice))
+					.reduce((acc, cur) => acc.plus(cur)).toNumber()
+						
+					return ({"dataKey":key, "dataValue":grossSalesByMenuItemObject[key]}) 
+			})
+
 		const serverTallyGross = Object.keys(allTicketsByServer)
-										.map(key => {
-										grossSalesByServer[key] = allTicketsByServer[key]
-										.map(arrayOfSoldMenuItemsInCategory => new BigNumber(arrayOfSoldMenuItemsInCategory.totalReal))
-										.reduce((acc, cur) => acc.plus(cur)).toNumber()
-										return ({"dataKey":key, "dataValue":grossSalesByServer[key]})
-								})
+			.map(key => {
+				grossSalesByServer[key] = allTicketsByServer[key]
+					.map(arrayOfSoldMenuItemsInCategory => new BigNumber(arrayOfSoldMenuItemsInCategory.totalReal))
+					.reduce((acc, cur) => acc.plus(cur)).toNumber()
+					
+					return ({"dataKey":key, "dataValue":grossSalesByServer[key]})
+			})
+
 		const menuItemCategoryGross = Object.keys(allMenuItemsSoldByCategory)
-										.map(key => { 
-										grossSalesByMenuItemCategory[key] = allMenuItemsSoldByCategory[key]
-										.map(arrayOfSoldMenuItemsInCategory => new BigNumber(arrayOfSoldMenuItemsInCategory.itemPrice))
-										.reduce((acc, cur) => acc.plus(cur)).toNumber()
-										return({"dataKey":key, "dataValue":grossSalesByMenuItemCategory[key]})
-								})
+			.map(key => { 
+				grossSalesByMenuItemCategory[key] = allMenuItemsSoldByCategory[key]
+					.map(arrayOfSoldMenuItemsInCategory => new BigNumber(arrayOfSoldMenuItemsInCategory.itemPrice))
+					.reduce((acc, cur) => acc.plus(cur)).toNumber()
+						
+					return({"dataKey":key, "dataValue":grossSalesByMenuItemCategory[key]})
+		})
+
 		
-const timeSeriesData = allPaidTickets
-.map(ticket => {
-	const currentTicketSale = new BigNumber(ticket.totalReal)
-		return({"time": ticket.createdAt, "sales": currentTicketSale})
-})
-const finalGross = timeSeriesData
-.map(object => object["sales"])
-.reduce((acc, cur, index) => {
-	timeSeriesData[index]["sales"] = acc.toNumber()
-	if ( index === 1 ) timeSeriesData[0].sales = cur.toNumber() 
-	return acc.plus(cur);
-	}).toNumber() 
+		const timeSeriesData = allPaidTickets
+			.map(ticket => {
+				
+				const currentTicketSale = new BigNumber(ticket.totalReal)
+				return({"time": ticket.createdAt, "sales": currentTicketSale})
+			})
+
+		const finalGross = timeSeriesData
+			.map(object => object["sales"])
+			.reduce((acc, cur, index) => {
+				timeSeriesData[index]["sales"] = acc.toNumber()
+				
+				if ( index === 1 ) timeSeriesData[0].sales = cur.toNumber() 
+				
+				return acc.plus(cur);
+			}).toNumber() 
 	
-timeSeriesData[timeSeriesData.length - 1].sales = finalGross
+		timeSeriesData[timeSeriesData.length - 1].sales = finalGross
 											
 		const grossSales = allPaidTickets
 						   	.map(ticket => new BigNumber(ticket.totalReal))

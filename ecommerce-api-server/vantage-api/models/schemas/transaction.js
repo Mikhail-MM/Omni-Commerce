@@ -69,6 +69,7 @@ var salesReportSchema = new Schema ({
 	tickets: [ticketSchema],
 	beginDate: Date,
 	endDate: Date,
+	gross: Number,
 });
 
 module.exports.menuSchema = menuItemSchema;
