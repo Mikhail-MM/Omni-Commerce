@@ -44,6 +44,8 @@ const MODAL_COMPONENTS = {
 
 	'CONFIRM_CART_ADDITION': ConfirmCartModal,
 	'CONFIRM_END_OF_BUSINESS_DAY': ConfirmSalesReportAggregationModal,
+
+	'CART_INVALIDATION_MODAL': CartInvalidationModal,
 }
 
 

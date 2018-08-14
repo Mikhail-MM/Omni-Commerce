@@ -25,7 +25,7 @@ const ConfirmSalesReportAggregationModal = props => {
 	return(
 		<div>
 			<Modal
-				isOpen={props.modalType === 'CARD_PAYMENT_MODAL'}
+				isOpen={props.modalType === 'CONFIRM_END_OF_BUSINESS_DAY'}
 				style={modalStyle}
 				contentLabel="Example Modal"
 				>
