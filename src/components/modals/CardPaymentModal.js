@@ -7,6 +7,10 @@ import { hideModal } from '../../actions/modals';
 
 import Checkout from '../stripe/Checkout'
 
+const mapDispatchToProps = dispatch => ({
+	hideModal: () => dispatch(hideModal()),
+})
+
 const CardPaymentModal = props => {
 	return(
 		<div>
@@ -24,4 +28,4 @@ const CardPaymentModal = props => {
 	)
 }
 
-export default CardPaymentModal
+export default connect(null, mapDispatchToProps)(CardPaymentModal)

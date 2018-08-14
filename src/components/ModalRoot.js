@@ -1,3 +1,18 @@
+/*
+
+The approach towards this component was derived from a post by Redux Author Dan Abramov on StackOverflow seen here:
+
+By abstracting the state of which Modal Type needs to be displayed away from conditional rendering from JSX into redux, programatically managing
+a modal-heavy application becomes trivial. The approach is seen here:
+
+https://stackoverflow.com/questions/35623656/how-can-i-display-a-modal-dialog-in-redux-that-performs-asynchronous-actions
+
+An even more involved approach can be seen here, authored by Redux maintainer Mark Erikson:
+
+https://blog.isquaredsoftware.com/2017/07/practical-redux-part-10-managing-modals/
+
+*/
+
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
@@ -28,6 +43,7 @@ const MODAL_COMPONENTS = {
 	'ADD_EMPLOYEE_MODAL': AuthenticationForm,
 
 	'CONFIRM_CART_ADDITION': ConfirmCartModal,
+	'CONFIRM_END_OF_BUSINESS_DAY': ConfirmSalesReportAggregationModal,
 }
 
 

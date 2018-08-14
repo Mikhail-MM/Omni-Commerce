@@ -18,7 +18,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
 	sendCashPaymentToApi: (authToken, amount, transactionId) => {
 		dispatch(sendCashPaymentToApi(authToken, amount, transactionId))
-	}
+	},
+	hideModal: () => dispatch(hideModal()),
 })
 
 // Note: Can export all redux logic to the Form and disconnect Modals from mapping state to props and passing them down
