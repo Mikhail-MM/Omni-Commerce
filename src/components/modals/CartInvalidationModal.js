@@ -5,13 +5,18 @@ import Modal from 'react-modal';
 import { modalStyle } from '../config';
 import { hideModal } from '../../actions/modals';
 
+import { disregardInvalidatedItems } from '../../actions/shopping-cart'
+
 const mapStateToProps = state => {
 	const { invalidatedItems } = state.shoppingCartReducer
 	return { invalidatedItems }
 }
 
 const mapDispatchToProps = dispatch => ({
-	hideModal: () => dispatch(hideModal()),
+	hideModal: () => {
+		dispatch(disregardInvalidatedItems())
+		dispatch(hideModal())
+	},
 })
 
 const generateCartInvalidationAlert = () => {
@@ -48,7 +53,7 @@ const CartInvalidationModal = props => {
 					<h4> Some items were removed from your shopping cart. The seller does not have sufficient stock to fulfill your entire order. </h4>
 				</div>
 				{ invalidatedItems && this.generateCartInvalidationAlert()}
-				<button onClick={() => props.hideModal()}> Cancel </button>
+				<button onClick={() => props.hideModal()}> Understood. </button>
 
 			</Modal>
 		</div>
