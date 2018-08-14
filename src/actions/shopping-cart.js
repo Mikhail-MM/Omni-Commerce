@@ -123,6 +123,36 @@ export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountA
 	}
 }
 
+export function validateCartAndProceedToPayment(token) {
+	return dispatch => { // check validation, watch for flags, dispatch to payment gateway or just bring up a modal 
+		fetch('http://localhost:3001/shoppingCart/checkOut/', {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': token,
+			},
+			method: 'POST',
+			mode: 'cors',
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json =>{
+			if (json.partialValidationFail) { 
+				
+				dispatch(receiveInvalidatedShoppingCartItems(json.failedItems))
+				dispatch(receiveShoppingCart(json.validatedCart))
+				dispatch(showModal('CART_INVALIDATION_MODAL', {}))
+			
+			} else if (!json.partialValidationFail) {
+				
+				dispatch(receiveShoppingCart(json.validatedCart))
+				dispatch(showModal('ONLINE_STORE_STRIPE_CHECKOUT', {}))
+			  
+			  }	
+		})
+		.catch(err => console.log(err))
+	}
+	
+}
+
 function receiveShoppingCart(shoppingCart) {
 	return {
 		type: 'RECEIVE_SHOPPING_CART',

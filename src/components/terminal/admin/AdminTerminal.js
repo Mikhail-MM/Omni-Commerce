@@ -40,11 +40,11 @@ class AdminTerminal extends Component {
 				<div className='main-body-wrapper' >
 					<div className='sidebar-column'>
 						<div className='menu-box'>
-							<div className='admin-button'>
+							<div className='admin-button' onClick={() => this.setState({actionComponent: 'MANAGE_EMPLOYEES'})}>
 								<img className='admin-menu-icon' src='./assets/icons/emp_mng.svg' />
 								<span> Employees </span>
 							</div>
-							<div className='admin-button'>
+							<div className='admin-button' onClick={() => this.setState({actionComponent: 'MANAGE_SALES_REPORTS'})}>
 								<img className='admin-menu-icon' src='./assets/icons/analytics.svg' />
 								<span> Sales Reports </span>
 							</div>
