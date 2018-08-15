@@ -8,11 +8,12 @@ const _ = require('underscore')
 // Create + Lookup In One Function (Need To Separate)
 
 module.exports.tabulateDailyTicketSales = async function(req, res, next) {
-	const Transaction = mongoose.model('Transaction', TicketTransaction, req.headers['x-mongo-key'] + '_Transactions')
+	const Transaction = mongoose.model('Transaction', TicketTransaction, 'Transactions_' + req.headers['x-mongo-key'])
 	const DailySalesReports = mongoose.model('SalesReport', SalesReportSchema, req.headers['x-mongo-key'] + '_SalesReports') 
 	try {
 
-		const allTicketsBySession = await Transaction.find({});
+		const allTicketsBySession = await Transaction.find({})
+		console.log("All Tickets Scraped Within Session:", allTicketsBySession)
 		const beginDate = new Date(allTicketsBySession[0].createdAt)
 		const endDate = new Date(allTicketsBySession[allTicketsBySession.length - 1].createdAt)
 
