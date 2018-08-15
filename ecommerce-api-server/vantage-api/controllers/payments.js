@@ -45,7 +45,7 @@ module.exports.saveStripeCustomerInformation = async function(req, res, next) {
 
       console.log("Check for existing customers with matching Client._id")
 
-    const existingCustomer = StripeCustomerModel.findOne({clientRef_id: reeq.body.client._id})
+    const existingCustomer = StripeCustomerModel.findOne({clientRef_id: req.body.client._id})
 
       const createNewCustomer = async () => {
               
@@ -78,7 +78,8 @@ module.exports.saveStripeCustomerInformation = async function(req, res, next) {
           
       }
 
-    const customer = (existingCustomer) ? existingCustomer : createNewCustomer
+
+    const customer = (existingCustomer) ? existingCustomer : await createNewCustomer()
 
     console.log('Using this customer:', customer)
 
