@@ -11,7 +11,7 @@ const mapDispatchToProps = dispatch => ({
 	hideModal: () => dispatch(hideModal()),
 })
 
-const CardPaymentModal = props => {
+const EssosCardPaymentModal = props => {
 	return(
 		<div>
 			<Modal
@@ -20,7 +20,7 @@ const CardPaymentModal = props => {
 				contentLabel="Example Modal"
 				>
 
-				<Checkout apiStripePath='Omni'/>
+				<Checkout apiStripePath='Essos'/>
 				<button onClick={() => props.hideModal()}> Cancel </button>
 
 			</Modal>
@@ -28,4 +28,4 @@ const CardPaymentModal = props => {
 	)
 }
 
-export default connect(null, mapDispatchToProps)(CardPaymentModal)
+export default connect(null, mapDispatchToProps)(EssosCardPaymentModal)

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { Elements, CardElement, StripeProvider, injectStripe} from 'react-stripe-elements';
 
-import { sendStripeTokenToApi } from '../../actions/payments'
+import { sendStripeTokenToApi, beginCartPaymentValidationCascade } from '../../actions/payments'
 
 const mapStateToProps = state => {
 
@@ -13,9 +13,12 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-	sendStripeTokenToApi: (authToken, stripeToken, ticketId) => {
+	sendOmniStripeTokenToApi: (authToken, stripeToken, ticketId) => {
 		dispatch(sendStripeTokenToApi(authToken, stripeToken, ticketId))
-	}
+	},
+	sendEssosStripeTokenToApi: (authToken, stripeToken) => {
+		dispatch(beginCartPaymentValidationCascade(authToken, stripeToken))
+	},
 })
 
 const CardSection = props => {
@@ -30,16 +33,51 @@ const CardSection = props => {
 const PaymentCheckoutForm = props => {
 
 	const { authToken, activeTicket } = props
-	const { sendStripeTokenToApi } = props
+	const { sendOmniStripeTokenToApi } = props
 
 	const handleSubmit = event => {
 		event.preventDefault()
 		// TODO : Inject form to get Customer's Name at Checkout by Cashier
 		// Will need to convert to Class Component.
-		this.props.stripe.createToken({name: 'Random Customer'})
-			.then(({token}) => {
-				this.props.sendStripeTokenToApi(authToken, token, activeTicket._id)
+		if (props.apiStripePath === 'Omni') {
+			props.stripe.createToken({name: 'Random Customer'})
+				.then(({token}) => {
+					sendOmniStripeTokenToApi(authToken, token, activeTicket._id)
+				})
+		}
+		if (props.apiStripePath === 'Essos') {
+			// Get Client Metadata -- Shipping and Billing info -- This should be provided by the customer on the cart checkout form instead of being tied permanently to account...
+			fetch('http://localhost:3001/client/metadata', {
+				headers:{
+					'Content-Type': 'application/json',
+					'x-access-token': authToken,
+				},
+				method: 'GET',
+				mode: 'cors',	
 			})
+			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+			.then(json => {
+			
+				const { address_line1, address_line2, address_city, address_state, address_zip, address_country, name } = json
+			
+				props.stripe.createToken({
+				
+					name,
+					address_line1,
+					address_line2,
+					address_city,
+					address_state,
+					address_zip,
+					address_country,
+
+				})
+				.then(({token}) => {
+					props.sendEssosStripeTokenToApi(authToken, token)
+				});
+			})
+			.catch(err => console.log(err))
+		
+		}
 	}
 
 	return(
@@ -50,13 +88,15 @@ const PaymentCheckoutForm = props => {
 	)
 }
 
+
+
 const ConnectedInjectedCheckoutForm = injectStripe(connect(mapStateToProps, mapDispatchToProps)(PaymentCheckoutForm))
 
 const Checkout = props => {
 	return(
 		<StripeProvider apiKey={'TODO: Add Private Publishable Key'}>
 			<Elements>
-				<ConnectedInjectedCheckoutForm />
+				<ConnectedInjectedCheckoutForm apiStripePath={props.apiStripePath}/>
 			</Elements>
 		</StripeProvider>
 		);

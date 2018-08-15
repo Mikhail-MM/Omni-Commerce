@@ -46,6 +46,7 @@ const MODAL_COMPONENTS = {
 	'CONFIRM_END_OF_BUSINESS_DAY': ConfirmSalesReportAggregationModal,
 
 	'CART_INVALIDATION_MODAL': CartInvalidationModal,
+	'ONLINE_STORE_STRIPE_CHECKOUT': EssosCardPaymentModal,
 }
 
 
