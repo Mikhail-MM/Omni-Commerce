@@ -97,6 +97,8 @@ router.route('/seed/essos/')
 	.post(seed.seedEssosMarket)
 
 // really need to consolidate this with our old client functions and make all our endpoints more REST ful...
+router.route('/users/essos/getProfileView/ownProfile')
+	.get(authorize.routeEmployeeToMongoCollection, clients.getOwnMetadata)
 router.route('/users/essos/getProfileView/:id') 
 	.get(clients.getProfileMetadata)
 

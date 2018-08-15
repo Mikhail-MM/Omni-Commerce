@@ -13,6 +13,12 @@ const UserPageComponentMap = {
 	'PURCHASE_HISTORY': PurchaseHistoryScreen,
 }
 
+const mapStateToProps = state => {
+	const { token } = state.authReducer
+	return { token }
+
+}
+
 class UserPage extends Component {
 	state = {
 		loading: true,
@@ -22,6 +28,7 @@ class UserPage extends Component {
 	}
 
 	fetchProfilePageMetadata = (userID) => {
+		const { token } = this.props
 		if (!this.props.selfProfileView) return fetch(`http://localhost:3001/users/essos/getProfileView/${this.props.match.params.id}`, {
 				headers:{
 					'Content-Type': 'application/json',
@@ -35,7 +42,21 @@ class UserPage extends Component {
 				return json
 			})
 			.catch(err => console.log(err))
-		if (this.props.selfProfileView) return null
+		if (this.props.selfProfileView) return fetch(`http://localhost:3001/users/essos/getProfileView/ownProfile`, {
+			headers:{
+					'Content-Type': 'application/json',
+					'x-access-token': token,
+				},
+				method: 'GET',
+				mode: 'cors'
+			})
+			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+			.then(json => {
+				console.log("found metadata:", json)
+				return json
+			})
+			.catch(err => console.log(err))
+
 	}
 
 
@@ -97,10 +118,10 @@ class UserPage extends Component {
 						}
 					</div>
 				</div>
-				{ <UserDetailDisplayComponent /> }
+				{ <UserDetailDisplayComponent {...this.props} /> }
 			</div>
 		)
 	}
 }
 
-export default UserPage
+export default connect(mapStateToProps)(UserPage)
