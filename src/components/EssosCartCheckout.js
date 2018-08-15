@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import ModalRoot from './ModalRoot'
+import { validateCartAndProceedToPayment } from '../actions/shopping-cart'
 const mapStateToProps = state => {
 
 	const { token, isAuthenticated } = state.authReducer
@@ -10,11 +12,18 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-	handleCheckout: () => dispatch(validateCartAndProceedToPayment(token))
+	handleCheckout: (token) => dispatch(validateCartAndProceedToPayment(token))
 })
 
-generateShoppingCartDropdownContent = () => {
-		const { shoppingCart } = this.props
+/* 
+
+	Note: Need to move Shipping/Billing Address out of account credentials and into a session-specific form
+
+*/
+const EssosCartCheckout = props => {
+	const { shoppingCart, token } = props
+
+	const generateShoppingCartDropdownContent = () => {
 		
 		return shoppingCart.itemsBought.map(item => {
 			return(
@@ -36,23 +45,18 @@ generateShoppingCartDropdownContent = () => {
 				</div>
 			)
 		})		
-}
-/* 
+	}
 
-	Note: Need to move Shipping/Billing Address out of account credentials and into a session-specific form
-
-*/
-const EssosCartCheckout = props => {
-	const { shoppingCart } = props
 	return(
-		<div className='app-root'>
+		<div className='app-root' style={{backgroundColor: 'black'}}>
+			<ModalRoot/>
 			<div className='header-container'>
-				<h1> Shopping Cart Checkout </h1>
+				<h1 style={{color: 'white'}}> Shopping Cart Checkout </h1>
 			</div>
 			<div className='shopping-cart-dropdown-container'>
 				{ shoppingCart && generateShoppingCartDropdownContent() }
 			</div>
-			<button onClick={() => this.props.handleCheckout()}> Confirm order </button>
+			<button onClick={() => props.handleCheckout(token)}> Confirm order </button>
 		</div>
 	)
 } 

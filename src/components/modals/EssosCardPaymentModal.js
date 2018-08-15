@@ -7,6 +7,10 @@ import { hideModal } from '../../actions/modals';
 
 import Checkout from '../stripe/Checkout'
 
+const mapStateToProps = state => {
+	const { modalType, modalProps } = state.modalReducer
+	return { modalType, modalProps }
+}
 const mapDispatchToProps = dispatch => ({
 	hideModal: () => dispatch(hideModal()),
 })
@@ -15,17 +19,18 @@ const EssosCardPaymentModal = props => {
 	return(
 		<div>
 			<Modal
-				isOpen={props.modalType === 'CARD_PAYMENT_MODAL'}
+				isOpen={props.modalType === 'ONLINE_STORE_STRIPE_CHECKOUT'}
 				style={modalStyle}
 				contentLabel="Example Modal"
 				>
-
-				<Checkout apiStripePath='Essos'/>
-				<button onClick={() => props.hideModal()}> Cancel </button>
+				<div style={{height: 100, width: 700}}>
+					<Checkout apiStripePath='Essos'/>
+					<button onClick={() => props.hideModal()}> Cancel </button>
+				</div>
 
 			</Modal>
 		</div>
 	)
 }
 
-export default connect(null, mapDispatchToProps)(EssosCardPaymentModal)
+export default connect(mapStateToProps, mapDispatchToProps)(EssosCardPaymentModal)

@@ -21,7 +21,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
 	retrieveAllMarketplaceItems: () => dispatch(retrieveAllItemsForSale()),
 	retrieveShoppingCart: (token) => dispatch(retrieveShoppingCart(token)),
-	routeToMarketPlace: (node) => dispatch(routeToNode(node)),
+	routeToNode: (node) => dispatch(routeToNode(node)),
 	showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps)),
 })
 
@@ -49,7 +49,7 @@ class EssosMarket extends Component {
 					<div className='ui_card_content'>
 						<div className='ui-card-infotext'>
 							<h3 className="StoreItem-Header-Name"> {item.itemName} </h3>
-							<p className="store-link" onClick={() => this.props.routeToMarketPlace(`/essos/user/${item.sellerRef_id}`)}> Posted By: {item.postedBy} </p>
+							<p className="store-link" onClick={() => this.props.routeToNode(`/essos/user/${item.sellerRef_id}`)}> Posted By: {item.postedBy} </p>
 							<p className="store-pricing"> ${item.itemPrice} </p>
 						</div>
 						<div className="cart-button button_no_border_radius" onClick={() => this.props.showModal('CONFIRM_CART_ADDITION', {item: item})} ><span> Add To Cart Icon </span> </div>
@@ -106,11 +106,11 @@ class EssosMarket extends Component {
 							</div>
 							<div className='shopping-cart-dropdown-pricing-container' >
 							</div>
-							<button> Check Out </button>
+							<button onClick={() => this.props.routeToNode('/essos/mycart')}> Check Out </button>
 	              		</div>
 	              	</div>
 
-	              	<div onClick={() => this.props.routeToMarketPlace('/essos/profile/')}className='my-store-button'>
+	              	<div onClick={() => this.props.routeToNode('/essos/profile/')}className='my-store-button'>
 	              		<img className='my-store-icon' src='./assets/icons/online-store.svg' />
 	              		<span> My Shop </span>
 	              	</div>

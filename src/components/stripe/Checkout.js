@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { Elements, CardElement, StripeProvider, injectStripe} from 'react-stripe-elements';
 
+import { stripeAPIkey } from '../../privateConfig.js'
+
 import { sendStripeTokenToApi, beginCartPaymentValidationCascade } from '../../actions/payments'
 
 const mapStateToProps = state => {
