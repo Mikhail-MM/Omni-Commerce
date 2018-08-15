@@ -33,6 +33,8 @@ import CartInvalidationModal from './modals/CartInvalidationModal'
 
 import ConfirmSalesReportAggregationModal from './modals/ConfirmSalesReportAggregationModal'
 
+import PaymentTypeSelectionModal from './modals/PaymentTypeSelectionModal'
+
 import AuthenticationForm from './forms/registration/AuthenticationForm'
 
 const MODAL_COMPONENTS = {
@@ -52,6 +54,8 @@ const MODAL_COMPONENTS = {
 
 	'CART_INVALIDATION_MODAL': CartInvalidationModal,
 	'ONLINE_STORE_STRIPE_CHECKOUT': EssosCardPaymentModal,
+
+	'CASH_OR_CARD_MODAL': PaymentTypeSelectionModal,
 }
 
 

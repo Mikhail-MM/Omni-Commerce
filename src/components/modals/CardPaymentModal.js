@@ -11,6 +11,11 @@ const mapDispatchToProps = dispatch => ({
 	hideModal: () => dispatch(hideModal()),
 })
 
+const mapStateToProps = (state) => {
+	const { modalType, modalProps } = state.modalReducer
+	return { modalType, modalProps }
+}
+
 const CardPaymentModal = props => {
 	return(
 		<div>
@@ -28,4 +33,4 @@ const CardPaymentModal = props => {
 	)
 }
 
-export default connect(null, mapDispatchToProps)(CardPaymentModal)
+export default connect(mapStateToProps, mapDispatchToProps)(CardPaymentModal)

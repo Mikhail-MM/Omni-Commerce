@@ -8,10 +8,11 @@ import { hideModal } from '../../actions/modals';
 import { updateTransactionWithRequestedAddon } from '../../actions/tickets-transactions'
 
 const mapStateToProps = state => {
-
+	
+	const { modalType, modalProps } = state.modalReducer
 	const { token } = state.authReducer
 	const { activeTicket } = state.ticketTrackingReducer
-	return { token, activeTicket }
+	return { token, activeTicket, modalType, modalProps }
 
 }
 

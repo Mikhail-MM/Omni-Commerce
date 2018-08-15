@@ -18,9 +18,9 @@ const mapStateToProps = state => {
 
 	const { token } = state.authReducer
 	const { loggedInUsers } = state.employeeReducer
-	const { modalType } = state.modalReducer
+	const { modalType, modalProps } = state.modalReducer
 
-	return { token, loggedInUsers, modalType }
+	return { token, loggedInUsers, modalType, modalProps }
 };
 
 const WaiterCallScreenMenu = props => {

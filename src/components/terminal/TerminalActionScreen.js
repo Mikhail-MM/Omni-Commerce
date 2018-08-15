@@ -174,15 +174,27 @@ class TerminalActionScreen extends Component {
 							<div className='ledger-footer'>
 								<div className='footer-buttons-pricing'>
 									<div className='action-button-container'>
-										<div style={{ backgroundColor: 'blue', marginBottom: 10 }}className='action-button'> Fire Order </div>
-										<div style={{ backgroundColor: 'red' }} className='action-button'> Void Ticket </div>
+										<div 
+											style={{ backgroundColor: 'blue', marginBottom: 10 }} 
+											className='action-button'
+											 onClick={() => this.props.updateTicketStatus(token, activeTicket._id, "Active")}
+										> 
+											Fire Order 
+										</div>
+										<div 
+											style={{ backgroundColor: 'red' }} 
+											className='action-button'
+											onClick={() => this.props.updateTicketStatus(token, activeTicket._id, "Void")}
+										> 
+											Void Ticket 
+										</div>
 									</div>
 									
 									{ activeTicket && this.displayPricingFromActiveTicket() }
 								
 								</div>
 
-								<div className='checkout-button'>
+								<div className='checkout-button' onClick={() => showModal('CASH_OR_CARD_MODAL', {})}>
 									Payment
 								</div>
 							</div>

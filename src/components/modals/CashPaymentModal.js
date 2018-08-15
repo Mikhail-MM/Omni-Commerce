@@ -11,7 +11,8 @@ const mapStateToProps = state => {
 	
 	const authToken = state.authReducer.token
 	const { activeTicket } = state.ticketTrackingReducer
-	return { authToken, activeTicket }
+	const { modalType, modalProps } = state.modalReducer
+	return { authToken, activeTicket, modalType, modalProps }
 
 }
 

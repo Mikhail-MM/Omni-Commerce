@@ -9,7 +9,8 @@ import { disregardInvalidatedItems } from '../../actions/shopping-cart'
 
 const mapStateToProps = state => {
 	const { invalidatedItems } = state.shoppingCartReducer
-	return { invalidatedItems }
+	const { modalType, modalProps } = state.modalReducer
+	return { invalidatedItems, modalType, modalProps}
 }
 
 const mapDispatchToProps = dispatch => ({

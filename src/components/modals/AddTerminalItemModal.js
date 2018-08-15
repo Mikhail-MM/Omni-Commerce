@@ -12,8 +12,8 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 const mapStateToProps = (state) => {
-	const { modalType } = state.modalReducer
-	return { modalType }
+	const { modalType, modalProps } = state.modalReducer
+	return { modalType, modalProps }
 }
 
 const AddTerminalItemModal = props => {

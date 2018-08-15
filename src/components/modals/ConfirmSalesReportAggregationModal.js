@@ -9,8 +9,9 @@ import { fetchAllTicketsAndGenerateSalesReport } from '../../actions/sales-repor
 
 const mapStateToProps = state => {
 	
+	const { modalType, modalProps } = state.modalReducer
 	const { token } = state.authReducer
-	return { token }
+	return { token, modalType, modalProps }
 
 }
 
@@ -51,4 +52,4 @@ const ConfirmSalesReportAggregationModal = props => {
 	)
 }
 
-export default connect(null, mapDispatchToProps)(ConfirmSalesReportAggregationModal)
+export default connect(mapStateToProps, mapDispatchToProps)(ConfirmSalesReportAggregationModal)

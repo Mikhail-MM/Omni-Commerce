@@ -16,8 +16,8 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => {
 	const { token } = state.authReducer
 	const { tickets, activeTicket } = state.ticketTrackingReducer
-	const { modalType } = state.modalReducer
-	return { modalType, token, tickets, activeTicket }
+	const { modalType, modalProps } = state.modalReducer
+	return { modalType, modalProps, token, tickets, activeTicket }
 }
 
 const TransactionHistoryDisplay = props => {
