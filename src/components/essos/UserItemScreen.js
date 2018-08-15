@@ -19,7 +19,7 @@ const mapDispatchToProps = dispatch => ({
 	routeToMarketPlace: (node) => dispatch(routeToNode(node)),
 })
 
-class UserItemPage extends Component {
+class UserItemScreen extends Component {
 	state = {
 
 	}
@@ -58,4 +58,4 @@ class UserItemPage extends Component {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserItemPage)
+export default connect(mapStateToProps, mapDispatchToProps)(UserItemScreen)

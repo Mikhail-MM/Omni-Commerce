@@ -3,10 +3,14 @@ import { connect } from 'react-redux'
 
 import '../styles/UserPage.css'
 
-import UserItemPage from './UserItemPage'
+import UserItemScreen from './UserItemScreen'
+import ShipmentOrderScreen from './ShipmentOrderScreen'
+import PurchaseHistoryScreen from './PurchaseHistoryScreen'
 
 const UserPageComponentMap = {
-	'USER_MARKET_ITEMS': UserItemPage,
+	'USER_MARKET_ITEMS': UserItemScreen,
+	'SHIPMENT_REQUESTS': ShipmentOrderScreen,
+	'PURCHASE_HISTORY': PurchaseHistoryScreen,
 }
 
 class UserPage extends Component {
@@ -63,7 +67,7 @@ class UserPage extends Component {
 							<div className='user-name-blurb metadata-loading' />
 							<div className='user-social-stats metadata-loading' />
 						</div>
-						) : (
+					   ) : (
 							<div className='user-social-container' >
 								<div className='user-avatar'>
 									<img className='user-avatar-image' src={this.state.userAvatarURL} />
@@ -76,9 +80,19 @@ class UserPage extends Component {
 									{`Some Stats...`}
 								</div>
 							</div>
-						)
+					   )
 					}
 					<div className='user-menu-control-panel'>
+						{ (this.props.selfProfileView) ? (
+							<button onClick={() => this.setState({componentView: 'USER_MARKET_ITEMS'})}> Modify My Items </button>
+							<button onClick={() => this.setState({componentView: 'SHIPMENT_REQUESTS'})}> Shipment Orders </button>
+							<button onClick={() => this.setState({componentView: 'PURCHASE_HISTORY'})}> My Purchase History </button>
+							
+						   ) : (
+
+						   )
+
+						}
 					</div>
 				</div>
 				{ <UserDetailDisplayComponent /> }
