@@ -82,7 +82,7 @@ module.exports.clockOutEmployee = async (req, res, next) => {
 
 		const TimeSheetModel = mongoose.model('TimeSheet', TimeSheetSchema, req.headers['x-mongo-key'] + '_TimeSheets')
 		const ClosedTimeSheet = await TimeSheetModel.findOneAndUpdate(
-			{user: client._id, status: "Clocked In"}, 
+			{user: UserClockingIn._id, status: "Clocked In"}, 
 			{timeOut: Date.now(), status: "Clocked Out" }, 
 			{ new: true }
 		)
