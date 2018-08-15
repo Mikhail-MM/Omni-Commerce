@@ -1,33 +1,16 @@
 export function fetchAllTicketsAndGenerateSalesReport(token) {
 	return dispatch => {
-		// Retrieve all transactions bound to organizational MongoCollectionKey on Backend
-
-		// Interestingly, none of these transactions will be available to be edited after they are aggregated. We can add the ability to modify them
-		// We may want to collect any unterminated tickets (Which have not been voided or paid) for further processing and to ensure that operator did not miss them accidentally
-		return fetch('http://localhost:3001/transactions', {
+		return fetch('http://localhost:3001/salesReports', {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token
 			},
-			method: 'GET',
-			mode: 'cors'
+			method: 'POST',
+			mode: 'cors',
+			body:JSON.stringify({})
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
-		.then(json => {
-			console.log("Sending Aggregate Transactions to Server:")
-			console.log(json)
-			return fetch('http://localhost:3001/salesReports', {
-				headers:{
-					'Content-Type': 'application/json',
-					'x-access-token': token
-				},
-				method: 'POST',
-				mode: 'cors',
-				body:JSON.stringify(json)
-			})
-			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
-			.then(json => dispatch(receiveSalesReport(json)))
-		})
+		.then(json => dispatch(receiveSalesReport(json)))
 		.catch(err => console.log(err))
 	}
 }

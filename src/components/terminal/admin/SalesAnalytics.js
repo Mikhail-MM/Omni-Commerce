@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
+import moment from 'moment'
 const mapStateToProps = state => {
 	const { token } = state.authReducer
 	return { token }
@@ -46,8 +46,8 @@ class SalesAnalyticsContainer extends Component {
 		return allReports.map(report => {
 			return(
 				<tr>
-					<td> {report.beginDate} </td>
-					<td> {report.endDate} </td>
+					<td> {moment(report.beginDate).format('MMMM Do YYYY, h:mm:ss a')} </td>
+					<td> {moment(report.endDate).format('MMMM Do YYYY, h:mm:ss a')} </td>
 					<td> {report.tickets.length} </td>
 					<td> {report.gross} </td>
 				</tr>

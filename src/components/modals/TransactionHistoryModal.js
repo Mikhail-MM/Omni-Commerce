@@ -67,7 +67,7 @@ const TransactionHistoryDisplay = props => {
 }
 
 const TransactionHistoryModal = props => {
-	const { token, tickets, activeTicket, fetchCurrentTicketDetails } = props
+	const { token, tickets, activeTicket, fetchCurrentTicketDetails, hideModal } = props
 	return(
 		<div>
 			<Modal
@@ -81,6 +81,7 @@ const TransactionHistoryModal = props => {
 					tickets={tickets}
 					activeTicket={activeTicket}
 					fetchCurrentTicketDetails={fetchCurrentTicketDetails}
+					hideModal={hideModal}
 				/>
 				<button onClick={() => props.hideModal()}> Cancel </button>
 

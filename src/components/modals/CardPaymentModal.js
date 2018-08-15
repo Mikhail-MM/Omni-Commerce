@@ -24,8 +24,9 @@ const CardPaymentModal = props => {
 				style={modalStyle}
 				contentLabel="Example Modal"
 				>
-
-				<Checkout apiStripePath='Omni'/>
+				<div style={{height: 80, width: 700}}>
+					<Checkout apiStripePath='Omni'/>
+				</div>
 				<button onClick={() => props.hideModal()}> Cancel </button>
 
 			</Modal>

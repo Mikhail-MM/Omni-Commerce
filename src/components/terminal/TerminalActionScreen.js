@@ -140,15 +140,6 @@ class TerminalActionScreen extends Component {
 						
 						<div className='touchpad' >
 								{ menuItems && activeTicket && this.generateCategoryContainersByVisibility() }
-								{/* 
-								<div className='action-buttons'>
-									<button onClick={() => this.props.updateTicketStatus(token, activeTicket._id, "Active")}>Fire Ticket</button>
-									<button onClick={() => this.props.updateTicketStatus(token, activeTicket._id, "Void")}>Void Ticket</button>
-								<button onClick={() => this.props.updateTicketStatus(token, activeTicket._id, "Delivered")}>Order Delivered</button>
-								<button onClick={() => this.props.showModal('CASH_PAYMENT_FORM', {})}>Pay With Cash</button>
-								<button onClick={() => this.props.showModal('CARD_PAYMENT_FORM', {})}>Pay With Stripe</button>
-									</div>
-								*/}
 						</div>
 
 						<div className='category-selection-buttons' >

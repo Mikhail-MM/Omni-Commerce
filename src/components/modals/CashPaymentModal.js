@@ -46,7 +46,7 @@ class CashPaymentForm extends Component {
 		const { authToken, activeTicket } = this.props
 		
 		return(
-			<form onSubmit={(event) => sendCashPaymentToApi(authToken, this.state.amount, activeTicket._id)}>
+			<form onSubmit={(event) => this.handleSubmit(event, authToken, this.state.amount, activeTicket._id)}>
 				<label>
 					Cash Tendered By Customer (Dollars):
 					<input type='text' value={this.state.amount} onChange={(event) => this.handleChange(event)} />
