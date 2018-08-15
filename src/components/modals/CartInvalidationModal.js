@@ -19,29 +19,19 @@ const mapDispatchToProps = dispatch => ({
 	},
 })
 
-const generateCartInvalidationAlert = () => {
-	return(
-		const { invalidatedItems } = this.props
-		
-		if (typeof(invalidatedItems) === "array") {
-				return invalidatedItems.itemsBought.map(removedItem => {
-					return(
-						<div>
-							{ `Item Removed: ${removedItem.itemName} could not be purchased - ${removedItem.unfulfillableStock} instance(s) removed.` } 
-						</div>
-					)
-		})}
-		else if (typeof(invalidatedItems) === "object") {
-			return (
-				<div>
-					{ `Item Removed: ${invalidatedItems.itemName} could not be purchased - ${removedItem.unfulfillableStock} instance(s) removed.`}
-				</div>
-				)
-		}
-	)
-}
 
 const CartInvalidationModal = props => {
+
+	const { invalidatedItems } = props
+
+	const generateCartInvalidationAlert = () => {
+		return invalidatedItems.itemsBought.map(removedItem => {
+			return ( <div> { `Item Removed: ${removedItem.itemName} could not be purchased - ${removedItem.unfulfillableStock} instance(s) removed.` } </div> )
+		})
+	}
+
+
+
 	return(
 		<div>
 			<Modal
@@ -52,7 +42,7 @@ const CartInvalidationModal = props => {
 				<div>
 					<h4> Some items were removed from your shopping cart. The seller does not have sufficient stock to fulfill your entire order. </h4>
 				</div>
-				{ invalidatedItems && this.generateCartInvalidationAlert()}
+				{ invalidatedItems && generateCartInvalidationAlert()}
 				<button onClick={() => props.hideModal()}> Understood. </button>
 
 			</Modal>

@@ -13,7 +13,7 @@ class PurchaseHistoryScreen extends Component {
 
 	async componentDidMount() {
 		const { token } = this.props
-		const purchaseHistory = await fetchShipmentRequests(token)
+		const purchaseHistory = await this.fetchShipmentRequests(token)
 
 		if (purchaseHistory) this.setState({
 			purchaseHistory: purchaseHistory
@@ -23,7 +23,7 @@ class PurchaseHistoryScreen extends Component {
 	fetchPurchaseHistory = async (token) => {
 		return fetch('http://localhost:3001/purchaseorders/userLookup/', {
 			headers: {
-				'Content/Type': 'application-json'
+				'Content/Type': 'application-json',
 				'x-access-token': token
 			},
 			method: 'GET',

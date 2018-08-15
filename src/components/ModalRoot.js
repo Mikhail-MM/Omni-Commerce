@@ -22,11 +22,16 @@ import WaiterCallScreenModal from './modals/WaiterCallScreenModal'
 import AddTerminalItemModal from './modals/AddTerminalItemModal'
 import TransactionHistoryModal  from './modals/TransactionHistoryModal'
 
+import EssosCardPaymentModal from './modals/EssosCardPaymentModal'
 import CashPaymentModal  from './modals/CashPaymentModal'
 import CardPaymentModal from './modals/CardPaymentModal'
+
 import CustomAddonModal from './modals/CustomAddonModal'
 
 import ConfirmCartModal from './modals/ConfirmCartModal'
+import CartInvalidationModal from './modals/CartInvalidationModal'
+
+import ConfirmSalesReportAggregationModal from './modals/ConfirmSalesReportAggregationModal'
 
 import AuthenticationForm from './forms/registration/AuthenticationForm'
 

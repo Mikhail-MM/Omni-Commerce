@@ -1,3 +1,5 @@
+import { showModal } from './modals'
+
 export function retrieveShoppingCart(token) {
 	console.log("Sending token to server for shopping cart retrieval")
 	console.log(token)

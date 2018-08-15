@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-mapStateToProps = state => {
+const mapStateToProps = state => {
 	const { token } = state.authReducer
 	return { token }
 }
 
-mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = dispatch => ({
 
 })
 

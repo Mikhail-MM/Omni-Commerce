@@ -84,12 +84,14 @@ class UserPage extends Component {
 					}
 					<div className='user-menu-control-panel'>
 						{ (this.props.selfProfileView) ? (
-							<button onClick={() => this.setState({componentView: 'USER_MARKET_ITEMS'})}> Modify My Items </button>
-							<button onClick={() => this.setState({componentView: 'SHIPMENT_REQUESTS'})}> Shipment Orders </button>
-							<button onClick={() => this.setState({componentView: 'PURCHASE_HISTORY'})}> My Purchase History </button>
+							<div>
+								<button onClick={() => this.setState({componentView: 'USER_MARKET_ITEMS'})}> Modify My Items </button>
+								<button onClick={() => this.setState({componentView: 'SHIPMENT_REQUESTS'})}> Shipment Orders </button>
+								<button onClick={() => this.setState({componentView: 'PURCHASE_HISTORY'})}> My Purchase History </button>
+							</div>
 							
 						   ) : (
-
+						   	<div/>
 						   )
 
 						}
