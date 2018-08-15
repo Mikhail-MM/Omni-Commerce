@@ -27,18 +27,29 @@ const WaiterCallScreenMenu = props => {
 		const { loggedInUsers } = props
 		console.log(loggedInUsers)
 		const generateWaiterCallScreen = () => {
-			if (loggedInUsers) return loggedInUsers.map(employee => <button key={employee} onClick={() => props.createNewTicket(props.token, employee)}> {employee} </button>)
+			if (loggedInUsers) return loggedInUsers.map(employee => { return (
+				<button 
+					key={employee} 
+					onClick={() => {
+						props.hideModal()
+						props.createNewTicket(props.token, employee)
+						}
+					}
+				> 
+					{employee} 
+				</button>
+			)})
 		}
 	
-	return(
-		<div>
-			{ props.loggedInUsers && generateWaiterCallScreen() }
-		</div>
-	)
+		return(
+			<div>
+				{ props.loggedInUsers && generateWaiterCallScreen() }
+			</div>
+		)
 }
 
 const WaiterCallScreenModal = props => {
-	const { token, loggedInUsers, createNewTicket } = props
+	const { token, loggedInUsers, createNewTicket, hideModal } = props
 	return(
 		<div>
 			<Modal
@@ -46,8 +57,8 @@ const WaiterCallScreenModal = props => {
 				style={modalStyle}
 				contentLabel="Employee Manifest"
 				>
-				<WaiterCallScreenMenu token={token} loggedInUsers={loggedInUsers} createNewTicket={createNewTicket}/>
-				<button onClick={() => props.hideModal()}> Cancel </button>
+				<WaiterCallScreenMenu token={token} loggedInUsers={loggedInUsers} createNewTicket={createNewTicket} hideModal={hideModal}/>
+				<button onClick={() => hideModal()}> Cancel </button>
 			</Modal>
 		</div>
 	)

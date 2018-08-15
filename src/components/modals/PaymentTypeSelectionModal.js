@@ -8,7 +8,7 @@ import { showModal, hideModal } from '../../actions/modals';
 
 const mapDispatchToProps = dispatch => ({
 	hideModal: () => dispatch(hideModal()),
-	showModal: (modalType, modalProps) => dispatch()
+	showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps))
 })
 
 const mapStateToProps = (state) => {
@@ -30,16 +30,16 @@ const PaymentTypeSelectionModal = props => {
 					<div 
 						style={{width: 56, height: 56, borderRadius:30, backgroundColor: 'red'}} 
 						className='payment-selection-icon' 
-						onClick={() => props.showModal('CARD_PAYMENT_MODAL')}
+						onClick={() => props.showModal('CARD_PAYMENT_MODAL', {})}
 					>
-						<img src='./assets/icons/credit-card.svg' />
+						<img src='/assets/icons/credit-card.svg' />
 					</div>
 					<div 
 						style={{width: 56, height: 56, borderRadius:30, backgroundColor: 'red'}} 
 						className='payment-selection-icon' 
 						onClick={() => props.showModal('CASH_PAYMENT_MODAL', {})}
 					>
-						<img src='./assets/icons/change.svg' />
+						<img src='/assets/icons/change.svg' />
 					</div>
 				</div>
 				<button onClick={() => props.hideModal()}> Cancel </button>

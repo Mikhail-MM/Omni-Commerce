@@ -27,7 +27,13 @@ const TransactionHistoryDisplay = props => {
 	const mapTicketsToDOMByStatus = ticketStatus => {
 			return tickets[ticketStatus].map(ticket => {
 				return(
-					<tr key={ticket._id} onClick={() => fetchCurrentTicketDetails(token, ticket._id)}>
+					<tr 
+						key={ticket._id} 
+						onClick={() => {
+							props.hideModal()
+							fetchCurrentTicketDetails(token, ticket._id)}
+						}
+					>
 						<td> {ticket.status} </td>
 						<td> {ticket.createdBy} </td>
 						<td> {moment(ticket.createdAt).format('h:mm:ss a')} </td>

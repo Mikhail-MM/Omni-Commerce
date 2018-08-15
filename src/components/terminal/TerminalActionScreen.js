@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import '../styles/TerminalActionScreen.css'
 
+import ModalRoot from '../ModalRoot'
 import { showModal } from '../../actions/modals'
 
 import { 
@@ -128,6 +129,7 @@ class TerminalActionScreen extends Component {
 
 		return(
 			<div className='action-page-wrapper' >
+				<ModalRoot />
 					
 				<div className='app-header__terminal-action'>
 				</div>
@@ -194,7 +196,7 @@ class TerminalActionScreen extends Component {
 								
 								</div>
 
-								<div className='checkout-button' onClick={() => showModal('CASH_OR_CARD_MODAL', {})}>
+								<div className='checkout-button' onClick={() => this.props.showModal('CASH_OR_CARD_MODAL', {})}>
 									Payment
 								</div>
 							</div>
