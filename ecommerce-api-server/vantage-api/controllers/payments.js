@@ -91,8 +91,6 @@ module.exports.saveStripeCustomerInformation = async function(req, res, next) {
         shipping: customer.shipping,
         statement_descriptor: "Omni Online Market",
       }).then( async (charge) => {
-
-        console.log("Stripe Charge Created:", charge)
         
         const purchaseOrderData = Object.assign({}, {itemsBought: req.body.validatedPurchaseOrderToProcess.validatedCart.itemsBought}, {
           customerRef_id: customer._id,
@@ -102,7 +100,6 @@ module.exports.saveStripeCustomerInformation = async function(req, res, next) {
         const newPurchaseOrder = new PurchaseOrderModel(purchaseOrderData);
         const savedPurchaseOrder = await newPurchaseOrder.save();
 
-        console.log("Built new purchase order for buyer:", savedPurchaseOrder)
 
         req.body.validatedPurchaseOrderToProcess.savedPurchaseOrder = savedPurchaseOrder;
 
@@ -131,11 +128,11 @@ module.exports.saveStripeCustomerInformation = async function(req, res, next) {
               const taxDisplay = subTotalBigNumber.times(taxRate).round(2).toNumber()
               const totalReal = subTotalBigNumber.plus(taxReal).toNumber()
               const totalDisplay = subTotalBigNumber.plus(taxReal).round(2).toNumber()
-            
+              console.log("Make sure we have correct sellerRef stuff happening: showing seller_id and groupedShippingOrders[seller_id]", seller_id, groupedShippingOrders[seller_id] )
                   const receiptObject = Object.assign({
                     sellerRef_id: seller_id,
                     masterOrderRef_id: savedPurchaseOrder._id,
-                    itemsBought: groupedShippingOrders.seller_id, // groupedShippingOrders is an object of arrays, whose keys are _id references of user who posted the items to the marketplace
+                    itemsBought: groupedShippingOrders[seller_id], // groupedShippingOrders is an object of arrays, whose keys are _id references of user who posted the items to the marketplace
                     subtotalReal: subtotalReal,
                     subtotalDisplay: subtotalDisplay,
                     taxReal: taxReal,
@@ -149,7 +146,7 @@ module.exports.saveStripeCustomerInformation = async function(req, res, next) {
 
                  req.body.validatedPurchaseOrderToProcess.arrayOfShippingOrders = arrayOfShippingOrders;
                   
-                  for (const receipt of arrayOfReceiptsForBuyers) {
+                  for (const receipt of arrayOfShippingOrders) {
                     
                     const newSellerSpecificPurchaseOrder = new sellerSpecificPurchaseOrderModel(receipt);
                     const savedSellerSpecificPurchaseOrder = await newSellerSpecificPurchaseOrder.save()
