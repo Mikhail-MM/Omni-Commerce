@@ -156,6 +156,26 @@ export function validateCartAndProceedToPayment(token) {
 	
 }
 
+export function pullItemFromCart(token, subdocId) {
+	console.log("Attempting to pull boughtItem at position");
+	console.log(subdocId);
+	const data = { _id: subdocId }
+	return dispatch => {
+		fetch('http://localhost:3001/shoppingCart/removeItem/',{ 
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': token,
+			},
+			method: 'PUT',
+			mode: 'cors',
+			body: JSON.stringify(data),
+		})
+		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(json => dispatch(receiveShoppingCart(json)))
+		.catch(err => console.log(err))
+	}
+}
+
 function receiveShoppingCart(shoppingCart) {
 	return {
 		type: 'RECEIVE_SHOPPING_CART',

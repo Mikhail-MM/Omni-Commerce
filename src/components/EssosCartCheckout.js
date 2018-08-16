@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import ModalRoot from './ModalRoot'
-import { validateCartAndProceedToPayment } from '../actions/shopping-cart'
+import { validateCartAndProceedToPayment, pullItemFromCart } from '../actions/shopping-cart'
 const mapStateToProps = state => {
 
 	const { token, isAuthenticated } = state.authReducer
@@ -12,7 +12,8 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-	handleCheckout: (token) => dispatch(validateCartAndProceedToPayment(token))
+	handleCheckout: (token) => dispatch(validateCartAndProceedToPayment(token)),
+	removeItem: (token, subdocID) => dispatch(pullItemFromCart(token, subdocID))
 })
 
 /* 
@@ -40,6 +41,9 @@ const EssosCartCheckout = props => {
 						</div>
 						<div className='cart-item-price-container' >
 							{`Cost Per Unit: $${item.itemPrice}`}
+						</div>
+						<div className='removal' onClick={() => props.removeItem(token, item._id)}>
+							Remove
 						</div>
 					</div>
 				</div>
