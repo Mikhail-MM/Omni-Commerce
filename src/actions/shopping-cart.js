@@ -120,7 +120,7 @@ export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountA
 				})
 				.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 				.then(json =>{ 
-					dispatch(showModal('CART_ADDITION_SUCCESS_MODAL', {}))
+					dispatch(showModal('CART_ADDITION_SUCCESS_MODAL', {boughtItem: json}))
 					dispatch(receiveShoppingCart(json)) 
 				})
 				.catch(err => console.log(err))

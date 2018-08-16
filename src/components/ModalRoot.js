@@ -29,6 +29,7 @@ import CardPaymentModal from './modals/CardPaymentModal'
 import CustomAddonModal from './modals/CustomAddonModal'
 
 import ConfirmCartModal from './modals/ConfirmCartModal'
+import CartSuccessModal from './modals/CartSuccessModal'
 import CartInvalidationModal from './modals/CartInvalidationModal'
 
 import ConfirmSalesReportAggregationModal from './modals/ConfirmSalesReportAggregationModal'
@@ -49,9 +50,10 @@ const MODAL_COMPONENTS = {
 
 	'ADD_EMPLOYEE_MODAL': AuthenticationForm,
 
-	'CONFIRM_CART_ADDITION': ConfirmCartModal,
+	
 	'CONFIRM_END_OF_BUSINESS_DAY': ConfirmSalesReportAggregationModal,
-
+	'CONFIRM_CART_ADDITION': ConfirmCartModal,
+	'CART_ADDITION_SUCCESS_MODAL' CartSuccessModal,
 	'CART_INVALIDATION_MODAL': CartInvalidationModal,
 	'ONLINE_STORE_STRIPE_CHECKOUT': EssosCardPaymentModal,
 
