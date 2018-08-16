@@ -95,7 +95,7 @@ module.exports.saveStripeCustomerInformation = async function(req, res, next) {
         console.log("Stripe Charge Created:", charge)
         
         const purchaseOrderData = Object.assign({}, {itemsBought: req.body.validatedPurchaseOrderToProcess.validatedCart.itemsBought}, {
-          customerRef_id: savedCustomerEntity._id,
+          customerRef_id: customer._id,
           charge: charge
          });
 

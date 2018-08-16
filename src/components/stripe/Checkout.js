@@ -33,7 +33,7 @@ const CardSection = props => {
 };
 
 const PaymentCheckoutForm = props => {
-
+	console.log(props)
 	const { authToken, activeTicket } = props
 	const { sendOmniStripeTokenToApi } = props
 
@@ -96,7 +96,7 @@ const ConnectedInjectedCheckoutForm = injectStripe(connect(mapStateToProps, mapD
 
 const Checkout = props => {
 	return(
-		<StripeProvider apiKey={'TODO: Add Private Publishable Key'}>
+		<StripeProvider apiKey={stripeAPIkey}>
 			<Elements>
 				<ConnectedInjectedCheckoutForm apiStripePath={props.apiStripePath}/>
 			</Elements>

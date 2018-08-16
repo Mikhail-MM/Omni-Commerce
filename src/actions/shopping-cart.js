@@ -66,6 +66,7 @@ export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountA
 						itemName: json.itemName,
 						itemPrice: json.itemPrice,
 						imageURL: json.imageURL,
+						postedBy: json.postedBy,
 						numberRequested: amountThatCanBeFulfilled,
 						sellerRef_id: json.sellerRef_id,
 						marketplaceRef_id: json.marketplaceRef_id,
