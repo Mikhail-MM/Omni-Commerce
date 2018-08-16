@@ -115,6 +115,7 @@ export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountA
 						sellerRef_id: json.sellerRef_id,
 						marketplaceRef_id: json.marketplaceRef_id,
 						itemRef_id: json._id,
+						postedBy: json.postedBy,
 					}),
 				})
 				.then(response => response.ok ? response.json() : new Error(response.statusText))

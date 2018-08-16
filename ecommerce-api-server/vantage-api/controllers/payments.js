@@ -109,18 +109,18 @@ module.exports.saveStripeCustomerInformation = async function(req, res, next) {
         const groupedShippingOrders = _.groupBy(savedPurchaseOrder.itemsBought, "sellerRef_id");
         const arrayOfShippingOrders = [];
 
-        for (const seller_id in sellerSpecificShippingOrders) {
+        for (const seller_id in groupedShippingOrders) {
 
           // EXPORT THIS INTO NEW FUNCTION TO CALCULATE PRICING
 
-          const bigNumberPrices = sellerSpecificShippingOrders[seller_id].map(item => {
+          const bigNumberPrices = groupedShippingOrders[seller_id].map(item => {
             return { 
               itemPrice: new BigNumber(item.itemPrice),
               multipleRequest: new BigNumber(item.numberRequested),
             }
           });
 
-          const subTotalBigNumber =  bigNumberPrices.reduce( (acc, cur) => { 
+          const subTotalBigNumber = bigNumberPrices.reduce( (acc, cur) => { 
           return acc.plus((cur.itemPrice.times(cur.multipleRequest))) }, new BigNumber(0)
           )
              
@@ -135,7 +135,7 @@ module.exports.saveStripeCustomerInformation = async function(req, res, next) {
                   const receiptObject = Object.assign({
                     sellerRef_id: seller_id,
                     masterOrderRef_id: savedPurchaseOrder._id,
-                    itemsBought: sellerSpecificShippingOrders.seller_id,
+                    itemsBought: groupedShippingOrders.seller_id, // groupedShippingOrders is an object of arrays, whose keys are _id references of user who posted the items to the marketplace
                     subtotalReal: subtotalReal,
                     subtotalDisplay: subtotalDisplay,
                     taxReal: taxReal,
