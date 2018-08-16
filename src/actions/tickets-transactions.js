@@ -36,7 +36,7 @@ export function fetchTickets(token) {
 			method: 'GET',
 			mode: 'cors'
 		})
-		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => dispatch(organizeTicketsByStatus(json)))
 		.catch(err => console.log(err))
 	}
@@ -54,7 +54,7 @@ export function createNewTicket(token, createdBy) {
 			mode: 'cors',
 			body: JSON.stringify(data),
 		})
-		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
 			dispatch(fetchTickets(token))
 			dispatch(receiveCurrentTicket(json))
@@ -76,7 +76,7 @@ export function fetchCurrentTicketDetails(token, ticket_Id) {
 			method: 'GET',
 			mode: 'cors',
 		})
-		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => dispatch(receiveCurrentTicket(json)))
 		.then(() => dispatch(push('/omni/terminal/tickets')))
 		.catch(err => console.log(err))
@@ -94,7 +94,7 @@ export function updateTransactionWithMenuItem(token, menuItem_Id, currentTransac
 			method: 'GET',
 			mode: 'cors',
 		})
-		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
 			const url = 'http://localhost:3001/transactions/addItem/' + currentTransaction_Id;
 			return fetch(url, {
@@ -106,7 +106,7 @@ export function updateTransactionWithMenuItem(token, menuItem_Id, currentTransac
 				mode: 'cors',
 				body: JSON.stringify(json),
 			})
-			.then(response => response.ok ? response.json() : new Error(response.statusText))
+			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 			.then(json => dispatch(receiveCurrentTicket(json)))
 		})
 		.catch(err => console.log(err))
@@ -127,7 +127,7 @@ export function updateTicketStatus(token, ticket_Id, ticketStatus) {
 			mode: 'cors',
 			body: JSON.stringify(data),
 		})
-		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => dispatch(receiveCurrentTicket(json)))
 	}
 }
@@ -145,7 +145,7 @@ export function updateTransactionWithRequestedAddon(token, currentTransaction_Id
 			mode: 'cors',
 			body: addOn,
 		})
-		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => dispatch(receiveCurrentTicket(json)))
 		.catch(err => console.log(err))
 	}
@@ -164,7 +164,7 @@ export function updateTransactionWithSubdocRemoval(token, subdoc_Id, currentTran
 			mode: 'cors',
 			body: JSON.stringify(data),
 		})
-		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => dispatch(receiveCurrentTicket(json)))
 		.catch(err => console.log(err))
 	}

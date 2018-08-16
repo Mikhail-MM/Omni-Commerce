@@ -12,7 +12,7 @@ export function clockEmployeeOut(token, employeeNumber) {
 			method: 'PUT',
 			mode: 'cors',
 		})
-		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
 			console.log("User Clocked Out - Returning Timesheet:")
 			console.log(json)
@@ -40,7 +40,7 @@ export function clockEmployeeIn(token, employeeNumber) {
 			mode: 'cors',
 			body: JSON.stringify(data),
 		})
-		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
 			console.log("User Clocked In - Returning Timesheet:")
 			console.log(json)

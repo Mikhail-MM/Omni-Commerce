@@ -21,7 +21,7 @@ export function fetchMenuItems(token) {
 			mode: 'cors',
 		})
 		// fix this method
-		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => dispatch(organizeItemsToCategories(json)))
 		.catch(err => console.log(err)) 
 	}
@@ -41,7 +41,7 @@ export function createNewMenuItem(token, data, imageFile) {
 				mode: 'cors',
 				body: JSON.stringify(data),
 		})
-		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(newMenuItemJSON => {
 
 			console.log("New Item JSON data", newMenuItemJSON)

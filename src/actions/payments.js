@@ -15,7 +15,7 @@ export function sendCashPaymentToApi(authToken, cashTendered, transaction_id) {
 			method: 'GET',
 			mode: 'cors',
 		})
-		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
 			data.parentTransaction = json;
 			fetch('http://localhost:3001/payments/cash', {
@@ -27,7 +27,7 @@ export function sendCashPaymentToApi(authToken, cashTendered, transaction_id) {
 				mode: 'cors',
 				body: JSON.stringify(data),
 			})
-			.then(response => response.ok ? response.json() : new Error(response.statusText))
+			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 			.then(json => {
 				const data = { 
 					payment: json.payment,
@@ -42,7 +42,7 @@ export function sendCashPaymentToApi(authToken, cashTendered, transaction_id) {
 					mode: 'cors',
 					body: JSON.stringify(data),
 				})
-				.then(response => response.ok ? response.json() : new Error(response.statusText))
+				.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 				.then(json => console.log(json))
 				.catch(err => console.log(err))
 			}) // Dispatch an event for the Cashier - Cash Register Screen
@@ -65,7 +65,7 @@ export function sendStripeTokenToApi(authToken, stripeToken, transaction_id) {
 			method: 'GET',
 			mode:'cors'
 		})
-		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
 			const data = {
 				chargeTotal: json.totalReal,
@@ -81,7 +81,7 @@ export function sendStripeTokenToApi(authToken, stripeToken, transaction_id) {
 			mode: 'cors',
 			body: JSON.stringify(data)
 			})
-			.then(response => response.ok ? response.json() : new Error(response.statusText))
+			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 			.then(json => {
 				console.log("Receiving Stripe Charge from API")
 				console.log(json)
@@ -155,7 +155,7 @@ function updateTransactionWithStripePaymentDetails(authToken, transaction_id, pa
 			mode: 'cors',
 			body: JSON.stringify(data),
 		})
-		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => console.log(json))
 		.catch(err => console.log(err))
 	}
@@ -172,7 +172,7 @@ export function beginCartPaymentValidationCascade(authToken, token) {
 			mode: 'cors',
 			body: JSON.stringify({stripeToken: token})
 		})
-		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
 			console.log("Returning heavy response from payment endpoints - ensure data validity")
 			console.log(json)

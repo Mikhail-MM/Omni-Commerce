@@ -7,7 +7,7 @@ export function retrieveAllItemsForSale() {
 			method: 'GET',
 			mode: 'cors'
 		})
-		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => dispatch(receiveItems(json)))
 		.catch(err => console.log(err))
 	}

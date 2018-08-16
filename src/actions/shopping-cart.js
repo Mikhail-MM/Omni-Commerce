@@ -12,7 +12,7 @@ export function retrieveShoppingCart(token) {
 			method: 'GET',
 			mode: 'cors'
 		})
-		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
 			if (json.message) { return new Error(json.message) }
 			dispatch(receiveShoppingCart(json))})
@@ -36,7 +36,7 @@ export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountA
 			method: 'GET',
 			mode: 'cors'
 		})
-		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
 				console.log("Evaluating how much of item is in stock on server (json.numberInStock:")
 				console.log(json.numberInStock)
@@ -73,7 +73,7 @@ export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountA
 						itemRef_id: json._id,
 					}),
 				})
-				.then(response => response.ok ? response.json() : new Error(response.statusText))
+				.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 				.then(pushedCart => {
 					console.log("Updating client's shopping cart with updated version")
 					dispatch(receiveShoppingCart(pushedCart))
@@ -118,8 +118,11 @@ export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountA
 						postedBy: json.postedBy,
 					}),
 				})
-				.then(response => response.ok ? response.json() : new Error(response.statusText))
-				.then(json => dispatch(receiveShoppingCart(json)))
+				.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+				.then(json =>{ 
+					dispatch(showModal('CART_ADDITION_SUCCESS_MODAL', {}))
+					dispatch(receiveShoppingCart(json)) 
+				})
 				.catch(err => console.log(err))
 			}
 		});
@@ -137,7 +140,7 @@ export function validateCartAndProceedToPayment(token) {
 			method: 'POST',
 			mode: 'cors',
 		})
-		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json =>{
 			if (json.partialValidationFail) { 
 				
@@ -171,7 +174,7 @@ export function pullItemFromCart(token, subdocId) {
 			mode: 'cors',
 			body: JSON.stringify(data),
 		})
-		.then(response => response.ok ? response.json() : new Error(response.statusText))
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => dispatch(receiveShoppingCart(json)))
 		.catch(err => console.log(err))
 	}
