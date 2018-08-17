@@ -62,7 +62,7 @@ class OmniTerminal extends Component {
 								</div>
 							</div>
 							<div className='row__buttons'>
-								<div className='button' onClick={() => this.props.showModal('DATABASE_INTERFACE_MODAL', { module:'Essos', action: 'upload' })}>
+								<div className='button' onClick={() => this.props.showModal('DATABASE_INTERFACE_MODAL', { module:'Omni', action: 'upload' })}>
 									Add New Item
 								</div>
 								<div className='button' onClick={() => this.props.routeToNode('/omni/terminal/modifyItems')} >

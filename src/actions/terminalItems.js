@@ -1,5 +1,7 @@
 import { groupBy } from 'underscore'
 
+import { showModal } from './modals'
+
 function organizeItemsToCategories(ArrayOfAllMenuItemObjects) {
 	
 	const categorizedMenuItems = groupBy(ArrayOfAllMenuItemObjects, 'category');
@@ -79,7 +81,7 @@ export function createNewMenuItem(token, data, imageFile) {
 						console.log("updated item", newItemJSONWithImageURL)
 
 						dispatch(fetchMenuItems(token))
-						dispatch(showModal('SHOW_ITEM_UPLOAD_SUCCESS_MODAL', {...newItemJSONWithImageURL})
+						dispatch(showModal('SHOW_ITEM_UPLOAD_SUCCESS_MODAL', {...newItemJSONWithImageURL}))
 
 					})
 				})
@@ -126,14 +128,14 @@ export function modifyOmniTerminalItem(token, itemID, data, imageHandler) {
 					.then(modifiedItemJSONWithImageURL => {
 						console.log("Modified Item w/ New Image:", modifiedItemJSONWithImageURL)
 						dispatch(fetchMenuItems(token))
-						dispatch(showModal('SHOW_ITEM_UPLOAD_SUCCESS_MODAL', {...modifiedItemJSONWithImageURL})
+						dispatch(showModal('SHOW_ITEM_UPLOAD_SUCCESS_MODAL', {...modifiedItemJSONWithImageURL}))
 					})
 				})
 			} else if (imageHandler.newImageFlag === null) {
 				console.log("No Image Change. Logging new item attributes: ", json)
 				console.log("Client fetching all items")
 				dispatch(fetchMenuItems(token))
-				dispatch(showModal('SHOW_ITEM_UPLOAD_SUCCESS_MODAL', {...json})
+				dispatch(showModal('SHOW_ITEM_UPLOAD_SUCCESS_MODAL', {...json}))
 			}
 		})
 		.catch(err => console.log(err))

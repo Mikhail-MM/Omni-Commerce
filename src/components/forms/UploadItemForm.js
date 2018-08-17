@@ -1,35 +1,36 @@
 import React, { Component } from 'react';
-import connect from 'react-redux';
+import { connect } from 'react-redux';
 
-import '../../styles/UploadItemForm.css'
+import '../styles/UploadItemForm.css'
 
-const { modifyOmniTerminalItem, createNewMenuItem } from '../../actions/terminalItems'
-const { updateMarketplaceItem, postEssosItem } from '../../actions/marketplace'
+import { modifyOmniTerminalItem, createNewMenuItem } from '../../actions/terminalItems'
+import { updateMarketplaceItem, postEssosItem } from '../../actions/marketplace'
+
 const initialState = {
 	itemName: '',
 	itemPrice: '',
 	imageSource: null,
-	category: ''
+	category: '',
 	tags: [],
-	newImageFlag: false
+	newImageFlag: false,
 	selectedFile: null,
 }
 
 const mapStateToProps = state => {
-	const { token } = state.authToken
+	const { token } = state.authReducer
 	return { token }
 }
 const mapDispatchToProps = dispatch => ({
-	modifyOmniItem = (token, itemID, data, imageHandler) => {
+	modifyOmniItem: (token, itemID, data, imageHandler) => {
 		dispatch(modifyOmniTerminalItem(token, itemID, data, imageHandler))
 	},
-	modifyEssosItem = (token, itemID, data, imageHandler) => {
+	modifyEssosItem: (token, itemID, data, imageHandler) => {
 		dispatch(updateMarketplaceItem(token, itemID, data, imageHandler))
 	},
-	uploadOmniItem = (token, data, imageFile) => {
+	uploadOmniItem: (token, data, imageFile) => {
 		dispatch(createNewMenuItem(token, data, imageFile))
 	},
-	uploadEssosItem = (token, data, imageFile) => {
+	uploadEssosItem: (token, data, imageFile) => {
 		dispatch(postEssosItem(token, data, imageFile))
 	},
 })
@@ -38,24 +39,25 @@ class UploadItemForm extends Component {
 	state = initialState
 
 	componentDidMount() {
+		//const { itemName, itemPrice, category, imageURL, numberInStock, tags } = this.props.modifyItemAttributes
+		console.log(this.props)
+		
 		if (this.props.action === 'modify') {
 			switch(this.props.module) {
 				case('Omni'):
-					const { itemName, itemPrice, category, imageURL } = this.props.modifyItemAttributes
 					return this.setState({
-						itemName,
-						itemPrice,
-						category,
-						imageSource: imageURL, 
+						itemName: this.props.modifyItemAttributes.itemName,
+						itemPrice: this.props.modifyItemAttributes.itemPrice,
+						category: this.props.modifyItemAttributes.category,
+						imageSource: this.props.modifyItemAttributes.imageURL, 
 					})
 				case('Essos'):
-					const { itemName, itemPrice, numberInStock, imageURL, tags } = this.props.modifyItemAttributes
 					return this.setState({
-						itemName,
-						itemPrice,
-						numberInStock,
-						imageSource: imageURL,
-						tags
+						itemName: this.props.modifyItemAttributes.itemName,
+						itemPrice: this.props.modifyItemAttributes. itemPrice,
+						numberInStock: this.props.modifyItemAttributes.numberInStock,
+						imageSource: this.props.modifyItemAttributes.imageURL,
+						tags: this.props.modifyItemAttributes.tags
 					})
 			}
 		}
@@ -149,7 +151,7 @@ class UploadItemForm extends Component {
 			tags,
 		}
 		const imageHandler = {
-			newImage,
+			newImageFlag,
 			imageSource
 		}
 		this.props.modifyEssosItem(token, _id, data, imageHandler)
@@ -206,7 +208,7 @@ class UploadItemForm extends Component {
 
 	render() {
 		return(
-			{ (this.props.module === 'Omni') ? (
+			(this.props.module === 'Omni') ? (
 				<form className='omni-item-form-wrapper' onSubmit={(event) => this.handleSubmit(event)}>
 					<div className='omni-image-preview-container' >
 						<img src={this.state.imageSource} />
@@ -285,7 +287,7 @@ class UploadItemForm extends Component {
 					</div>
 				</form>
 
-			)}
+			)
 		)
 	}
 }

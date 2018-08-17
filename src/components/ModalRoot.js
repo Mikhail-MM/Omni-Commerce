@@ -36,6 +36,7 @@ import ConfirmSalesReportAggregationModal from './modals/ConfirmSalesReportAggre
 
 import PaymentTypeSelectionModal from './modals/PaymentTypeSelectionModal'
 
+import DatabaseInterfaceModal from './modals/DatabaseInterfaceModal'
 import UploadSuccessModal from './modals/UploadSuccessModal'
 
 import AuthenticationForm from './forms/registration/AuthenticationForm'
@@ -56,7 +57,7 @@ const MODAL_COMPONENTS = {
 	
 	'CONFIRM_END_OF_BUSINESS_DAY': ConfirmSalesReportAggregationModal,
 	'CONFIRM_CART_ADDITION': ConfirmCartModal,
-	'CART_ADDITION_SUCCESS_MODAL' CartSuccessModal,
+	'CART_ADDITION_SUCCESS_MODAL': CartSuccessModal,
 	'CART_INVALIDATION_MODAL': CartInvalidationModal,
 	'ONLINE_STORE_STRIPE_CHECKOUT': EssosCardPaymentModal,
 

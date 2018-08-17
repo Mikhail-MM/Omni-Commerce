@@ -12,7 +12,7 @@ import {
 	updateTransactionWithSubdocRemoval 
 } from '../../actions/tickets-transactions'
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownprops) => {
 
 	const { token, isAuthenticated } = state.authReducer
 	const { menuItems, visibleCategory } = state.terminalItemsReducer 
@@ -37,6 +37,9 @@ class TerminalActionScreen extends Component {
 
 	// Category Selection Screen
 
+	componentDidMount() {
+		console.log(this.props)
+	}
 	generateItemCategoryVisibilityMenu = () => {
 		const { menuItems } = this.props
 
@@ -133,7 +136,6 @@ class TerminalActionScreen extends Component {
 
 	render() {
 		const { token, isAuthenticated, menuItems, visibleCategory, activeTicket } = this.props
-
 		return(
 			<div className='action-page-wrapper' >
 				<ModalRoot />
@@ -146,7 +148,7 @@ class TerminalActionScreen extends Component {
 					<div className='picker-column' >
 						
 						<div className='touchpad' >
-								{ menuItems && activeTicket && this.generateCategoryContainersByVisibility() }
+								{ menuItems && this.generateCategoryContainersByVisibility() }
 						</div>
 
 						<div className='category-selection-buttons' >

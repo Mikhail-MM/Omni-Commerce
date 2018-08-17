@@ -1,3 +1,5 @@
+import { showModal } from './modals'
+
 export function retrieveAllItemsForSale() {
 	return dispatch => {	
 		return fetch('http://localhost:3001/storeItem', {
@@ -51,7 +53,7 @@ export function updateMarketplaceItem(token, itemID, data, imageHandler) {
 					.then(modifiedItemJSONWithImageURL => {
 						console.log("Modified Item w/ New Image:", modifiedItemJSONWithImageURL)
 						dispatch(retrieveAllItemsForSale())
-						dispatch(showModal('SHOW_ITEM_UPLOAD_SUCCESS_MODAL', {...modifiedItemJSONWithImageURL})
+						dispatch(showModal('SHOW_ITEM_UPLOAD_SUCCESS_MODAL', {...modifiedItemJSONWithImageURL}))
 					})
 				})
 			} else if (imageHandler.newImageFlag === null) {
@@ -94,7 +96,7 @@ export function postEssosItem(token, data, imageFile) {
 					headers: {
 						'Content-Type': 'application-json',
 						'x-access-token': token,
-					}
+					},
 					method: 'PUT',
 					mode: 'cors',
 					body: JSON.stringify(imageURLJSON),
@@ -103,7 +105,7 @@ export function postEssosItem(token, data, imageFile) {
 				.then(newItemJSONWithImageURL => {
 				console.log("New item uploaded to marketplace:", newItemJSONWithImageURL)
 				dispatch(retrieveAllItemsForSale())
-				dispatch(showModal('SHOW_ITEM_UPLOAD_SUCCESS_MODAL', {...newItemJSONWithImageURL})
+				dispatch(showModal('SHOW_ITEM_UPLOAD_SUCCESS_MODAL', {...newItemJSONWithImageURL}))
 				})
 			})
 		})
