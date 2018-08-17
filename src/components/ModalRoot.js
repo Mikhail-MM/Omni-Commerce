@@ -36,7 +36,10 @@ import ConfirmSalesReportAggregationModal from './modals/ConfirmSalesReportAggre
 
 import PaymentTypeSelectionModal from './modals/PaymentTypeSelectionModal'
 
+import UploadSuccessModal from './modals/UploadSuccessModal'
+
 import AuthenticationForm from './forms/registration/AuthenticationForm'
+
 
 const MODAL_COMPONENTS = {
 	'EMPLOYEE_PUNCH_CLOCK_FORM_MODAL': EmployeePunchClockFormModal,
@@ -58,6 +61,9 @@ const MODAL_COMPONENTS = {
 	'ONLINE_STORE_STRIPE_CHECKOUT': EssosCardPaymentModal,
 
 	'CASH_OR_CARD_MODAL': PaymentTypeSelectionModal,
+
+	'DATABASE_INTERFACE_MODAL': DatabaseInterfaceModal,
+	'SHOW_ITEM_UPLOAD_SUCCESS_MODAL': UploadSuccessModal,
 }
 
 

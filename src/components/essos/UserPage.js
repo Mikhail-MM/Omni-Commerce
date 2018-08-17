@@ -3,9 +3,13 @@ import { connect } from 'react-redux'
 
 import '../styles/UserPage.css'
 
+import ModalRoot from '../ModalRoot'
+
 import UserItemScreen from './UserItemScreen'
 import ShipmentOrderScreen from './ShipmentOrderScreen'
 import PurchaseHistoryScreen from './PurchaseHistoryScreen'
+
+import { showModal } from '../../actions/modals'
 
 const UserPageComponentMap = {
 	'USER_MARKET_ITEMS': UserItemScreen,
@@ -18,6 +22,10 @@ const mapStateToProps = state => {
 	return { token }
 
 }
+
+const mapDispatchToProps = dispatch => ({
+	showModal: (modalType, modalRoot) => dispatch(showModal(modalType, modalRoot)),
+})
 
 class UserPage extends Component {
 	state = {
@@ -64,12 +72,13 @@ class UserPage extends Component {
 		window.scrollTo(0, 0)
 
 		const profileData = await this.fetchProfilePageMetadata()
-		const { firstName, lastName, avatarURL } = profileData
+		const { firstName, lastName, avatarURL, _id } = profileData
 
 		if (profileData) return this.setState({
 			userFullName: `${firstName} ${lastName}`,
 			userAvatarURL: avatarURL,
 			loading: false,
+			selfID: _id,
 		})
 	}
 
@@ -81,6 +90,7 @@ class UserPage extends Component {
 
 		return (
 			<div className='user-page-wrapper'>
+				<ModalRoot/>
 				<div className='main-user-header'>
 					{ (this.state.loading === true) ? (
 						<div className='user-social-container' >
@@ -109,6 +119,7 @@ class UserPage extends Component {
 								<button onClick={() => this.setState({componentView: 'USER_MARKET_ITEMS'})}> Modify My Items </button>
 								<button onClick={() => this.setState({componentView: 'SHIPMENT_REQUESTS'})}> Shipment Orders </button>
 								<button onClick={() => this.setState({componentView: 'PURCHASE_HISTORY'})}> My Purchase History </button>
+								<button onClick={() => this.props.showModal('DATABASE_INTERFACE_MODAL', {module: 'Essos', action: 'upload' })}> Add Item To My Store</button>
 							</div>
 							
 						   ) : (
@@ -118,7 +129,7 @@ class UserPage extends Component {
 						}
 					</div>
 				</div>
-				{ <UserDetailDisplayComponent {...this.props} /> }
+				{ (this.state.loading) ? (<div> Loading ... </div>) : (<UserDetailDisplayComponent {...this.props} selfProfileID={this.state.selfID}/>) }
 			</div>
 		)
 	}

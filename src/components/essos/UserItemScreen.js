@@ -2,14 +2,17 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { routeToNode } from '../../actions/routing'
+import { showModal } from '../../actions/modals'
 
 const filterItemsBySeller = (items, sellerID) => {
 	// This fails if we do not ensure that the entire DB is loaded. If we refresh the page while the state is cleared (reset app and go straight to page without ladoing main essos splash) - it is empty
+	
 	return items.filter(item => item.sellerRef_id == sellerID)
 }
 
 const mapStateToProps = (state, ownprops) => {
 	const { marketplaceItems } = state.marketplaceItemsReducer
+	const userID = (ownprops.selfProfileView) ? ownprops.selfProfileID : ownprops.match.params.id
 	return {
 		sellerItems: filterItemsBySeller(marketplaceItems, ownprops.match.params.id)
 	} 
@@ -17,6 +20,7 @@ const mapStateToProps = (state, ownprops) => {
 
 const mapDispatchToProps = dispatch => ({
 	routeToMarketPlace: (node) => dispatch(routeToNode(node)),
+	showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps)),
 })
 
 class UserItemScreen extends Component {
@@ -39,7 +43,12 @@ class UserItemScreen extends Component {
 							<p className="store-link" onClick={() => this.props.routeToMarketPlace(`/essos/user/${item.sellerRef_id}`)}> Posted By: {item.postedBy} </p>
 							<p className="store-pricing"> ${item.itemPrice} </p>
 						</div>
-						<div className="cart-button button_no_border_radius" ><span> Add To Cart Icon </span> </div>
+						<div 
+							className="cart-button button_no_border_radius"
+							onClick={() => this.props.showModal('DATABASE_INTERFACE_MODAL', {module: 'Essos', action: 'modify', modifyItemAttributes: item})}
+						>
+							<span> Add To Cart Icon </span> 
+						</div>
 					</div>
 				</div>
 			)

@@ -285,7 +285,7 @@ class UploadItemForm extends Component {
 					</div>
 				</form>
 
-			) }
+			)}
 		)
 	}
 }

@@ -59,9 +59,10 @@ export default class Root extends Component {
                  		<Route exact path='/register/essos' render={() => <AuthenticationForm regpathEssos/>} />
 
                  		<Route exact path='/omni/terminal' component={OmniTerminal} />
+                 		<Route exact path='/omni/terminal/modifyItems' render={(props) => <TerminalActionScreen {...props} modify /> } /> 
                  		<Route exact path='/omni/terminal/tickets' component={TerminalActionScreen} />
                  		<Route exact path='/essos/user/:id' component={UserPage} />
-                 		<Route exact path='/essos/profile/' render={(props) => <UserPage {...props} selfProfileView />} />
+                 		<Route exact path='/essos/profile/' render={(props) => <UserPage {...props} selfProfileView /> } />
                  		<Route exact path='/essos/mycart' component={EssosCartCheckout} />
                  		<Route exact path='/admin' component={AdminTerminal} />
 

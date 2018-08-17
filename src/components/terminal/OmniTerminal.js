@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { routeToNode } from '../../actions/routing'
 import { fetchMenuItems } from '../../actions/terminalItems'
 import { fetchTickets } from '../../actions/tickets-transactions'
 import { fetchLoggedUsers } from '../../actions/employees'
@@ -25,6 +26,7 @@ const mapDispatchToProps = (dispatch) => ({
 	fetchTickets: (token) => dispatch(fetchTickets(token)),
 	fetchLoggedUsers: (token) => dispatch(fetchLoggedUsers(token)),
 	showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps)),
+	routeToNode: (node) => dispatch(routeToNode(node))
 })
 
 class OmniTerminal extends Component {
@@ -60,10 +62,10 @@ class OmniTerminal extends Component {
 								</div>
 							</div>
 							<div className='row__buttons'>
-								<div className='button' onClick={() => this.props.showModal('ADD_POINT_SALE_ITEM', {})}>
+								<div className='button' onClick={() => this.props.showModal('DATABASE_INTERFACE_MODAL', { module:'Essos', action: 'upload' })}>
 									Add New Item
 								</div>
-								<div className='button' >
+								<div className='button' onClick={() => this.props.routeToNode('/omni/terminal/modifyItems')} >
 									Modify Items
 								</div>
 							</div>

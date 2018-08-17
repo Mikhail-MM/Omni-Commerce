@@ -68,7 +68,14 @@ class TerminalActionScreen extends Component {
 
 		return menuItems[category].map(item => {
 			return(
-  				<div className="ui-pos-item" key={item._id} onClick={() => this.props.updateTransactionWithMenuItem(token, item._id, activeTicket._id)}>
+  				<div 
+  					className="ui-pos-item" key={item._id} 
+  					onClick={ () => {
+  						if ( this.props.modify ) this.props.showModal('DATABASE_INTERFACE_MODAL', { module: 'Omni', action: 'modify', modifyItemAttributes: item })
+  						else if ( !this.props.modify ) this.props.updateTransactionWithMenuItem(token, item._id, activeTicket._id)
+  						}
+  					}
+  				>
   					<div className="ui-pos-item_image">
   						<img src={item.imageURL} />
   					</div>
