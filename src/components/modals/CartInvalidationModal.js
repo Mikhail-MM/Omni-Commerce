@@ -26,9 +26,13 @@ const CartInvalidationModal = props => {
 	const { invalidatedItems } = props
 
 	const generateCartInvalidationAlert = () => {
-		return invalidatedItems.map(removedItem => {
-			return ( <div> { `Item Removed: ${removedItem.itemName} could not be purchased - ${removedItem.numberRequested} instance(s) removed.` } </div> )
-		})
+		if (Array.isArray(invalidatedItems)) {
+			return invalidatedItems.map(removedItem => {
+				return ( <div> { `Item Removed: ${removedItem.itemName} could not be purchased - ${removedItem.numberRequested} instance(s) removed.` } </div> )
+			})
+		} else {
+			return ( <div> { `Item Removed: ${invalidatedItems.itemName} could not be purchased - ${invalidatedItems.numberRequested} instance(s) removed.` } </div> )
+		}
 	}
 
 
