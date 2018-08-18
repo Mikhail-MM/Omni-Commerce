@@ -93,6 +93,15 @@ module.exports.saveStripeCustomerInformation = async function(req, res, next) {
       }).then( async (charge) => {
         
         const purchaseOrderData = Object.assign({}, {itemsBought: req.body.validatedPurchaseOrderToProcess.validatedCart.itemsBought}, {
+          subtotalReal: req.body.validatedPurchaseOrderToProcess.validatedCart.subtotalReal,
+          subtotalDisplay: req.body.validatedPurchaseOrderToProcess.validatedCart.subtotalDisplay,
+          taxReal: req.body.validatedPurchaseOrderToProcess.validatedCart.taxReal,
+          taxDisplay: req.body.validatedPurchaseOrderToProcess.validatedCart.taxDisplay,
+          totalReal: req.body.validatedPurchaseOrderToProcess.validatedCart.totalReal,
+          itemsBought: req.body.validatedPurchaseOrderToProcess.validatedCart.itemsBought,
+        }, 
+        {
+          buyerRef_id: req.body.client._id,
           customerRef_id: customer._id,
           charge: charge
          });

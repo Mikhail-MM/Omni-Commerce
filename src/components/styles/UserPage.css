@@ -27,10 +27,14 @@
 
 .user-menu-control-panel {
 	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-end;
 
 	width: calc(100% - 400px);
 	height: 100%;
 }
+
 .user-content-wrapper{
   display: flex;
   flex-wrap: wrap;
@@ -39,7 +43,59 @@
 
 	min-height: calc(100% - 200px);
 
+
 	padding: 25px 25px ;
+}
+
+.user-context-menu-button-container{
+	display: flex;
+	justify-content: space-between;
+}
+
+.user-context-menu-button {
+	position: relative;
+	height: 22px;
+	padding: 0 15px;
+	width: auto;
+	text-align: center;
+}
+
+.user-context-menu-button::before {
+	position: absolute;
+	
+	left: 0;
+	right: 0;
+	bottom: 0;
+
+	content: "";
+
+	transition: border-bottom 0.2s ease-out;
+	z-index: 5;
+}
+
+.user-context-menu-button:hover::before {
+	border-bottom: 2px solid black;
+}
+
+.user-context-menu-button::after { 
+	position: absolute;
+
+	left:0;
+	right: 0;
+	bottom: 0;
+	
+	transform: scaleX(0);
+	transition: transform 0.2s ease-out;
+
+	content: "\00a0";
+
+	border-bottom: 2px solid blue;
+
+	z-index:8;
+}
+
+.underlinebutton-active::after {
+	transform: scaleX(1);
 }
 
 .cart-button {

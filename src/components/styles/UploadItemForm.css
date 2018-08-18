@@ -46,6 +46,12 @@
 	width: 25px;
 	height: 25px;
 }
+
+.tag-label-container {
+	width: 100px;
+	height: 100%;
+	color: black;
+}
 .omni-item-form-wrapper {
 	display: flex;
 	flex-direction: column;

@@ -10,6 +10,7 @@ const initialState = {
 	itemName: '',
 	itemPrice: '',
 	imageSource: null,
+	imageRAWFILE: null,
 	category: '',
 	tags: [],
 	newImageFlag: false,
@@ -68,12 +69,15 @@ class UploadItemForm extends Component {
 	}
 
 	handleTagChange(tagName){
+		console.log('Handler - TagName - THISSTATE...', tagName, this.state.tags)
 		if (!this.state.tags.includes(tagName)) {
+			console.log('State does not include tagname')
 			this.setState({
 				tags: this.state.tags.concat([tagName])	
 			})
 		}
 		if (this.state.tags.includes(tagName)) {
+			console.log('State includes tagname')
 			this.setState({
 				tags: this.state.tags.filter(item => item !== tagName)
 			})
@@ -82,8 +86,10 @@ class UploadItemForm extends Component {
 	}
 
 	imageSelectedHandler = (event) => {
+		const blobURL = URL.createObjectURL(event.target.files[0])
 		this.setState({
-			imageSource: event.target.files[0],
+			imageSource: blobURL,
+			imageRAWFILE: event.target.files[0],
 			newImage: true
 		})
 	}
@@ -116,7 +122,7 @@ class UploadItemForm extends Component {
 
 
 	handleOmniModification = (token) => {
-		const { itemName, itemPrice, category, imageSource, newImageFlag } = this.state
+		const { itemName, itemPrice, category, imageSource, newImageFlag, imageRAWFILE } = this.state
 		const { _id } = this.props.modifyItemAttributes
 		const data = {
 			itemName,
@@ -125,24 +131,24 @@ class UploadItemForm extends Component {
 		}
 		const imageHandler = {
 			newImageFlag,
-			imageSource
+			imageSource: imageRAWFILE
 		}
 		this.props.modifyOmniItem(token, _id, data, imageHandler)
 	}
 
 	handleOmniUpload = (token) => {
 		if (this.state.imageSource === null) return console.log("Please upload an image.")
-		const { itemName, itemPrice, category, imageSource } = this.state
+		const { itemName, itemPrice, category, imageSource, imageRAWFILE } = this.state
 		const data = {
 			itemName,
 			itemPrice,
 			category
 		}
-		this.props.uploadOmniItem(token, data, imageSource)
+		this.props.uploadOmniItem(token, data, imageRAWFILE)
 	}
 
 	handleEssosModification = (token) => {
-		const { itemName, itemPrice, numberInStock, tags, imageSource, newImageFlag } = this.state
+		const { itemName, itemPrice, numberInStock, tags, imageSource, newImageFlag, imageRAWFILE } = this.state
 		const { _id } = this.props.modifyItemAttributes
 		const data = {
 			itemName,
@@ -152,44 +158,37 @@ class UploadItemForm extends Component {
 		}
 		const imageHandler = {
 			newImageFlag,
-			imageSource
+			imageSource: imageRAWFILE
 		}
 		this.props.modifyEssosItem(token, _id, data, imageHandler)
 	}
 
 	handleEssosUpload = (token) => {
-		this.props.uploadEssosItem()
+		const { itemName, itemPrice, numberInStock, tags, imageSource, newImageFlag, imageRAWFILE } = this.state
+		const data = {
+			itemName,
+			itemPrice,
+			numberInStock,
+			tags
+		}
+		this.props.uploadEssosItem(token, data, imageRAWFILE)
 	}
 
 	renderTagSelectionMenu = () => {
 		// Export tags array to config
 		const tags = [
 			{ 
-				tagname: `Shoes - Male`,
+				tagName: `Shoes - Male`,
 				iconURL: `/assets/icons/box.svg`
 			},
 			{ 
-				tagname: `Shoes - Female`,
+				tagName: `Shoes - Female`,
 				iconURL: `/assets/icons/box.svg`
 			},
 		]
 
 		return tags.map(tag => {
-			if (!this.state.tags.includes(tag)) return (
-				<div 
-					className='essos-category-tag-label' 
-					style={{backgroundColor: 'red'}}
-					onClick={ () => this.handleTagChange(tag.tagName) }
-				> 
-						<div className='tag-icon-container' >
-							<img src={tag.iconURL} />
-						</div>
-						<div>
-							{tag.tagName}
-						</div>
-				</div>
-			)
-			else if (this.state.tags.includes(tag)) return (
+			if (!this.state.tags.includes(tag.tagName)) return (
 				<div 
 					className='essos-category-tag-label' 
 					style={{backgroundColor: 'gray'}}
@@ -198,7 +197,21 @@ class UploadItemForm extends Component {
 					<div className='tag-icon-container' >
 						<img src={tag.iconURL} />
 					</div>
-					<div>
+					<div className='tag-label-container'>
+						{tag.tagName}
+					</div>
+				</div>
+			)
+			else if (this.state.tags.includes(tag.tagName)) return (
+				<div 
+					className='essos-category-tag-label' 
+					style={{backgroundColor: 'red'}}
+					onClick={ () => this.handleTagChange(tag.tagName) }
+				> 
+					<div className='tag-icon-container' >
+						<img src={tag.iconURL} />
+					</div>
+					<div className='tag-label-container'>
 						{tag.tagName}
 					</div>
 				</div>

@@ -10,11 +10,14 @@ class ShipmentOrderScreen extends Component {
 	state = {
 		shipmentRequests: [],
 	}
+	
+
 
 	async componentDidMount() {
 		const { token } = this.props
+		console.log(this.props)
 		const shipmentRequests = await this.fetchShipmentRequests(token)
-
+		console.log(shipmentRequests)
 		if (shipmentRequests) this.setState({
 			shipmentRequests: shipmentRequests
 		})
@@ -23,7 +26,7 @@ class ShipmentOrderScreen extends Component {
 	fetchShipmentRequests = async (token) => {
 		return fetch('http://localhost:3001/sellorders/userLookup/', {
 			headers: {
-				'Content/Type': 'application-json',
+				'Content-Type': 'application/json',
 				'x-access-token': token,
 			},
 			method: 'GET',
@@ -41,13 +44,13 @@ class ShipmentOrderScreen extends Component {
 		const { shipmentRequests } = this.state
 
 		return shipmentRequests.map(request => {
-			return <div> request._id </div>
+			return <div>{ request._id} </div>
 		})
 	}
 
 	render() {
 		const { shipmentRequests } = this.state
-
+		console.log(shipmentRequests)
 		return(
 			<div style={{display: 'flex', flexDirection:'column', alignItems:'center'}}>
 				{ shipmentRequests && this.renderShipmentRequestsToDOM() }

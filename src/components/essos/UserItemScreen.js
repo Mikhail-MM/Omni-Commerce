@@ -12,9 +12,13 @@ const filterItemsBySeller = (items, sellerID) => {
 
 const mapStateToProps = (state, ownprops) => {
 	const { marketplaceItems } = state.marketplaceItemsReducer
+	console.log('Ownprops!!')
+	console.log(ownprops)
 	const userID = (ownprops.selfProfileView) ? ownprops.selfProfileID : ownprops.match.params.id
+	console.log(userID)
+	console.log(marketplaceItems)
 	return {
-		sellerItems: filterItemsBySeller(marketplaceItems, ownprops.match.params.id)
+		sellerItems: filterItemsBySeller(marketplaceItems,userID)
 	} 
 }
 
@@ -47,7 +51,7 @@ class UserItemScreen extends Component {
 							className="cart-button button_no_border_radius"
 							onClick={() => this.props.showModal('DATABASE_INTERFACE_MODAL', {module: 'Essos', action: 'modify', modifyItemAttributes: item})}
 						>
-							<span> Add To Cart Icon </span> 
+							<span> Modify Item </span> 
 						</div>
 					</div>
 				</div>
@@ -58,7 +62,7 @@ class UserItemScreen extends Component {
 
 	render() {
 		const { sellerItems } = this.props
-
+		console.log(sellerItems)
 		return(
 		<div className='user-content-wrapper'>
 			{ sellerItems && this.generateItemDOM() }

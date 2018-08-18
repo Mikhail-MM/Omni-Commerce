@@ -29,6 +29,7 @@ const mapDispatchToProps = dispatch => ({
 
 class UserPage extends Component {
 	state = {
+		indexActive: null,
 		loading: true,
 		userFullName: '',
 		userAvatarURL: '',
@@ -115,11 +116,35 @@ class UserPage extends Component {
 					}
 					<div className='user-menu-control-panel'>
 						{ (this.props.selfProfileView) ? (
-							<div>
-								<button onClick={() => this.setState({componentView: 'USER_MARKET_ITEMS'})}> Modify My Items </button>
-								<button onClick={() => this.setState({componentView: 'SHIPMENT_REQUESTS'})}> Shipment Orders </button>
-								<button onClick={() => this.setState({componentView: 'PURCHASE_HISTORY'})}> My Purchase History </button>
-								<button onClick={() => this.props.showModal('DATABASE_INTERFACE_MODAL', {module: 'Essos', action: 'upload' })}> Add Item To My Store</button>
+							<div className='user-context-menu-button-container'>
+								<div 
+									className={(this.state.indexActive === 0 ) ? 'user-context-menu-button underlinebutton-active': 'user-context-menu-button'} 
+									onClick={() => this.setState({indexActive: 0, componentView: 'USER_MARKET_ITEMS'})}
+								>
+									 My Items 
+								</div>
+								<div 
+									className={(this.state.indexActive === 1 ) ? 'user-context-menu-button underlinebutton-active': 'user-context-menu-button'}  
+									onClick={() => this.setState({indexActive: 1, componentView: 'SHIPMENT_REQUESTS'})}
+								> 
+									Orders 
+								</div>
+								<div 
+									className={(this.state.indexActive === 2 ) ? 'user-context-menu-button underlinebutton-active': 'user-context-menu-button'}  
+									onClick={() => this.setState({indexActive: 2, componentView: 'PURCHASE_HISTORY'})}
+								> 
+									Purchase History 
+								</div>
+								<div 
+									className={(this.state.indexActive === 3 ) ? 'user-context-menu-button underlinebutton-active': 'user-context-menu-button'}  
+									onClick={() => {
+										this.setState({indexActive:3})
+										this.props.showModal('DATABASE_INTERFACE_MODAL', {module: 'Essos', action: 'upload' })
+										}
+									}
+								> 
+									Add Item 
+								</div>
 							</div>
 							
 						   ) : (
@@ -135,4 +160,4 @@ class UserPage extends Component {
 	}
 }
 
-export default connect(mapStateToProps)(UserPage)
+export default connect(mapStateToProps, mapDispatchToProps)(UserPage)

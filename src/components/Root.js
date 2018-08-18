@@ -23,6 +23,7 @@ import AdminTerminal from './terminal/admin/AdminTerminal'
 import RegistrationPicker from './forms/RegistrationPicker'
 import AuthenticationForm from './forms/registration/AuthenticationForm'
 
+import Playground from './Playground'
 
 import EssosCartCheckout from './EssosCartCheckout'
 
@@ -63,6 +64,7 @@ export default class Root extends Component {
                  		<Route exact path='/omni/terminal/tickets' component={TerminalActionScreen} />
                  		<Route exact path='/essos/user/:id' component={UserPage} />
                  		<Route exact path='/essos/profile/' render={(props) => <UserPage {...props} selfProfileView /> } />
+                 		<Route exact path='/uiplayground' component={Playground} />
                  		<Route exact path='/essos/mycart' component={EssosCartCheckout} />
                  		<Route exact path='/admin' component={AdminTerminal} />
 
