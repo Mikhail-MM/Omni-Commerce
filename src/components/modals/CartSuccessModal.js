@@ -19,6 +19,7 @@ const mapStateToProps = (state) => {
 const CartSuccessModal = props => {
 	console.log(props)
 	return(
+
 		<div>
 			<Modal
 				isOpen={props.modalType === 'CART_ADDITION_SUCCESS_MODAL'}
@@ -28,7 +29,7 @@ const CartSuccessModal = props => {
 
 				<div>
 					<h2> 
-						{`Successfully Added  ${props.itemBought.itemName} to cart.`}
+						{`Successfully Added  ${props.itemName} to cart.`}
 					</h2>
 					<button onClick={() => props.hideModal()}> Okay. </button>
 				</div>

@@ -92,6 +92,7 @@ module.exports.saveStripeCustomerInformation = async function(req, res, next) {
         statement_descriptor: "Omni Online Market",
       }).then( async (charge) => {
         
+        console.log("Getting validated portion of user cart - Turning it into receipt/purchase order")
         const purchaseOrderData = Object.assign({}, {itemsBought: req.body.validatedPurchaseOrderToProcess.validatedCart.itemsBought}, {
           subtotalReal: req.body.validatedPurchaseOrderToProcess.validatedCart.subtotalReal,
           subtotalDisplay: req.body.validatedPurchaseOrderToProcess.validatedCart.subtotalDisplay,
@@ -107,18 +108,23 @@ module.exports.saveStripeCustomerInformation = async function(req, res, next) {
          });
 
         const newPurchaseOrder = new PurchaseOrderModel(purchaseOrderData);
+
         const savedPurchaseOrder = await newPurchaseOrder.save();
+
+        console.log("Purchase order saved", savedPurchaseOrder)
 
 
         req.body.validatedPurchaseOrderToProcess.savedPurchaseOrder = savedPurchaseOrder;
 
+        console.log("Organizing all bought items by seller_id to generate order notifications")
+
         const groupedShippingOrders = _.groupBy(savedPurchaseOrder.itemsBought, "sellerRef_id");
-        const arrayOfShippingOrders = [];
+        const arrayOfFinalizedShippingOrders = [];
 
         for (const seller_id in groupedShippingOrders) {
 
           // EXPORT THIS INTO NEW FUNCTION TO CALCULATE PRICING
-
+          console.log("Calculating sale for user ", seller_id)
           const bigNumberPrices = groupedShippingOrders[seller_id].map(item => {
             return { 
               itemPrice: new BigNumber(item.itemPrice),
@@ -137,10 +143,11 @@ module.exports.saveStripeCustomerInformation = async function(req, res, next) {
               const taxDisplay = subTotalBigNumber.times(taxRate).round(2).toNumber()
               const totalReal = subTotalBigNumber.plus(taxReal).toNumber()
               const totalDisplay = subTotalBigNumber.plus(taxReal).round(2).toNumber()
-              console.log("Make sure we have correct sellerRef stuff happening: showing seller_id and groupedShippingOrders[seller_id]", seller_id, groupedShippingOrders[seller_id] )
+        
                   const receiptObject = Object.assign({
                     sellerRef_id: seller_id,
-                    masterOrderRef_id: savedPurchaseOrder._id,
+                    buyerRef_id: req.body.client._id,
+                    masterPurchaseOrderRef_id: savedPurchaseOrder._id,
                     itemsBought: groupedShippingOrders[seller_id], // groupedShippingOrders is an object of arrays, whose keys are _id references of user who posted the items to the marketplace
                     subtotalReal: subtotalReal,
                     subtotalDisplay: subtotalDisplay,
@@ -150,12 +157,12 @@ module.exports.saveStripeCustomerInformation = async function(req, res, next) {
                     totalDisplay: totalDisplay,
                   })
 
-                    arrayOfShippingOrders.push(receiptObject)
+                    arrayOfFinalizedShippingOrders.push(receiptObject)
         }
 
-                 req.body.validatedPurchaseOrderToProcess.arrayOfShippingOrders = arrayOfShippingOrders;
+                 req.body.validatedPurchaseOrderToProcess.arrayOfFinalizedShippingOrders = arrayOfFinalizedShippingOrders;
                   
-                  for (const receipt of arrayOfShippingOrders) {
+                  for (const receipt of arrayOfFinalizedShippingOrders) {
                     
                     const newSellerSpecificPurchaseOrder = new sellerSpecificPurchaseOrderModel(receipt);
                     const savedSellerSpecificPurchaseOrder = await newSellerSpecificPurchaseOrder.save()

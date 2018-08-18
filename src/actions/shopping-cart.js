@@ -95,11 +95,10 @@ export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountA
 					console.log(json.unfulfillableStock)
 					console.log("dispatching invalidated cart receipt")
 					dispatch(receiveInvalidatedShoppingCartItems(json))
-
 				}
 
 			} else if ( amountAlreadyInCart + amountRequested <= json.numberInStock ){
-				console.log("If statmenet running: Item DB is greater than or equal to amount requested + amount already in cart")
+				console.log("If statement running: Item DB is greater than or equal to amount requested + amount already in cart")
 				return fetch('http://localhost:3001/shoppingCart/addItem', {
 					headers:{
 						'Content-Type': 'application/json',
@@ -119,9 +118,10 @@ export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountA
 					}),
 				})
 				.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
-				.then(json =>{ 
-					dispatch(showModal('CART_ADDITION_SUCCESS_MODAL', {boughtItem: json}))
-					dispatch(receiveShoppingCart(json)) 
+				.then(cartJson =>{ 
+					console.log("WHERE IS THE NAME", json)
+					dispatch(showModal('CART_ADDITION_SUCCESS_MODAL', { itemName: json.itemName }))
+					dispatch(receiveShoppingCart(cartJson)) 
 				})
 				.catch(err => console.log(err))
 			}

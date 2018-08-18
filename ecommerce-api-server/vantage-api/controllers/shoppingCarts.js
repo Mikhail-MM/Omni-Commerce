@@ -242,97 +242,48 @@ module.exports.validateMarketplacePayment = async function (req, res, next) {
 
 		const shoppingCartByUser = await ShoppingCartModel.findOne({ownerRef_id: req.body.client._id})
 		
+		if (shoppingCartByUser.itemsBought.length === 0) {
+			res.status(409).send("User sent empty shopping cart.")
+		}
 
 		for (const cartItem of shoppingCartByUser.itemsBought) {
-			
-			console.log("Running ForEach - Looking for requested cartItem listing within DB - Logging Listed Item:");
+			console.log("Find Item Listing from Cart Within DB - Saving in Cache")			
 			const merchantStock = await StoreItemModel.findOne({_id: cartItem.itemRef_id}, '-_id');
-			console.log(merchantStock)
-			oldStoreItems.push(merchantStock)
-			
+				oldStoreItems.push(merchantStock)
 			const numRequested = parseInt(cartItem.numberRequested, 10)
-			
 			const inStock = parseInt(merchantStock.numberInStock, 10)
-
-			console.log("# in Customer Cart")
-			console.log(numRequested)
-			console.log("# stocked by merchant")
-			console.log(inStock)
-			
+			console.log("Items Requested by User, SKU In-Stock", numRequested, inStock)
 			if (numRequested <= inStock) { 
-
-					console.log("if statement running: Number Requested is Less than or Equal to amount in stock by merchant")
-					console.log("Pushing cartItem into passedItems array - logging passedItems array")
-					console.log(passedItems)
-
+					console.log("Merchant can fulfill full order.")
 					passedItems.push(cartItem)
-
-					console.log("Updating item stock in DB - Logging new Item")
+					console.log("Updating merchant SKU")
 					const newStock = inStock - numRequested
-					const updatedMerchantStock = await StoreItemModel.findOneAndUpdate({_id: cartItem.itemRef_id}, {numberInStock: newStock}, {new: true})
-					
-					console.log(updatedMerchantStock)
+						// This should be done later
+						const updatedMerchantStock = await StoreItemModel.findOneAndUpdate({_id: cartItem.itemRef_id}, {numberInStock: newStock}, {new: true})
 
 				newStoreItems.push(updatedMerchantStock)
 			}
 				else if (numRequested > inStock) { 
-
-						console.log("else If statement running: number requested exceeds amount in stock")
-						console.log("Reconciling - determining amountThatCanBeFulfilled:")
-
-					const amountThatCanBeFulfilled = inStock
-						console.log(amountThatCanBeFulfilled)
-
-					if (amountThatCanBeFulfilled == 0) { 
-						
-							console.log("nested if within else if running:")
-							console.log("Amount that can be fulfilled is ZERO...")
-							console.log("Pushing entire cartItem to failedItems array - logging failedItems array")
-
-						const updatedMerchantStock = await StoreItemModel.findOne({_id: cartItem.itemRef_id}) //unnecessary?
-						
-						newStoreItems.push(updatedMerchantStock)
-						
-						
-
+					console.log("Merchant unable to fulfill full order")
+					if (inStock === 0) { 
+						console.log("Merchant Stock Empty")
+						newStoreItems.push(merchantStock)
 						failedItems.push(cartItem) 
-						console.log(failedItems)
 					}
-					else if (amountThatCanBeFulfilled > 0) {
-						
-							console.log("Nested else if within else if statement:")
-							console.log("Amount that can be fulfilled is greater than zero")
-							console.log("Calculating how much is unfulfillable (amount requested - amount that can be fulfilled) - logging unfulfillable")
+					else if (inStock > 0) {
 
-						const unfulfillable = numRequested - amountThatCanBeFulfilled
-						console.log(unfulfillable)
-						// Doing a Direct Mutation here - not sure if that's great
-						// Unfulfillable Portion
-						console.log("Doing a mutation type thing now")
-						console.log("Setting cartItem.numberRequested to unfulfillable - pushing a partial invalidation to failed Items - logging failed items")
+						const unfulfillableCount = numRequested - inStock
+
+						console.log("Merchant fulfilling partial order")
 						
-						var unfulfillableObject = Object.assign({}, cartItem)
-						unfulfillableObject.numberRequested = unfulfillable
+						const partialOrderFulfillent = {...cartItem, numberRequested: inStock }
+						const discardedOrderPortion = {...cartItem, numberRequested: unfulfillable}
 						
+
 						failedItems.push(unfulfillableObject) 
-						
-						console.log(failedItems)
-						// Fulfillable
-						
-						console.log("Setting cartItem.numberRequested to amountThatCanbeFulfilled - pushing cartItem as partial validation to passedItems - logging passed items")
+						passedItems.push(partialOrderFulfillent)
 
-
-						cartItem.numberRequested = amountThatCanBeFulfilled
-
-						
-						passedItems.push(cartItem)
-						console.log(passedItems)
-						console.log("Updating item stored on DB - Logging new stock and new item entry")
-						const newStock = inStock - amountThatCanBeFulfilled
-
-						const updatedMerchantStock = await StoreItemModel.findOneAndUpdate({_id: cartItem.itemRef_id}, {numberInStock: newStock}, {new: true})
-						console.log(newStock)
-						console.log(updatedMerchantStock)
+						const updatedMerchantStock = await StoreItemModel.findOneAndUpdate({_id: cartItem.itemRef_id}, {numberInStock: 0}, {new: true})
 						newStoreItems.push(updatedMerchantStock)
 					}
 				}
@@ -342,15 +293,12 @@ module.exports.validateMarketplacePayment = async function (req, res, next) {
 		response.passedItems = passedItems
 		response.failedItems = failedItems
 		response.partialValidationFail = partialValidationFail
-		console.log("Updating cart - replacing itemsBought array with all items that are within passedItems array");
-		console.log("New Cart:")
 
 		const validatedCart = await ShoppingCartModel.findOneAndUpdate({ownerRef_id: req.body.client._id}, {$set: {itemsBought: passedItems } }, {new: true}) // Prices Not Updated - be aware - outsource full update til later
-		console.log(validatedCart)
+		
 		response.validatedCart = validatedCart
 		response.oldStoreItems = oldStoreItems
 		response.newStoreItems = newStoreItems
-		console.log("Logging Response, which should contain PassedItems/FailedItems as well as our entire validated cart, as well as all items in the DB before/after they were run ")
 		console.log(response);
 		console.log("Here is validatedCart.itemsBought:")
 		console.log(validatedCart.itemsBought)
@@ -371,22 +319,15 @@ module.exports.test = async function(req, res, next) {
 }
 
 module.exports.calculatePricing = async function(req, res, next) {
-	console.log("req.body.shoppingCartSubdocs")
-	console.log(req.body.shoppingCartSubdocs)
 	const bigNumberPrices = req.body.shoppingCartSubdocs.map(item => {
 		return { 
 			itemPrice: new BigNumber(item.itemPrice),
 			multipleRequest: new BigNumber(item.numberRequested),
 		}
 	});
-	console.log("Mapping array of bigNumberPrices")
-	console.log(bigNumberPrices)
 
-	// initialValue used to be  bigNumberPrices[0].itemPrice.times(bigNumberPrices[0].multipleRequest whereas It should just be zero
 	const subTotalBigNumber =  bigNumberPrices.reduce( (acc, cur) => { 
-		console.log('cur, acc:')
-		console.log(cur)
-		console.log(acc)
+
 		return acc.plus((cur.itemPrice.times(cur.multipleRequest))) }, new BigNumber(0)
 	)
 

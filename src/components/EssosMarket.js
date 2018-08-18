@@ -103,10 +103,10 @@ class EssosMarket extends Component {
 	              		<div className='my-cart-dropdown'>
 	              			<div className='shopping-cart-dropdown-container'>
 								{ shoppingCart && this.generateShoppingCartDropdownContent() }
+								<button onClick={() => this.props.routeToNode('/essos/mycart')}> Check Out </button>
 							</div>
 							<div className='shopping-cart-dropdown-pricing-container' >
 							</div>
-							<button onClick={() => this.props.routeToNode('/essos/mycart')}> Check Out </button>
 	              		</div>
 	              	</div>
 
