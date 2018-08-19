@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+
 import '../../styles/AdminTerminal.css'
 
 import { showModal } from '../../../actions/modals'
+
+import { getAllEvents } from '../../../actions/events'
+import { subscribeToFeedUpdates, closeConnection } from '../../../actions/socket'
 
 import EmployeeManagement from './EmployeeManagement'
 import SalesAnalytics from './SalesAnalytics'
@@ -28,6 +32,30 @@ const AdminComponentMap = {
 class AdminTerminal extends Component {
 	state = {
 		actionComponent: 'MANAGE_EMPLOYEES',
+		eventFeed: [],
+	}
+	
+	async componentDidMount() {
+		const { token } = this.props
+		const feed = await getAllEvents(token)
+		
+		this.setState({
+			eventFeed: feed
+		})
+
+		subscribeToFeedUpdates(this.updateEventFeed)
+	}
+
+	componentDidUnmount() {
+		closeConnection()
+	}
+
+	updateEventFeed = (newEvent) => {
+		const { eventFeed } = this.state
+		const updatedFeed = [...eventFeed, newEvent]
+		this.setState({
+			eventFeed: updatedFeed
+		})
 	}
 
 	render() {
@@ -68,6 +96,7 @@ class AdminTerminal extends Component {
 					<AdminActionDisplayComponent />
 
 					<div className='feed-column'>
+
 					</div>
 				</div>
 			</div>

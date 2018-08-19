@@ -69,14 +69,12 @@ async function validateToken(req, res, next, authReq) {
 
 			const decoded = jwt.decode(token, config.secret)
 
-			console.log("decoded", decoded)
 
 			console.log("Looking for validated client")
 			const userCollection = (decoded.accountType === 'Essos') ? EssosUser : OmniUser 
 			
 			const validatedClient = await userCollection.findById(decoded._id)
 
-			console.log(validatedClient)
 
 		if (!validatedClient) 
 			return res.status(403).send("Invalid Client.")

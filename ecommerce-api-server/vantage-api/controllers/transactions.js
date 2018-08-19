@@ -4,6 +4,8 @@ const TicketTransaction = Schemas.ticketSchema
 const MenuSchema = Schemas.menuSchema
 const BigNumber = require('bignumber.js');
 
+const events = require('./events')
+
 
 
 module.exports.calculatePricing = async function(req, res, next) {
@@ -37,17 +39,26 @@ module.exports.calculatePricing = async function(req, res, next) {
 	res.json(updatedTransaction)
 }	
 
-
 module.exports.createNewTransaction = async function(req, res, next) {
 	try{ 
+		const { createdBy, createdAt } = req.body
 
 		const TransactionModel = mongoose.model('Transaction', TicketTransaction, 'Transactions_' + req.headers['x-mongo-key'])
 		const newTransaction = new TransactionModel(req.body)
 
 		const savedTransaction = await newTransaction.save()
+			
+			console.log("Sending event information to events handler")
 
+			events.postNewEvent(req, res, next, {
+				actionType: 'New Transaction',
+				createdBy,
+				createdAt,
+				creatorId: req.body.client._id,
+				description: `${createdBy} started a new Ticket.`
+			})
+		
 			return res.json(savedTransaction)
-
 
 	} catch(err) { next(err) }
 }

@@ -26,10 +26,17 @@ const upload = multer({ storage: storage })
 const config = require('./models/config');
 
 
+
+
+const app = express();
+const server = require('http').createServer(app);
+const socketIO = require('./socket/initialize').initialize(server)
+
 const clients = require('./controllers/clients');
-const images = require('./controllers/images')
+const images = require('./controllers/images');
+const events = require('./controllers/events');
 const employees = require('./controllers/employees');
-const messages = require('./controllers/messages')
+const messages = require('./controllers/messages');
 const menus = require('./controllers/menus');
 const transactions = require('./controllers/transactions');
 const authorize = require('./controllers/authorize');
@@ -45,8 +52,7 @@ const purchaseOrders = require('./controllers/purchaseOrders')
 const sellOrders = require('./controllers/sellOrders')
 const seed = require('./seed/seed')
 
-var app = express();
-var router = express.Router(); 
+const router = express.Router(); 
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/vantageAPI-2', { useMongoClient: true });
@@ -95,6 +101,10 @@ router.route('/seed/omni/')
 	.post(seed.seedOmniUsers)
 router.route('/seed/essos/')
 	.post(seed.seedEssosMarket)
+
+router.route('/events')
+	.get(authorize.routeEmployeeToMongoCollection, events.getEventFeed)
+	.post(authorize.routeEmployeeToMongoCollection, events.postNewEvent)
 
 // really need to consolidate this with our old client functions and make all our endpoints more REST ful...
 router.route('/users/essos/getProfileView/ownProfile')
@@ -246,6 +256,8 @@ router.route('/test')
 
 app.use('/', router);
 
+// Socket.IO //
+
 
 //	Error Handling Middleware	//
 ///		404 Handler			  ///
@@ -271,7 +283,8 @@ app.use(function(err, req, res, next) {
 	res.status(err.status || 500).send();
 });
 
-var server = app.listen(config.port);
+
+server.listen(config.port);
 
 console.log('Listening at http://localhost: %s in %s mode',
 	server.address().port, app.get('env'));

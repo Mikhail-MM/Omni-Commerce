@@ -42,6 +42,7 @@
     "request": "^2.83.0",
     "rimraf": "^2.6.2",
     "semver": "^5.4.1",
+    "socket.io": "^2.1.1",
     "stripe": "^5.4.0",
     "tar": "^4.0.2",
     "underscore": "^1.8.3",
