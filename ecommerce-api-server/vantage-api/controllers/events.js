@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const EventSchema =  require('../models/schemas/event').EventSchema
 
 const io = require('../socket/initialize').io()
-console.log(io)
 
 module.exports.getEventFeed = async (req, res, next) => {
 	try {

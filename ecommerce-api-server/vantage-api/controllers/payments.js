@@ -2,6 +2,7 @@ require('dotenv').config()
 const _ = require('underscore');
 const stripe = require('stripe')(process.env.SECRET_KEY);
 const BigNumber = require('bignumber.js');
+const events = require('./events')
 
 const MarketPlaceModels = require('../models/schemas/marketplace')
 StripeCustomerModel = MarketPlaceModels.StripeCustomerModel;
@@ -15,8 +16,17 @@ module.exports.createCashCharge = function(req, res, next) {
   req.params._id = req.body.parentTransaction._id;
   const totalBalance = new BigNumber(req.body.parentTransaction.totalReal).round(2)
   const customerPaid = new BigNumber(req.body.payment.cashTenderedByCustomer).round(2)
-
-  req.body.payment.refund = customerPaid.minus(totalBalance).toNumber()
+  const refund  = customerPaid.minus(totalBalance).toNumber()
+    events.postNewEvent(req, res, next, {
+        actionType: 'Payment - Cash',
+        createdAt: Date.now(),
+        creatorId: req.body.client._id,
+        description: `Transaction Fulfilled: Customer Paid $${customerPaid} in Cash for purchase amounting to $${totalBalance}. $${refund} was refunded.`,
+        metadata: {
+          transactionId: req.body.parentTransaction._id,
+        }
+    })
+  req.body.payment.refund = refund
   res.json(req.body)
 }
 
@@ -32,6 +42,17 @@ module.exports.createStripeCharge = function(req, res, next) {
 		source: token
 	}, function(err, charge) {
 		if (err) return next(err)
+
+      events.postNewEvent(req, res, next, {
+        actionType: 'Payment - Card',
+        createdAt: Date.now(),
+        creatorId: req.body.client._id,
+        description: `Transaction Fulfilled: Customer Paid $${stripeAmount} with Credit Card.`,
+        metadata: {
+          transactionId: req.body.transactionId,
+        }
+    })
+
 		res.json(charge)
 	});
 }

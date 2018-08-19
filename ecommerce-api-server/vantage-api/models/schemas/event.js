@@ -7,6 +7,7 @@ const EventSchema = new Schema({
 	creatorId: { type: Schema.Types.ObjectId, ref: 'OmniUser' },
 	createdAt: Date,
 	description: String,
+	metadata: { type: Schema.Types.Mixed }
 })
 
 module.exports.EventSchema = EventSchema

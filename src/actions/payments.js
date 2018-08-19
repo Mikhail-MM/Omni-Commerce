@@ -70,6 +70,7 @@ export function sendStripeTokenToApi(authToken, stripeToken, transaction_id) {
 			const data = {
 				chargeTotal: json.totalReal,
 				stripeToken: stripeToken,
+				transactionId: transaction_id,
 			}
 
 			return fetch('http://localhost:3001/payments/stripe', {

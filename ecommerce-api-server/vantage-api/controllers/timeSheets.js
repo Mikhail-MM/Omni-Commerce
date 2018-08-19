@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Users = require('../models/schemas/users');
+const events = require('./events')
 const OmniUser = Users.OmniUser;
 
 const Schemas = require('../models/schemas/timeSheet');
@@ -37,6 +38,15 @@ module.exports.createNewTimesheet = async (req, res, next) => {
 			req.body.timeSheet = savedTimeSheet
 
 			console.log("Sending req.body to StoreConfig controllers")
+			
+			events.postNewEvent(req, res, next, {
+				actionType: 'Clock In',
+				createdBy: `${UserClockingIn.firstName} ${UserClockingIn.lastName}`,
+				createdAt: Date.now(),
+				creatorId: req.body.client._id,
+				description: `${UserClockingIn.firstName} ${UserClockingIn.lastName} reported for work and clocked in.`
+			})
+
 			next()		
 	} catch(err) { next(err) }
 }
@@ -59,7 +69,16 @@ module.exports.checkForMissedTimesheets = async (req, res, next) => {
 			)
 
 			if (!LookForAndUpdateForgottenTimesheet) console.log("No missed clock-out to update")
-			if (LookForAndUpdateForgottenTimesheet) console.log("Missed Clock-Out Updated - Logged", LookForAndUpdateForgottenTimesheet)
+			if (LookForAndUpdateForgottenTimesheet) {
+				events.postNewEvent(req, res, next, {
+					actionType: 'Missed Clock Out',
+					createdBy: `${UserClockingIn.firstName} ${UserClockingIn.lastName}`,
+					createdAt: Date.now(),
+					creatorId: req.body.client._id,
+					description: `${UserClockingIn.firstName} ${UserClockingIn.lastName} forgot to close out their timesheet last night!`
+				})
+				console.log("Missed Clock-Out Updated - Logged", LookForAndUpdateForgottenTimesheet)
+			}
 
 			next()
 	} catch(err) { next(err) }
@@ -91,6 +110,14 @@ module.exports.clockOutEmployee = async (req, res, next) => {
 		if (ClosedTimeSheet) console.log("Logging and attaching ClosedTimeSheet to req.body.timeSheet")
 
 		req.body.timeSheet = ClosedTimeSheet
+
+		events.postNewEvent(req, res, next, {
+			actionType: 'Clock Out',
+			createdBy: `${UserClockingIn.firstName} ${UserClockingIn.lastName}`,
+			createdAt: Date.now(),
+			creatorId: req.body.client._id,
+			description: `${UserClockingIn.firstName} ${UserClockingIn.lastName} has just clocked out.`
+		})
 
 		next()
 
