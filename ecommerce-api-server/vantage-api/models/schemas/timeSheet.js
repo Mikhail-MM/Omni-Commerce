@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 var timeSheetSchema = new Schema({
 	user: { type: Schema.Types.ObjectId, ref: 'Client'},
+	name: String,
 	timeIn: Date,
 	timeOut: Date,
 	status: String // Clocked In, Clocked Out

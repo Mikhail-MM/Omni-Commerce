@@ -172,6 +172,8 @@ router.route('/transactions/:id')
 	.put(authorize.routeEmployeeToMongoCollection, transactions.updateTransactionById)
 	.delete(authorize.routeEmployeeToMongoCollection, transactions.deleteTransactionById);
 
+router.route('/timesheets')
+	.get(authorize.routeEmployeeToMongoCollection, timesheets.getAllTimesheets)
 router.route('/timesheets/ci')
 	.post(authorize.routeEmployeeToMongoCollection, timesheets.checkForMissedTimesheets, timesheets.createNewTimesheet, storeConfig.pushLoggedUser);
 router.route('/timesheets/co')

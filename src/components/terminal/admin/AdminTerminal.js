@@ -10,6 +10,7 @@ import { subscribeToFeedUpdates, closeConnection } from '../../../actions/socket
 
 import EmployeeManagement from './EmployeeManagement'
 import SalesAnalytics from './SalesAnalytics'
+import TimeSheetTable from './TimeSheetTable'
 
 const mapStateToProps = state => {
 
@@ -27,6 +28,7 @@ const mapDispatchToProps = dispatch => ({
 const AdminComponentMap = {
 	'MANAGE_EMPLOYEES': EmployeeManagement,
 	'MANAGE_SALES_REPORTS': SalesAnalytics,
+	'MANAGE_TIMESHEETS': TimeSheetTable,
 }
 
 class AdminTerminal extends Component {
@@ -76,7 +78,7 @@ class AdminTerminal extends Component {
 								<img className='admin-menu-icon' src='./assets/icons/analytics.svg' />
 								<span> Sales Reports </span>
 							</div>
-							<div className='admin-button'>
+							<div className='admin-button' onClick={() => this.setState({actionComponent: 'MANAGE_TIMESHEETS'})}>
 								<img className='admin-menu-icon' src='./assets/icons/calendar.svg' />
 								<span> Timesheets </span>
 							</div>					

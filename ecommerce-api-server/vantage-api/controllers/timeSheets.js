@@ -8,6 +8,13 @@ const TimeSheetSchema = Schemas.timeSheetSchema;
 
 // Need better error handling - send 404 if no users with that number is found ...
 
+module.exports.getAllTimesheets = async (req, res, next) => {
+	try{
+		const TimeSheetModel = mongoose.model('TimeSheet', TimeSheetSchema, req.headers['x-mongo-key'] + '_TimeSheets')
+		const allTimeSheets = await TimeSheetModel.find({})
+			res.json(allTimeSheets)
+	} catch(err) { next(err) }
+}
 module.exports.createNewTimesheet = async (req, res, next) => {
 	try {	
 			console.log("Creating New Timesheet. Clock In number:", req.body.clockInNumber)
