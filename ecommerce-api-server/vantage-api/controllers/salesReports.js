@@ -13,7 +13,6 @@ module.exports.tabulateDailyTicketSales = async function(req, res, next) {
 	try {
 
 		const allTicketsBySession = await Transaction.find({})
-		console.log("All Tickets Scraped Within Session:", allTicketsBySession)
 		const beginDate = new Date(allTicketsBySession[0].createdAt)
 		const endDate = new Date(allTicketsBySession[allTicketsBySession.length - 1].createdAt)
 
@@ -21,18 +20,88 @@ module.exports.tabulateDailyTicketSales = async function(req, res, next) {
 
 		const allPaidTickets = allTicketsByCategory["Paid"]
 		
-		const grossSales = allPaidTickets
+		const gross = allPaidTickets
 			.map(ticket => new BigNumber(ticket.totalReal))
 			.reduce((acc, cur) => acc.plus(cur)).toNumber()
 
 		// MUST CONVERT ALL UNPAID TICKETS TO VOID
 
+		const allTicketsByServer = _.groupBy(allPaidTickets, 'createdBy')
+		const allPaidMenuItems = allPaidTickets
+			.map(ticket => ticket.items)
+			.reduce((acc, cur) => acc.concat(cur))
+
+		console.log("All paid menu items:", allPaidMenuItems)
+
+		const allItemsSoldByItem = _.groupBy(allPaidMenuItems, 'itemName')
+
+		console.log("all Items by Item", allItemsSoldByItem)
+		const allItemsSoldByCategory = _.groupBy(allPaidMenuItems, 'category')
+
+		let grossSalesByItemName = {}
+		let grossSalesByServer = {}
+		let grossSalesByCategory = {}
+
+		const menuItemGross = Object.keys(allItemsSoldByItem)
+			.map(itemNameKey => {
+				grossSalesByItemName[itemNameKey] = allItemsSoldByItem[itemNameKey]
+					.map(subdocItemsByName => new BigNumber(subdocItemsByName.itemPrice))
+					.reduce((acc, cur) => acc.plus(cur)).toNumber()
+					
+					return({ "dataKey": itemNameKey, "dataValue": grossSalesByItemName[itemNameKey] })
+			})
+
+		const employeeGrossMetrics = Object.keys(allTicketsByServer)
+			.map(employeeNameKey => {
+				grossSalesByServer[employeeNameKey] = allTicketsByServer[employeeNameKey]
+					.map(employeeTickets => new BigNumber(employeeTickets.totalReal))
+					.reduce((acc, cur) => acc.plus(cur)).toNumber()
+
+					return ({ "dataKey": employeeNameKey, "dataValue": grossSalesByServer[employeeNameKey] })
+			})
+
+		const categoryMetrics = Object.keys(allItemsSoldByCategory)
+			.map(categoryKey => {
+				grossSalesByCategory[categoryKey] = allItemsSoldByCategory[categoryKey]
+					.map(subdocItemsByCategory => new BigNumber(subdocItemsByCategory.itemPrice))
+					.reduce((acc, cur) => acc.plus(cur)).toNumber()
+				
+					return ({ "dataKey": categoryKey, "dataValue": grossSalesByCategory[categoryKey] })
+			})
+
+
+		const timeSeriesData = allPaidTickets
+			.map(ticket => {
+				return({
+					"time": ticket.createdAt,
+					"sales": new BigNumber(ticket.totalReal),
+				})
+			})
+
+		const finalGross = timeSeriesData
+			.map(snapshot => snapshot["sales"])
+			.reduce((acc, cur, index) => {
+				timeSeriesData[index]["sales"] = acc.toNumber()
+				
+				if ( index === 1 ) timeSeriesData[0].sales = cur.toNumber() 
+				
+				return acc.plus(cur);
+			}).toNumber() 
+	
+		timeSeriesData[timeSeriesData.length - 1].sales = finalGross
 
 		const newDailySalesReport = new DailySalesReports({
 			tickets: allTicketsBySession,
 			beginDate: beginDate,
 			endDate: endDate,
-			gross: grossSales,
+			gross,
+			allTicketsByServer,
+			employeeGrossMetrics,
+			allItemsSoldByItem,
+			menuItemGross,
+			allItemsSoldByCategory,
+			categoryMetrics,
+			timeSeriesData,
 		})
 
 		console.log("Final Sales Report:", newDailySalesReport)

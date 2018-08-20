@@ -70,6 +70,13 @@ var salesReportSchema = new Schema ({
 	beginDate: Date,
 	endDate: Date,
 	gross: Number,
+	allTicketsByServer: { type: Schema.Types.Mixed },
+	allItemsSoldByItem: { type: Schema.Types.Mixed },
+	allItemsSoldByCategory: { type: Schema.Types.Mixed },
+	employeeGrossMetrics: { type: Schema.Types.Mixed },
+	menuItemGross: { type: Schema.Types.Mixed },
+	categoryMetrics: { type: Schema.Types.Mixed },
+	timeSeriesData: { type: Schema.Types.Mixed },
 });
 
 module.exports.menuSchema = menuItemSchema;
