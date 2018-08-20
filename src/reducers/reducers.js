@@ -13,6 +13,9 @@ const stateMap = {
 		isInvalidated: false,
 		isFetching: false,		
 	},
+	salesReportReducer: {
+		salesReport: {}
+	},
 	employeeReducer: { 
 		loggedInUsers: [ 'Terminal' ],
 	},
@@ -169,12 +172,23 @@ const shoppingCartReducer = (state = stateMap.shoppingCartReducer, action) => {
 	}
 }
 
+const salesReportReducer = (state = stateMap.salesReportReducer, action) => {
+	switch(action.type) {
+		case('RECEIVE_SALES_REPORT'):
+			return Object.assign({}, state, {
+				salesReport: action.salesReport
+			})
+		default:
+			return state
+	}
+}
 
 const rootReducer = combineReducers({
 	authReducer,
 	modalReducer,
 	terminalItemsReducer,
 	ticketTrackingReducer,
+	salesReportReducer,
 	employeeReducer,
 	marketplaceItemsReducer,
 	shoppingCartReducer,

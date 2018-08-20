@@ -1,3 +1,5 @@
+import { showModal } from './modals'
+
 export function fetchAllTicketsAndGenerateSalesReport(token) {
 	return dispatch => {
 		return fetch('http://localhost:3001/salesReports', {
@@ -10,7 +12,10 @@ export function fetchAllTicketsAndGenerateSalesReport(token) {
 			body:JSON.stringify({})
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
-		.then(json => dispatch(receiveSalesReport(json)))
+		.then(json => {
+			dispatch(receiveSalesReport(json))
+			dispatch(showModal('END_OF_BUSINESS_DAY_SUCCESS', {}))
+		})
 		.catch(err => console.log(err))
 	}
 }
