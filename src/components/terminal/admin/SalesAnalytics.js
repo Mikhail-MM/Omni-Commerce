@@ -114,7 +114,6 @@ class SalesAnalyticsContainer extends Component {
 						data={formatItemPie}
 						padAngle={0.25}
  						innerRadius={100}
- 						labels={(d) => d.y}
  						labelComponent={<VictoryTooltip/>}
 						theme={VictoryTheme.material}
 					/>
