@@ -41,9 +41,25 @@ export function lookUpSalesReportsByDate(token, beginDate, endDate) {
 	}
 }
 
+export function getSalesReportById(token, id) {
+	return dispatch => {
+		return fetch(`http://localhost:3001/salesReports/${id}`, {
+			headers:{
+				'Content-Type': 'application/json',
+				'x-access-token': token
+			},
+			method: 'GET',
+			mode: 'cors',
+		})
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+		.then(json => dispatch(receiveSalesReport(json)))
+		.catch(err => console.log(err))
+	}
+}
+
 export function receiveSalesReport(salesReport) {
 	return {
 		type: 'RECEIVE_SALES_REPORT',
-		salesReport
+		salesReport,
 	}
 }

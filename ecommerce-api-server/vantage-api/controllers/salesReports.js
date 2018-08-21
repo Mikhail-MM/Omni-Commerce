@@ -223,7 +223,7 @@ module.exports.lookupByTimestamp = async function(req, res, next) {
 module.exports.getSalesReportById = async function(req, res, next) {
 	const DailySalesReports = mongoose.model('SalesReport', SalesReportSchema, req.headers['x-mongo-key'] + '_SalesReports')
 	try {
-		const salesReport = await DailySalesReports.findOne({_id: req.body})
+		const salesReport = await DailySalesReports.findOne({_id: req.params.id})
 		res.json(salesReport)
 	} catch(err) { next(err) }
 }

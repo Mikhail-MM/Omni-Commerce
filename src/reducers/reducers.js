@@ -14,7 +14,8 @@ const stateMap = {
 		isFetching: false,		
 	},
 	salesReportReducer: {
-		salesReport: {}
+		salesReport: {},
+		reportLoaded: false
 	},
 	employeeReducer: { 
 		loggedInUsers: [ 'Terminal' ],
@@ -176,7 +177,8 @@ const salesReportReducer = (state = stateMap.salesReportReducer, action) => {
 	switch(action.type) {
 		case('RECEIVE_SALES_REPORT'):
 			return Object.assign({}, state, {
-				salesReport: action.salesReport
+				salesReport: action.salesReport,
+				reportLoaded: true
 			})
 		default:
 			return state
