@@ -135,10 +135,13 @@ tbody tr:nth-child(odd) td {
 
 .feed-column {
 	display: flex;
+	flex-direction: column;
+	align-items: center;
 
 	width: 350px;
 	height: 100%;
 
+	padding: 8px 8px;
 	background-color: #f2f6fa;
 	border-left: 1px solid gray;
 	overflow-y: scroll;
@@ -147,4 +150,22 @@ tbody tr:nth-child(odd) td {
 td {
 	border-radius: 10px;
 	overflow:hidden;
+}
+
+.event-container {
+	display: flex;
+	flex-direction: column;
+
+	width: 100%;
+	height: auto;
+	margin-bottom: 4px;
+}
+
+.event-time-container {
+	font-size: 0.8em;
+	color: rgba(0,0,0,.4);
+}
+
+.event-user-name {
+	color: #4183c4;
 }

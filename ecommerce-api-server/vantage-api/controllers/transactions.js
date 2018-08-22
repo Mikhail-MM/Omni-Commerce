@@ -55,7 +55,7 @@ module.exports.createNewTransaction = async function(req, res, next) {
 				createdBy,
 				createdAt,
 				creatorId: req.body.client._id,
-				description: `${createdBy} started a new Ticket.`
+				description: `has opened a new Ticket.`
 			})
 		
 			return res.json(savedTransaction)

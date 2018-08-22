@@ -51,7 +51,7 @@ module.exports.createNewTimesheet = async (req, res, next) => {
 				createdBy: `${UserClockingIn.firstName} ${UserClockingIn.lastName}`,
 				createdAt: Date.now(),
 				creatorId: req.body.client._id,
-				description: `${UserClockingIn.firstName} ${UserClockingIn.lastName} reported for work and clocked in.`
+				description: `reported for work and clocked in.`
 			})
 
 			next()		
@@ -82,7 +82,7 @@ module.exports.checkForMissedTimesheets = async (req, res, next) => {
 					createdBy: `${UserClockingIn.firstName} ${UserClockingIn.lastName}`,
 					createdAt: Date.now(),
 					creatorId: req.body.client._id,
-					description: `${UserClockingIn.firstName} ${UserClockingIn.lastName} forgot to close out their timesheet last night!`
+					description: `forgot to close out their timesheet last night!`
 				})
 				console.log("Missed Clock-Out Updated - Logged", LookForAndUpdateForgottenTimesheet)
 			}
@@ -123,7 +123,7 @@ module.exports.clockOutEmployee = async (req, res, next) => {
 			createdBy: `${UserClockingIn.firstName} ${UserClockingIn.lastName}`,
 			createdAt: Date.now(),
 			creatorId: req.body.client._id,
-			description: `${UserClockingIn.firstName} ${UserClockingIn.lastName} has just clocked out.`
+			description: `has just clocked out.`
 		})
 
 		next()

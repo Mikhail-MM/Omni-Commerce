@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 const Schemas = require('../models/schemas/transaction')
 const TicketTransaction = Schemas.ticketSchema
 const SalesReportSchema = Schemas.salesReportSchema
+
+const events = require('./events')
+
 const BigNumber = require('bignumber.js')
 const _ = require('underscore')
 
@@ -105,6 +108,17 @@ module.exports.tabulateDailyTicketSales = async function(req, res, next) {
 		})
 
 		console.log("Final Sales Report:", newDailySalesReport)
+
+			events.postNewEvent(req, res, next, {
+				actionType: 'Sales Report',
+				createdAt: Date.now(),
+				creatorId: req.body.client._id,
+				description: `Business day concluded - sales aggregation available. ${allPaidTickets.length} paid transactions have been processed successfully.`,
+				metadata: {
+					gross,
+					categoryMetrics,
+				}
+			})
 
 		const salesNow = await newDailySalesReport.save()
 

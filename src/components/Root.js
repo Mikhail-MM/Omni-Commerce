@@ -29,6 +29,8 @@ import EssosCartCheckout from './EssosCartCheckout'
 
 import ModalRoot from './ModalRoot'
 
+import Marketing from './Marketing'
+
 const loggerMiddleware = createLogger()
 const history = createHistory()
 
@@ -52,6 +54,7 @@ export default class Root extends Component {
 					<Switch>
 						
                   		<Route exact path='/' component={OmniSplash} />
+                  		<Route exact path='/splash' component={Marketing} />
                  		<Route exact path='/essos' component={EssosMarket} />
                  		<Route exact path='/essos/login' render={() => <AuthenticationForm login loginEssos /> } />
                  		<Route exact path='/omni/login' render={() => <AuthenticationForm login loginOmni /> } />

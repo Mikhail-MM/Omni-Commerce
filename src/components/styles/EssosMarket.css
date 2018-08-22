@@ -98,7 +98,13 @@ h1, h2, h3, h4, h5, h6 {
 .featured-mockup {
   height: 300px;
   width: 300px;
+  
+  transform: scale(1);
+  transition: transform 0.2s ease-in;
+}
 
+.featured-mockup:hover {
+  transform: scale(1.04);
 }
 
 .storybook-container {
@@ -116,6 +122,13 @@ h1, h2, h3, h4, h5, h6 {
   width: 458px;
   height: 550px;
 
+  transform: scale(1);
+  transition: transform 0.2s ease-in;
+
+}
+
+.feature-set-mockup:hover {
+  transform: scale(1.02);
 }
 
 .search-bar-container {

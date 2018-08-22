@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import moment from 'moment'
 
 import '../../styles/AdminTerminal.css'
 
@@ -40,9 +41,9 @@ class AdminTerminal extends Component {
 	async componentDidMount() {
 		const { token } = this.props
 		const feed = await getAllEvents(token)
-		
+		const timeFeed = [...feed].reverse()
 		this.setState({
-			eventFeed: feed
+			eventFeed: timeFeed
 		})
 
 		subscribeToFeedUpdates(this.updateEventFeed)
@@ -54,12 +55,55 @@ class AdminTerminal extends Component {
 
 	updateEventFeed = (newEvent) => {
 		const { eventFeed } = this.state
-		const updatedFeed = [...eventFeed, newEvent]
+		const updatedFeed = [newEvent, ...eventFeed,]
 		this.setState({
 			eventFeed: updatedFeed
 		})
 	}
 
+	renderEventFeedToDOM = () => {
+		const { eventFeed } = this.state
+		return eventFeed.map(event => {
+			if (event.actionType === 'Sales Report') return(
+				<div className='event-container'>
+					<div className='event-time-container'> 
+						{ moment(event.createdAt).format('MMMM Do YYYY, h:mm:ss a') }
+					</div>
+					<div className='event-text'>
+						{event.description} 
+					</div>
+					<div className='event-text'>
+						Statistics at a glance:
+					</div>
+					<div className='event-text'>
+						Today's Gross Sales: {event.metadata.gross}
+					</div>
+					<div className='event-text'>
+					{ event.metadata.categoryMetrics.map(categoryMetric => {
+							return(
+									<div className='event-text'>
+										{`${categoryMetric.dataKey}: $${categoryMetric.dataValue}`}
+									</div>
+							)
+						})
+					}
+					</div>
+					<button> See Detailed Analysis </button>
+				</div>
+			)
+			if (event.actionType === 'New Transaction' || 'Clock In' || 'Clock Out' || 'Missed Clock Out') return(
+				<div className='event-container'>
+					<div className='event-time-container'> 
+						{ moment(event.createdAt).format('MMMM Do YYYY, h:mm:ss a') }
+					</div>
+					<div className='event-text'>
+						<span className='event-user-name'> {event.createdBy} </span> <span> {event.description} </span>
+					</div>
+
+				</div>
+			)
+		})
+	}
 	render() {
 		const AdminActionDisplayComponent = AdminComponentMap[this.state.actionComponent]
 
@@ -98,7 +142,7 @@ class AdminTerminal extends Component {
 					<AdminActionDisplayComponent />
 
 					<div className='feed-column'>
-
+						{this.state.eventFeed && this.renderEventFeedToDOM()}
 					</div>
 				</div>
 			</div>
@@ -107,3 +151,5 @@ class AdminTerminal extends Component {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminTerminal)
+
+
