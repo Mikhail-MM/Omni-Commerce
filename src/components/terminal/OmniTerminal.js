@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import moment from 'moment'
 
 import { routeToNode } from '../../actions/routing'
 import { fetchMenuItems } from '../../actions/terminalItems'
-import { fetchTickets } from '../../actions/tickets-transactions'
+import { fetchTickets, fetchCurrentTicketDetails } from '../../actions/tickets-transactions'
 import { fetchLoggedUsers } from '../../actions/employees'
 import { showModal } from '../../actions/modals'
 
@@ -39,7 +40,34 @@ class OmniTerminal extends Component {
 		this.props.fetchLoggedUsers(token);
 	}
 
+	mapTicketsToDOMByStatus = ticketStatus => {
+		const { tickets, token } = this.props
+		return tickets[ticketStatus].map(ticket => {
+			return(
+				<tr 
+					key={ticket._id} 
+					onClick={() => {
+						fetchCurrentTicketDetails(token, ticket._id)}
+					}
+				>
+					<td> {ticket.status} </td>
+					<td> {ticket.createdBy} </td>
+					<td> {moment(ticket.createdAt).format('h:mm:ss a')} </td>
+					<td> $ {ticket.total} </td>
+				</tr>
+			)
+		})
+	}
+
+	generateTicketStatusMappings = () => {
+		const { tickets } = this.props
+		return(Object.keys(tickets).map(ticketStatus => {
+			return( this.mapTicketsToDOMByStatus(ticketStatus) )
+		}))
+	}
+
 	render() {
+		const { tickets } = this.props
 		return(
 			<div className='page-wrapper'>
 				<ModalRoot />
@@ -47,6 +75,19 @@ class OmniTerminal extends Component {
 					<div className='row-1-big'>
 						<div className='mainframe-container'>
 							<div className='graph' >
+										<table>
+											<thead>
+												<tr>
+													<th> Ticket Status </th>
+													<th> Created By </th>
+													<th> Time Created </th>
+													<th> Total Charge </th>
+												</tr>
+											</thead>
+											<tbody>
+												{ tickets && this.generateTicketStatusMappings() }
+											</tbody>
+										</table>
 							</div>
 							<div className='row__statistics'>
 							</div>
