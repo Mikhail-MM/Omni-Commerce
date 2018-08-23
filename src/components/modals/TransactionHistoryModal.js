@@ -74,6 +74,7 @@ const TransactionHistoryModal = props => {
 				isOpen={props.modalType === 'DISPLAY_ALL_TRANSACTIONS'}
 				style={modalStyle}
 				contentLabel="Example Modal"
+				overlayClassName="Overlay"
 				>
 
 				<TransactionHistoryDisplay 

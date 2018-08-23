@@ -71,6 +71,7 @@ const CustomAddonModal = props => {
 				isOpen={props.modalType === 'CUSTOM_ADDON_MODAL'}
 				style={modalStyle}
 				contentLabel="Example Modal"
+				overlayClassName="Overlay"
 				>
 
 				<AddCustomAddonForm 

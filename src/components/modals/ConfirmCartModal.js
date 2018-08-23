@@ -55,6 +55,7 @@ class ConfirmCartModal extends Component {
 					isOpen={this.props.modalType === 'CONFIRM_CART_ADDITION'}
 					style={modalStyle}
 					contentLabel="Example Modal"
+					overlayClassName="Overlay"
 					>
 					<div className='item-preview-container'>
 						<div className='product-image-container'>

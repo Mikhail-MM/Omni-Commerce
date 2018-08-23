@@ -23,6 +23,7 @@ const CardPaymentModal = props => {
 				isOpen={props.modalType === 'CARD_PAYMENT_MODAL'}
 				style={modalStyle}
 				contentLabel="Example Modal"
+				overlayClassName="Overlay"
 				>
 				<div style={{height: 80, width: 700}}>
 					<Checkout apiStripePath='Omni'/>

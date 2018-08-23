@@ -43,9 +43,24 @@ class TerminalActionScreen extends Component {
 	generateItemCategoryVisibilityMenu = () => {
 		const { menuItems } = this.props
 
-		return Object.keys(menuItems).map(category => {
+		const darkPastelColorWheel=['#3D1D1D', '#311726', '#3D2B1D', '#3D1D1D']
 
-			return <button key={category} onClick={() => this.props.setVisibleCategory(category)}> {category} </button>
+		return Object.keys(menuItems).map((category, index) => {
+
+			return <button 
+						style={{
+							backgroundColor: 'rgb(66, 64, 244)',
+							marginRight: 4,
+							borderStyle: 'none',
+							color: 'white',
+							cursor: 'pointer'
+
+						}} 
+						key={category} 
+						onClick={() => this.props.setVisibleCategory(category)}
+					> 
+						{category} 
+					</button>
 
 		})
 	}
@@ -138,6 +153,7 @@ class TerminalActionScreen extends Component {
 		const { token, isAuthenticated, menuItems, visibleCategory, activeTicket } = this.props
 		return(
 			<div className='action-page-wrapper' >
+
 				<ModalRoot />
 					
 				<div className='app-header__terminal-action'>
@@ -184,7 +200,7 @@ class TerminalActionScreen extends Component {
 											Fire Order 
 										</div>
 										<div 
-											style={{ backgroundColor: 'red' }} 
+											style={{ backgroundColor: '#8E2727' }} 
 											className='action-button'
 											onClick={() => this.props.updateTicketStatus(token, activeTicket._id, "Void")}
 										> 

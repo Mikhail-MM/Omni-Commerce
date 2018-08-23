@@ -26,6 +26,7 @@ const SalesAggregationSuccessModal = props => {
 				isOpen={props.modalType === 'END_OF_BUSINESS_DAY_SUCCESS'}
 				style={modalStyle}
 				contentLabel="Example Modal"
+				overlayClassName="Overlay"
 				>
 
 				<div>

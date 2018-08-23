@@ -25,6 +25,7 @@ const CartSuccessModal = props => {
 				isOpen={props.modalType === 'CART_ADDITION_SUCCESS_MODAL'}
 				style={modalStyle}
 				contentLabel="Example Modal"
+				overlayClassName="Overlay"
 				>
 
 				<div>

@@ -22,6 +22,7 @@ const UploadSuccessModal = props => {
 				isOpen={props.modalType === 'SHOW_ITEM_UPLOAD_SUCCESS_MODAL'}
 				style={modalStyle}
 				contentLabel="Example Modal"
+				overlayClassName="Overlay"
 				>
 				<div>
 					<h2> Item Uploade Success, logging props in console </h2>

@@ -29,6 +29,7 @@ const ConfirmSalesReportAggregationModal = props => {
 				isOpen={props.modalType === 'CONFIRM_END_OF_BUSINESS_DAY'}
 				style={modalStyle}
 				contentLabel="Example Modal"
+				overlayClassName="Overlay"
 				>
 
 				<div>

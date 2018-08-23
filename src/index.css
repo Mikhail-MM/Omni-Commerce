@@ -522,7 +522,8 @@ table {
 	flex-direction: column;
 	height: 220px;
 	width: 180px;
-	background-color: rgb(0, 0, 0, .30);
+	background-color: /* rgb(0, 0, 0, .30) #431730 */ rgb(0,0,0, 0.40);
+	font-size: 0.8em;
 	border: 1px solid white;
 	color: white;
 	border-radius: 3px;
@@ -739,4 +740,9 @@ img { object-fit: cover; height: 100%; width: 100%;}
 .vh100{
 	position: relative;
 	min-height: 100vh;
+}
+/* Modals */
+
+.Overlay {
+	background-color: transparent;
 }

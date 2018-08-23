@@ -23,6 +23,7 @@ const DatabaseInterfaceModal = props => {
 				isOpen={props.modalType === 'DATABASE_INTERFACE_MODAL'}
 				style={modalStyle}
 				contentLabel="Example Modal"
+				overlayClassName="Overlay"
 				>
 				<UploadItemForm {...props} />
 				<button onClick={() => props.hideModal()}> Cancel </button>

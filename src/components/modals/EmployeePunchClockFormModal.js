@@ -24,6 +24,7 @@ const EmployeePunchClockFormModal = props => {
 				isOpen={props.modalType === 'EMPLOYEE_PUNCH_CLOCK_FORM_MODAL'}
 				style={modalStyle}
 				contentLabel="Example Modal"
+				overlayClassName="Overlay"
 				>
 					<div>
 						{ (modalProps.formSelector === "Clock In" ) && <ClockInOutForm option={modalProps.formSelector}/> }

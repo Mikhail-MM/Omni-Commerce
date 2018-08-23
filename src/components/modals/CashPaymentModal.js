@@ -68,6 +68,7 @@ const CashPaymentModal = props => {
 				isOpen={props.modalType === 'CASH_PAYMENT_MODAL'}
 				style={modalStyle}
 				contentLabel="Example Modal"
+				overlayClassName="Overlay"
 				>
 
 				<CashPaymentForm 

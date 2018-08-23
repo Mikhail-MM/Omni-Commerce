@@ -56,6 +56,7 @@ const WaiterCallScreenModal = props => {
 				isOpen={props.modalType === 'SELECT_EMPLOYEE_OPENING_TICKET'}
 				style={modalStyle}
 				contentLabel="Employee Manifest"
+				overlayClassName="Overlay"
 				>
 				<WaiterCallScreenMenu token={token} loggedInUsers={loggedInUsers} createNewTicket={createNewTicket} hideModal={hideModal}/>
 				<button onClick={() => hideModal()}> Cancel </button>

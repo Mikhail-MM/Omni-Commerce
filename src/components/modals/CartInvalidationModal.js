@@ -43,6 +43,7 @@ const CartInvalidationModal = props => {
 				isOpen={props.modalType === 'CART_INVALIDATION_MODAL'}
 				style={modalStyle}
 				contentLabel="Example Modal"
+				overlayClassName="Overlay"
 				>
 				<div>
 					<h4> Some items were removed from your shopping cart. The seller does not have sufficient stock to fulfill your entire order. </h4>

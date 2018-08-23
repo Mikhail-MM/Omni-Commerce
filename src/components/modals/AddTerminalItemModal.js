@@ -23,6 +23,7 @@ const AddTerminalItemModal = props => {
 				isOpen={props.modalType === 'ADD_POINT_SALE_ITEM'}
 				style={modalStyle}
 				contentLabel="Example Modal"
+				overlayClassName="Overlay"
 				>
 
 				<AddTerminalItemForm />

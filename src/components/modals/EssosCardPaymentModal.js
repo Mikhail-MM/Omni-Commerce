@@ -22,6 +22,7 @@ const EssosCardPaymentModal = props => {
 				isOpen={props.modalType === 'ONLINE_STORE_STRIPE_CHECKOUT'}
 				style={modalStyle}
 				contentLabel="Example Modal"
+				overlayClassName="Overlay"
 				>
 				<div style={{height: 100, width: 700}}>
 					<Checkout apiStripePath='Essos'/>

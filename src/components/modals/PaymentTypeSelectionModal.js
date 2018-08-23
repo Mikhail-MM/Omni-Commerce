@@ -24,6 +24,7 @@ const PaymentTypeSelectionModal = props => {
 				isOpen={props.modalType === 'CASH_OR_CARD_MODAL'}
 				style={modalStyle}
 				contentLabel="Example Modal"
+				overlayClassName="Overlay"
 				>
 
 				<div style={{display: 'flex'}}className='centered-modal-wrapper'>

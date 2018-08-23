@@ -144,7 +144,11 @@ tbody tr:nth-child(odd) td {
 	padding: 8px 8px;
 	background-color: #f2f6fa;
 	border-left: 1px solid gray;
-	overflow-y: scroll;
+	overflow-y: hidden;
+}
+
+.feed-column:hover {
+	overflow-y: auto;
 }
 
 td {
