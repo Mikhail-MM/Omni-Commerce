@@ -646,6 +646,22 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 			}
 		}
 
+		const populateRecommendations = (items) => {
+
+		}
+
+		const generateFollowers = (users) => {
+
+		}
+
+		const generateWishlists = (users, items) => {
+
+		}
+
+		const createFeaturedItems = () => {
+			
+		}
+
 		const response = {
 			savedChildren,
 			savedShoppingCarts,

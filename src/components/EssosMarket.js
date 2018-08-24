@@ -4,7 +4,7 @@ import './styles/EssosMarket.css';
 
 import ModalRoot from './ModalRoot'
 
-import { retrieveAllItemsForSale } from '../actions/marketplace'
+import { retrieveAllItemsForSale, addItemToWishlist, getUserWishlist } from '../actions/marketplace'
 import { retrieveShoppingCart } from '../actions/shopping-cart'
 
 import { showModal } from '../actions/modals'
@@ -14,13 +14,16 @@ const mapStateToProps = state => {
 	const { token, isAuthenticated } = state.authReducer
 	const { marketplaceItems } = state.marketplaceItemsReducer
 	const { shoppingCart } = state.shoppingCartReducer
+	const { wishlist } = state.wishlistReducer
 
-	return { token, isAuthenticated, marketplaceItems, shoppingCart }
+	return { token, isAuthenticated, marketplaceItems, shoppingCart, wishlist }
 }
 
 const mapDispatchToProps = dispatch => ({
 	retrieveAllMarketplaceItems: () => dispatch(retrieveAllItemsForSale()),
 	retrieveShoppingCart: (token) => dispatch(retrieveShoppingCart(token)),
+	retrieveUserWishlist: (token) => dispatch(getUserWishlist(token)),
+	addItemToWishlist: (token, itemId) => dispatch(addItemToWishlist(token, itemId)),
 	routeToNode: (node) => dispatch(routeToNode(node)),
 	showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps)),
 })
@@ -30,10 +33,15 @@ class EssosMarket extends Component {
 		const { isAuthenticated, token } = this.props
 		this.props.retrieveAllMarketplaceItems()
 		if (isAuthenticated) this.props.retrieveShoppingCart(token)
+		if (isAuthenticated) this.props.retrieveUserWishlist(token)
+	}
+	
+	handleWishlistClick = (itemId) => {
+		console.log('booty')
 	}
 
 	generateItemDOM = () => {
-		const { marketplaceItems } = this.props
+		const { isAuthenticated, marketplaceItems } = this.props
 
 		return marketplaceItems.map(item => {
 			return(
@@ -48,7 +56,13 @@ class EssosMarket extends Component {
 					</div>
 					<div className='ui_card_content'>
 						<div className='ui-card-infotext'>
-							<h3 className="StoreItem-Header-Name"> {item.itemName} </h3>
+							<div className='item-header-container' >
+								<h3 className="StoreItem-Header-Name"> {item.itemName} </h3>
+								<div className='wishlist-icon-container active-wish' onClick={(isAuthenticated) ? () => this.handleWishlistClick(item._id) : () => {}} >
+									<div className='wishlist-icon-message'> Add to Wishlist </div>
+									<img src='./assets/icons/gift.svg' />
+								</div>
+							</div>
 							<p className="store-link" onClick={() => this.props.routeToNode(`/essos/user/${item.sellerRef_id}`)}> Posted By: {item.postedBy} </p>
 							<p className="store-pricing"> ${item.itemPrice} </p>
 						</div>
@@ -98,6 +112,9 @@ class EssosMarket extends Component {
 	              <div className='logo-container'>
 	              </div>
 	              <div className='account-control'>
+	              	<div className='my-notifications-button'>
+	              		<img style={{marginTop:5}} src='./assets/icons/notification.svg' />
+	              	</div>
 	             	<div className='my-cart-button'>
 	              		<img className='my-cart-icon' src='./assets/icons/my-cart.svg' />
 	              		<div className='my-cart-dropdown'>

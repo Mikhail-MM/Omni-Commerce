@@ -34,6 +34,9 @@ const stateMap = {
 		modalType: null,
 		modalProps: {}
 	},
+	wishlistReducer: {
+		wishlist: []
+	},
 }
 
 const authReducer = (state = stateMap.authReducer, action) => {
@@ -185,6 +188,17 @@ const salesReportReducer = (state = stateMap.salesReportReducer, action) => {
 	}
 }
 
+const wishlistReducer = (state = stateMap.wishlistReducer, action) => {
+	switch(action.type) {
+		case('RECEIVE_WISHLIST'):
+			return Object.assign({}, state, {
+				wishlist: action.wishlist
+			})
+		default:
+			return state
+	}
+}
+
 const rootReducer = combineReducers({
 	authReducer,
 	modalReducer,
@@ -194,7 +208,8 @@ const rootReducer = combineReducers({
 	employeeReducer,
 	marketplaceItemsReducer,
 	shoppingCartReducer,
-	routerReducer
+	routerReducer,
+	wishlistReducer
 })
 
 export default rootReducer

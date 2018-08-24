@@ -9,6 +9,7 @@
     "d3-time": "^1.0.8",
     "form-data": "^2.3.2",
     "history": "^4.7.2",
+    "immutability-helper": "^2.7.1",
     "moment": "^2.20.1",
     "querystring": "^0.2.0",
     "react": "^16.2.0",

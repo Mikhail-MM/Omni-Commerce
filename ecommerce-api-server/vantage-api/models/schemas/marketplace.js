@@ -24,6 +24,7 @@ const storeItemSchema = new Schema({
 			choiceStock: Number,
 		}],
 	}],
+	optionRequired: Boolean,
 	tags: [String],
 	numberInStock: Number,
 	numberRequested: Number, // we NEED to split these shoppingCartOnly values out
@@ -32,6 +33,7 @@ const storeItemSchema = new Schema({
 	rating: [{
 		userId: { type: Schema.Types.ObjectId, ref: 'EssosUser' },
 		rating: Number,
+		review: String,
 	}],
 
 	followers: [{
@@ -43,7 +45,7 @@ const storeItemSchema = new Schema({
 		itemId: { type: Schema.Types.ObjectId, ref: 'StoreItem' },
 		imageURL: String,
 	}],
-	
+
 	sellerRef_id: {type: Schema.Types.ObjectId, ref: 'EssosUser', required: true},
 	marketplaceRef_id: {type: Schema.Types.ObjectId, ref: 'Marketplace'},
 	itemRef_id: {type: Schema.Types.ObjectId, ref:'StoreItem',}, // only used within shopping cart

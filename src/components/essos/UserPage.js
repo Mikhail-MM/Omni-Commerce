@@ -102,6 +102,11 @@ class UserPage extends Component {
 					   ) : (
 							<div className='user-social-container' >
 								<div className='user-avatar'>
+									{ (this.props.selfProfileView) ? (
+										<div className='user-avatar-hoverover'>
+											Change Avatar
+										</div>
+									   ) : (null) }
 									<img className='user-avatar-image' src={this.state.userAvatarURL} />
 								</div>
 								<div className='user-name-blurb' >

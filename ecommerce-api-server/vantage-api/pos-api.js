@@ -230,7 +230,10 @@ router.route('/sellorders/:id')
 	.get(authorize.routeMarketplaceClient, sellOrders.getSellOrderById)
 	.put(authorize.routeMarketplaceClient, sellOrders.updateSellOrderById);
 
-
+router.route('/storeItem/wishlist/')
+	.get(authorize.routeMarketplaceClient, storeItems.retrieveUserWishlist)
+router.route('/storeItem/wishlist/:id')
+	.put(authorize.routeMarketplaceClient, storeItems.handleWishlistRequest)
 router.route('/storeItem/marketplaceLookup/:id')
 	.get(storeItems.findAllItemsFromMarketplace);
 router.route('/storeItem/noIDhack/:id')

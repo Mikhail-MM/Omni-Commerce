@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const Schemas = require('../models/schemas/marketplace')
 const MarketplaceModels = require('../models/schemas/marketplace')
+const Users = require('../models/schemas/users');
+
+const EssosUser = Users.EssosUser;
 const StoreItemModel = MarketplaceModels.StoreItemModel
 
 
@@ -43,9 +46,25 @@ module.exports.findAllItemsFromMarketplace = async function(req, res, next) {
 }
 
 module.exports.retrieveStoreItemWithoutId = async function(req, res, next) {
-try { 
-	const noIdItem = await StoreItemModel.findOne({_id: req.params.id}, '-_id')
-		res.json(noIdItem)
+	try { 
+		const noIdItem = await StoreItemModel.findOne({_id: req.params.id}, '-_id')
+			res.json(noIdItem)
+		} catch(err) { next(err) }
+}
+
+module.exports.handleWishlistRequest = async (req, res, next) => {
+	try {
+		const updateUser = {}
+		const updateItem = {}
 	} catch(err) { next(err) }
 }
 
+module.exports.retrieveUserWishlist = async (req, res, next) => {
+	try {
+		const authorizedUser = await EssosUser.findById(req.headers['x-user-id'])
+		const { wishlist } = authorizedUser
+
+		res.json(wishlist)
+		
+	} catch(err) { next(err) }
+}

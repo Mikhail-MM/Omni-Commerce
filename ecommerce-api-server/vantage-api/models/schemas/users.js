@@ -67,12 +67,14 @@ const essosUserSchema = new Schema({
 		userId: { type: Schema.Types.ObjectId, ref: 'EssosUser' },
 		avatarURL: String,
 	}],
+
 	following: [{
 		userId: { type: Schema.Types.ObjectId, ref: 'EssosUser' },
 		avatarURL: String,
 	}],
-	wishList: [{
-		userId: { type: Schema.Types.ObjectId, ref: 'StoreItem' },
+
+	wishlist: [{
+		itemId: { type: Schema.Types.ObjectId, ref: 'StoreItem' },
 		imageURL: String,
 	}],
 

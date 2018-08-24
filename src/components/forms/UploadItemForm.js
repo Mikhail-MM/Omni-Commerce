@@ -15,6 +15,7 @@ const initialState = {
 	tags: [],
 	newImageFlag: false,
 	selectedFile: null,
+	// options: [],
 }
 
 const mapStateToProps = state => {
@@ -67,6 +68,38 @@ class UploadItemForm extends Component {
 	handleChange = (key, value) => {
 		this.setState([key]: value)
 	}
+
+	/*
+	addOption = () => {
+		if (this.state.options.length < 2) {
+			return this.setState({
+				options: [...this.state.options, {
+					optionType: ''
+					optionChoices: [{
+						choiceName: '',
+						choiceStock: 0,
+					}],
+				}]
+			})
+		}
+	}
+
+
+	renderOptionConfiguration = () => {
+		if (this.state.options.length > 0) return this.state.options.map((option, index) => {
+			return(
+				<div>
+					<input 
+						type='text'
+						value={this.state.options}
+						onChange={(event) => this.handleChange(``)}
+						/>
+				</div>
+			)
+		})
+	}
+
+	*/
 
 	handleTagChange(tagName){
 		console.log('Handler - TagName - THISSTATE...', tagName, this.state.tags)
@@ -280,6 +313,9 @@ class UploadItemForm extends Component {
 								onChange={(event) => this.handleChange('itemName', event.target.value)}
 							/>
 						</div>
+						<div className='tag-selection-input-container'>
+							{ this.renderTagSelectionMenu() }
+						</div>
 						<div>
 							<input 
 								type='text'
@@ -293,9 +329,6 @@ class UploadItemForm extends Component {
 								value={this.state.numberInStock}
 								onChange={(event) => this.handleChange('numberInStock', event.target.value)}
 							/>
-						</div>
-						<div className='tag-selection-input-container'>
-							{ this.renderTagSelectionMenu() }
 						</div>
 					</div>
 				</form>

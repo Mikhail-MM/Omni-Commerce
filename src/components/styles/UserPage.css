@@ -106,11 +106,37 @@
 }
 /* mockups */
 .user-avatar{
+	position: relative;
+
 	width: 200px;
 	height: 200px;
 
 	border-radius: 100px;
 }
+
+.user-avatar-hoverover {
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	width: 200px;
+	height: 200px;
+
+	border-radius: 100px;
+
+	opacity: 0;
+}
+
+.user-avatar-hoverover:hover {
+
+	padding-top: 45%;
+	text-align: center;
+
+	background-color: rgba(0, 0, 0, .45);
+	opacity: 1;
+	color: white;
+}
+
 
 
 .user-avatar-image {

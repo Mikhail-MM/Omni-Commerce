@@ -94,7 +94,7 @@ export function postEssosItem(token, data, imageFile) {
 				const imageURLJSON = { imageURL: fileUploadResponse.imageURL} 
 				return fetch(`http://localhost:3001/storeItem/${newItemJSON._id}`, {
 					headers: {
-						'Content-Type': 'application-json',
+						'Content-Type': 'application/json',
 						'x-access-token': token,
 					},
 					method: 'PUT',
@@ -113,6 +113,40 @@ export function postEssosItem(token, data, imageFile) {
 	}
 }
 
+export function addItemToWishlist(token, itemId, mode) {
+	return dispatch => {
+		const controllerMode = { mode }
+		return fetch(`http://localhost:3001/storeItem/wishlist/${itemId}`, {
+			headers: {
+				'Content-Type': 'application/json',
+				'x-access-token': token,			
+			},
+			method: 'PUT',
+			mode: 'cors',
+			body: JSON.stringify(controllerMode)
+		})
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+		.then(json => receiveWishlist(json))
+		.catch(err => console.log(err))
+	}
+}
+
+export function getUserWishlist(token) {
+	return dispatch => {
+		return fetch(`http://localhost:3001/storeItem/wishlist`, {
+			headers: {
+				'Content-Type': 'application/json',
+				'x-access-token': token,			
+			},
+			method: 'GET',
+			mode: 'cors',	
+		})
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+		.then(json => dispatch(receiveWishlist(json)))
+		.catch(err => console.log(err))
+	}
+}
+
 function receiveItems(items) {
 	return {
 		type: 'RECEIVE_MARKETPLACE_GOODS',
@@ -124,5 +158,12 @@ function receiveCurrentItem(item) {
 	return{
 		type: 'RECEIVE_CURRENT_ITEM',
 		item
+	}
+}
+
+function receiveWishlist(wishlist) {
+	return{
+		type: 'RECEIVE_WISHLIST',
+		wishlist
 	}
 }
