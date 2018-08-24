@@ -61,7 +61,21 @@ const essosUserSchema = new Schema({
 	token: String,
 	tokenCreatedAt: Date,
 
-	marketplaceRef_id: { type: Schema.Types.ObjectId, ref: 'Marketplace' }
+	marketplaceRef_id: { type: Schema.Types.ObjectId, ref: 'Marketplace' },
+
+	followers: [{
+		userId: { type: Schema.Types.ObjectId, ref: 'EssosUser' },
+		avatarURL: String,
+	}],
+	following: [{
+		userId: { type: Schema.Types.ObjectId, ref: 'EssosUser' },
+		avatarURL: String,
+	}],
+	wishList: [{
+		userId: { type: Schema.Types.ObjectId, ref: 'StoreItem' },
+		imageURL: String,
+	}],
+
 	},
 	{
 		toObject:{ getters : true }	

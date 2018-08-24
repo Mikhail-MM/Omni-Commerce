@@ -17,12 +17,33 @@ const storeItemSchema = new Schema({
 	description: String,
 	postedBy: String,
 	category: String, // Consider consolidating with tags
-	options: [String],
+	options: [{
+		optionType: String,
+		optionChoices: [{
+			choiceName: String,
+			choiceStock: Number,
+		}],
+	}],
 	tags: [String],
 	numberInStock: Number,
 	numberRequested: Number, // we NEED to split these shoppingCartOnly values out
 	storeOwnerName: String,
 	status: String, // inStock/ outOfStock
+	rating: [{
+		userId: { type: Schema.Types.ObjectId, ref: 'EssosUser' },
+		rating: Number,
+	}],
+
+	followers: [{
+		userId: { type: Schema.Types.ObjectId, ref: 'EssosUser' },
+		avatarURL: String,
+	}],
+
+	recommended: [{
+		itemId: { type: Schema.Types.ObjectId, ref: 'StoreItem' },
+		imageURL: String,
+	}],
+	
 	sellerRef_id: {type: Schema.Types.ObjectId, ref: 'EssosUser', required: true},
 	marketplaceRef_id: {type: Schema.Types.ObjectId, ref: 'Marketplace'},
 	itemRef_id: {type: Schema.Types.ObjectId, ref:'StoreItem',}, // only used within shopping cart
