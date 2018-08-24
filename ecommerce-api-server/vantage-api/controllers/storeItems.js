@@ -54,8 +54,50 @@ module.exports.retrieveStoreItemWithoutId = async function(req, res, next) {
 
 module.exports.handleWishlistRequest = async (req, res, next) => {
 	try {
-		const updateUser = {}
-		const updateItem = {}
+		const { mode } = req.body
+		const response = {}
+		const authorizedUser = await EssosUser.findById(req.headers['x-user-id'])
+		const favoriteItem = await StoreItemModel.findById(req.params.id)
+
+		if (mode === 'add') {
+			const updateUser = await EssosUser.findOneAndUpdate(
+				{_id: req.headers['x-user-id']}, 
+				{ $push: { wishlist: {
+					itemId: req.params.id,
+					imageURL: favoriteItem.imageURL
+				}}},
+				{upsert: true, new: true},
+			)
+			const updateItemFollowers = await StoreItemModel.findOneAndUpdate(
+				{_id: req.params.id},
+				{ $push: { followers: {
+					userId: req.headers['x-user-id'],
+					avatarURL: authorizedUser.avatarURL,
+				}}},
+				{upsert: true, new: true},
+			)
+			response = {
+				updateUser,
+				updateItemFollowers
+			}
+		} else if (mode === 'remove') {
+			const updateUser = await EssosUser.findOneAndUpdate(
+				{_id: req.headers['x-user-id']},
+				{ $pull: { wishlist: { itemId: req.params.id }}},
+				{upsert: true, new: true},
+			)
+
+			const updateItemFollowers = await StoreItemModel.findOneAndUpdate(
+				{_id: req.params.id},
+				{ $pull : { followers: { userId: req.headers['x-user-id'] }}},
+				{upsert: true, new: true},
+			)
+			response = {
+				updateUser,
+				updateItemFollowers,
+			}
+		}
+			res.json(response)
 	} catch(err) { next(err) }
 }
 

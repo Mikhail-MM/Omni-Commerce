@@ -153,12 +153,6 @@ class EssosMarket extends Component {
 	            </div>
 	          </section>
 
-	          <div className='storybook-container' >
-	            <img className='feature-set-mockup' src='./assets/store-splash/dutone-3.jpg' />
-	            <img className='feature-set-mockup' src='./assets/store-splash/dutone-2.jpg' />
-	            <img className='feature-set-mockup' src='./assets/store-splash/dutone-1.jpg' />
-	          </div>
-
 	          <div className='search-bar-container'>
 	          </div>
 	          <div className='main-items-container'>
