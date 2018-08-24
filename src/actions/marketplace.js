@@ -126,7 +126,9 @@ export function addItemToWishlist(token, itemId, mode) {
 			body: JSON.stringify(controllerMode)
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
-		.then(json => receiveWishlist(json))
+		.then(json => {
+			console.log(json)
+			dispatch(receiveWishlist(json))})
 		.catch(err => console.log(err))
 	}
 }

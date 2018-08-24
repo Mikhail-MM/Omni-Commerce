@@ -23,7 +23,7 @@ const mapDispatchToProps = dispatch => ({
 	retrieveAllMarketplaceItems: () => dispatch(retrieveAllItemsForSale()),
 	retrieveShoppingCart: (token) => dispatch(retrieveShoppingCart(token)),
 	retrieveUserWishlist: (token) => dispatch(getUserWishlist(token)),
-	addItemToWishlist: (token, itemId) => dispatch(addItemToWishlist(token, itemId)),
+	wishlistAction: (token, itemId, mode) => dispatch(addItemToWishlist(token, itemId, mode)),
 	routeToNode: (node) => dispatch(routeToNode(node)),
 	showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps)),
 })
@@ -37,7 +37,14 @@ class EssosMarket extends Component {
 	}
 	
 	handleWishlistClick = (itemId) => {
-		console.log('booty')
+		const { token, wishlist } = this.props
+		if (!wishlist) return console.log("No wishlist on this account")
+		console.log(wishlist)
+		console.log(itemId)
+		console.log(wishlist.find(item => item.itemId == itemId))
+		const alreadyInWishlist = wishlist.find(item => item.itemId == itemId)
+		if (!alreadyInWishlist) { return this.props.wishlistAction(token, itemId, 'add')
+		} else if (alreadyInWishlist) { return this.props.wishlistAction(token, itemId, 'remove')}
 	}
 
 	generateItemDOM = () => {

@@ -55,11 +55,12 @@ module.exports.retrieveStoreItemWithoutId = async function(req, res, next) {
 module.exports.handleWishlistRequest = async (req, res, next) => {
 	try {
 		const { mode } = req.body
-		const response = {}
+
 		const authorizedUser = await EssosUser.findById(req.headers['x-user-id'])
 		const favoriteItem = await StoreItemModel.findById(req.params.id)
 
 		if (mode === 'add') {
+			console.log("Adding item")
 			const updateUser = await EssosUser.findOneAndUpdate(
 				{_id: req.headers['x-user-id']}, 
 				{ $push: { wishlist: {
@@ -76,11 +77,9 @@ module.exports.handleWishlistRequest = async (req, res, next) => {
 				}}},
 				{upsert: true, new: true},
 			)
-			response = {
-				updateUser,
-				updateItemFollowers
-			}
+			res.json(updateUser.wishlist)
 		} else if (mode === 'remove') {
+			console.log("Removing item")
 			const updateUser = await EssosUser.findOneAndUpdate(
 				{_id: req.headers['x-user-id']},
 				{ $pull: { wishlist: { itemId: req.params.id }}},
@@ -92,12 +91,8 @@ module.exports.handleWishlistRequest = async (req, res, next) => {
 				{ $pull : { followers: { userId: req.headers['x-user-id'] }}},
 				{upsert: true, new: true},
 			)
-			response = {
-				updateUser,
-				updateItemFollowers,
-			}
+			res.json(updateUser.wishlist)
 		}
-			res.json(response)
 	} catch(err) { next(err) }
 }
 
@@ -108,5 +103,11 @@ module.exports.retrieveUserWishlist = async (req, res, next) => {
 
 		res.json(wishlist)
 		
+	} catch(err) { next(err) }
+}
+
+module.exports.appendRatingToItem = async (req, res, next) => {
+	try{
+		console.log('Add dat wishlist')
 	} catch(err) { next(err) }
 }
