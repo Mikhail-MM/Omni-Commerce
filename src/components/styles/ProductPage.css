@@ -12,3 +12,7 @@
 	width: 430px;
 	height: 573px;
 }
+
+.item-details-container {
+	flex-grow: 1;
+}

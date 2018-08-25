@@ -44,7 +44,27 @@ class ShipmentOrderScreen extends Component {
 		const { shipmentRequests } = this.state
 
 		return shipmentRequests.map(request => {
-			return <div>{ request._id} </div>
+			return(
+				<div key={request._id} className='purchase-order-container'> 
+					{request.itemsBought.map(item=> {
+						return (
+							<div key={item._id} className='purchase-order__flex-row'>
+								<div className='purchase-order__image-container'>
+									<img src={item.imageURL} />
+								</div>
+								<div className='purchase-order__item-details'>
+									{item.itemName}
+									{item.numberRequested}
+								</div>
+
+								<div classname='purchase-order__item-status-container'>
+									BUTTON...
+								</div>
+							</div>
+						)
+					})}
+				</div>
+			)
 		})
 	}
 

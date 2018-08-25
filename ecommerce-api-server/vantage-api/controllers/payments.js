@@ -9,7 +9,6 @@ StripeCustomerModel = MarketPlaceModels.StripeCustomerModel;
 PurchaseOrderModel = MarketPlaceModels.PurchaseOrderModel;
 sellerSpecificPurchaseOrderModel = MarketPlaceModels.sellerSpecificPurchaseOrderModel;
 
-
 module.exports.createCashCharge = function(req, res, next) {
   console.log("Creating Cash Charge")
   // Needs error handling to ensure that customer didn't over/underpay due to cached redux values that didn't update for whatever reason
@@ -102,8 +101,6 @@ module.exports.saveStripeCustomerInformation = async function(req, res, next) {
 
     const customer = (existingCustomer) ? existingCustomer : await createNewCustomer()
 
-    console.log('Using this customer:', customer)
-
       stripe.charges.create({
         amount: stripeAmount,
         currency: "usd",
@@ -113,10 +110,21 @@ module.exports.saveStripeCustomerInformation = async function(req, res, next) {
         statement_descriptor: "Omni Online Market",
       }).then( async (charge) => {
         
-        console.log("Getting validated portion of user cart - Turning it into receipt/purchase order")
-
         const appendStatusToArray = itemsBoughtArray => {
-            return itemsBoughtArray.map(cartItem => ({...cartItem, orderStatus: 'await_delivery'}))
+            return itemsBoughtArray.map(cartItem => {
+              // Object spread operator does not work well on raw mongoose models
+              const { itemName, itemPrice, imageURL, numberRequested, sellerRef_id, itemRef_id, postedBy } = cartItem
+              return Object.assign({}, {
+                itemName,
+                itemPrice,
+                imageURL,
+                numberRequested,
+                sellerRef_id,
+                itemRef_id,
+                postedBy,
+                status: 'awaiting_delivery'
+              })
+            })
         }
 
         const purchaseOrderData = Object.assign({}, {itemsBought: appendStatusToArray(req.body.validatedPurchaseOrderToProcess.validatedCart.itemsBought)}, {
@@ -125,7 +133,6 @@ module.exports.saveStripeCustomerInformation = async function(req, res, next) {
           taxReal: req.body.validatedPurchaseOrderToProcess.validatedCart.taxReal,
           taxDisplay: req.body.validatedPurchaseOrderToProcess.validatedCart.taxDisplay,
           totalReal: req.body.validatedPurchaseOrderToProcess.validatedCart.totalReal,
-          itemsBought: req.body.validatedPurchaseOrderToProcess.validatedCart.itemsBought,
         }, 
         {
           buyerRef_id: req.body.client._id,
@@ -158,6 +165,7 @@ module.exports.saveStripeCustomerInformation = async function(req, res, next) {
             }
           });
 
+          const buyerName = `${req.body.client.firstName} ${req.body.client.lastName}`
           const subTotalBigNumber = bigNumberPrices.reduce( (acc, cur) => { 
           return acc.plus((cur.itemPrice.times(cur.multipleRequest))) }, new BigNumber(0)
           )
@@ -172,6 +180,7 @@ module.exports.saveStripeCustomerInformation = async function(req, res, next) {
         
                   const receiptObject = Object.assign({
                     sellerRef_id: seller_id,
+                    buyerName,
                     buyerRef_id: req.body.client._id,
                     masterPurchaseOrderRef_id: savedPurchaseOrder._id,
                     itemsBought: groupedShippingOrders[seller_id], // groupedShippingOrders is an object of arrays, whose keys are _id references of user who posted the items to the marketplace

@@ -210,8 +210,8 @@ h1, h2, h3, h4, h5, h6 {
 
     padding: 10px 10px;
 
-    background-color: black;
-    border-radius: 25px;
+    background-color: white;
+    border: 2px solid black;
 
     z-index: 100;
 }
@@ -303,7 +303,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   height: 100%;
 
-  color: white;
+  color: black;
 
   overflow: auto;
 }
@@ -317,7 +317,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 5px 5px;
   margin-bottom: 2px;
 
-  border: 1px solid white;
+  border: 1px solid black;
   border-radius: 5px;
 }
 

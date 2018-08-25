@@ -104,7 +104,9 @@ const shoppingCartSchema = new Schema(Object.assign({}, salesManifest, {
 }));
 
 const purchaseOrderSchema = new Schema(Object.assign({}, salesManifest, { 
+	sellerRef_id: {type: Schema.Types.ObjectId, ref: 'EssosUser'},
 	buyerRef_id: {type: Schema.Types.ObjectId, ref: 'EssosUser'},
+	buyerName: String,
 	customerRef_id: {type: Schema.Types.ObjectId, ref: 'StripeCustomer'},
 	charge: {type: Schema.Types.Mixed},
 }));
@@ -112,6 +114,7 @@ const purchaseOrderSchema = new Schema(Object.assign({}, salesManifest, {
 const sellerSpecificPurchaseOrder = new Schema(Object.assign({}, salesManifest, {
 	sellerRef_id: {type: Schema.Types.ObjectId, ref: 'EssosUser'},
 	buyerRef_id: {type: Schema.Types.ObjectId, ref: 'EssosUser'},
+	buyerName: String,
 	masterPurchaseOrderRef_id: {type: Schema.Types.ObjectId, ref: 'PurchaseOrder'},
 	customerRef_id: {type: Schema.Types.ObjectId, ref: 'StripeCustomer'},
 }));

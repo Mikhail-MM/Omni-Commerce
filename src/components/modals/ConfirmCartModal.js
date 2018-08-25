@@ -63,7 +63,9 @@ class ConfirmCartModal extends Component {
 						</div>
 
 						<div className='item-details-container'>
-							<h3> Confirm your Order! </h3>
+						<div style={{textAlign: 'center'}}>
+							<h3> {item.itemName}</h3>
+						</div>
 							<h4> Confirm your purchase of {item.itemName} </h4>
 							<input type='number' value={this.state.requestedAmount} onChange={e => this.handleChange('requestedAmount', e.target.value)} />
 							<button onClick={() => this.addItemToCart(item._id)}>Add To Cart</button>

@@ -137,8 +137,22 @@
 	color: white;
 }
 
+.purchase-order-container {
+	display: flex;
+	flex-direction: column;
 
+	width: 100%;
+	height: 100%;
+}
 
+.purchase-order__flex-row {
+	display: flex;
+}
+
+.purchase-order__image-container {
+	width: ;
+	height: 200px;
+}
 .user-avatar-image {
 	border-radius: 100px;
 }
@@ -158,7 +172,7 @@
 	animation: loadingOpacity 2s infinite;
 }
 
-
+/* Purchase Order Page */
 
 @keyframes loadingOpacity {
 	0% { opacity: 0.5; }

@@ -41,7 +41,25 @@ class PurchaseHistoryScreen extends Component {
 		const { purchaseHistory } = this.state
 
 		return purchaseHistory.map(request => {
-			return <div> request._id </div>
+			return (
+				<div className='purchase-order-container'> 
+					{request.itemsBought.map(item => {
+						(
+							<div className='purchase-order__flex-row'>
+								<div className='purchase-order__image-container'>
+									<img src={item.imageURL} />
+								</div>
+								<div className='purchase-order__item-details'>
+									{item.itemName}
+								</div>
+								<div classname='purchase-order__item-status-container'>
+									<button>{item.orderStatus}</button>
+								</div>
+							</div>
+						)
+					})}
+				</div>
+			)
 		})
 	}
 
@@ -49,7 +67,7 @@ class PurchaseHistoryScreen extends Component {
 		const { purchaseHistory } = this.state
 
 		return(
-			<div style={{display: 'flex', flexDirection:'column', alignItems:'center'}}>
+			<div style={{display: 'flex', flexDirection:'column', alignItems:'center', paddingRight: 25, paddingLeft: 25}}>
 				{ purchaseHistory && this.renderPurchaseHistoryToDOM() }
 			</div>
 		)
