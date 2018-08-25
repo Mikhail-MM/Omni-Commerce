@@ -50,6 +50,8 @@ const storeItems = require('./controllers/storeItems')
 const shoppingCarts = require('./controllers/shoppingCarts')
 const purchaseOrders = require('./controllers/purchaseOrders')
 const sellOrders = require('./controllers/sellOrders')
+const social = require('./controllers/social')
+
 const seed = require('./seed/seed')
 
 const router = express.Router(); 
@@ -105,6 +107,9 @@ router.route('/seed/essos/')
 router.route('/events')
 	.get(authorize.routeEmployeeToMongoCollection, events.getEventFeed)
 	.post(authorize.routeEmployeeToMongoCollection, events.postNewEvent)
+
+router.route('/social/follow/:id')
+	.put(authorize.routeMarketplaceClient, social.follow)
 
 // really need to consolidate this with our old client functions and make all our endpoints more REST ful...
 router.route('/users/essos/getProfileView/ownProfile')

@@ -47,8 +47,19 @@ class EssosMarket extends Component {
 		} else if (alreadyInWishlist) { return this.props.wishlistAction(token, itemId, 'remove')}
 	}
 
+	handleWishlistIcon = (itemId) => {
+		const { wishlist } = this.props
+		if (!wishlist) { 
+			return 'wishlist-icon-container' 
+		} else if (wishlist.find(item => item.itemId == itemId)) {
+			return 'wishlist-icon-container active-wish'
+		} else { 
+			return 'wishlist-icon-container' 
+		}
+	}
+
 	generateItemDOM = () => {
-		const { isAuthenticated, marketplaceItems } = this.props
+		const { isAuthenticated, marketplaceItems, wishlist } = this.props
 
 		return marketplaceItems.map(item => {
 			return(
@@ -65,9 +76,10 @@ class EssosMarket extends Component {
 						<div className='ui-card-infotext'>
 							<div className='item-header-container' >
 								<h3 className="StoreItem-Header-Name"> {item.itemName} </h3>
-								<div className='wishlist-icon-container active-wish' onClick={(isAuthenticated) ? () => this.handleWishlistClick(item._id) : () => {}} >
-									<div className='wishlist-icon-message'> Add to Wishlist </div>
-									<img src='./assets/icons/gift.svg' />
+								<div className={this.handleWishlistIcon(item._id)} 
+									onClick={(isAuthenticated) ? () => this.handleWishlistClick(item._id) : () => {}} >
+										<div className='wishlist-icon-message'> Add to Wishlist </div>
+										<img src='./assets/icons/gift.svg' />
 								</div>
 							</div>
 							<p className="store-link" onClick={() => this.props.routeToNode(`/essos/user/${item.sellerRef_id}`)}> Posted By: {item.postedBy} </p>

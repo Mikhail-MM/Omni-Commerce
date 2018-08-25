@@ -37,6 +37,9 @@ const stateMap = {
 	wishlistReducer: {
 		wishlist: []
 	},
+	socialReducer: {
+		followContacts: [],
+	}
 }
 
 const authReducer = (state = stateMap.authReducer, action) => {
@@ -199,6 +202,17 @@ const wishlistReducer = (state = stateMap.wishlistReducer, action) => {
 	}
 }
 
+const socialReducer = (state = stateMap.socialReducer, action) => {
+	switch(action.type) {
+		case('RECEIVE_FOLLOW_FEED'):
+			return Object.assign({}, state, {
+				followContacts: action.followContacts
+			})
+		default: 
+			return state
+	}
+}
+
 const rootReducer = combineReducers({
 	authReducer,
 	modalReducer,
@@ -209,7 +223,8 @@ const rootReducer = combineReducers({
 	marketplaceItemsReducer,
 	shoppingCartReducer,
 	routerReducer,
-	wishlistReducer
+	wishlistReducer,
+	socialReducer,
 })
 
 export default rootReducer

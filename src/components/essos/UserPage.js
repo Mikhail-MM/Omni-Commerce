@@ -9,6 +9,7 @@ import UserItemScreen from './UserItemScreen'
 import ShipmentOrderScreen from './ShipmentOrderScreen'
 import PurchaseHistoryScreen from './PurchaseHistoryScreen'
 
+import { followUser } from '../../actions/social'
 import { showModal } from '../../actions/modals'
 
 const UserPageComponentMap = {
@@ -18,13 +19,15 @@ const UserPageComponentMap = {
 }
 
 const mapStateToProps = state => {
-	const { token } = state.authReducer
-	return { token }
+	const { followContacts } = state.socialReducer
+	const { token, isAuthenticated } = state.authReducer
+	return { followContacts, token, isAuthenticated }
 
 }
 
 const mapDispatchToProps = dispatch => ({
 	showModal: (modalType, modalRoot) => dispatch(showModal(modalType, modalRoot)),
+	followUser: (token, userId, mode) => dispatch(followUser(token, userId, mode)),
 })
 
 class UserPage extends Component {
@@ -68,6 +71,17 @@ class UserPage extends Component {
 
 	}
 
+	handleFollowRequest = () => {
+		const { followContacts, token, isAuthenticated } = this.props
+		if (!isAuthenticated) return console.log("not logged in")
+		if (followContacts.find(user => user.userId == this.props.match.params.id)) {
+			return this.props.followUser(token, this.props.match.params.id, 'unfollow')
+		} else {
+			return this.props.followUser(token, this.props.match.params.id, 'follow')
+		}
+
+	}
+
 
 	async componentDidMount() {
 		window.scrollTo(0, 0)
@@ -88,6 +102,7 @@ class UserPage extends Component {
 	render() {
 
 		const UserDetailDisplayComponent = UserPageComponentMap[this.state.componentView]
+		const { followContacts } = this.props
 
 		return (
 			<div className='user-page-wrapper'>
@@ -150,10 +165,11 @@ class UserPage extends Component {
 								> 
 									Add Item 
 								</div>
-							</div>
-							
+							</div>							
 						   ) : (
-						   	<div/>
+						   	<div className='user-menu-control-panel'>
+						   		<button onClick={() => this.handleFollowRequest()}> {(followContacts.find(user => user.userId == this.props.match.params.id)) ? 'UnFollow' : 'Follow' } </button>
+						   	</div>
 						   )
 
 						}
