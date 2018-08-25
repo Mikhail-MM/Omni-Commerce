@@ -45,7 +45,7 @@ const storeItemSchema = new Schema({
 		itemId: { type: Schema.Types.ObjectId, ref: 'StoreItem' },
 		imageURL: String,
 	}],
-
+	orderStatus: String,
 	sellerRef_id: {type: Schema.Types.ObjectId, ref: 'EssosUser', required: true},
 	marketplaceRef_id: {type: Schema.Types.ObjectId, ref: 'Marketplace'},
 	itemRef_id: {type: Schema.Types.ObjectId, ref:'StoreItem',}, // only used within shopping cart

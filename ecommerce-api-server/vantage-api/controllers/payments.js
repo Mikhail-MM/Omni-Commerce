@@ -114,7 +114,12 @@ module.exports.saveStripeCustomerInformation = async function(req, res, next) {
       }).then( async (charge) => {
         
         console.log("Getting validated portion of user cart - Turning it into receipt/purchase order")
-        const purchaseOrderData = Object.assign({}, {itemsBought: req.body.validatedPurchaseOrderToProcess.validatedCart.itemsBought}, {
+
+        const appendStatusToArray = itemsBoughtArray => {
+            return itemsBoughtArray.map(cartItem => ({...cartItem, orderStatus: 'await_delivery'}))
+        }
+
+        const purchaseOrderData = Object.assign({}, {itemsBought: appendStatusToArray(req.body.validatedPurchaseOrderToProcess.validatedCart.itemsBought)}, {
           subtotalReal: req.body.validatedPurchaseOrderToProcess.validatedCart.subtotalReal,
           subtotalDisplay: req.body.validatedPurchaseOrderToProcess.validatedCart.subtotalDisplay,
           taxReal: req.body.validatedPurchaseOrderToProcess.validatedCart.taxReal,
