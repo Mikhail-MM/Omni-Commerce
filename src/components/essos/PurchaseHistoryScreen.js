@@ -44,16 +44,19 @@ class PurchaseHistoryScreen extends Component {
 			return (
 				<div className='purchase-order-container'> 
 					{request.itemsBought.map(item => {
-						(
+						return (
 							<div className='purchase-order__flex-row'>
 								<div className='purchase-order__image-container'>
 									<img src={item.imageURL} />
 								</div>
 								<div className='purchase-order__item-details'>
 									{item.itemName}
+									{item.numberRequested}
 								</div>
-								<div classname='purchase-order__item-status-container'>
-									<button>{item.orderStatus}</button>
+								<div className='purchase-order__item-status-container'>
+									<div className={`order-status-button ${item.status}`}>
+										{item.status}
+									</div>
 								</div>
 							</div>
 						)
@@ -62,6 +65,7 @@ class PurchaseHistoryScreen extends Component {
 			)
 		})
 	}
+	
 
 	render() {
 		const { purchaseHistory } = this.state

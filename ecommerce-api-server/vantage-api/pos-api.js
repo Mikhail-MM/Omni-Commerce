@@ -217,6 +217,10 @@ router.route('/shoppingCart')
 	.get(authorize.routeMarketplaceClient, shoppingCarts.getAllShoppingCarts)
 	.post(authorize.routeMarketplaceClient, shoppingCarts.createShoppingCart);
 
+
+router.route('/essos/updateOrderStatus')
+	.put(authorize.routeMarketplaceClient, sellOrders.updateStatus)
+
 router.route('/purchaseorders/userLookup/')
 	.get(authorize.routeMarketplaceClient, purchaseOrders.getMyPurchaseOrders);
 router.route('/purchaseorders')

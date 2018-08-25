@@ -122,7 +122,7 @@ module.exports.saveStripeCustomerInformation = async function(req, res, next) {
                 sellerRef_id,
                 itemRef_id,
                 postedBy,
-                status: 'awaiting_delivery'
+                status: 'Awaiting Delivery'
               })
             })
         }

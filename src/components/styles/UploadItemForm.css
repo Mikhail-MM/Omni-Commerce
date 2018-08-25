@@ -68,4 +68,5 @@
 .essos-image-preview-container {
 	width: 430px;
 	height: 573px;
+	border: 1px solid black;
 }

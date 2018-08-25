@@ -141,17 +141,27 @@
 	display: flex;
 	flex-direction: column;
 
-	width: 100%;
+	width: 800px;
 	height: 100%;
 }
 
 .purchase-order__flex-row {
 	display: flex;
+	justify-content: space-between;
+
+	border: 2px solid black;
+	margin-top: 10px;
+	padding: 10px 10px;
 }
 
 .purchase-order__image-container {
 	width: ;
 	height: 200px;
+}
+
+.purchase-order__item-details {
+	display: flex;
+	flex-direction: column;
 }
 .user-avatar-image {
 	border-radius: 100px;
@@ -172,10 +182,48 @@
 	animation: loadingOpacity 2s infinite;
 }
 
-/* Purchase Order Page */
 
 @keyframes loadingOpacity {
 	0% { opacity: 0.5; }
 	50% { opacity:  1; }
 	100% { opacity: 0.5; }
+}
+
+/* Purchase Order Page */
+ 
+.delayed {
+	background-color: yellow;
+ }
+.awaiting_delivery {
+	background-color: gray;
+}
+.shipped {
+	background-color: green;
+}
+.order-status-button {
+	position: relative;
+
+	width: 125px;
+	height: 65px;
+
+	transition: 0.8s background-color ease-out;
+}
+
+.purchase-order__item-status-container {
+	padding-right: 50px;
+	padding-top: 50px;
+}
+.order-status-button__dropdown-container {
+	position: absolute;
+	display: none;
+	top: 100%;
+
+	width: auto;
+	height: auto;
+}
+
+.order-status-button:hover .order-status-button__dropdown-container,
+.order-status-button__dropdown-container:hover {
+	display: flex;
+	flex-direction: column;
 }
