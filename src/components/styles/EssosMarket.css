@@ -50,6 +50,21 @@ h1, h2, h3, h4, h5, h6 {
   height: auto;
 }
 
+.hatcontainer1 {
+  position: absolute;
+  top: 16%;
+  bottom: 71%;
+  right: 78%;
+  left: 13.5%;
+
+  border: 3px dashed white;
+  transition: border 0.8s ease-out;
+}
+
+.hatcontainer1:hover {
+  border-style:solid ;
+}
+
 .greeter-button {
   position: absolute;
   left: calc(50% - 100px);

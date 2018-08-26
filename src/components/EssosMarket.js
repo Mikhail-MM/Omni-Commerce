@@ -175,12 +175,13 @@ class EssosMarket extends Component {
 	              </div>
 	          </header>
 	          
-	          <container className='jumbotron'>
+	          <div className='jumbotron'>
 	            <img className='jumbotron-greeter' src='./assets/store-splash/greeting4.jpg' />
+	            <div className='hatcontainer1' />
 	            <button className='greeter-button' >
 	                Shop Now
 	            </button>
-	          </container>
+	          </div>
 	         
 	          <section className='featured-items'>
 	            <div className='featured-items__header-container' >
