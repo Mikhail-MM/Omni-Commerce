@@ -40,6 +40,9 @@ import PaymentTypeSelectionModal from './modals/PaymentTypeSelectionModal'
 import DatabaseInterfaceModal from './modals/DatabaseInterfaceModal'
 import UploadSuccessModal from './modals/UploadSuccessModal'
 
+import AddReviewModal from './modals/AddReviewModal'
+import ReviewSuccessModal from './modals/ReviewSuccessModal'
+
 import AuthenticationForm from './forms/registration/AuthenticationForm'
 
 const MODAL_COMPONENTS = {
@@ -63,6 +66,9 @@ const MODAL_COMPONENTS = {
 	'CART_INVALIDATION_MODAL': CartInvalidationModal,
 	'ONLINE_STORE_STRIPE_CHECKOUT': EssosCardPaymentModal,
 
+
+	'ADD_REVIEW_MODAL': AddReviewModal,
+	'ADD_REVIEW_SUCCESS_MODAL': ReviewSuccessModal,
 	'CASH_OR_CARD_MODAL': PaymentTypeSelectionModal,
 
 	'DATABASE_INTERFACE_MODAL': DatabaseInterfaceModal,

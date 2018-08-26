@@ -108,6 +108,18 @@ module.exports.retrieveUserWishlist = async (req, res, next) => {
 
 module.exports.appendRatingToItem = async (req, res, next) => {
 	try{
-		console.log('Add dat wishlist')
+		const { rating, review } = req.body
+		const reviewedStoreItem = await StoreItemModel.findOneAndUpdate(
+			{_id: req.params.id}, 
+			{ $push: { reviews: {
+				userId: req.body.client._id,
+				name: `${req.body.client.firstName} ${req.body.client.lastName}`,
+				avatarURL: req.body.client.avatarURL,
+				rating,
+				review,
+			}}},
+			{upsert: true, new: true},
+		)
+		res.json(reviewedStoreItem)
 	} catch(err) { next(err) }
 }

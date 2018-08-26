@@ -1,10 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { showModal } from '../../actions/modals'
+
 const mapStateToProps = state => {
 	const { token } = state.authReducer
 	return { token }
 }
+
+const mapDispatchToProps = dispatch => ({
+	showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps))
+})
 
 class PurchaseHistoryScreen extends Component {
 	state = {
@@ -57,6 +63,9 @@ class PurchaseHistoryScreen extends Component {
 									<div className={`order-status-button ${item.status}`}>
 										{item.status}
 									</div>
+									<div onClick={() => this.props.showModal('ADD_REVIEW_MODAL', {item})}>
+										Write Review
+									</div>
 								</div>
 							</div>
 						)
@@ -79,4 +88,5 @@ class PurchaseHistoryScreen extends Component {
 
 
 }
-export default connect(mapStateToProps)(PurchaseHistoryScreen)
+
+export default connect(mapStateToProps, mapDispatchToProps)(PurchaseHistoryScreen)

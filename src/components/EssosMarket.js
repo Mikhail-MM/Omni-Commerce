@@ -58,6 +58,28 @@ class EssosMarket extends Component {
 		}
 	}
 
+	generateReviewHoveroverContainer = (reviews) => {
+		if (reviews.length < 1) return
+		const totalScore = reviews.map(userReview => userReview.rating).reduce((acc, cur) => acc + cur)
+		const average = totalScore / reviews.length
+		const floor = Math.floor(average)
+		let halfStarPosition = null
+		if (average > floor) { halfStarPosition = floor + 1 }
+		console.log(totalScore, average, halfStarPosition)
+		return ( 
+			<div className='ratings-bar'>
+			{	[1,2,3,4,5].map(star => {
+					return (
+						<div className='star-icon-container'>
+							<img src={(star === halfStarPosition) ? `/assets/icons/half-star.svg` : (star <= floor) ? `/assets/icons/star-full.svg` : `/assets/icons/star-empty.svg`} />
+						</div>
+					)
+				})
+			}
+			</div>
+		)
+	}
+
 	generateItemDOM = () => {
 		const { isAuthenticated, marketplaceItems, wishlist } = this.props
 
@@ -67,8 +89,8 @@ class EssosMarket extends Component {
 					<div className='ui_card_image'>
 						<img className='card-image-source' src={item.imageURL} />
 						<div className='card-image__hoverover'>
-							<img className='info-icon' src='./assets/icons/search.svg' />
-							See Info
+							{ (item.description) && <p style={{textAlign: 'center', padding: '5px 5px', margin: 0}} > {item.description} </p> }
+							{ (item.reviews) && this.generateReviewHoveroverContainer(item.reviews) }
 
 						</div>
 					</div>

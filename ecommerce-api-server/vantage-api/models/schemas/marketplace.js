@@ -30,17 +30,19 @@ const storeItemSchema = new Schema({
 	numberRequested: Number, // we NEED to split these shoppingCartOnly values out
 	storeOwnerName: String,
 	status: String, // inStock/ outOfStock
-	rating: [{
+	reviews: [{
 		userId: { type: Schema.Types.ObjectId, ref: 'EssosUser' },
+		name: String,
+		avatarURL: String,
 		rating: Number,
 		review: String,
 	}],
 
 	followers: [{
 		userId: { type: Schema.Types.ObjectId, ref: 'EssosUser' },
+		name: String,
 		avatarURL: String,
 	}],
-
 	recommended: [{
 		itemId: { type: Schema.Types.ObjectId, ref: 'StoreItem' },
 		imageURL: String,
@@ -48,6 +50,7 @@ const storeItemSchema = new Schema({
 	sellerRef_id: {type: Schema.Types.ObjectId, ref: 'EssosUser', required: true},
 	marketplaceRef_id: {type: Schema.Types.ObjectId, ref: 'Marketplace'},
 	itemRef_id: {type: Schema.Types.ObjectId, ref:'StoreItem',}, // only used within shopping cart
+	reviewed: Boolean,
 });
 
 // A reusable schema representing transactions in different states and instantiations
