@@ -53,18 +53,89 @@ h1, h2, h3, h4, h5, h6 {
 .hatcontainer1 {
   position: absolute;
   top: 16%;
-  bottom: 71%;
-  right: 78%;
-  left: 13.5%;
+  bottom: 75%;
+  right: 78.5%;
+  left: 14%;
+}
+.hatcontainer-1-companion {
+  display: none;
+  position: absolute;
+  top: 16%;
+  right: 70.5%;
+}
+.hatcontainer1:hover ~ .hatcontainer-1-companion,
+.hatcontainer-1-companion:hover {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
 
+.teecontainer1 {
+  position: absolute;
+  right: 30%;
+  left: 60%;
+  top: 26%;
+  bottom: 45%;
+}
+.pantscontainer2 {
+  position: absolute;
+  top: 50%;
+  bottom: 16%;
+  right: 8%;
+  left: 86%;
+}
+.acccontainer1 {
+  position: absolute;
+  top: 65%;
+  bottom: 6%;
+  left: 6%;
+  right: 81%;
+}
+
+.acccontainer2 {
+  position: absolute;
+  top: 74%;
+  bottom: 14%;
+  left: 26.5%;
+  right: 70.5%;
+}
+
+.acccontainer3 {
+  position: absolute;
+
+  top: 81%;
+  bottom: 7%;
+  left: 74%;
+  right: 19%;
+}
+
+.pantscontainer1 {
+  position: absolute;
+
+  top: 50%;
+  bottom: 28%;
+  right: 42%;
+  left: 40%;
+}
+
+.jumbotron-context-box {
   border: 3px dashed white;
   transition: border 0.8s ease-out;
 }
-
-.hatcontainer1:hover {
-  border-style:solid ;
+.jumbotron-context-box:hover {
+  border-style:solid;
+  animation: breathe 3s infinite;
+}
+.context-container {
+  background-color: white;
+  color: black;
 }
 
+@keyframes breathe {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
 .greeter-button {
   position: absolute;
   left: calc(50% - 100px);

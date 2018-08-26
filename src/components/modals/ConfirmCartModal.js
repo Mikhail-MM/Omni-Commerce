@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Modal from 'react-modal';
-import { modalStyle } from '../config';
+import { modalStyle2 } from '../config';
 import { hideModal } from '../../actions/modals';
  
 import { pushItemIntoShoppingCart } from '../../actions/shopping-cart'
@@ -53,7 +53,7 @@ class ConfirmCartModal extends Component {
 			<div>
 				<Modal
 					isOpen={this.props.modalType === 'CONFIRM_CART_ADDITION'}
-					style={modalStyle}
+					style={modalStyle2}
 					contentLabel="Example Modal"
 					overlayClassName="Overlay"
 					>

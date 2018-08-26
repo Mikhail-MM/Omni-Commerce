@@ -41,10 +41,16 @@
 	background-color: #7488aa;
 
 	padding-left: 20px;
-	border-radius: 20px;
+	border-radius: 3px;
 
 	outline: none;
 	border-style: none;
+	border-bottom: 3px solid gray;
+	transition: all 0.6s ease-out;
+}
+.form-input:focus{
+	background-color: rgba(255,255,255, 0.8);
+	border-color: rgb(252, 214, 105);
 }
 
 .splash-button {

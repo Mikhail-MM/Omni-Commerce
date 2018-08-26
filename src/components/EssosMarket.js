@@ -177,9 +177,21 @@ class EssosMarket extends Component {
 	          
 	          <div className='jumbotron'>
 	            <img className='jumbotron-greeter' src='./assets/store-splash/greeting4.jpg' />
-	            <div className='hatcontainer1' />
+	            <div className='hatcontainer1 jumbotron-context-box'>
+	            </div>
+	           	<div className='hatcontainer-1-companion context-container'>
+	            	<h6> Custom Fitted </h6>
+	            	<p style={{color: 'green'}}> 50$ </p>
+	            	<button> See Details </button>
+	            </div>
+	            <div className='teecontainer1 jumbotron-context-box' />
+	            <div className='pantscontainer2 jumbotron-context-box' />
+	            <div className='acccontainer1 jumbotron-context-box' />
+	            <div className='acccontainer2 jumbotron-context-box' />
+	            <div className='acccontainer3 jumbotron-context-box' />
+	            <div className='pantscontainer1 jumbotron-context-box' />
 	            <button className='greeter-button' >
-	                Shop Now
+	                V See All Items V
 	            </button>
 	          </div>
 	         
