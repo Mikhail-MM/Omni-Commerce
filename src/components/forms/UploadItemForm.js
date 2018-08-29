@@ -11,6 +11,7 @@ const initialState = {
 	itemPrice: '',
 	imageSource: null,
 	imageRAWFILE: null,
+	description: '',
 	category: '',
 	tags: [],
 	newImageFlag: false,
@@ -42,7 +43,7 @@ class UploadItemForm extends Component {
 	componentDidMount() {
 		//const { itemName, itemPrice, category, imageURL, numberInStock, tags } = this.props.modifyItemAttributes
 		console.log(this.props)
-		
+		console.log(this.state)
 		if (this.props.action === 'modify') {
 			switch(this.props.module) {
 				case('Omni'):
@@ -58,6 +59,7 @@ class UploadItemForm extends Component {
 						itemPrice: this.props.modifyItemAttributes. itemPrice,
 						numberInStock: this.props.modifyItemAttributes.numberInStock,
 						imageSource: this.props.modifyItemAttributes.imageURL,
+						description: this.props.modifyItemAttributes.description,
 						tags: this.props.modifyItemAttributes.tags
 					})
 			}
@@ -65,7 +67,10 @@ class UploadItemForm extends Component {
 	}
 	
 	handleChange = (key, value) => {
-		this.setState([key]: value)
+		console.log("Trying to Set key to value", key, value)
+		this.setState({
+			[key]: value
+		})
 	}
 
 	/*
@@ -103,13 +108,11 @@ class UploadItemForm extends Component {
 	handleTagChange(tagName){
 		console.log('Handler - TagName - THISSTATE...', tagName, this.state.tags)
 		if (!this.state.tags.includes(tagName)) {
-			console.log('State does not include tagname')
 			this.setState({
 				tags: this.state.tags.concat([tagName])	
 			})
 		}
 		if (this.state.tags.includes(tagName)) {
-			console.log('State includes tagname')
 			this.setState({
 				tags: this.state.tags.filter(item => item !== tagName)
 			})
@@ -122,7 +125,7 @@ class UploadItemForm extends Component {
 		this.setState({
 			imageSource: blobURL,
 			imageRAWFILE: event.target.files[0],
-			newImage: true
+			newImageFlag: true
 		})
 	}
 
@@ -180,12 +183,13 @@ class UploadItemForm extends Component {
 	}
 
 	handleEssosModification = (token) => {
-		const { itemName, itemPrice, numberInStock, tags, imageSource, newImageFlag, imageRAWFILE } = this.state
+		const { itemName, itemPrice, numberInStock, description, tags, imageSource, newImageFlag, imageRAWFILE } = this.state
 		const { _id } = this.props.modifyItemAttributes
 		const data = {
 			itemName,
 			itemPrice,
 			numberInStock,
+			description,
 			tags,
 		}
 		const imageHandler = {
@@ -196,13 +200,16 @@ class UploadItemForm extends Component {
 	}
 
 	handleEssosUpload = (token) => {
-		const { itemName, itemPrice, numberInStock, tags, imageSource, newImageFlag, imageRAWFILE } = this.state
+		const { itemName, itemPrice, numberInStock, description, tags, imageSource, newImageFlag, imageRAWFILE } = this.state
 		const data = {
 			itemName,
 			itemPrice,
 			numberInStock,
-			tags
+			description,
+			tags,
 		}
+		console.log(imageRAWFILE)
+		console.log(imageRAWFILE.type)
 		this.props.uploadEssosItem(token, data, imageRAWFILE)
 	}
 
@@ -334,6 +341,16 @@ class UploadItemForm extends Component {
 								value={this.state.numberInStock}
 								onChange={(event) => this.handleChange('numberInStock', event.target.value)}
 							/>
+						</div>
+						<div>
+							<label> Description </label>
+							<textarea 
+								value={this.state.description}
+								onChange={(event) => this.handleChange('description', event.target.value)}
+							/>
+						</div>
+						<div>
+							<input type='submit' />
 						</div>
 					</div>
 				</form>

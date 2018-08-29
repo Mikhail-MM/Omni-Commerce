@@ -5,7 +5,10 @@ require('dotenv').config()
 
 module.exports.signS3Request = (req, res, next) => {
 	const { fileName, fileType } = req.query
-	const collisionSafeFileName = `${fileName}_${uuid4().slice(0, 7)}`
+
+	console.log(fileName, fileType)
+
+	const collisionSafeFileName = `${uuid4().slice(0, 7)}_${fileName}`
 
 	const s3Params = {
 		Bucket: process.env.AWS_S3_BUCKET,

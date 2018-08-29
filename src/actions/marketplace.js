@@ -16,8 +16,9 @@ export function retrieveAllItemsForSale() {
 }
 
 export function updateMarketplaceItem(token, itemID, data, imageHandler) {
+	console.log("Updating Marketplace Item - What is Image handler? ", imageHandler)
 	return dispatch => {
-		return fetch(`'http://localhost:3001/storeItem/${itemID}`, {
+		return fetch(`http://localhost:3001/storeItem/${itemID}`, {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-access-token': token
@@ -29,34 +30,45 @@ export function updateMarketplaceItem(token, itemID, data, imageHandler) {
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
 			if (imageHandler.newImageFlag) {
-				const formData = new FormData()
-				formData.append('marketplaceItems', imageHandler.imageSource)
-				return fetch('http://localhost:3001/images/marketplace-item', {
-					method: 'POST',
+				return fetch(`http://localhost:3001/sign-s3?fileName=${imageHandler.imageSource.name}&fileType=${imageHandler.imageSource.type}`, {
+					method: 'GET',
 					mode: 'cors',
-					body: formData
 				})
 				.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
-				.then(fileUploadResponse => {
-					console.log("Receive Image Metadata", fileUploadResponse)
-					const imageURLJSON = { imageURL: fileUploadResponse.imageURL} 
-					return fetch(`http://localhost:3001/storeItem/${itemID}`, {
+				.then(signedRequestJSON => {
+					const { signedRequest, fileOnBucketurl } = signedRequestJSON
+					return fetch(signedRequest, {
 						headers: {
-							'Content-Type': 'application/json',
-							'x-access-token': token,
-						},	
-						method: 'PUT',
+							'Origin': 'http://localhost:3000',
+						},
+						method: 'PUT', 
+						body: imageHandler.imageSource,
 						mode: 'cors',
-						body: JSON.stringify(imageURLJSON)				
 					})
-					.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
-					.then(modifiedItemJSONWithImageURL => {
-						console.log("Modified Item w/ New Image:", modifiedItemJSONWithImageURL)
-						dispatch(retrieveAllItemsForSale())
-						dispatch(showModal('SHOW_ITEM_UPLOAD_SUCCESS_MODAL', {...modifiedItemJSONWithImageURL}))
+					.then(response =>{
+						console.log(response)
+						if (!response.ok) Promise.reject(response.statusText)
+							return fileOnBucketurl
+					})
+					.then(persistedBucketURL => {
+						return fetch(`http://localhost:3001/storeItem/${itemID}`, {
+							headers: {
+								'Content-Type': 'application/json',
+								'x-access-token': token,
+							},	
+							method: 'PUT',
+							mode: 'cors',
+							body: JSON.stringify({ imageURL: persistedBucketURL })				
+						})
+						.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+						.then(modifiedItemJSONWithImageURL => {
+							console.log("Modified Item w/ New Image:", modifiedItemJSONWithImageURL)
+							dispatch(retrieveAllItemsForSale())
+							dispatch(showModal('SHOW_ITEM_UPLOAD_SUCCESS_MODAL', {...modifiedItemJSONWithImageURL}))
+						})
 					})
 				})
-			} else if (imageHandler.newImageFlag === null) {
+			} else if (!imageHandler.newImageFlag) {
 				console.log("No new image uploaded")
 				console.log("Fetching all DB items")
 				dispatch(retrieveAllItemsForSale())
@@ -80,25 +92,30 @@ export function postEssosItem(token, data, imageFile) {
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(newItemJSON => {
-
-			return fetch(`http://localhost:3001/sign-s3?filename=${imageFile.name}&fileType=${imageFile.type}`, {
+			return fetch(`http://localhost:3001/sign-s3?fileName=${imageFile.name}&fileType=${imageFile.type}`, {
 				method: 'GET',
 				mode: 'cors',
 			})
 			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 			.then(signedRequestJSON => {
 				// Upload image to S3
-				console.log(signedRequestJSON)
 				const { signedRequest, fileOnBucketurl } = signedRequestJSON
 				return fetch(signedRequest, {
+					headers: {
+						// Use empty string because S3 expects Origin Header
+						'Origin': 'http://localhost:3000',
+					},
 					method: 'PUT', 
-					body: imageFile
+					body: imageFile,
+					mode: 'cors',
 				})
 				.then(response =>{
+					console.log(response)
 					if (!response.ok) Promise.reject(response.statusText)
 						return fileOnBucketurl
 				})
 				.then(persistedBucketURL => {
+					console.log(persistedBucketURL)
 					return fetch(`http://localhost:3001/storeItem/${newItemJSON._id}`, {
 						headers: {
 							'Content-Type': 'application/json',
