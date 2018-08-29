@@ -193,7 +193,7 @@ class TerminalActionScreen extends Component {
 								<div className='footer-buttons-pricing'>
 									<div className='action-button-container'>
 										<div 
-											style={{ backgroundColor: 'blue', marginBottom: 10 }} 
+											style={{ backgroundColor: '#463FC5', marginBottom: 10 }} 
 											className='action-button'
 											 onClick={() => this.props.updateTicketStatus(token, activeTicket._id, "Active")}
 										> 

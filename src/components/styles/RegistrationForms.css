@@ -45,8 +45,8 @@
 
 	outline: none;
 	border-style: none;
-	border-bottom: 3px solid gray;
-	transition: all 0.6s ease-out;
+	border-bottom: 3px solid #605482;
+	transition: border-color 0.4s ease-out, background-color 0.8s ease-out;
 }
 .form-input:focus{
 	background-color: rgba(255,255,255, 0.8);
@@ -72,5 +72,9 @@
 	border-style: none;
 	
 	cursor: pointer;
+	transition: background-color 0.4s ease-out;
+}
 
+.splash-button:hover {
+	background-color: #FFCA34;
 }

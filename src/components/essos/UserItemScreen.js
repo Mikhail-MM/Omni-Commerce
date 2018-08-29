@@ -49,9 +49,9 @@ class UserItemScreen extends Component {
 						</div>
 						<div 
 							className="cart-button button_no_border_radius"
-							onClick={() => this.props.showModal('DATABASE_INTERFACE_MODAL', {module: 'Essos', action: 'modify', modifyItemAttributes: item})}
+							onClick={() => (this.props.selfProfileView) ? this.props.showModal('DATABASE_INTERFACE_MODAL', {module: 'Essos', action: 'modify', modifyItemAttributes: item}) : this.props.showModal('CONFIRM_CART_ADDITION', {item: item})}
 						>
-							<span> Modify Item </span> 
+							<span> Add To Cart </span> 
 						</div>
 					</div>
 				</div>

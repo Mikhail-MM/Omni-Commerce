@@ -18,6 +18,7 @@
   "author": "Mikhail Maslyuk",
   "license": "UNLICENSED",
   "dependencies": {
+    "aws-sdk": "^2.304.0",
     "bcrypt": "^1.0.3",
     "bcrypt-nodejs": "0.0.3",
     "bignumber.js": "^5.0.0",

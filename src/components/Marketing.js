@@ -20,9 +20,25 @@ class Marketing extends Component {
 						</div>
 					</nav>
 					<img src='/assets/omni-splash/jumbo-blur.jpg' />
-					<div className='container-overlay-content' >
-						<h1> Content Here? </h1>
+					<div className='hero-header-1' >
+						Running a Business is a <span style={{color: '#FF4734'}}> Challenge </span>
 					</div>
+					<div className='hero-header-2' >
+						We're Here to Help
+					</div>
+					<div className='hero-header-3' >
+						<button className='getting-started-button'>
+							Getting Started
+						</button>
+						<button className='sign-in-button'>
+							Sign In
+						</button>
+					</div>
+				{/* 
+					<div className='hero-header-4'>
+						See More
+					</div>
+				*/}
 				</div>
 				</div>
 				<div className='splash-intro'>

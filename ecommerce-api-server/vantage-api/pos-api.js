@@ -51,6 +51,7 @@ const shoppingCarts = require('./controllers/shoppingCarts')
 const purchaseOrders = require('./controllers/purchaseOrders')
 const sellOrders = require('./controllers/sellOrders')
 const social = require('./controllers/social')
+const aws = require('./controllers/aws')
 
 const seed = require('./seed/seed')
 
@@ -92,6 +93,8 @@ router.route('/clients/lookupEmployees')
 
 // New Registration Pathways
 
+router.route('/sign-s3')
+	.get(aws.signS3Request)
 router.route('/omni-master/')
 	.post(register.registerOmniMaster)
 router.route('/essos-user/')

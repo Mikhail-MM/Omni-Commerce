@@ -14,7 +14,6 @@ const initialState = {
 	category: '',
 	tags: [],
 	newImageFlag: false,
-	selectedFile: null,
 	// options: [],
 }
 
@@ -267,6 +266,7 @@ class UploadItemForm extends Component {
 						/>
 					</div>
 					<div>
+						<label> Name </label>
 						<input 
 							type='text'
 							value={this.state.itemName}
@@ -274,6 +274,7 @@ class UploadItemForm extends Component {
 						/>
 					</div>
 					<div>
+						<label> Price </label>
 						<input
 							type='text'
 							value={this.state.itemPrice}
@@ -281,6 +282,7 @@ class UploadItemForm extends Component {
 						/>
 					</div>
 					<div>
+						<label> Category </label>
 						<input 
 							type='text'
 							value={this.state.category}
@@ -307,6 +309,7 @@ class UploadItemForm extends Component {
 					</div>
 					<div className='essos-product-details-modify-column'>
 						<div>
+							<label> Name </label>
 							<input 
 								type='text'
 								value={this.state.itemName}
@@ -317,6 +320,7 @@ class UploadItemForm extends Component {
 							{ this.renderTagSelectionMenu() }
 						</div>
 						<div>
+							<label> Price </label>
 							<input 
 								type='text'
 								value={this.state.itemPrice}
@@ -324,6 +328,7 @@ class UploadItemForm extends Component {
 							/>
 						</div>
 						<div>
+							<label> SKU (# Stock Available for Purchase) </label>
 							<input 
 								type='text'
 								value={this.state.numberInStock}

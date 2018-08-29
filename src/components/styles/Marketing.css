@@ -11,6 +11,8 @@
 
 	height: 100vh;
 	width: auto;
+
+	font-family: 'Ubuntu', sans-serif;
 }
 .marketing-nav {
 	position: fixed;
@@ -33,14 +35,141 @@
 
 }
 
-.container-overlay-content {
+.hero-header-1 {
 	position: absolute;
 
-	width: auto;
+	width: 900px;
 	height: auto;
 
-	background-color: rgba(0,0,0,0.75);
+	left: calc(50% - 450px);
+	top: 30%;
+
+	text-align: center;
+	font-size: 2.8em;
+	font-weight: 800;
+	text-shadow: 2px 2px 5px black;
+
+	/* background-color: rgba(0,0,0,0.75); */
 	color: white;
+
+
+	animation: fadeIn 2s;
+}
+
+.hero-header-2 {
+	position: absolute;
+
+	width: 400px;
+	height: auto;
+
+	left: calc(50% - 200px);
+	top: 45%;
+
+	text-align: center;
+	font-size: 2.7em;
+	font-weight: 700;
+	text-shadow: 2px -3px 5px black;
+
+	color: #FF9734;
+	opacity: 0;
+
+
+	animation: fadeIn 2s ease 1s;
+	animation-fill-mode: forwards;
+}
+
+.hero-header-3 {
+	position: absolute;
+	display: flex;
+	justify-content: space-around;
+
+	width: 400px;
+	height: auto;
+
+	left: calc(50% - 200px);
+	top: 60%;
+
+	opacity: 0;
+
+	animation: fadeIn 2s ease 2s;
+	animation-fill-mode: forwards;
+
+}
+
+/*
+.hero-header-4 {
+	position: absolute;
+	width: 400px;
+	height: auto;
+	text-align: center;
+	font-size: 3em;
+	left: calc(50% - 200px);
+	top: 90%;
+	opacity: 0;
+	color: white;
+	animation: fadeIn 2s ease 3s;
+	animation-fill-mode: forwards;
+}
+*/
+
+.getting-started-button {
+	width: 150px;
+	height: 50px;
+
+	outline: none;
+
+	background-color: rgb(255, 71, 52);
+	color: #FFC083;
+
+	font-size: 0.9em;
+	font-weight: 600;
+
+	border: 2px solid #FFC083;
+	border-radius: 10px;
+
+	transition: all 0.4s ease-out;
+}
+
+.getting-started-button:hover {
+	background-color: #FF9734;
+	border-color: rgb(255, 71, 52);
+	color: rgb(255, 71, 52);
+}
+
+.sign-in-button {
+	width: 150px;
+	height: 50px;
+
+	outline: none;
+
+	font-size: 0.9em;
+	font-weight: 600;
+
+	background-color: #525f7f;
+
+	color: rgb(252, 214, 105);
+	border: 2px solid rgb(252, 214, 105);
+
+	border-radius: 10px;
+
+	transition: all 0.4s ease-out;
+}
+
+.sign-in-button:hover {
+	background-color: rgb(252, 214, 105);
+	border-color: #525f7f;
+	color: #525f7f;
+}
+
+@keyframes fadeIn {
+	0% { 
+		opacity: 0; 
+		transform: translateY(50px);
+	}
+	100% { 
+		opacity: 1; 
+		transform: translateY(0px);
+	}
 }
 
 .icon-revealer-container {

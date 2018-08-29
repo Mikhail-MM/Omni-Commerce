@@ -80,33 +80,41 @@ export function postEssosItem(token, data, imageFile) {
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(newItemJSON => {
-			console.log("Raw item attributes posted to DB: ", newItemJSON)
-			const formData = new FormData()
-			formData.append('marketplaceItems', imageFile)
-			return fetch('http://localhost:3001/images/marketplace-item', {
-				method: 'POST',
+
+			return fetch(`http://localhost:3001/sign-s3?filename=${imageFile.name}&fileType=${imageFile.type}`, {
+				method: 'GET',
 				mode: 'cors',
-				body: formData
 			})
 			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
-			.then(fileUploadResponse => {
-				console.log("Receive Image Metadata", fileUploadResponse)
-				const imageURLJSON = { imageURL: fileUploadResponse.imageURL} 
-				return fetch(`http://localhost:3001/storeItem/${newItemJSON._id}`, {
-					headers: {
-						'Content-Type': 'application/json',
-						'x-access-token': token,
-					},
-					method: 'PUT',
-					mode: 'cors',
-					body: JSON.stringify(imageURLJSON),
+			.then(signedRequestJSON => {
+				// Upload image to S3
+				console.log(signedRequestJSON)
+				const { signedRequest, fileOnBucketurl } = signedRequestJSON
+				return fetch(signedRequest, {
+					method: 'PUT', 
+					body: imageFile
 				})
-				.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
-				.then(newItemJSONWithImageURL => {
-				console.log("New item uploaded to marketplace:", newItemJSONWithImageURL)
-				dispatch(retrieveAllItemsForSale())
-				dispatch(showModal('SHOW_ITEM_UPLOAD_SUCCESS_MODAL', {...newItemJSONWithImageURL}))
+				.then(response =>{
+					if (!response.ok) Promise.reject(response.statusText)
+						return fileOnBucketurl
 				})
+				.then(persistedBucketURL => {
+					return fetch(`http://localhost:3001/storeItem/${newItemJSON._id}`, {
+						headers: {
+							'Content-Type': 'application/json',
+							'x-access-token': token,
+						},
+						method: 'PUT',
+						mode: 'cors',
+						body: JSON.stringify({imageURL: persistedBucketURL}),
+					})
+					.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+					.then(newItemJSONWithImageURL => {
+					console.log("New item uploaded to marketplace:", newItemJSONWithImageURL)
+					dispatch(retrieveAllItemsForSale())
+					dispatch(showModal('SHOW_ITEM_UPLOAD_SUCCESS_MODAL', {...newItemJSONWithImageURL}))
+					})
+				})	
 			})
 		})
 		.catch(err => console.log(err))
