@@ -22,15 +22,11 @@ export function fetchMenuItems(token) {
 			method: 'GET',
 			mode: 'cors',
 		})
-		// fix this method
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => dispatch(organizeItemsToCategories(json)))
 		.catch(err => console.log(err)) 
 	}
 }
-
-
-// Create New Terminal Item with Image
 
 export function createNewMenuItem(token, data, imageFile) {
 	return dispatch => {
@@ -45,46 +41,46 @@ export function createNewMenuItem(token, data, imageFile) {
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(newMenuItemJSON => {
-
-			console.log("New Item JSON data", newMenuItemJSON)
-			
-			const formData = new FormData()
-
-			formData.append('menuItems', imageFile) 
-
-			fetch('http://localhost:3001/images/point-of-sale-item', {
-					method: 'POST',
+			return fetch(`http://localhost:3001/sign-s3?fileName=${imageFile.name}&fileType=${imageFile.type}`, {
+				method: 'GET',
+				mode: 'cors',
+			})
+			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+			.then(signedRequestJSON => {
+				const { signedRequest, fileOnBucketurl } = signedRequestJSON
+				return fetch(signedRequest, {
+					headers: {
+						// Use empty string because S3 expects Origin Header
+						'Origin': 'http://localhost:3000',
+					},
+					method: 'PUT', 
+					body: imageFile,
 					mode: 'cors',
-					body: formData
 				})
-				.then(response => response.ok ? response.json() :Promise.reject(response.statusText))
-				.then(imageJSON => {
-					
-					console.log("Receive image metadata")
-					console.log(imageJSON)
-
-					const updatedImageSourceJSON = { imageURL: imageJSON.imageURL }
-
-					const url = 'http://localhost:3001/menus/' +  newMenuItemJSON._id
-					return fetch(url, {
+				.then(response =>{
+					console.log(response)
+					if (!response.ok) Promise.reject(response.statusText)
+						return fileOnBucketurl
+				})
+				.then(persistedBucketURL => {
+					return fetch(`http://localhost:3001/menus/${newMenuItemJSON._id}`, {
 						headers: {
 							'Content-Type': 'application/json',
 							'x-access-token': token,
 						},
 						method: 'PUT',
 						mode: 'cors',
-						body: JSON.stringify(updatedImageSourceJSON)
+						body: JSON.stringify({ imageURL: persistedBucketURL })
 					})
 					.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 					.then(newItemJSONWithImageURL => {
-						
 						console.log("updated item", newItemJSONWithImageURL)
-
 						dispatch(fetchMenuItems(token))
 						dispatch(showModal('SHOW_ITEM_UPLOAD_SUCCESS_MODAL', {...newItemJSONWithImageURL}))
 
 					})
 				})
+			})
 		})
 		.catch(err => console.log(err))
 	}
@@ -104,34 +100,46 @@ export function modifyOmniTerminalItem(token, itemID, data, imageHandler) {
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
 			if (imageHandler.newImageFlag) { 
-				const formData = new FormData()
-				formData.append('menuItems', imageHandler.imageSource)
-				return fetch('http://localhost:3001/images/point-of-sale-item', {
-					method: 'POST',
+				return fetch(`http://localhost:3001/sign-s3?fileName=${imageHandler.imageSource.name}&fileType=${imageHandler.imageSource.type}`, {
+					method: 'GET',
 					mode: 'cors',
-					body: formData
 				})
 				.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
-				.then(fileUploadResponse => {
-					console.log("Receive Image Metadata", fileUploadResponse)
-					const imageURLJSON = { imageURL: fileUploadResponse.imageURL} 
-					return fetch(`http://localhost:3001/menus/${itemID}`, {
+				.then(signedRequestJSON => {
+					const { signedRequest, fileOnBucketurl } = signedRequestJSON
+					return fetch(signedRequest, {
 						headers: {
-							'Content-Type': 'application/json',
-							'x-access-token': token,
-						},	
-						method: 'PUT',
+							'Origin': 'http://localhost:3000',
+						},
+						method: 'PUT', 
+						body: imageHandler.imageSource,
 						mode: 'cors',
-						body: JSON.stringify(imageURLJSON)				
 					})
-					.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
-					.then(modifiedItemJSONWithImageURL => {
-						console.log("Modified Item w/ New Image:", modifiedItemJSONWithImageURL)
-						dispatch(fetchMenuItems(token))
-						dispatch(showModal('SHOW_ITEM_UPLOAD_SUCCESS_MODAL', {...modifiedItemJSONWithImageURL}))
+					.then(response =>{
+						console.log(response)
+						if (!response.ok) Promise.reject(response.statusText)
+							return fileOnBucketurl
+					})
+					.then(persistedBucketURL => {
+						return fetch(`http://localhost:3001/menus/${itemID}`, {
+							headers: {
+								'Content-Type': 'application/json',
+								'x-access-token': token,
+							},
+							method: 'PUT',
+							mode: 'cors',
+							body: JSON.stringify({ imageURL: persistedBucketURL })
+						})
+						.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+						.then(newItemJSONWithImageURL => {
+							console.log("updated item", newItemJSONWithImageURL)
+							dispatch(fetchMenuItems(token))
+							dispatch(showModal('SHOW_ITEM_UPLOAD_SUCCESS_MODAL', {...newItemJSONWithImageURL}))
+
+						})
 					})
 				})
-			} else if (imageHandler.newImageFlag === null) {
+			} else if (!imageHandler.newImageFlag) {
 				console.log("No Image Change. Logging new item attributes: ", json)
 				console.log("Client fetching all items")
 				dispatch(fetchMenuItems(token))
@@ -141,3 +149,4 @@ export function modifyOmniTerminalItem(token, itemID, data, imageHandler) {
 		.catch(err => console.log(err))
 	}
 }
+
