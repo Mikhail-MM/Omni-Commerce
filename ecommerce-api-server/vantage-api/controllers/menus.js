@@ -81,7 +81,7 @@ module.exports.deleteMenuItemById = async function (req, res, next) {
 
 		if (!menuItem) return res.status(404).send("No menu item with that ID!")
 
-			return res.status(200).send("Deleted menu item.")
+			return res.json(menuItem)
 
 	} catch(err) { next(err) }
 }

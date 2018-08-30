@@ -1,6 +1,6 @@
 import { groupBy } from 'underscore'
 
-import { showModal } from './modals'
+import { showModal, hideModal } from './modals'
 
 function organizeItemsToCategories(ArrayOfAllMenuItemObjects) {
 	
@@ -150,3 +150,22 @@ export function modifyOmniTerminalItem(token, itemID, data, imageHandler) {
 	}
 }
 
+export function deleteTerminalItem(token, itemID) {
+	return dispatch => {
+		return fetch(`http://localhost:3001/menus/${itemID}`, {
+			headers: {
+				'Content-Type': 'application/json',
+				'x-access-token': token,
+			},
+			method: 'DELETE',
+			mode: 'cors',
+		})
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+		.then(deletedItem => {
+			console.log("Deleted Item")
+			dispatch(fetchMenuItems(token))
+			dispatch(hideModal())
+		})
+		.catch(err => console.log(err))
+	}
+}

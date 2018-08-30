@@ -5,6 +5,7 @@ import '../styles/UploadItemForm.css'
 
 import { modifyOmniTerminalItem, createNewMenuItem } from '../../actions/terminalItems'
 import { updateMarketplaceItem, postEssosItem } from '../../actions/marketplace'
+import { showModal } from '../../actions/modals'
 
 const initialState = {
 	itemName: '',
@@ -23,6 +24,7 @@ const mapStateToProps = state => {
 	return { token }
 }
 const mapDispatchToProps = dispatch => ({
+	showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps)),
 	modifyOmniItem: (token, itemID, data, imageHandler) => {
 		dispatch(modifyOmniTerminalItem(token, itemID, data, imageHandler))
 	},
@@ -299,6 +301,11 @@ class UploadItemForm extends Component {
 					<div>
 						<input type='submit' />
 					</div>
+					{ this.props.action === 'modify' &&
+						<div>
+							<button className='essos-delete-icon-container' onClick={() => this.props.showModal('CONFIRM_DELETE_MODAL', { module: 'Omni', itemData: this.props.modifyItemAttributes })}> Delete Item </button>
+						</div>
+					}
 				</form>
 			) : (
 				<form className='essos-item-form-wrapper' onSubmit={(event) => this.handleSubmit(event)}>

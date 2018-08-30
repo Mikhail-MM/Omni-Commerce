@@ -44,7 +44,14 @@ module.exports.findAllItemsFromMarketplace = async function(req, res, next) {
 		
 	} catch(err) { next(err) }
 }
-
+module.exports.deleteStoreItem = async (req, res, next) => {
+	try {
+		const itemToDelete = await StoreItemModel.findById(req.params.id)
+			if (itemToDelete.sellerRef_id.toString() !== req.body.client._id.toString()) return res.status(403).send('You do not have permission to delete this item')
+		const deletedItem = await StoreItemModel.findOneAndRemove({_id: req.params.id})
+			res.json(deletedItem)
+	} catch(err) { next(err) }
+}
 module.exports.retrieveStoreItemWithoutId = async function(req, res, next) {
 	try { 
 		const noIdItem = await StoreItemModel.findOne({_id: req.params.id}, '-_id')

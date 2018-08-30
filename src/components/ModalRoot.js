@@ -45,6 +45,8 @@ import ReviewSuccessModal from './modals/ReviewSuccessModal'
 
 import AuthenticationForm from './forms/registration/AuthenticationForm'
 
+import ConfirmDeletionModal from './modals/ConfirmDeletionModal'
+
 const MODAL_COMPONENTS = {
 	'EMPLOYEE_PUNCH_CLOCK_FORM_MODAL': EmployeePunchClockFormModal,
 	'ADD_POINT_SALE_ITEM': AddTerminalItemModal,
@@ -73,6 +75,8 @@ const MODAL_COMPONENTS = {
 
 	'DATABASE_INTERFACE_MODAL': DatabaseInterfaceModal,
 	'SHOW_ITEM_UPLOAD_SUCCESS_MODAL': UploadSuccessModal,
+
+	'CONFIRM_DELETE_MODAL': ConfirmDeletionModal,
 }
 
 

@@ -539,6 +539,8 @@ table {
 
 
 .ui-pos-item_image {
+	position: relative;
+
 	width: 100%;
 	height: 85%;
 	padding: 5px 5px 0 5px;
@@ -546,6 +548,16 @@ table {
 	margin-bottom: 3px;
 }
 
+.ui-pos-item_image__hoverover {
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	opacity: 0;
+}
+.ui-pos-item_image__hoverover:hover {
+	opacity: 1;
+}
 .ui-pos-item_content {
 	align-self: flex-end;
 	display: flex;

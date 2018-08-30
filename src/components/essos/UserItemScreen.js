@@ -40,6 +40,9 @@ class UserItemScreen extends Component {
 				<div className="ui_card_mockup">
 					<div className='ui_card_image'>
 						<img src={item.imageURL} />
+						<div className='card-image__hoverover'>
+							<button className='essos-delete-icon-container' onClick={() => this.props.showModal('CONFIRM_DELETE_MODAL', { module: 'Essos', itemData: item })}> X </button>
+						</div>
 					</div>
 					<div className='ui_card_content'>
 						<div className='ui-card-infotext'>

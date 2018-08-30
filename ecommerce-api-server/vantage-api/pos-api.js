@@ -255,7 +255,8 @@ router.route('/storeItem/noIDhack/:id')
 	.get(storeItems.retrieveStoreItemWithoutId)
 router.route('/storeItem/:id')
 	.get(storeItems.getStoreItemById)
-	.put(storeItems.updateStoreItemById);
+	.put(storeItems.updateStoreItemById)
+	.delete(authorize.routeMarketplaceClient, storeItems.deleteStoreItem);
 router.route('/storeItem/')
 	.get(storeItems.getAllStoreItems)
 	.post(authorize.routeMarketplaceClient, storeItems.createNewStoreItem);

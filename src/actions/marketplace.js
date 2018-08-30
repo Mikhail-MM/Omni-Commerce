@@ -1,4 +1,4 @@
-import { showModal } from './modals'
+import { showModal, hideModal } from './modals'
 
 export function retrieveAllItemsForSale() {
 	return dispatch => {	
@@ -133,6 +133,26 @@ export function postEssosItem(token, data, imageFile) {
 					})
 				})	
 			})
+		})
+		.catch(err => console.log(err))
+	}
+}
+
+export function deleteMarketplaceItem(token, itemID) {
+	return dispatch => {
+		return fetch(`http://localhost:3001/storeItem/${itemID}`, {
+			headers: {
+				'Content-Type': 'application/json',
+				'x-access-token': token,
+			},
+			method: 'DELETE',
+			mode: 'cors',
+		})
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+		.then(deletedItem => {
+			console.log("Deleted Item")
+			dispatch(retrieveAllItemsForSale())
+			dispatch(hideModal())
 		})
 		.catch(err => console.log(err))
 	}

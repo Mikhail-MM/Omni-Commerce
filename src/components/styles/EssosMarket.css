@@ -338,6 +338,13 @@ h1, h2, h3, h4, h5, h6 {
   opacity: 1;
 }
 
+.essos-delete-icon-container {
+  position: absolute;
+
+  top: 10px;
+  right: 10px;
+}
+
 .item-header-container {
   display: flex;
   justify-content: space-between;
