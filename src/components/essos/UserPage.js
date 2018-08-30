@@ -36,7 +36,17 @@ class UserPage extends Component {
 		loading: true,
 		userFullName: '',
 		userAvatarURL: '',
+		followers: [],
+		following: [],
+		wistlist: [],
+		itemsPostedLength: 0,
 		componentView: 'USER_MARKET_ITEMS',
+	}
+
+	setItemsLengthAfterLoading = (length) => {
+		this.setState({
+			itemsPostedLength: length
+		})
 	}
 
 	fetchProfilePageMetadata = (userID) => {
@@ -87,11 +97,14 @@ class UserPage extends Component {
 		window.scrollTo(0, 0)
 
 		const profileData = await this.fetchProfilePageMetadata()
-		const { firstName, lastName, avatarURL, _id } = profileData
+		const { firstName, lastName, avatarURL, followers, following, wishlist, _id } = profileData
 
 		if (profileData) return this.setState({
 			userFullName: `${firstName} ${lastName}`,
 			userAvatarURL: avatarURL,
+			followers,
+			following,
+			wishlist,
 			loading: false,
 			selfID: _id,
 		})
@@ -129,7 +142,26 @@ class UserPage extends Component {
 								</div>
 
 								<div className='user-social-stats' >
-									{`Some Stats...`}
+									<div className='userpage-ticker-container' 
+										onClick={() => this.props.showModal('VIEW_USER_SOCIAL_DETAILS', {userArray: this.state.followers, arrayUserType: 'Followers'})}
+									>
+										<div className='ticker-header'> Followers </div>
+										<div className='ticker-payload'> {this.state.followers.length} </div>
+									</div>
+									<div className='userpage-ticker-container'
+										onClick={() => this.props.showModal('VIEW_USER_SOCIAL_DETAILS', {userArray: this.state.following, arrayUserType: 'Following'})}
+									>
+										<div className='ticker-header'> Following </div>
+										<div className='ticker-payload'> {this.state.following.length} </div>
+									</div>
+									<div className='userpage-ticker-container'>
+										<div className='ticker-header'> Wishlist </div>
+										<div className='ticker-payload'> {this.state.wishlist.length} </div>
+									</div>
+									<div className='userpage-ticker-container'>
+										<div className='ticker-header'> Items </div>
+										<div className='ticker-payload'> {this.state.itemsPostedLength} </div>
+									</div>
 								</div>
 							</div>
 					   )
@@ -175,7 +207,7 @@ class UserPage extends Component {
 						}
 					</div>
 				</div>
-				{ (this.state.loading) ? (<div> Loading ... </div>) : (<UserDetailDisplayComponent {...this.props} selfProfileID={this.state.selfID}/>) }
+				{ (this.state.loading) ? (<div> Loading ... </div>) : (<UserDetailDisplayComponent {...this.props} selfProfileID={this.state.selfID} setItemsLength={this.setItemsLengthAfterLoading}/>) }
 			</div>
 		)
 	}

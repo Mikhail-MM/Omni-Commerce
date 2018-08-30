@@ -65,16 +65,20 @@ const essosUserSchema = new Schema({
 
 	followers: [{
 		userId: { type: Schema.Types.ObjectId, ref: 'EssosUser' },
+		name: String,
 		avatarURL: String,
 	}],
 
 	following: [{
 		userId: { type: Schema.Types.ObjectId, ref: 'EssosUser' },
+		name: String,
 		avatarURL: String,
 	}],
 
 	wishlist: [{
 		itemId: { type: Schema.Types.ObjectId, ref: 'StoreItem' },
+		itemName: String,
+		postedBy: String,
 		imageURL: String,
 	}],
 

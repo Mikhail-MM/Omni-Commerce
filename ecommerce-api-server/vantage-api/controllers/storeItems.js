@@ -72,7 +72,9 @@ module.exports.handleWishlistRequest = async (req, res, next) => {
 				{_id: req.headers['x-user-id']}, 
 				{ $push: { wishlist: {
 					itemId: req.params.id,
-					imageURL: favoriteItem.imageURL
+					imageURL: favoriteItem.imageURL,
+					itemName: favoriteItem.itemName,
+					postedBy: favoriteItem.postedBy,
 				}}},
 				{upsert: true, new: true},
 			)
@@ -81,6 +83,7 @@ module.exports.handleWishlistRequest = async (req, res, next) => {
 				{ $push: { followers: {
 					userId: req.headers['x-user-id'],
 					avatarURL: authorizedUser.avatarURL,
+					name: `${authorizedUser.firstName} ${authorizedUser.lastName}`
 				}}},
 				{upsert: true, new: true},
 			)

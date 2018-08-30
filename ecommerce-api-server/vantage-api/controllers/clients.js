@@ -14,12 +14,12 @@ const ShoppingCartModel = MarketPlaceModels.ShoppingCartModel
 //CREATE
 
 module.exports.getProfileMetadata = async function(req, res, next) {
-	const profileInfo = await EssosUser.findById(req.params.id, 'firstName lastName avatarURL')
+	const profileInfo = await EssosUser.findById(req.params.id, 'firstName lastName avatarURL followers following wishlist')
 	res.json(profileInfo)
 }
 
 module.exports.getOwnMetadata = async (req, res, next) => {
-	const profileInfo = await EssosUser.findById(req.body.client._id, '_id firstName lastName avatarURL')
+	const profileInfo = await EssosUser.findById(req.body.client._id, '_id firstName lastName avatarURL followers following wishlist')
 	res.json(profileInfo)
 }
 module.exports.createClient = async function(req, res, next) {

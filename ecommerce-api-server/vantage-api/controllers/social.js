@@ -14,6 +14,7 @@ module.exports.follow = async (req, res, next) => {
 					{_id: req.body.client._id},
 					{ $push: { following: { 
 						userId: followedUser._id,
+						name: `${followedUser.firstName} ${followedUser.lastName}`,
 						avatarURL: followedUser.avatarURL,
 					}}},
 					{upsert: true, new: true},
@@ -22,7 +23,8 @@ module.exports.follow = async (req, res, next) => {
 					{_id: req.params.id},
 					{ $push: { followers: {
 						userId: authorizedUser._id,
-						avatarURL: authorizedUser.avatarURL
+						name: `${authorizedUser.firstName} ${authorizedUser.lastName}`,
+						avatarURL: authorizedUser.avatarURL,
 					}}},
 					{upsert: true, new: true},
 				)

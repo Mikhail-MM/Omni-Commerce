@@ -168,15 +168,57 @@
 }
 
 .user-name-blurb{
-	width: 100px;
+	width: auto;
 	height: 2em;
 }
 
 .user-social-stats{
-	width: 150px;
+	display: flex;
+	justify-content: space-between;
+
+	width: auto;
 	height: 2.5em;
 }
 
+.userpage-ticker-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+
+	text-align: center;
+
+	width: 75px;
+	height: 100%;
+}
+.userpage-ticker-container:hover {
+	background-color: rgba(0,0,0,0.35);
+}
+.ticker-header {
+	font-size: 0.75em;
+}
+.ticker-payload {
+	font-size: 0.85em;
+}
+
+.user-social__user-container {
+	display: flex;
+	height: 100px;
+	width: auto;
+}
+.user-social__avatar-container {
+	width: 50px;
+	height: 50px;
+
+	border-radius: 50px;
+}
+
+.user-social__name-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 50px;
+	width: 125px;
+}
 .metadata-loading {
 	background-color: gray;
 	animation: loadingOpacity 2s infinite;
@@ -227,3 +269,5 @@
 	display: flex;
 	flex-direction: column;
 }
+
+

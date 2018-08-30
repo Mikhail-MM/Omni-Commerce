@@ -42,6 +42,7 @@ import UploadSuccessModal from './modals/UploadSuccessModal'
 
 import AddReviewModal from './modals/AddReviewModal'
 import ReviewSuccessModal from './modals/ReviewSuccessModal'
+import SocialUserListModal from './modals/SocialUserListModal'
 
 import AuthenticationForm from './forms/registration/AuthenticationForm'
 
@@ -68,6 +69,7 @@ const MODAL_COMPONENTS = {
 	'CART_INVALIDATION_MODAL': CartInvalidationModal,
 	'ONLINE_STORE_STRIPE_CHECKOUT': EssosCardPaymentModal,
 
+	'VIEW_USER_SOCIAL_DETAILS': SocialUserListModal,
 
 	'ADD_REVIEW_MODAL': AddReviewModal,
 	'ADD_REVIEW_SUCCESS_MODAL': ReviewSuccessModal,
