@@ -627,13 +627,13 @@ table {
 	margin-bottom: 0px;
 }
 .store-pricing{
+	position: absolute;
+	bottom: 8px;
+	left: 8px;
 	font-weight: 700;
 	color: rgba(255, 255, 255);
 	font-size: 20px;
-	padding-left: 5px;
-	margin-bottom: 0px;
-	padding-top: 10px;
-	padding-bottom: 30px;
+	margin: 0;
 }
 .button_no_border_radius {
 	height: 75px;
@@ -664,7 +664,9 @@ table {
 }
 
 .ui-card-infotext {
+	position: relative;
 	height: 100px;
+	width: 100%;
 }
 img { object-fit: cover; height: 100%; width: 100%;}
 

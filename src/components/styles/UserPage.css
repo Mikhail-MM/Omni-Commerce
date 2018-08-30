@@ -241,6 +241,18 @@
 	width: 125px;
 }
 
+.user-social__review-container-column {
+	display: flex;
+	flex-direction: column;
+}
+
+.review-userbox-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: auto;
+	height: auto;
+}
 .metadata-loading {
 	background-color: gray;
 	animation: loadingOpacity 2s infinite;

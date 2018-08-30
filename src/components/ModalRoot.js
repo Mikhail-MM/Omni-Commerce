@@ -44,6 +44,7 @@ import AddReviewModal from './modals/AddReviewModal'
 import ReviewSuccessModal from './modals/ReviewSuccessModal'
 import SocialUserListModal from './modals/SocialUserListModal'
 import UserWishlistPreviewPreview from './modals/UserWishlistPreviewPreview'
+import ReviewListModal from './modals/ReviewListModal'
 
 import AuthenticationForm from './forms/registration/AuthenticationForm'
 
@@ -75,6 +76,8 @@ const MODAL_COMPONENTS = {
 
 	'ADD_REVIEW_MODAL': AddReviewModal,
 	'ADD_REVIEW_SUCCESS_MODAL': ReviewSuccessModal,
+	'VIEW_REVIEWS_MODAL':ReviewListModal,
+	
 	'CASH_OR_CARD_MODAL': PaymentTypeSelectionModal,
 
 	'DATABASE_INTERFACE_MODAL': DatabaseInterfaceModal,

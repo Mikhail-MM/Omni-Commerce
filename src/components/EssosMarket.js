@@ -38,11 +38,8 @@ class EssosMarket extends Component {
 	
 	handleWishlistClick = (itemId) => {
 		const { token, wishlist } = this.props
-		if (!wishlist) return console.log("No wishlist on this account")
-		console.log(wishlist)
-		console.log(itemId)
-		console.log(wishlist.find(item => item.itemId == itemId))
 		const alreadyInWishlist = wishlist.find(item => item.itemId == itemId)
+		if (!wishlist) return console.log("No wishlist on this account")
 		if (!alreadyInWishlist) { return this.props.wishlistAction(token, itemId, 'add')
 		} else if (alreadyInWishlist) { return this.props.wishlistAction(token, itemId, 'remove')}
 	}
@@ -67,15 +64,23 @@ class EssosMarket extends Component {
 		if (average > floor) { halfStarPosition = floor + 1 }
 		console.log(totalScore, average, halfStarPosition)
 		return ( 
-			<div className='ratings-bar'>
-			{	[1,2,3,4,5].map(star => {
-					return (
-						<div className='star-icon-container'>
-							<img src={(star === halfStarPosition) ? `/assets/icons/half-star.svg` : (star <= floor) ? `/assets/icons/star-full.svg` : `/assets/icons/star-empty.svg`} />
-						</div>
-					)
-				})
-			}
+			<div className='ratings-menu-column'>
+				<div className='ratings-bar'>
+				{	[1,2,3,4,5].map(star => {
+						return (
+							<div className='star-icon-container'>
+								<img src={(star === halfStarPosition) ? `/assets/icons/half-star.svg` : (star <= floor) ? `/assets/icons/star-full.svg` : `/assets/icons/star-empty.svg`} />
+							</div>
+						)
+					})
+				}
+				</div>
+				<div 
+					className='ratings-modal-link'
+					onClick={() => this.props.showModal('VIEW_REVIEWS_MODAL', {reviewArray: reviews, arrayType: 'Reviews'})}
+				> 
+					See Reviews 
+				</div>
 			</div>
 		)
 	}
@@ -105,6 +110,13 @@ class EssosMarket extends Component {
 								</div>
 							</div>
 							<p className="store-link" onClick={() => this.props.routeToNode(`/essos/user/${item.sellerRef_id}`)}> Posted By: {item.postedBy} </p>
+							{ (item.followers.length > 0) &&  
+								<p 
+									className='item-wishlist-counter'
+									onClick={() => this.props.showModal('VIEW_USER_SOCIAL_DETAILS', {userArray: item.followers, arrayUserType: 'Wishlisted'})}
+								> 
+									<span> {item.followers.length} </span> user{item.followers.length > 1 && 's'} want{item.followers.length < 2 && 's'} this item. 
+								</p> }
 							<p className="store-pricing"> ${item.itemPrice} </p>
 						</div>
 						<div className="cart-button button_no_border_radius" onClick={() => this.props.showModal('CONFIRM_CART_ADDITION', {item: item})} ><span> Add To Cart Icon </span> </div>

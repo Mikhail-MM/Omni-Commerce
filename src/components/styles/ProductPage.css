@@ -37,13 +37,21 @@
 	flex-direction: column;
 }
 
+.ratings-menu-column {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
 .ratings-bar {
 	display: flex;
 
 	width: 150px;
 	height: 25px;
 }
-
+.ratings-modal-link:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
 .star-icon-container {
 	width: 25px;
 	height: 25px;
