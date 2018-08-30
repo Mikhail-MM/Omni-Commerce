@@ -66,6 +66,10 @@ class OmniTerminal extends Component {
 		}))
 	}
 
+	calculateGross = (tickets) => {
+		return `$${tickets.map(ticket => ticket.subTotalReal)
+		.reduce((acc, cur) => acc + cur)}`
+	}
 	render() {
 		const { tickets } = this.props
 		return(
@@ -89,9 +93,26 @@ class OmniTerminal extends Component {
 											</tbody>
 										</table>
 							</div>
-							<div className='row__statistics'>
-							</div>
-
+							{ (tickets) &&
+								<div className='row__statistics'>
+									<div className='terminal-statistics-box'>
+										<h5> Open Tickets </h5>
+										{ (tickets['Open']) && <h3> {tickets['Open'].length} </h3> }
+									</div>
+									<div className='terminal-statistics-box'>
+										<h5> Voids </h5>
+										{ (tickets['Void']) && <h3> {tickets['Void'].length} </h3> }
+									</div>
+									<div className='terminal-statistics-box'>
+										<h5> Paid Tickets </h5>
+										{ (tickets['Paid']) && <h3> {tickets['Paid'].length} </h3> }
+									</div>
+									<div className='terminal-statistics-box'>
+										<h5> Gross Sales </h5>
+										{ (tickets['Paid']) && <h3> { this.calculateGross(tickets['Paid']) } </h3> } 
+									</div>
+								</div>
+							}
 						</div> 
 						<div className='foursquare-container'>
 							<div className='row__buttons'>
