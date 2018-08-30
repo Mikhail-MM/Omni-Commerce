@@ -154,7 +154,9 @@ class UserPage extends Component {
 										<div className='ticker-header'> Following </div>
 										<div className='ticker-payload'> {this.state.following.length} </div>
 									</div>
-									<div className='userpage-ticker-container'>
+									<div className='userpage-ticker-container'
+										onClick={() => this.props.showModal('VIEW_USER_WISHLIST', {wishlistArray: this.state.wishlist, arrayType: 'Wishlist'})}
+									>
 										<div className='ticker-header'> Wishlist </div>
 										<div className='ticker-payload'> {this.state.wishlist.length} </div>
 									</div>

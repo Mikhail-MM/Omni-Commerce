@@ -43,6 +43,7 @@ import UploadSuccessModal from './modals/UploadSuccessModal'
 import AddReviewModal from './modals/AddReviewModal'
 import ReviewSuccessModal from './modals/ReviewSuccessModal'
 import SocialUserListModal from './modals/SocialUserListModal'
+import UserWishlistPreviewPreview from './modals/UserWishlistPreviewPreview'
 
 import AuthenticationForm from './forms/registration/AuthenticationForm'
 
@@ -70,6 +71,7 @@ const MODAL_COMPONENTS = {
 	'ONLINE_STORE_STRIPE_CHECKOUT': EssosCardPaymentModal,
 
 	'VIEW_USER_SOCIAL_DETAILS': SocialUserListModal,
+	'VIEW_USER_WISHLIST': UserWishlistPreviewPreview,
 
 	'ADD_REVIEW_MODAL': AddReviewModal,
 	'ADD_REVIEW_SUCCESS_MODAL': ReviewSuccessModal,

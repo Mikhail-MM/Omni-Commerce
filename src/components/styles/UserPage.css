@@ -155,7 +155,7 @@
 }
 
 .purchase-order__image-container {
-	width: ;
+	width: auto;
 	height: 200px;
 }
 
@@ -219,6 +219,28 @@
 	height: 50px;
 	width: 125px;
 }
+
+.user-wishlist__wishlist-container {
+	display: flex;
+	height: auto;
+	width: auto;
+
+	margin-bottom: 10px;
+}
+
+.user-wishlist__image-container {
+	width: 112.5px;
+	height: 150px;
+}
+.user-wishlist__metadata-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 50px;
+	width: 125px;
+}
+
 .metadata-loading {
 	background-color: gray;
 	animation: loadingOpacity 2s infinite;
