@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import { modalStyle } from '../config';
 import { hideModal } from '../../actions/modals';
+
 import { updateProfileData } from '../../actions/users'
 
 const mapDispatchToProps = dispatch => ({
@@ -38,7 +39,7 @@ class OmniProfileModificationModal extends Component {
 			phone,
 			role,
 			avatarURL,
-		} = this.props
+		} = this.props.profileData
 
 		this.setState({
 			firstName,
@@ -46,6 +47,7 @@ class OmniProfileModificationModal extends Component {
 			email,
 			phone,
 			role,
+			imageSource: avatarURL
 		})
 
 	}
@@ -91,7 +93,7 @@ class OmniProfileModificationModal extends Component {
 			imageRAWFILE,
 			newImageFlag,
 		}
-
+			// NEED TO ADD DIFFERENT ACTIONS FOR CREATE NEW USER/MODIFY USER
 			this.props.editProfileData(token, this.props.profileData._id, data, imageHandler)
 	}
 
@@ -157,7 +159,7 @@ class OmniProfileModificationModal extends Component {
 					</div>
 
 					<div className='essos-reg-form-row'>
-						<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
+						<div className='form-label-input-container' style={{width: '100%', height: 'auto'}}>
 							<label> Role </label>
 							<input 
 								type='text'

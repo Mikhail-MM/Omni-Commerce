@@ -9,6 +9,8 @@ import { showModal } from '../../../actions/modals'
 import { getAllEvents } from '../../../actions/events'
 import { subscribeToFeedUpdates, closeConnection } from '../../../actions/socket'
 
+import ModalRoot from '../../ModalRoot'
+
 import EmployeeManagement from './EmployeeManagement'
 import SalesAnalytics from './SalesAnalytics'
 import TimeSheetTable from './TimeSheetTable'
@@ -109,6 +111,7 @@ class AdminTerminal extends Component {
 
 		return(
 			<div className='admin-page-wrapper'>
+				<ModalRoot />
 				<div className='app-header-admin'>
 				</div>
 				<div className='main-body-wrapper' >

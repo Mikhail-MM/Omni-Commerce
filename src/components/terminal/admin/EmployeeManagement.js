@@ -52,7 +52,7 @@ class EmployeeManagement extends Component {
 		return myEmployees.map(employee => {
 			if (employee.accountType === 'Terminal') return
 			return(
-				<tr>
+				<tr onClick={() => this.props.showModal('OMNI_EMPLOYEE_MANAGEMENT_MODAL', {profileData: employee})}>
 						<td> <img className='employee-avatar-image' src={employee.avatarURL}/> </td>
 						<td> {`${employee.firstName} ${employee.lastName}`}</td>
 						<td> {employee.phone} </td>
