@@ -6,7 +6,7 @@ import ModalRoot from './ModalRoot'
 
 import { retrieveAllItemsForSale, addItemToWishlist, getUserWishlist } from '../actions/marketplace'
 import { retrieveShoppingCart } from '../actions/shopping-cart'
-
+import { getUserSocialFeed } from '../actions/social'
 import { showModal } from '../actions/modals'
 import { routeToNode } from '../actions/routing'
 
@@ -23,6 +23,7 @@ const mapDispatchToProps = dispatch => ({
 	retrieveAllMarketplaceItems: () => dispatch(retrieveAllItemsForSale()),
 	retrieveShoppingCart: (token) => dispatch(retrieveShoppingCart(token)),
 	retrieveUserWishlist: (token) => dispatch(getUserWishlist(token)),
+	getUserSocialFeed: (token) => dispatch(getUserSocialFeed(token)),
 	wishlistAction: (token, itemId, mode) => dispatch(addItemToWishlist(token, itemId, mode)),
 	routeToNode: (node) => dispatch(routeToNode(node)),
 	showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps)),
@@ -34,6 +35,7 @@ class EssosMarket extends Component {
 		this.props.retrieveAllMarketplaceItems()
 		if (isAuthenticated) this.props.retrieveShoppingCart(token)
 		if (isAuthenticated) this.props.retrieveUserWishlist(token)
+		if (isAuthenticated) this.props.getUserSocialFeed(token)
 	}
 	
 	handleWishlistClick = (itemId) => {

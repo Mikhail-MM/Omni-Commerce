@@ -16,6 +16,22 @@ export const followUser = (token, userId, mode) => {
 	}
 }
 
+export const getUserSocialFeed = (token) => {
+	return dispatch => {
+		return fetch(`http://localhost:3001/users/essos/getProfileView/ownProfile`, {
+			headers: {
+				'Content-Type': 'application/json',
+				'x-access-token': token,			
+			},
+			method: 'GET',
+			mode: 'cors',
+		})
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+		.then(json => dispatch(receiveFollowFeed(json.following)))
+		.catch(err => console.log(err))
+	}
+}
+
 function receiveFollowFeed(followContacts){
 	return {
 		type: 'RECEIVE_FOLLOW_FEED',
