@@ -46,7 +46,6 @@ export function updateMarketplaceItem(token, itemID, data, imageHandler) {
 						mode: 'cors',
 					})
 					.then(response =>{
-						console.log(response)
 						if (!response.ok) Promise.reject(response.statusText)
 							return fileOnBucketurl
 					})

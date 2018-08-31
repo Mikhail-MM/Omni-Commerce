@@ -4,14 +4,17 @@ import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import { modalStyle } from '../config';
 import { hideModal } from '../../actions/modals';
+import { updateEssosProfileData } from '../../actions/users'
 
 const mapDispatchToProps = dispatch => ({
+	editProfileData: (token, userID, data, imageHandler) => dispatch(updateEssosProfileData(token, userID, data, imageHandler)), 
 	hideModal: () => dispatch(hideModal()),
 })
 
 const mapStateToProps = (state) => {
 	const { modalType, modalProps } = state.modalReducer
-	return { modalType, modalProps }
+	const { token } = state.authReducer
+	return { modalType, modalProps, token}
 }
 
 class EssosProfileModificationModal extends Component {
@@ -28,7 +31,7 @@ class EssosProfileModificationModal extends Component {
 		billing_address_state: '',
 		shipping_address_line1: '',
 		shipping_address_line2: '',
-		shipping__address_city: '',
+		shipping_address_city: '',
 		shipping_address_zip: '',
 		shipping_address_state: '',
 		imageSource: '',
@@ -51,7 +54,7 @@ class EssosProfileModificationModal extends Component {
 			billing_address_state,
 			shipping_address_line1,
 			shipping_address_line2,
-			shipping__address_city,
+			shipping_address_city,
 			shipping_address_zip,
 			shipping_address_state,
 			avatarURL,
@@ -69,7 +72,7 @@ class EssosProfileModificationModal extends Component {
 			billing_address_state,
 			shipping_address_line1,
 			shipping_address_line2,
-			shipping__address_city,
+			shipping_address_city,
 			shipping_address_zip,
 			shipping_address_state,
 			imageSource: avatarURL,
@@ -91,6 +94,53 @@ class EssosProfileModificationModal extends Component {
 		})
 	}
 
+	handleSubmit = (e) => {
+		e.preventDefault()
+		const { token } = this.props
+		const { 
+			email, 
+			firstName, 
+			lastName,
+			phone,
+			billing_address_line1,
+			billing_address_line2,
+			billing_address_city,
+			billing_address_zip,
+			billing_address_state,
+			shipping_address_line1,
+			shipping_address_line2,
+			shipping_address_city,
+			shipping_address_zip,
+			shipping_address_state,
+			imageSource,
+			imageRAWFILE,
+			newImageFlag,
+		} = this.state
+		const data = {
+			email, 
+			firstName, 
+			lastName,
+			phone,
+			billing_address_line1,
+			billing_address_line2,
+			billing_address_city,
+			billing_address_zip,
+			billing_address_state,
+			shipping_address_line1,
+			shipping_address_line2,
+			shipping_address_city,
+			shipping_address_zip,
+			shipping_address_state,
+		}
+		const imageHandler = {
+			imageSource,
+			imageRAWFILE,
+			newImageFlag,
+		}
+
+			this.props.editProfileData(token, this.props.profileData._id, data, imageHandler)
+	}
+
 	render() {
 		return(
 			<div>
@@ -100,7 +150,7 @@ class EssosProfileModificationModal extends Component {
 				contentLabel="Example Modal"
 				overlayClassName="Overlay"
 				>	
-				<form className='essos-profile-edit-form'>
+				<form className='essos-profile-edit-form' onSubmit={(e) => this.handleSubmit(e)}>
 					<div className='avatar-selection-container'>
 						<h4> Change Avatar </h4>
 						<div className='essos-avatar-preview-container' >
@@ -243,6 +293,7 @@ class EssosProfileModificationModal extends Component {
 							/>
 						</div>
 					</div>
+					<input type='submit' />
 					<button onClick={() => this.props.hideModal()}> Cancel </button>
 				</form>
 			</Modal>

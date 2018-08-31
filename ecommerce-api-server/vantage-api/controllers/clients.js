@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const Client = require('../models/schemas/client');
 const Users = require('../models/schemas/users');
 const EssosUser = Users.EssosUser;
+const OmniUser = Users.OmniUser
 
 const bcrypt = require('bcrypt');
 const MarketPlaceModels = require('../models/schemas/marketplace')
@@ -168,8 +169,8 @@ module.exports.findMasterAndTagChild = async function(req, res, next) {
 
 module.exports.updateClient = async function(req, res, next) {
 	try{ 
-		
-		const client = await Client.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
+		const User = (req.headers['x-user-pathway'] === 'Essos') ? EssosUser : OmniUser
+		const client = await User.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
 
 		if (!client) return res.status(404).send("No client with that ID")
 
@@ -180,7 +181,6 @@ module.exports.updateClient = async function(req, res, next) {
 
 module.exports.deleteClientById = async function(req, res, next) {
 	try{ 
-
 		const client = await Client.findOneAndRemove({_id: req.params.id})
 
 		if (!client) return res.json(404).send("No client with that ID")
