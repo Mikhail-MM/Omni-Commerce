@@ -20,12 +20,24 @@
 	display: flex;
 	flex-direction: column;
 
+	background-color: #525f7f;
 	width: 1136px;
 	height: 500px;
 
 	padding: 25px 75px;
 	border: 2px #9bacc8 solid;
 	border-radius: 10px;
+}
+
+.modalpicker-selector {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.modalpicker-selector h3 {
+	text-align: center;
+	margin-top: 16px;
+
 }
 
 .picker-button-container {
@@ -46,13 +58,31 @@
 	background-color: rgb(255, 255, 255, 0.50);
 	border-radius: 100px;
 
-	transition: background-color 0.8s;
+	transition: background-color 0.8s, border 0.8s, transform 0.8s;
 }
 
 .icon-container:hover {
-	background-color: rgb(96, 84, 130);
+	background-color: rgb(252, 214, 105);
+	border: 5px solid white;
 }
 
+.activeIcon, .activeIcon:hover {
+	background-color: rgb(252, 114, 145);
+	border: 10px solid white;
+	box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.2);
+	transform: translateY(-10px);
+}
+
+.fade-in-text {
+	animation: fadeIn 2s;
+}
+
+.reg-selection-header {
+	transition: color 0.8s;
+}
+.activeHeader {
+	color: rgb(252, 214, 105);
+}
 .point-sale-icon {
 	margin-left: 20px;
 }

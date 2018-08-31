@@ -11,6 +11,10 @@ const mapDispatchToProps = (dispatch) => ({
 
 
 class RegistrationPicker extends Component {
+	state = {
+		pathway: null,
+		renderButton: false,
+	}
 	render() {
 		return(
 			<div className='registration-picker-wrapper'>
@@ -18,27 +22,32 @@ class RegistrationPicker extends Component {
 				<div className='centered-rectangle'>
 
 					<div className='picker-header-container'>
-						<h1> Registration </h1>
+						<h1> Select Module </h1>
 					</div>
 					
 					<div className='picker-button-container'>
-						<div onClick={(event) => this.props.route('/register/essos') } className='icon-container'>
-							<img className="online-market-icon" src='./assets/registration/online-shop.svg' />
+						<div className='modalpicker-selector'>
+							<div onClick={() => this.setState({pathway: 'Essos', renderButton: true})} className={(this.state.pathway === 'Essos') ? "icon-container activeIcon" : "icon-container"}>
+								<img className="online-market-icon" src='./assets/registration/online-shop.svg' />
+							</div>
+							<h3 className={(this.state.pathway === 'Essos') ? "reg-selection-header activeHeader" : "reg-selection-header"}> Online Marketplace </h3>
 						</div>
-						<div onClick={(event) => this.props.route('/register/omni')} className='icon-container'>
-							<img className="point-sale-icon" src='./assets/registration/point-of-service.svg' />
+						<div className='modalpicker-selector'>
+							<div onClick={() => this.setState({pathway: 'Omni', renderButton: true})} className={(this.state.pathway === 'Omni') ? "icon-container activeIcon" : "icon-container"}>
+								<img style={{marginLeft: 10}} className="online-market-icon" src='./assets/registration/point-of-service.svg' />
+							</div>
+							<h3 className={(this.state.pathway === 'Omni') ? "reg-selection-header activeHeader" : "reg-selection-header"}> Point of Sale </h3>
 						</div>
 					</div>
 
 					<div className="notification-box">
-						<div>
-							Register to buy and sell goods through the Essos online marketplace. Build an online brand and gain access to a variety of products. 
-						</div>
-						<div>
-							Register to use our Point-of-Sale management service for your retail storefront. Accept cash and card payments, manage employees, and gain access to valuable statistics and analytics.
-						</div>
+						{(!this.state.pathway) ? null : (this.state.pathway === 'Essos') ? 
+							<h4 className='fade-in-text'> Register to buy and sell goods through the Essos online marketplace. Build an online brand and gain access to a variety of products. </h4>
+							:
+							<h4 className='fade-in-text'> Register to use our Point-of-Sale management service for your retail storefront. Accept cash and card payments, manage employees, and gain access to valuable statistics and analytics. </h4>
+						}
 					</div>
-
+					<button classname='registration-navigate-to-button'> Begin Registation </button>
 				</div>
 			</div>
 		)

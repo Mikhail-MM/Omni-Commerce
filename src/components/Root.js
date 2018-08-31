@@ -53,8 +53,8 @@ export default class Root extends Component {
 				<ConnectedRouter history={history}>
 					<Switch>
 						
-                  		<Route exact path='/' component={OmniSplash} />
-                  		<Route exact path='/splash' component={Marketing} />
+                  		<Route exact path='/' component={Marketing} />
+                  		<Route exact path='/splash' component={OmniSplash} />
                  		<Route exact path='/essos' component={EssosMarket} />
                  		<Route exact path='/essos/login' render={() => <AuthenticationForm login loginEssos /> } />
                  		<Route exact path='/omni/login' render={() => <AuthenticationForm login loginOmni /> } />

@@ -16,6 +16,8 @@ https://blog.isquaredsoftware.com/2017/07/practical-redux-part-10-managing-modal
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import RegistrationPickerModal from './modals/RegistrationPickerModal'
+
 import EmployeePunchClockFormModal from './modals/EmployeePunchClockFormModal'
 import WaiterCallScreenModal from './modals/WaiterCallScreenModal'
 
@@ -55,6 +57,7 @@ import EssosProfileModificationModal from './modals/EssosProfileModificationModa
 import OmniProfileModificationModal from './modals/OmniProfileModificationModal'
 
 const MODAL_COMPONENTS = {
+	'REGISTRATION_MODULE_PICKER': RegistrationPickerModal,
 	'EMPLOYEE_PUNCH_CLOCK_FORM_MODAL': EmployeePunchClockFormModal,
 	'ADD_POINT_SALE_ITEM': AddTerminalItemModal,
 	'DISPLAY_ALL_TRANSACTIONS': TransactionHistoryModal, 

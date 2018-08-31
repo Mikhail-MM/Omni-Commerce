@@ -1,12 +1,19 @@
 import React, { Component } from 'react'
+import { connect} from 'react-redux'
 
+import ModalRoot from './ModalRoot'
+
+import { showModal } from '../actions/modals'
 import './styles/Marketing.css'
 
-class Marketing extends Component {
-	state = {}
-	render(){
+const mapDispatchToProps = dispatch => ({
+	showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps)),
+})
+
+const Marketing = (props) => {
 		return(
 			<div className='marketing-wrapper'>
+				<ModalRoot />
 				<div className='screen-resizer'>
 				<div className='jumbo-image-container'>
 					<nav className='marketing-nav'>
@@ -27,7 +34,10 @@ class Marketing extends Component {
 						We're Here to Help
 					</div>
 					<div className='hero-header-3' >
-						<button className='getting-started-button'>
+						<button 
+							className='getting-started-button'
+							onClick={() => props.showModal('REGISTRATION_MODULE_PICKER', {})}
+						>
 							Getting Started
 						</button>
 						<button className='sign-in-button'>
@@ -84,7 +94,6 @@ class Marketing extends Component {
 
 			</div>
 		)
-	}
 }
 
-export default Marketing
+export default connect(null, mapDispatchToProps)(Marketing)
