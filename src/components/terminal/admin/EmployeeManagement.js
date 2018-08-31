@@ -50,16 +50,31 @@ class EmployeeManagement extends Component {
 		const { myEmployees } = this.state
 
 		return myEmployees.map(employee => {
+			const fullName = `${employee.firstName} ${employee.lastName}`
 			if (employee.accountType === 'Terminal') return
-			return(
-				<tr onClick={() => this.props.showModal('OMNI_EMPLOYEE_MANAGEMENT_MODAL', {profileData: employee})}>
-						<td> <img className='employee-avatar-image' src={employee.avatarURL}/> </td>
-						<td> {`${employee.firstName} ${employee.lastName}`}</td>
-						<td> {employee.phone} </td>
-						<td> {employee.email} </td>
-						<td> <div className='fireButton'> Revoke Access </div> </td>
-				</tr>
-			)
+			if (!this.state.workerSearch) {
+				return(
+					<tr onClick={() => this.props.showModal('OMNI_EMPLOYEE_MANAGEMENT_MODAL', {profileData: employee})}>
+							<td> <img className='employee-avatar-image' src={employee.avatarURL}/> </td>
+							<td> {fullName} </td>
+							<td> {employee.phone} </td>
+							<td> {employee.email} </td>
+							<td> <div className='fireButton'> Revoke Access </div> </td>
+					</tr>
+				)
+			} else if (this.state.workerSearch) {
+				if (fullName.toLowerCase().includes(this.state.workerSearch.toLowerCase())) {
+					return(
+						<tr onClick={() => this.props.showModal('OMNI_EMPLOYEE_MANAGEMENT_MODAL', {profileData: employee})}>
+							<td> <img className='employee-avatar-image' src={employee.avatarURL}/> </td>
+							<td> {fullName} </td>
+							<td> {employee.phone} </td>
+							<td> {employee.email} </td>
+							<td> <div className='fireButton'> Revoke Access </div> </td>
+						</tr>
+					)
+				}
+			}
 		})
 	}
 
