@@ -1,10 +1,10 @@
-export function updateEssosProfileData(token, userID, data, imageHandler) {
+export function updateProfileData(token, userID, data, imageHandler, mode) {
 	return dispatch => {
 		return fetch(`http://localhost:3001/clients/${userID}`, {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-access-token': token,
-				'x-user-pathway': 'Essos',
+				'x-user-pathway': mode,
 			},
 			method: 'PUT',
 			mode: 'cors',
@@ -37,7 +37,7 @@ export function updateEssosProfileData(token, userID, data, imageHandler) {
 							headers: {
 								'Content-Type': 'application/json',
 								'x-access-token': token,
-								'x-user-pathway': 'Essos',
+								'x-user-pathway': mode,
 							},
 							method: 'PUT',
 							mode: 'cors',

@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import { modalStyle } from '../config';
 import { hideModal } from '../../actions/modals';
-import { updateEssosProfileData } from '../../actions/users'
+import { updateProfileData } from '../../actions/users'
 
 const mapDispatchToProps = dispatch => ({
-	editProfileData: (token, userID, data, imageHandler) => dispatch(updateEssosProfileData(token, userID, data, imageHandler)), 
+	editProfileData: (token, userID, data, imageHandler) => dispatch(updateProfileData(token, userID, data, imageHandler, 'Essos')), 
 	hideModal: () => dispatch(hideModal()),
 })
 

@@ -52,6 +52,8 @@ import ConfirmDeletionModal from './modals/ConfirmDeletionModal'
 
 import EssosProfileModificationModal from './modals/EssosProfileModificationModal'
 
+import OmniProfileModificationModal from './modals/OmniProfileModificationModal'
+
 const MODAL_COMPONENTS = {
 	'EMPLOYEE_PUNCH_CLOCK_FORM_MODAL': EmployeePunchClockFormModal,
 	'ADD_POINT_SALE_ITEM': AddTerminalItemModal,
@@ -69,6 +71,8 @@ const MODAL_COMPONENTS = {
 	'END_OF_BUSINESS_DAY_SUCCESS': SalesAggregationSuccessModal,
 
 	'MODIFY_ESSOS_PROFILE_SETTINGS': EssosProfileModificationModal,
+	'OMNI_EMPLOYEE_MANAGEMENT_MODAL': OmniProfileModificationModal,
+
 	'CONFIRM_CART_ADDITION': ConfirmCartModal,
 	'CART_ADDITION_SUCCESS_MODAL': CartSuccessModal,
 	'CART_INVALIDATION_MODAL': CartInvalidationModal,

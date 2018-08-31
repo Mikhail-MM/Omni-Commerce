@@ -108,7 +108,6 @@ class UploadItemForm extends Component {
 	*/
 
 	handleTagChange(tagName){
-		console.log('Handler - TagName - THISSTATE...', tagName, this.state.tags)
 		if (!this.state.tags.includes(tagName)) {
 			this.setState({
 				tags: this.state.tags.concat([tagName])	
@@ -119,7 +118,6 @@ class UploadItemForm extends Component {
 				tags: this.state.tags.filter(item => item !== tagName)
 			})
 		}
-		
 	}
 
 	imageSelectedHandler = (event) => {
