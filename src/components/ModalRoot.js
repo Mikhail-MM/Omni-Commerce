@@ -50,6 +50,8 @@ import AuthenticationForm from './forms/registration/AuthenticationForm'
 
 import ConfirmDeletionModal from './modals/ConfirmDeletionModal'
 
+import EssosProfileModificationModal from './modals/EssosProfileModificationModal'
+
 const MODAL_COMPONENTS = {
 	'EMPLOYEE_PUNCH_CLOCK_FORM_MODAL': EmployeePunchClockFormModal,
 	'ADD_POINT_SALE_ITEM': AddTerminalItemModal,
@@ -66,6 +68,7 @@ const MODAL_COMPONENTS = {
 	'CONFIRM_END_OF_BUSINESS_DAY': ConfirmSalesReportAggregationModal,
 	'END_OF_BUSINESS_DAY_SUCCESS': SalesAggregationSuccessModal,
 
+	'MODIFY_ESSOS_PROFILE_SETTINGS': EssosProfileModificationModal,
 	'CONFIRM_CART_ADDITION': ConfirmCartModal,
 	'CART_ADDITION_SUCCESS_MODAL': CartSuccessModal,
 	'CART_INVALIDATION_MODAL': CartInvalidationModal,

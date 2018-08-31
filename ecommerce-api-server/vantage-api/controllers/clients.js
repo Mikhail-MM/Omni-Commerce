@@ -19,7 +19,7 @@ module.exports.getProfileMetadata = async function(req, res, next) {
 }
 
 module.exports.getOwnMetadata = async (req, res, next) => {
-	const profileInfo = await EssosUser.findById(req.body.client._id, '_id firstName lastName avatarURL followers following wishlist')
+	const profileInfo = await EssosUser.findById(req.body.client._id)
 	res.json(profileInfo)
 }
 module.exports.createClient = async function(req, res, next) {

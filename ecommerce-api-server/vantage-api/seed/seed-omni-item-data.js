@@ -7,7 +7,7 @@ const terminalItems = [
 	},
 	{
 		itemName: 'Yogurt Parfait',
-		itemName: 13.99,
+		itemPrice: 13.99,
 		category: 'Breakfast',
 		imageURL: '/assets/seed/terminal/yparfait.jpg',
 	},

@@ -52,7 +52,7 @@ const essosUserSchema = new Schema({
 	billing_address_state: String,
 	shipping_address_line1: String,
 	shipping_address_line2: String,
-	shipping__address_city: String,
+	shipping_address_city: String,
 	shipping_address_zip: String,
 	shipping_address_state: String,
 

@@ -71,7 +71,7 @@ module.exports.saveStripeCustomerInformation = async function(req, res, next) {
               
               console.log("Previous customer not found. Creating new customer")
 
-              stripe.customers.create({
+             return stripe.customers.create({
                 email: req.body.client.email,
                 shipping: {
                   address: {

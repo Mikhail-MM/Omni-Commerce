@@ -275,7 +275,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 				billing_address_zip: '19096',
 				billing_address_state: 'PA',
 				shipping_address_line1: '919 Cedar Grove Rd',
-				shipping__address_city: 'Wynnewood',
+				shipping_address_city: 'Wynnewood',
 				shipping_address_zip: '19096',
 				shipping_address_state: 'PA',
 				
@@ -386,7 +386,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 				billing_address_zip: '11550',
 				billing_address_state: 'NY',
 				shipping_address_line1: '303 Washington St',
-				shipping__address_city: 'Hempstead',
+				shipping_address_city: 'Hempstead',
 				shipping_address_zip: '11550',
 				shipping_address_state: 'NY',
 				
@@ -439,7 +439,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 				billing_address_zip: '11550',
 				billing_address_state: 'NY',
 				shipping_address_line1: '553 Washington St',
-				shipping__address_city: 'Hempstead',
+				shipping_address_city: 'Hempstead',
 				shipping_address_zip: '11550',
 				shipping_address_state: 'NY',
 				
@@ -493,7 +493,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 				billing_address_zip: '11550',
 				billing_address_state: 'NY',
 				shipping_address_line1: '600 Washington St',
-				shipping__address_city: 'Hempstead',
+				shipping_address_city: 'Hempstead',
 				shipping_address_zip: '11550',
 				shipping_address_state: 'NY',
 				
@@ -570,7 +570,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 				billing_address_state,
 				shipping_address_line1,
 				shipping_address_line2,
-				shipping__address_city,
+				shipping_address_city,
 				shipping_address_zip,
 				shipping_address_state,
 				mongoCollectionKey,
@@ -591,7 +591,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 				billing_address_state,
 				shipping_address_line1,
 				shipping_address_line2,
-				shipping__address_city,
+				shipping_address_city,
 				shipping_address_zip,
 				shipping_address_state,
 				mongoCollectionKey,
@@ -697,7 +697,7 @@ module.exports.registerEssosUser = async (req, res, next) => {
 			billing_address_state	: req.body.billing_address_state,
 			shipping_address_line1	: req.body.shipping_address_line1,
 			shipping_address_line2	: req.body.shipping_address_line2,
-			shipping__address_city	: req.body.shipping__address_city,
+			shipping_address_city	: req.body.shipping_address_city,
 			shipping_address_zip	: req.body.shipping_address_zip,
 			shipping_address_state	: req.body.shipping_address_state,
 

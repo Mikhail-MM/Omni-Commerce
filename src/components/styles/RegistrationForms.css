@@ -78,3 +78,39 @@
 .splash-button:hover {
 	background-color: #FFCA34;
 }
+
+.essos-profile-edit-form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 600px;
+	height: auto;
+}
+.essos-reg-form-row {
+	display: flex;
+	width: 100%;
+	height: 100%;
+}
+.form-label-input-container {
+	display: flex;
+	flex-direction: column;
+	padding: 0px 10px;
+}
+
+.avatar-selection-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 200px;
+}
+
+.essos-avatar-preview-container {
+	width: 150px;
+	height: 150px;
+}
+
+.essos-avatar-preview-container img {
+	border-radius: 100px;
+}

@@ -41,6 +41,7 @@ class UserPage extends Component {
 		wistlist: [],
 		itemsPostedLength: 0,
 		componentView: 'USER_MARKET_ITEMS',
+		fullData: {}
 	}
 
 	setItemsLengthAfterLoading = (length) => {
@@ -107,11 +108,11 @@ class UserPage extends Component {
 			wishlist,
 			loading: false,
 			selfID: _id,
+			fullData: profileData,
 		})
 	}
 
 
-	
 	render() {
 
 		const UserDetailDisplayComponent = UserPageComponentMap[this.state.componentView]
@@ -131,8 +132,11 @@ class UserPage extends Component {
 							<div className='user-social-container' >
 								<div className='user-avatar'>
 									{ (this.props.selfProfileView) ? (
-										<div className='user-avatar-hoverover'>
-											Change Avatar
+										<div 
+											className='user-avatar-hoverover'
+											onClick={() => this.props.showModal('MODIFY_ESSOS_PROFILE_SETTINGS', {profileData: this.state.fullData})}
+										>
+											Profile Settings
 										</div>
 									   ) : (null) }
 									<img className='user-avatar-image' src={this.state.userAvatarURL} />

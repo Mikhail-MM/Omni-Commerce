@@ -202,7 +202,7 @@
 
 .user-social__user-container {
 	display: flex;
-	height: 100px;
+	height: auto;
 	width: auto;
 }
 .user-social__avatar-container {
