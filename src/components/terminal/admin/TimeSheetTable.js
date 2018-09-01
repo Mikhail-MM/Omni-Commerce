@@ -70,7 +70,7 @@ class SalesAnalyticsContainer extends Component {
 									<td> Hours Worked </td>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody className='omni-table-body'>
 								{ allTimeSheets && this.renderTimeSheetTableToDOM() }
 							</tbody>
 						</table>

@@ -166,7 +166,7 @@ class SalesAnalyticsContainer extends Component {
 									<td> Gross Sales </td>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody className='omni-table-body'>
 								{ this.state.allReports && this.renderSaleReportTableToDOM() }
 							</tbody>
 						</table>

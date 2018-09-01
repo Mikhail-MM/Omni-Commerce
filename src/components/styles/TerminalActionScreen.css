@@ -93,9 +93,38 @@ td {
 .ledger-table {
 	width: 100%;
 	height: auto;
+	border-collapse: collapse;
+	border-spacing: 0px;
+}
+.ledger-table th, .ledger-table td {
+	border: 0.5px solid white;
 }
 .ledger-table__header {
 	width: 100%;
+
+}
+
+.fade-in-row {
+	opacity: 0;
+	animation: fadeInTableRow 0.5s;
+	animation-fill-mode: forwards;
+}
+
+@keyframes fadeInTableRow {
+	0% { 
+		opacity: 0; 
+		transform: translateY(-10px);
+	}
+	100% { 
+		opacity: 1; 
+		transform: translateY(0px);
+	}
+}
+
+.ledger-tbody tr:nth-child(even) td {
+
+}
+.ledger-tbody tr:nth-child(odd) td {
 
 }
 
@@ -107,6 +136,7 @@ td {
 
 	overflow-y: auto;
 }
+
 
 .ledger-footer {
 	display: flex;

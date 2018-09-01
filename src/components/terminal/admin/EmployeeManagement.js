@@ -108,7 +108,7 @@ class EmployeeManagement extends Component {
 									<td> 86 </td>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody className='omni-table-body'>
 								{ this.state.myEmployees && this.renderEmployeeTableToDOM() }
 								<tr>
 									<td> <img className='employee-avatar-image' src='./assets/avatars/44.jpg'/> </td>

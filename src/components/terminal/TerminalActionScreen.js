@@ -41,7 +41,7 @@ class TerminalActionScreen extends Component {
 		console.log(this.props)
 	}
 	generateItemCategoryVisibilityMenu = () => {
-		const { menuItems } = this.props
+		const { menuItems, visibleCategory } = this.props
 
 		const darkPastelColorWheel=['#3D1D1D', '#311726', '#3D2B1D', '#3D1D1D']
 
@@ -49,7 +49,7 @@ class TerminalActionScreen extends Component {
 
 			return <button 
 						style={{
-							backgroundColor: 'rgb(66, 64, 244)',
+							backgroundColor: `${(category === visibleCategory) ? '#2F99F2' : 'rgb(66, 64, 244)'}`,
 							marginRight: 4,
 							borderStyle: 'none',
 							color: 'white',
@@ -116,24 +116,16 @@ class TerminalActionScreen extends Component {
 		const { activeTicket, token } = this.props
 
 		return activeTicket.items.map((item, index, array) => {
-			if (index == array.length - 1) {
-				return (
-					<tr key={item._id}>
-					 <td>{item.itemName}</td>
-					 <td>${item.itemPrice}</td>
-					 <td><button  color="black" onClick={() => this.props.showModal('CUSTOM_ADDON_MODAL', {})}>AddOn</button></td>
-					 <td><button  color="black" onClick={() => this.props.removeItemFromTicket(token, item._id, activeTicket._id)}>Remove</button></td>	 
-					</tr>
-					)
-			}
+
 			return(
-				<tr key={item._id}>
-					 <td>{item.itemName}</td>
-					 <td>${item.itemPrice}</td>
-					 <td></td>
-					 <td><button  color="black" onClick={() => this.props.removeItemFromTicket(token, item._id, activeTicket._id)}>Remove</button></td>	 
-				</tr>
+					<tr key={item._id} className={`ledger-row${(index === array.length - 1) ? ' fade-in-row' : ''}`}>
+						<td>{item.itemName}</td>
+						<td>${item.itemPrice}</td>
+						<td>{ (index === array.length - 1) ? <button  onClick={() => this.props.showModal('CUSTOM_ADDON_MODAL', {})}>AddOn</button> : null }</td>
+						<td><button  onClick={() => this.props.removeItemFromTicket(token, item._id, activeTicket._id)}>Remove</button></td>	 
+					</tr>
 			)
+
 		})
 	}
 
@@ -184,7 +176,7 @@ class TerminalActionScreen extends Component {
 											<td> Remove </td>
 										</tr>
 									</thead>
-									<tbody>
+									<tbody className='ledger-tbody'>
 										{ activeTicket && this.generateLedgerFromActiveTicket() }
 									</tbody>
 								</table>

@@ -121,17 +121,19 @@
 	border-radius: 100px;
 }
 
-tbody tr:nth-child(even) td {
+.omni-table-body tr:nth-child(even) td {
 	background-color: #ebf1f5;
 	color: #5b6f84;
 }
 
-tbody tr:nth-child(odd) td {
+.omni-table-body tr:nth-child(odd) td {
 	background-color: #f2f6fa;
 	color: #5b6f84;
 }
 
-
+td {
+	overflow:hidden;
+}
 
 .feed-column {
 	display: flex;
@@ -151,10 +153,6 @@ tbody tr:nth-child(odd) td {
 	overflow-y: auto;
 }
 
-td {
-	border-radius: 10px;
-	overflow:hidden;
-}
 
 .event-container {
 	display: flex;
