@@ -64,6 +64,7 @@
 .icon-container:hover {
 	background-color: rgb(252, 214, 105);
 	border: 5px solid white;
+	cursor: pointer;
 }
 
 .activeIcon, .activeIcon:hover {

@@ -21,7 +21,7 @@ module.exports.postNewEvent = async (req, res, next, eventData) => {
 		const newEvent = new EventModel(eventData)
 		const savedEvent = await newEvent.save()
 			console.log("Created new event: ", savedEvent)
-			io.emit('getevent', savedEvent)
+			io.emit(`getEvent_${req.headers['x-mongo-key']}`, savedEvent)
 
 	} catch(err) { next(err) }
 }

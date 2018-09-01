@@ -69,6 +69,7 @@ class UserPage extends Component {
 			headers:{
 					'Content-Type': 'application/json',
 					'x-access-token': token,
+					'x-user-pathway': 'Essos',
 				},
 				method: 'GET',
 				mode: 'cors'

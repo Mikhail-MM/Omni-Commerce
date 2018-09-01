@@ -38,10 +38,10 @@ const Marketing = (props) => {
 							className='getting-started-button'
 							onClick={() => props.showModal('REGISTRATION_MODULE_PICKER', {})}
 						>
-							Getting Started
+							Get Started
 						</button>
 						<button className='sign-in-button'>
-							Sign In
+							View Marketplace
 						</button>
 					</div>
 				{/* 

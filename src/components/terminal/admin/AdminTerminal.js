@@ -48,7 +48,7 @@ class AdminTerminal extends Component {
 			eventFeed: timeFeed
 		})
 
-		subscribeToFeedUpdates(this.updateEventFeed)
+		subscribeToFeedUpdates(token, this.updateEventFeed)
 	}
 
 	componentDidUnmount() {
@@ -56,6 +56,7 @@ class AdminTerminal extends Component {
 	}
 
 	updateEventFeed = (newEvent) => {
+		console.log("Event emitted to callback")
 		const { eventFeed } = this.state
 		const updatedFeed = [newEvent, ...eventFeed,]
 		this.setState({

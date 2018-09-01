@@ -20,7 +20,8 @@ module.exports.getProfileMetadata = async function(req, res, next) {
 }
 
 module.exports.getOwnMetadata = async (req, res, next) => {
-	const profileInfo = await EssosUser.findById(req.body.client._id)
+	const User = (req.headers['x-user-pathway'] === 'Essos') ? EssosUser : OmniUser
+	const profileInfo = await User.findById(req.body.client._id)
 	res.json(profileInfo)
 }
 module.exports.createClient = async function(req, res, next) {
