@@ -5,7 +5,11 @@ import '../styles/RegistrationPicker.css'
 
 import { push } from 'react-router-redux'
 
+import { showModal, hideModal } from '../../actions/modals'
+
 const mapDispatchToProps = (dispatch) => ({
+	showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps)),
+	hideModal: () => dispatch(hideModal()),
 	route: (node) => dispatch(push(node))
 })
 
@@ -15,12 +19,21 @@ class RegistrationPicker extends Component {
 		pathway: null,
 		renderButton: false,
 	}
+
+	handleRegistrationInitiationRequest = () => {
+		if (this.state.pathway === 'Essos') {
+			return this.props.showModal('AUTH_FORM_MODAL', {regpathEssos: true})
+		} else if (this.state.pathway === 'Omni') {
+			return this.props.showModal('AUTH_FORM_MODAL', {regpathOmniMaster: true})
+		}
+	}
+
 	render() {
 		return(
 			<div className='registration-picker-wrapper'>
 				
 				<div className='centered-rectangle'>
-
+					<button className='modal-corner-hide' onClick={() => this.props.hideModal()}> Close </button>
 					<div className='picker-header-container'>
 						<h1> Select Module </h1>
 					</div>
@@ -47,7 +60,7 @@ class RegistrationPicker extends Component {
 							<h4 className='fade-in-text'> Register to use our Point-of-Sale management service for your retail storefront. Accept cash and card payments, manage employees, and gain access to valuable statistics and analytics. </h4>
 						}
 					</div>
-					<button classname='registration-navigate-to-button'> Begin Registation </button>
+					{(this.state.renderButton) && <button className='fade-in-text' onClick={() => this.handleRegistrationInitiationRequest()}> Begin Registation </button> }
 				</div>
 			</div>
 		)

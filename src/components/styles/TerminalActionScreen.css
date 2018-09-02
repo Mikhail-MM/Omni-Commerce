@@ -93,7 +93,7 @@ td {
 .ledger-table {
 	width: 100%;
 	height: auto;
-	border-collapse: collapse;
+	border-collapse: separate;
 	border-spacing: 0px;
 }
 .ledger-table th, .ledger-table td {
@@ -137,7 +137,9 @@ td {
 	overflow-y: auto;
 }
 
-
+.action-screen-table {
+	border-collapse: collapse;
+}
 .ledger-footer {
 	display: flex;
 	flex-direction: column;

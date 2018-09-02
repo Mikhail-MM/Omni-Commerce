@@ -20,6 +20,8 @@
 	display: flex;
 	flex-direction: column;
 
+	position: relative;
+
 	background-color: #525f7f;
 	width: 1136px;
 	height: 500px;
@@ -27,6 +29,12 @@
 	padding: 25px 75px;
 	border: 2px #9bacc8 solid;
 	border-radius: 10px;
+}
+
+.modal-corner-hide {
+	position: absolute;
+	top: 10px;
+	right: 10px;
 }
 
 .modalpicker-selector {

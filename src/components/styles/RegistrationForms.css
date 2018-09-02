@@ -9,6 +9,8 @@
 
 	background-color: #525f7f;
 	color: white;
+
+	padding: 20px;
 }
 
 .centered-box {
@@ -45,12 +47,12 @@
 
 	outline: none;
 	border-style: none;
-	border-bottom: 3px solid #605482;
-	transition: border-color 0.4s ease-out, background-color 0.8s ease-out;
+	border-bottom: 3px solid #243256;
+	transition: border-color 0.4s ease-out, border-width 0.6s ease, background-color 0.8s ease-out;
 }
 .form-input:focus{
 	background-color: rgba(255,255,255, 0.8);
-	border-color: rgb(252, 214, 105);
+	border-bottom: 6px solid #DFB642;
 }
 
 .splash-button {

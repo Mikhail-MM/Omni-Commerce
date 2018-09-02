@@ -17,6 +17,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import RegistrationPickerModal from './modals/RegistrationPickerModal'
+import AuthModal from './modals/AuthModal'
 
 import EmployeePunchClockFormModal from './modals/EmployeePunchClockFormModal'
 import WaiterCallScreenModal from './modals/WaiterCallScreenModal'
@@ -58,6 +59,7 @@ import OmniProfileModificationModal from './modals/OmniProfileModificationModal'
 
 const MODAL_COMPONENTS = {
 	'REGISTRATION_MODULE_PICKER': RegistrationPickerModal,
+	'AUTH_FORM_MODAL': AuthModal,
 	'EMPLOYEE_PUNCH_CLOCK_FORM_MODAL': EmployeePunchClockFormModal,
 	'ADD_POINT_SALE_ITEM': AddTerminalItemModal,
 	'DISPLAY_ALL_TRANSACTIONS': TransactionHistoryModal, 

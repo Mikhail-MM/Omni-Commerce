@@ -24,7 +24,20 @@ class AuthenticationForm extends Component {
 		lastName: '',
 		role: '',
 		phone: '',
-
+		billing_address_line1: '',
+		billing_address_line2: '',
+		billing_address_city: '',
+		billing_address_zip: '',
+		billing_address_state: '',
+		shipping_address_line1: '',
+		shipping_address_line2: '',
+		shipping_address_city: '',
+		shipping_address_zip: '',
+		shipping_address_state: '',
+		imageSource: '',
+		imageRAWFILE: null,
+		newImageFlag: false,
+		registrationPage: 1,
 	}
 
 	handleChange = (key, value) => {
@@ -86,100 +99,322 @@ class AuthenticationForm extends Component {
 		return this.props.attemptRegistration(credentials)
 	}
 
-	render() {
-		return(
-			<div className='registration-form-wrapper'>
-				<form className='centered-box' onSubmit={event => this.handleSubmit(event)} >
-					<div className='form-row'>
-						<label> 
-							Email
-						</label> 
-						<input 
-							className='form-input'
-							type='email'
-							value={this.state.email}
-							onChange={ event => this.handleChange('email', event.target.value) }
-							/>
-					</div>
-					<div className='form-row'>
-						<label> 
-							Password
-						</label> 
-						<input 
-							className='form-input'
-							type='password'
-							value={this.state.password}
-							onChange={ event => this.handleChange('password', event.target.value) }
-							/>
+	renderEssosStepper = () => {
+		switch(this.state.registrationPage) {
+			case 1: {
+				return(
+					<React.Fragment>
+					<div className='avatar-selection-container'>
+						<h4> Change Avatar </h4>
+						<div className='essos-avatar-preview-container' >
+							<img src={this.state.imageSource} />
 						</div>
-					{(this.props.regpathOmniMaster || this.props.regpathEssos || this.props.regpathOmniChild) &&
-						<div className='form-row'>
-							<label> 
-								Confirm Password
-							</label> 
-							<input 
-								className='form-input'
-								type='password'
-								value={this.state.confpass}
-								onChange={ event => this.handleChange('confpass', event.target.value) }
+							<div>
+								<input 
+									className='form-input'
+									type='file'
+									name='avatar'
+									onChange={(e) => this.imageSelectedHandler(e)}
 								/>
-						</div>
-					}
-					{(this.props.regpathOmniMaster || this.props.regPathEssos || this.props.regpathOmniChild) &&
-						<div className='form-row'>
-							<label> 
-								First Name
-							</label> 
-							<input 
-								className='form-input'
+							</div>
+					</div>
+					<div className='essos-reg-form-row'>
+						<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
+							<label> First Name </label>
+							<input
+								className='form-input' 
 								type='text'
 								value={this.state.firstName}
-								onChange={ event => this.handleChange('firstName', event.target.value) }
-								/>
+								onChange={(e) => this.handleChange('firstName', e.target.value)}
+							/>
 						</div>
-					}
-					{(this.props.regpathOmniMaster || this.props.regPathEssos || this.props.regpathOmniChild) &&
-						<div className='form-row'>
-							<label> 
-								Last Name
-							</label> 
-							<input 
-								className='form-input'
+						<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
+							<label> Last Name </label>
+							<input
+								className='form-input' 
 								type='text'
 								value={this.state.lastName}
-								onChange={ event => this.handleChange('lastName', event.target.value) }
-								/>
+								onChange={(e) => this.handleChange('lastName', e.target.value)}
+							/>
 						</div>
-					}
-					{(this.props.regpathOmniMaster || this.props.regPathEssos || this.props.regpathOmniChild) &&
-						<div className='form-row'>
-							<label> 
-								Phone Number (###)-###-####
-							</label> 
-							<input 
-								className='form-input'
-								type='text'
-								value={this.state.phone}
-								onChange={ event => this.handleChange('phone', event.target.value) }
-								/>
-						</div>
-					}
-					{(this.props.regpathOmniChild) &&
-						<div className='form-row'>
-							<label> 
-								Role
-							</label> 
-							<input 
-								className='form-input'
-								type='text'
-								value={this.state.role}
-								onChange={ event => this.handleChange('role', event.target.value) }
-								/>
-						</div>
-					}
-					<input className='splash-button' value={this.props.login ? 'Log In' : 'Register'} type='submit' />
+					</div>
+					<div className='essos-reg-form-row'>
+								<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
+									<label> E-Mail </label>
+									<input
+										className='form-input' 
+										type='text'
+										value={this.state.email}
+										onChange={(e) => this.handleChange('email', e.target.value)}
+									/>
+								</div>
+								<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
+									<label> Phone Number </label>
+									<input
+										className='form-input' 
+										type='text'
+										value={this.state.phone}
+										onChange={(e) => this.handleChange('phone', e.target.value)}
+									/>
+								</div>
+							</div>
 
-				</form>
+							<div className='essos-reg-form-row'>
+								<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
+									<label> Password </label>
+									<input
+										className='form-input' 
+										type='text'
+										value={this.state.password}
+										onChange={(e) => this.handleChange('password', e.target.value)}
+									/>
+								</div>
+								<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
+									<label> Confirm Password </label>
+									<input
+										className='form-input' 
+										type='text'
+										value={this.state.confpass}
+										onChange={(e) => this.handleChange('confpass', e.target.value)}
+									/>
+								</div>
+							</div>
+							<button onClick={() => this.setState({registrationPage: 2})}> Next Page </button>
+					</React.Fragment>
+				)
+			}
+			case 2: {
+				return (
+					<React.Fragment>
+						<div className='essos-reg-form-row'>
+							<div className='form-label-input-container' style={{width: '70%', height: 'auto'}}>
+								<label> Billing Address </label>
+								<input
+									className='form-input' 
+									type='text'
+									value={this.state.billing_address_line1}
+									onChange={(e) => this.handleChange('billing_address_line1', e.target.value)}
+								/>
+							</div>
+							<div className='form-label-input-container' style={{width: '30%', height: 'auto'}}>
+								<label> Line 2 </label>
+								<input
+									className='form-input' 
+									type='text'
+									value={this.state.billing_address_line2}
+									onChange={(e) => this.handleChange('billing_address_line2', e.target.value)}
+								/>
+							</div>
+						</div>
+
+						<div className='essos-reg-form-row'>
+							<div className='form-label-input-container' style={{width: '55%', height: 'auto'}}>
+								<label> City </label>
+								<input
+									className='form-input' 
+									type='text'
+									value={this.state.billing_address_city}
+									onChange={(e) => this.handleChange('billing_address_city', e.target.value)}
+								/>
+							</div>
+							<div className='form-label-input-container' style={{width: '20%', height: 'auto'}}>
+								<label> State </label>
+								<input
+									className='form-input' 
+									type='text'
+									value={this.state.billing_address_state}
+									onChange={(e) => this.handleChange('billing_address_state', e.target.value)}
+								/>
+							</div>
+							<div className='form-label-input-container' style={{width: '25%', height: 'auto'}}>
+								<label> Zip Code </label>
+								<input
+									className='form-input' 
+									type='text'
+									value={this.state.billing_address_zip}
+									onChange={(e) => this.handleChange('billing_address_zip', e.target.value)}
+								/>
+							</div>
+						</div>
+
+						<div className='essos-reg-form-row'>
+							<div className='form-label-input-container' style={{width: '70%', height: 'auto'}}>
+								<label> Shipping Address </label>
+								<input
+									className='form-input' 
+									type='text'
+									value={this.state.shipping_address_line1}
+									onChange={(e) => this.handleChange('shipping_address_line1', e.target.value)}
+								/>
+							</div>
+							<div className='form-label-input-container' style={{width: '30%', height: 'auto'}}>
+								<label> Line 2 </label>
+								<input
+									className='form-input' 
+									type='text'
+									value={this.state.shipping_address_line2}
+									onChange={(e) => this.handleChange('shipping_address_line2', e.target.value)}
+								/>
+							</div>
+						</div>
+
+						<div className='essos-reg-form-row'>
+							<div className='form-label-input-container' style={{width: '55%', height: 'auto'}}>
+								<label> City </label>
+								<input
+									className='form-input' 
+									type='text'
+									value={this.state.shipping_address_city}
+									onChange={(e) => this.handleChange('shipping_address_city', e.target.value)}
+								/>
+							</div>
+							<div className='form-label-input-container' style={{width: '20%', height: 'auto'}}>
+								<label> State </label>
+								<input
+									className='form-input' 
+									type='text'
+									value={this.state.shipping_address_state}
+									onChange={(e) => this.handleChange('shipping_address_state', e.target.value)}
+								/>
+							</div>
+							<div className='form-label-input-container' style={{width: '25%', height: 'auto'}}>
+								<label> Zip Code </label>
+								<input
+									className='form-input' 
+									type='text'
+									value={this.state.shipping_address_zip}
+									onChange={(e) => this.handleChange('shipping_address_zip', e.target.value)}
+								/>
+							</div>
+						</div>
+						<input className='splash-button' value={this.props.login ? 'Log In' : 'Register'} type='submit' />
+					</React.Fragment>
+				)
+			}
+		}
+	}
+
+	render() {
+		const { registrationPage } = this.state
+		return(
+			<div className='registration-form-wrapper'>
+				{ this.props.regpathEssos && 
+						<form className='essos-profile-edit-form' onSubmit={(e) => this.handleSubmit(e)}>
+							{ this.renderEssosStepper() }
+							<button onClick={() => this.props.hideModal()}> Cancel </button>
+						</form>
+				}
+
+				{ this.props.regpathOmniMaster &&
+					<form className='essos-profile-edit-form' onSubmit={(e) => this.handleSubmit(e)}>
+						<div className='avatar-selection-container'>
+							<h4> Change Avatar </h4>
+							<div className='essos-avatar-preview-container' >
+								<img src={this.state.imageSource} />
+							</div>
+							<div>
+								<input
+									className='form-input' 
+									type='file'
+									name='avatar'
+									onChange={(e) => this.imageSelectedHandler(e)}
+								/>
+							</div>
+						</div>
+						<div className='essos-reg-form-row'>
+							<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
+								<label> First Name </label>
+								<input
+									className='form-input' 
+									type='text'
+									value={this.state.firstName}
+									onChange={(e) => this.handleChange('firstName', e.target.value)}
+								/>
+							</div>
+							<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
+								<label> Last Name </label>
+								<input
+									className='form-input' 
+									type='text'
+									value={this.state.lastName}
+									onChange={(e) => this.handleChange('lastName', e.target.value)}
+								/>
+							</div>
+						</div>
+
+						<div className='essos-reg-form-row'>
+							<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
+								<label> E-Mail </label>
+								<input
+									className='form-input' 
+									type='text'
+									value={this.state.email}
+									onChange={(e) => this.handleChange('email', e.target.value)}
+								/>
+							</div>
+							<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
+								<label> Phone Number </label>
+								<input
+									className='form-input' 
+									type='text'
+									value={this.state.phone}
+									onChange={(e) => this.handleChange('phone', e.target.value)}
+								/>
+							</div>
+						</div>
+
+						<div className='essos-reg-form-row'>
+							<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
+								<label> Password </label>
+								<input
+									className='form-input' 
+									type='text'
+									value={this.state.password}
+									onChange={(e) => this.handleChange('password', e.target.value)}
+								/>
+							</div>
+							<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
+								<label> Confirm Password </label>
+								<input
+									className='form-input' 
+									type='text'
+									value={this.state.confpass}
+									onChange={(e) => this.handleChange('confpass', e.target.value)}
+								/>
+							</div>
+						</div>
+						<input className='splash-button' value={this.props.login ? 'Log In' : 'Register'} type='submit' />
+						<button onClick={() => this.props.hideModal()}> Cancel </button>
+					</form>
+				}
+				{ this.props.login &&
+					<form className='essos-profile-edit-form' onSubmit={(e) => this.handleSubmit(e)}>
+						<div className='essos-reg-form-row'>
+							<div className='form-label-input-container' style={{width: '100%', height: 'auto'}}>
+								<label> E-Mail </label>
+								<input
+									className='form-input' 
+									type='text'
+									value={this.state.email}
+									onChange={(e) => this.handleChange('email', e.target.value)}
+								/>
+							</div>
+						</div>
+						<div className='essos-reg-form-row'>
+							<div className='form-label-input-container' style={{width: '100%', height: 'auto'}}>
+								<label> Password </label>
+								<input
+									className='form-input' 
+									type='text'
+									value={this.state.password}
+									onChange={(e) => this.handleChange('password', e.target.value)}
+								/>
+							</div>
+						</div>
+						<input className='splash-button' value={this.props.login ? 'Log In' : 'Register'} type='submit' />
+						<button onClick={() => this.props.hideModal()}> Cancel </button>
+					</form>
+				}
 			</div>
 		)
 	}
