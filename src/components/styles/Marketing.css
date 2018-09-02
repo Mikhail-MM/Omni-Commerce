@@ -31,8 +31,15 @@
 	background-color: rgba(49, 60, 69, 0.95);
 	border-bottom: 1px solid gray;
 
+	transition: background-color 0.8s ease-in, height 0.8s ease-in;
+
 	z-index: 3;
 
+}
+
+.collapseNavHeader {
+	height: 60px;
+	background-color: rgba(49, 60, 69);
 }
 
 .hero-header-1 {
@@ -172,25 +179,38 @@
 	}
 }
 
+
 .icon-revealer-container {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 
+	position: sticky;
+	top: 50px;
+
 	width: 100%;
-	height: auto;
+	height: 192px;
 	background-color: rgba(0,0,0,0.75);
 	padding: 12px 12px; 
+
+	transition: height 0.8s ease-out
+}
+
+.shrink-sticky {
+	height: 100px;
+	overflow: hidden;
 }
 .icon-revealer-row {
 	display: flex;
 	justify-content: space-around;
 
 	width: 100%;
-	height: auto;
+	height: 100%;
 
 	padding: 12px 0;
 }
+
+
 
 .informatic-blurb {
 	display: flex;
@@ -207,6 +227,12 @@
 	width: 100px;
 
 	margin: 12px 0;
+	transition: width 0.8s ease-out, height 0.8s ease-out;
+}
+
+.shrink-icon {
+	height: 50px;
+	width: 50px;
 }
 
 .informatic-blurb__text {

@@ -45,20 +45,58 @@ export function attemptLogIn(credentials) {
 
 }
 
-export function attemptRegistration(credentials) {
-	const url = (credentials.registrationPath === 'omni') ? 'http://localhost:3001/omni-master/' : 'http://localhost:3001/essos-user/'
+export function attemptRegistration(token, data, imageHandler, mode) {
 	return dispatch => {
-		return fetch(url, {
-		headers:{
-			'Content-Type': 'application/json'
-		},
-		method: 'POST',
-		mode: 'cors', 
-		body: JSON.stringify(credentials)
-		})
-		.then(json => {
-			console.log('Use the ModalRoot component to display a confirmation message. Redirect to the appropriate node from the confirmation modal')
-		})
-		.catch(err => console.log(err))
+		if (imageHandler.newImageFlag) {
+			return fetch(`http://localhost:3001/sign-s3?fileName=${imageHandler.imageSource.name}&fileType=${imageHandler.imageSource.type}`, {
+				method: 'GET',
+				mode: 'cors',
+			})
+			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+			.then(signedRequestJSON => {
+				const { signedRequest, fileOnBucketurl } = signedRequestJSON
+				return fetch(signedRequest, {
+					headers: {
+						'Origin': 'http://localhost:3000',
+					},
+					method: 'PUT', 
+					body: imageHandler.imageSource,
+					mode: 'cors',
+				})
+				.then(response => {
+					if (!response.ok) Promise.reject(response.statusText)
+						return fileOnBucketurl
+				})
+				.then(avatarURL => {
+					return fetch(`http://localhost:3001/registration/${mode}`, {
+						headers:{
+							'Content-Type': 'application/json'
+						},
+						method: 'POST',
+						mode: 'cors', 
+						body: JSON.stringify({...data, avatarURL})
+					})
+					.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+					.then(json => {
+						// dispatch confirmation
+					})
+				})
+			})
+			.catch(err => console.log(err))
+		} else if (!imageHandler.newImageFlag) {
+			return fetch(`http://localhost:3001/registration/${mode}`, {
+				headers:{
+					'Content-Type': 'application/json'
+				},
+				method: 'POST',
+				mode: 'cors', 
+				body: JSON.stringify({...data, avatarURL: imageHandler.imageSource})
+			})
+			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+			.then(json => {
+				// dispatch confirmation
+			})
+			.catch(err => console.log(err))
+		}
 	}
 }
