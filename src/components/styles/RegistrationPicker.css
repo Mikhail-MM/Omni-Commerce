@@ -19,6 +19,7 @@
 .centered-rectangle {
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 
 	position: relative;
 
@@ -29,6 +30,7 @@
 	padding: 25px 75px;
 	border: 2px #9bacc8 solid;
 	border-radius: 10px;
+
 }
 
 .modal-corner-hide {
@@ -51,6 +53,9 @@
 .picker-button-container {
 	display: flex;
 	justify-content: space-around;
+
+	width: 70%;
+	height: auto;
 
 	padding: 0px 25px;
 }
@@ -86,6 +91,11 @@
 	animation: fadeIn 2s;
 }
 
+.fade-in-button {
+	opacity: 0;
+	animation: fadeIn 2s ease 1.5s;
+	animation-fill-mode: forwards;
+}
 .reg-selection-header {
 	transition: color 0.8s;
 }

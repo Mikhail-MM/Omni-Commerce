@@ -35,4 +35,13 @@ export const modalStyle3 = {
 		borderRadius: 5,
 		padding: 0,
 	},
-}
+};
+
+export const stockAvvys = [
+	'/assets/avatars/sa1.svg',
+	'/assets/avatars/sa2.svg',
+	'/assets/avatars/sa3.svg',
+	'/assets/avatars/sa4.svg',
+	'/assets/avatars/sa5.svg',
+	'/assets/avatars/sa6.svg',
+]

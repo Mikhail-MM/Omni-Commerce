@@ -36,6 +36,8 @@ module.exports.registerOmniMaster = async (req, res, next) => {
 			lastName: req.body.lastName,
 			phone: req.body.phone,
 
+			avatarURL: req.body.avatarURL,
+
 			hash: hashedPass,
 			
 			accountType: 'Master',

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { stockAvvys } from '../../config'
 import '../../styles/RegistrationForms.css'
 
 import { attemptLogIn, attemptRegistration } from '../../../actions/auth'
@@ -13,8 +14,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
 	attemptLogin: (credentials) => dispatch(attemptLogIn(credentials)),
-	registerOmniMaster: (credentials) =>  dispatch(attemptRegistration(credentials)),
+	registerUser: (data, imageHandler, mode) =>  dispatch(attemptRegistration(null, data, imageHandler, mode)),
+
 })
+
+
 class AuthenticationForm extends Component {
 	state = {
 		email: '',
@@ -34,7 +38,8 @@ class AuthenticationForm extends Component {
 		shipping_address_city: '',
 		shipping_address_zip: '',
 		shipping_address_state: '',
-		imageSource: '',
+		avatarCounter: 0,
+		imageSource: stockAvvys[0],
 		imageRAWFILE: null,
 		newImageFlag: false,
 		registrationPage: 1,
@@ -43,6 +48,15 @@ class AuthenticationForm extends Component {
 	handleChange = (key, value) => {
 		this.setState({
 			[key]:value
+		})
+	}
+
+	imageSelectedHandler = (event) => {
+		const blobURL = URL.createObjectURL(event.target.files[0])
+		this.setState({
+			imageSource: blobURL,
+			imageRAWFILE: event.target.files[0],
+			newImageFlag: true
 		})
 	}
 
@@ -63,13 +77,40 @@ class AuthenticationForm extends Component {
 
 	handleSubmit = (event) => {
 		event.preventDefault()
+		const { email, firstName, lastName, phone, password, imageSource, imageRAWFILE, newImageFlag } = this.state
+		const { billing_address_line1, billing_address_line2, billing_address_city, billing_address_zip, billing_address_state, shipping_address_line1, shipping_address_line2, shipping_address_city, shipping_address_zip, shipping_address_state } = this.state
+		const imageHandler = {
+			imageSource,
+			imageRAWFILE,
+			newImageFlag,
+		}
 		if (this.validateFormData()) {
 			console.log("Truth Received")
 		}
 		if (this.props.loginOmni) return this.handleLogin('omni')
 		if (this.props.loginEssos) return this.handleLogin('essos')
-		if (this.props.regpathOmniMaster) return this.handleRegistration('omni')
-		if (this.props.regpathEssos) return this.handleRegistration('essos')
+		if (this.props.regpathOmniMaster) {
+			const data = {
+				email,
+				firstName,
+				lastName,
+				phone,
+				password
+			}
+				return this.props.registerUser(data, imageHandler, 'omni-master')
+		}
+		if (this.props.regpathEssos) {
+			const data = {
+				email,
+				firstName,
+				lastName,
+				phone,
+				password,
+
+			}
+				return this.props.registerUser(data, imageHandler, 'essos-user') 
+		}
+
 		if (this.props.regpathOmniChild) return this.handleRegistration('omniChild')
 
 	}
@@ -99,6 +140,16 @@ class AuthenticationForm extends Component {
 		return this.props.attemptRegistration(credentials)
 	}
 
+	randomizeAvvy = (e) => {
+		e.preventDefault()
+		this.setState((prevState) => {
+			return ({
+				imageSource: stockAvvys[(prevState.avatarCounter + 1) % 6],
+				newImageFlag: false,
+				avatarCounter: prevState.avatarCounter + 1,
+			})
+		})
+	}
 	renderEssosStepper = () => {
 		switch(this.state.registrationPage) {
 			case 1: {
@@ -109,9 +160,13 @@ class AuthenticationForm extends Component {
 						<div className='essos-avatar-preview-container' >
 							<img src={this.state.imageSource} />
 						</div>
-							<div>
+							<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
+								<button type='button' onClick={(e) => this.randomizeAvvy(e)}> Randomize Avatar </button>
+							</div>
+							<h4> OR </h4>
+							<div className='form-label-input-container' style={{width: '50%', height: 'auto', alignItems:'center', justifyContent: 'center'}}>
+								<label> Select a Profile Picture Instead </label>
 								<input 
-									className='form-input'
 									type='file'
 									name='avatar'
 									onChange={(e) => this.imageSelectedHandler(e)}
@@ -186,6 +241,11 @@ class AuthenticationForm extends Component {
 			case 2: {
 				return (
 					<React.Fragment>
+						<div className='avatar-selection-container'>
+							<div className='essos-avatar-preview-container' >
+								<img src={this.state.imageSource} />
+							</div>
+						</div>
 						<div className='essos-reg-form-row'>
 							<div className='form-label-input-container' style={{width: '70%', height: 'auto'}}>
 								<label> Billing Address </label>
@@ -309,12 +369,16 @@ class AuthenticationForm extends Component {
 					<form className='essos-profile-edit-form' onSubmit={(e) => this.handleSubmit(e)}>
 						<div className='avatar-selection-container'>
 							<h4> Change Avatar </h4>
-							<div className='essos-avatar-preview-container' >
-								<img src={this.state.imageSource} />
+						<div className='essos-avatar-preview-container' >
+							<img src={this.state.imageSource} />
+						</div>
+							<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
+								<button type='button' onClick={(e) => this.randomizeAvvy(e)}> Randomize Avatar </button>
 							</div>
-							<div>
-								<input
-									className='form-input' 
+							<h4> OR </h4>
+							<div className='form-label-input-container' style={{width: '50%', height: 'auto', alignItems:'center', justifyContent: 'center'}}>
+								<label> Select a Profile Picture Instead </label>
+								<input 
 									type='file'
 									name='avatar'
 									onChange={(e) => this.imageSelectedHandler(e)}
