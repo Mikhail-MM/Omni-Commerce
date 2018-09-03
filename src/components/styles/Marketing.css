@@ -232,28 +232,33 @@
 	text-align: center;
 	color: rgba(255, 255, 255, 0.85);
 
-	transition: 1.2s left ease-out, 0.8s width ease-out;
+	transition: 0.8s width ease-out;
 
 }
 
 .abs-ico-co1 {
 	left: 7.194%;
+	transition: 1.1s left ease-out,
 }
 
 .abs-ico-co2 {
 	left: 30.325%;
+	transition: 1s left ease-out
 }
 
 .abs-ico-co3 {
 	left: 58.55143%;
+	transition: 0.9s left ease-out
 }
 .abs-ico-co4 {
 	left: 82.09201%;
+	transition: 0.8s left ease-out
 }
 
 .co1-move {
 	width: 125px;
 	left: calc(100% - 500px);
+	animation: hoverme 1s infinite ease-in-out;
 }
 .co2-move {
 	width: 125px;
@@ -267,7 +272,6 @@
 .co4-move {
 	width: 125px;
 	left: calc(100% - 125px);
-	animation: hoverme 1s infinite ease-in-out;
 }
 
 @keyframes hoverme {

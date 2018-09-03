@@ -245,6 +245,7 @@ class AuthenticationForm extends Component {
 							<div className='essos-avatar-preview-container' >
 								<img src={this.state.imageSource} />
 							</div>
+							<h3> {`${this.state.firstName} ${this.state.lastName}`} </h3>
 						</div>
 						<div className='essos-reg-form-row'>
 							<div className='form-label-input-container' style={{width: '70%', height: 'auto'}}>

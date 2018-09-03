@@ -23,6 +23,10 @@ class  Marketing extends Component {
 	handleScroll = (event) => {
 		let scrollTop = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop)
 
+		if (!scrollTop && !!window.chrome && !!window.chrome.webstore) {
+			scrollTop = event.path[1].scrollY
+		}
+
 		if (scrollTop > 0 && this.state.topOfPage === true) {
 			this.setState({
 				topOfPage: false
