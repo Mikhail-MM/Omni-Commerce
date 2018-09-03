@@ -39,7 +39,7 @@
 
 .collapseNavHeader {
 	height: 60px;
-	background-color: rgba(49, 60, 69);
+	background-color: rgba(49, 60, 69, 1.00);
 }
 
 .hero-header-1 {
@@ -211,15 +211,92 @@
 }
 
 
+.sticky-headers {
+	font-size: 1em;
+	transition: font-size 0.8s ease-out, opacity 0.8s ease-out;
+}
+
+.sticky-header-shrink {
+	font-size: 0.5em;
+	opacity: 0;
+}
 
 .informatic-blurb {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 
+	position: absolute;
+	top: 10px;
+
 	text-align: center;
 	color: rgba(255, 255, 255, 0.85);
 
+	transition: 1.2s left ease-out, 0.8s width ease-out;
+
+}
+
+.abs-ico-co1 {
+	left: 7.194%;
+}
+
+.abs-ico-co2 {
+	left: 30.325%;
+}
+
+.abs-ico-co3 {
+	left: 58.55143%;
+}
+.abs-ico-co4 {
+	left: 82.09201%;
+}
+
+.co1-move {
+	width: 125px;
+	left: calc(100% - 500px);
+}
+.co2-move {
+	width: 125px;
+	left: calc(100% - 375px);
+}
+.co3-move {
+	width: 125px;
+	left: calc(100% - 250px);
+}
+
+.co4-move {
+	width: 125px;
+	left: calc(100% - 125px);
+	animation: hoverme 1s infinite ease-in-out;
+}
+
+@keyframes hoverme {
+	0% {
+		transform: translateY(-3px);
+	}
+	50% {
+		transform: translateY(3px);
+	}
+	100% {
+		transform: translateY(-3px);
+	}
+}
+@keyframes hover {
+	0% {
+		transform: translateY(0px);
+	}
+	25% {
+		transform: translateY(5px);
+	}
+	50% {
+		transform: translateY(0px);
+	}
+	75% {
+		transform: translateY(-5px);
+	}
+	100% {
+		transform: translateY(0px);
+	}
 }
 
 .informatic-blurb__icon {

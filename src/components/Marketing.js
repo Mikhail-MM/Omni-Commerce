@@ -21,8 +21,7 @@ class  Marketing extends Component {
 	}
 
 	handleScroll = (event) => {
-		let scrollTop = event.pageY
-		
+		let scrollTop = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop)
 
 		if (scrollTop > 0 && this.state.topOfPage === true) {
 			this.setState({
@@ -90,35 +89,35 @@ class  Marketing extends Component {
 					<div style={{width: '100vw', height: 5000}} ref={el => this.stickyElContainer = el}>
 						<div className={`icon-revealer-container${(this.state.manageSticky) ? ' shrink-sticky' : ''}`} ref={el => this.stickyEl = el}>
 							<div className='icon-revealer-row'>
-								<div className='informatic-blurb'>
+								<div ref={el => this.img1 = el} className={`informatic-blurb abs-ico-co1${(this.state.manageSticky) ? ' co1-move' : ''}`}>
 									<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 										<img src='/assets/omni-splash/icons/payment-method.svg' />
 									</div>
-									<h4> Compliant Payments </h4>
+									<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Compliant Payments </h4>
 									<div className='informatic-blurb__text'>
 									</div>
 								</div>
-								<div className='informatic-blurb'>
+								<div ref={el => this.img2 = el} className={`informatic-blurb abs-ico-co2${(this.state.manageSticky) ? ' co2-move' : ''}`}>
 									<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 										<img src='/assets/omni-splash/icons/online-shop.svg' />
 									</div>
-									<h4> Remote Business Management </h4>
+									<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Remote Business Management </h4>
 									<div className='informatic-blurb__text'>
 									</div>
 								</div>
-								<div className='informatic-blurb'>
+								<div ref={el => this.img3 = el} className={`informatic-blurb abs-ico-co3${(this.state.manageSticky) ? ' co3-move' : ''}`}>
 									<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 										<img src='/assets/omni-splash/icons/stats.svg' />						
 									</div>
-									<h4> Metrics and Statistics </h4>
+									<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Metrics and Statistics </h4>
 									<div className='informatic-blurb__text'>
 									</div>
 								</div>
-								<div className='informatic-blurb'>
+								<div ref={el => this.img4 = el} className={`informatic-blurb abs-ico-co4${(this.state.manageSticky) ? ' co4-move' : ''}`}>
 									<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 										<img src='/assets/omni-splash/icons/smartphone.svg' />
 									</div>
-									<h4> Personal Marketplace </h4>
+									<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Personal Marketplace </h4>
 									<div className='informatic-blurb__text'>
 									</div>
 								</div>
