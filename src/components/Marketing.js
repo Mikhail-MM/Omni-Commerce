@@ -11,7 +11,10 @@ const mapDispatchToProps = dispatch => ({
 })
 
 class  Marketing extends Component {
-	state = { topOfPage: true }
+	state = { 
+		topOfPage: true, 
+		scrollDir: null,
+	}
 	componentDidMount() {
 		window.addEventListener('scroll', this.handleScroll)
 	}
@@ -20,9 +23,21 @@ class  Marketing extends Component {
 		window.removeEventListener('scroll', this.handleScroll)
 	}
 
+	uniqueCollisionFreePrevScrollTop = null
+
 	handleScroll = (event) => {
 		let scrollTop = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop)
 
+		if (this.uniqueCollisionFreePrevScrollTop && scrollTop > this.uniqueCollisionFreePrevScrollTop && this.state.scrollDir !== 'Scrolling Down') { 
+			this.setState({
+				scrollDir: 'Scrolling Down'
+			})
+		}
+		if (this.uniqueCollisionFreePrevScrollTop && scrollTop < this.uniqueCollisionFreePrevScrollTop && this.state.scrollDir !== 'Scrolling Up') { 
+			this.setState({
+				scrollDir: 'Scrolling Up'
+			})
+		}
 		if (!scrollTop && !!window.chrome && !!window.chrome.webstore) {
 			scrollTop = event.path[1].scrollY
 		}
@@ -49,6 +64,7 @@ class  Marketing extends Component {
 			})
 		}
 
+		this.uniqueCollisionFreePrevScrollTop = scrollTop
 	}
 	render(){
 			return(
