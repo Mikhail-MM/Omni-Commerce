@@ -19,6 +19,7 @@ const storeConfig = require('../models/schemas/storeConfig')
 const storeConfigSchema = storeConfig.storeConfigSchema
 
 const MarketplaceModels = require('../models/schemas/marketplace')
+const MarketplaceSchema = MarketplaceModels.MarketplaceSchema
 const StoreItemModel = MarketplaceModels.StoreItemModel
 const ShoppingCartModel = MarketplaceModels.ShoppingCartModel
 
@@ -247,6 +248,8 @@ module.exports.seedOmniUsers = async (req, res, next) => {
 
 	} catch(err) { next(err) }
 }
+
+
 
 module.exports.seedEssosMarket = async (req, res, next) => {
 	try {
@@ -674,67 +677,331 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 }
 
 
-module.exports.registerEssosUser = async (req, res, next) => {
+const seedFeaturedItems = async (req, res, next) => {
 	try {
 		
-		const mongoCollectionKey = uuid4().slice(0, 13);
-		const hashedPass = await bcrypt.hash(req.body.password, 10);
+		const savedChildren = [];
+		const savedShoppingCarts = [];
+		const savedItems = [];
 
-		const userData = {
-			email: req.body.email,
-			hash: hashedPass,
+		const hashedPass = await bcrypt.hash('12345', 10);
 
-			accountType: 'Essos',
+		const featuredSeed = [{
+						email: 'ijones@essos.com',
+						hash: hashedPass,
+		
+						firstName: 'Isis',
+						lastName: 'Jones',
+						phone: '(423)-789-4131',
+		
+						accountType: 'Essos',
+						avatarURL: '/assets/seed/essos-avatars/isis.jpg',
+						billing_address_line1: '919 Cedar Grove Rd',
+						billing_address_city: 'Wynnewood',
+						billing_address_zip: '19096',
+						billing_address_state: 'PA',
+						shipping_address_line1: '919 Cedar Grove Rd',
+						shipping_address_city: 'Wynnewood',
+						shipping_address_zip: '19096',
+						shipping_address_state: 'PA',
+		
+						mongoCollectionKey: uuid4().slice(0, 13),
+		
+						marketplaceItems: [
+							{
+								itemName: 'Yellow Blouse',
+								itemPrice: 75,
+								tags: [`Women`],
+								numberInStock: 10,
+								imageURL: '/assets/store-splash/featured-1.jpg',
+							},
+							{
+								itemName: 'Floral Blazer',
+								itemPrice: 125,
+								tags: [`Men`],
+								numberInStock: 10,
+								imageURL: '/assets/store-splash/featured-1.jpg',
+							},
+							{
+								itemName: 'Blue Flowy Sundress',
+								itemPrice: 98,
+								tags: [`Women`],
+								numberInStock: 10,
+								imageURL: '/assets/store-splash/featured-1.jpg',
+							},
+							{
+								itemName: 'Movado Ultra Slim',
+								itemPrice: 695,
+								tags: [`Men`],
+								numberInStock: 10,
+								imageURL: '/assets/store-splash/featured-1.jpg',
+							},
+						],
+					}]
 			
-			firstName: req.body.firstName,
-			lastName: req.body.lastName,
-			phoneNumber: req.body.phoneNumber,
+			const jumbotronSeed = [{
+							email: 'bks@essos.com',
+							hash: hashedPass,
+			
+							firstName: 'Brooklyn',
+							lastName: 'Supply Co.',
+							phone: '(423)-789-4131',
+			
+							accountType: 'Essos',
+							avatarURL: '/assets/seed/essos-avatars/bk.jpg',
+			
+							billing_address_line1: '919 Cedar Grove Rd',
+							billing_address_city: 'Wynnewood',
+							billing_address_zip: '19096',
+							billing_address_state: 'PA',
+							shipping_address_line1: '919 Cedar Grove Rd',
+							shipping_address_city: 'Wynnewood',
+							shipping_address_zip: '19096',
+							shipping_address_state: 'PA',
+			
+							mongoCollectionKey: uuid4().slice(0, 13),
+			
+							marketplaceItems: [
+								{
+									itemName: 'BKSCO Trucker Hat',
+									itemPrice: 35,
+									tags: [`Men`],
+									numberInStock: 10,
+									imageURL: '/assets/store-splash/jumbo1.jpg',
+								},
+								{
+									itemName: 'Paradise Graphic Tee',
+									itemPrice: 40,
+									tags: [`Men`],
+									numberInStock: 10,
+									imageURL: '/assets/store-splash/jumbo2.jpg',
+								},
+								{
+									itemName: 'Herschel Supply Co. Backpack',
+									itemPrice: 80,
+									tags: [`Men`],
+									numberInStock: 10,
+									imageURL: '/assets/store-splash/jumbo3.jpeg',
+								},
+								{
+									itemName: 'Gray Canvas Mid-Calf Socks',
+									itemPrice: 20,
+									tags: [`Men`],
+									numberInStock: 10,
+									imageURL: '/assets/store-splash/jumbo4.jpg',
+								},
+								{
+									itemName: 'True Religion Rocco Skinny Jeans',
+									itemPrice: 90,
+									tags: [`Men`],
+									numberInStock: 10,
+									imageURL: '/assets/store-splash/jumbo5.jpg',
+								},
+								{
+									itemName: 'Nike Air Max 2',
+									itemPrice: 90,
+									tags: [`Men`],
+									numberInStock: 10,
+									imageURL: '/assets/store-splash/jumbo6.jpg',
+								},
+							],
+						}]
 
-			billing_address_line1	: req.body.billing_address_line1,
-			billing_address_line2	: req.body.billing_address_line2,
-			billing_address_city	: req.body.billing_address_city,
-			billing_address_zip		: req.body.billing_address_zip,
-			billing_address_state	: req.body.billing_address_state,
-			shipping_address_line1	: req.body.shipping_address_line1,
-			shipping_address_line2	: req.body.shipping_address_line2,
-			shipping_address_city	: req.body.shipping_address_city,
-			shipping_address_zip	: req.body.shipping_address_zip,
-			shipping_address_state	: req.body.shipping_address_state,
+			for (essosUser of featuredSeed) {
+			// Create new User Entry in DB
+			const { 
+				email, 
+				hash, 
+				accountType, 
+				firstName, 
+				lastName, 
+				phone, 
+				avatarURL,
+				billing_address_line1,
+				billing_address_line2,
+				billing_address_city,
+				billing_address_zip,
+				billing_address_state,
+				shipping_address_line1,
+				shipping_address_line2,
+				shipping_address_city,
+				shipping_address_zip,
+				shipping_address_state,
+				mongoCollectionKey,
+			} = essosUser
 
-			mongoCollectionKey: mongoCollectionKey,
+			const userData = {
+				email, 
+				hash, 
+				accountType, 
+				firstName, 
+				lastName, 
+				phone, 
+				avatarURL,
+				billing_address_line1,
+				billing_address_line2,
+				billing_address_city,
+				billing_address_zip,
+				billing_address_state,
+				shipping_address_line1,
+				shipping_address_line2,
+				shipping_address_city,
+				shipping_address_zip,
+				shipping_address_state,
+				mongoCollectionKey,
+			}
 
-		};
+			const newEssosUser = new EssosUserModel(userData)
+			const savedEssosUser = await newEssosUser.save()
+
+			savedChildren.push(savedEssosUser)
+
+			const newShoppingCart = new ShoppingCartModel({ 
+							
+				ownerRef_id			: savedEssosUser._id,
+				subtotalDisplay		: 0,
+				subtotalReal		: 0,
+				taxDisplay			: 0,
+				taxReal				: 0,
+				totalDisplay		: 0,
+				totalReal			: 0,
+			
+			});
+
+			
+			const savedShoppingCart = await newShoppingCart.save();
+
+			savedShoppingCarts.push(savedShoppingCart);
+
+			for (item of essosUser.marketplaceItems) {
 
 
+				const {
+					itemName,
+					itemPrice,
+					numberInStock,
+					tags,
+					imageURL
+				} = item
 
-		const newEssosUser = new EssosUser(userData);
-		const savedEssosUser = await newEssosUser.save();
+				const itemData = {
+					itemName,
+					itemPrice,
+					numberInStock,
+					tags,
+					imageURL,
+					sellerRef_id: savedEssosUser._id,
+					postedBy: `${essosUser.firstName} ${essosUser.lastName}`
+				}
+				const featuredItemModel = mongoose.model('Marketplace', marketplaceSchema, 'storeitems_featured');
+				const newMarketplaceItem = new featuredItemModel(itemData)
+				const savedMarketplaceItem = await newMarketplaceItem.save()
 
-		const newShoppingCart = new ShoppingCartModel({ 
-						
-			ownerRef_id			: savedEssosUser._id,
-			subtotalDisplay		: 0,
-			subtotalReal		: 0,
-			taxDisplay			: 0,
-			taxReal				: 0,
-			totalDisplay		: 0,
-			totalReal			: 0,
-		
-		});
+				savedItems.push(savedMarketplaceItem)
+			}
+		}
 
-		
-		const savedShoppingCart = await newShoppingCart.save();
+		for (essosUser of jumbotronSeed) {
+			// Create new User Entry in DB
+			const { 
+				email, 
+				hash, 
+				accountType, 
+				firstName, 
+				lastName, 
+				phone, 
+				avatarURL,
+				billing_address_line1,
+				billing_address_line2,
+				billing_address_city,
+				billing_address_zip,
+				billing_address_state,
+				shipping_address_line1,
+				shipping_address_line2,
+				shipping_address_city,
+				shipping_address_zip,
+				shipping_address_state,
+				mongoCollectionKey,
+			} = essosUser
 
+			const userData = {
+				email, 
+				hash, 
+				accountType, 
+				firstName, 
+				lastName, 
+				phone, 
+				avatarURL,
+				billing_address_line1,
+				billing_address_line2,
+				billing_address_city,
+				billing_address_zip,
+				billing_address_state,
+				shipping_address_line1,
+				shipping_address_line2,
+				shipping_address_city,
+				shipping_address_zip,
+				shipping_address_state,
+				mongoCollectionKey,
+			}
+
+			const newEssosUser = new EssosUserModel(userData)
+			const savedEssosUser = await newEssosUser.save()
+
+			savedChildren.push(savedEssosUser)
+
+			const newShoppingCart = new ShoppingCartModel({ 
+							
+				ownerRef_id			: savedEssosUser._id,
+				subtotalDisplay		: 0,
+				subtotalReal		: 0,
+				taxDisplay			: 0,
+				taxReal				: 0,
+				totalDisplay		: 0,
+				totalReal			: 0,
+			
+			});
+
+			
+			const savedShoppingCart = await newShoppingCart.save();
+
+			savedShoppingCarts.push(savedShoppingCart);
+
+			for (item of essosUser.marketplaceItems) {
+
+
+				const {
+					itemName,
+					itemPrice,
+					numberInStock,
+					tags,
+					imageURL
+				} = item
+
+				const itemData = {
+					itemName,
+					itemPrice,
+					numberInStock,
+					tags,
+					imageURL,
+					sellerRef_id: savedEssosUser._id,
+					postedBy: `${essosUser.firstName} ${essosUser.lastName}`
+				}
+				const featuredItemModel = mongoose.model('Marketplace', marketplaceSchema, 'storeitems_featured');
+				const newMarketplaceItem = new featuredItemModel(itemData)
+				const savedMarketplaceItem = await newMarketplaceItem.save()
+
+				savedItems.push(savedMarketplaceItem)
+			}
+		}
 
 		const response = {
+			savedChildren,
+			savedShoppingCarts,
+			savedItems
+		}
 
-			savedEssosUser,
-			savedShoppingCart,
-
-		};
-
-		res.json(response);
+		res.send(response)
 
 	} catch(err) { next(err) }
-
 }
