@@ -61,15 +61,67 @@ h1, h2, h3, h4, h5, h6 {
   display: none;
   position: absolute;
   top: 16%;
-  right: 70.5%;
+  right: 65.5%;
 }
+.hatcontainer1__notif {
+  display: none;
+  position: absolute;
+  color: white;
+  text-align: center;
+  left: 0%;
+  right: 0%;
+  top: 0%;
+  bottom: calc(100% - 25px);
+  padding:1px 1px;
+  border-radius: 100px;
+  animation-fill-mode: forwards;
+}
+.hatcontainer1:hover > .hatcontainer1__notif {
+  display: block;
+  animation: fadeInCartNotif 2s;
+  animation-fill-mode: forwards;
+
+}
+
+@keyframes fadeInCartNotif {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-40px);
+  }
+}
+.hatContainer1-clickerOverlayHelper{
+  position:absolute;
+  top: -100px;
+  bottom: -100px;
+  right: -100px;
+  left: -100px;
+  background-color: transparent;
+  border: 0.2px solid white;
+  z-index: 100;
+}
+
 .hatcontainer1:hover ~ .hatcontainer-1-companion,
 .hatcontainer-1-companion:hover {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  animation: animateHatContainer1 2s;
 }
 
+@keyframes animateHatContainer1 {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px)
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 .teecontainer1 {
   position: absolute;
   right: 30%;
@@ -123,7 +175,8 @@ h1, h2, h3, h4, h5, h6 {
   transition: border 0.8s ease-out;
 }
 .jumbotron-context-box:hover {
-  border-style:solid;
+  border: 10px dashed red;
+  border-radius: 5px;
   animation: breathe 3s infinite;
 }
 .context-container {
@@ -442,4 +495,10 @@ h1, h2, h3, h4, h5, h6 {
 .cart-item-price-container{
   text-align: right;
   height: 100%;
+}
+
+
+.breather {
+  animation: breathe 3s infinite;
+  border: 3px solid white;
 }

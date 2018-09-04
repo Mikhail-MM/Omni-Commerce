@@ -987,8 +987,8 @@ const seedFeaturedItems = async (req, res, next) => {
 					sellerRef_id: savedEssosUser._id,
 					postedBy: `${essosUser.firstName} ${essosUser.lastName}`
 				}
-				const featuredItemModel = mongoose.model('Marketplace', marketplaceSchema, 'storeitems_featured');
-				const newMarketplaceItem = new featuredItemModel(itemData)
+				const jumbotronItemModel = mongoose.model('Marketplace', marketplaceSchema, 'storeitems_banner');
+				const newMarketplaceItem = new jumbotronItemModel(itemData)
 				const savedMarketplaceItem = await newMarketplaceItem.save()
 
 				savedItems.push(savedMarketplaceItem)

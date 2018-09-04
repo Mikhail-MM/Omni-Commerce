@@ -30,6 +30,9 @@ const mapDispatchToProps = dispatch => ({
 })
 
 class EssosMarket extends Component {
+	state = {
+		activeJumbo: null
+	}
 	componentDidMount() {
 		const { isAuthenticated, token } = this.props
 		this.props.retrieveAllMarketplaceItems()
@@ -191,14 +194,25 @@ class EssosMarket extends Component {
 	          
 	          <div className='jumbotron'>
 	            <img className='jumbotron-greeter' src='./assets/store-splash/greeting4.jpg' />
-	            <div className='hatcontainer1 jumbotron-context-box'>
+	            <div className={`hatcontainer1 jumbotron-context-box`}>
+	            	<div className='hatcontainer1__notif'> 
+	            		<h6> Add to Cart </h6>
+	            	</div>
+	            	<div className='hat1-bullseye' />
 	            </div>
 	           	<div className='hatcontainer-1-companion context-container'>
 	            	<h6> Custom Fitted </h6>
 	            	<p style={{color: 'green'}}> 50$ </p>
 	            	<button> See Details </button>
+	            	{ /* <div className='hatContainer1-clickerOverlayHelper' onMouseEnter={() => this.setState({ activeJumbo: 'hat1'})} onMouseLeave={() => this.setState({ activeJumbo: null})} /> */ }
 	            </div>
-	            <div className='teecontainer1 jumbotron-context-box' />
+
+	            <div className='teecontainer1 jumbotron-context-box' >
+	            	<div className='hatcontainer1__notif'> 
+	            	<h6> Add to Cart </h6>
+	           		</div>
+
+	            </div>
 	            <div className='pantscontainer2 jumbotron-context-box' />
 	            <div className='acccontainer1 jumbotron-context-box' />
 	            <div className='acccontainer2 jumbotron-context-box' />
