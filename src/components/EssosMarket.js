@@ -164,6 +164,7 @@ class EssosMarket extends Component {
 	}
 
 	 retrieveFeaturedItems = () => {
+	 	// This can be moved to a selector to filter all items by queryMarker string
 		return fetch('http://localhost:3001/storeItem?lookup=queryBannerItems', {
 			headers:{
 				'Content-Type': 'application/json'
