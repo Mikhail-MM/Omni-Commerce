@@ -31,14 +31,19 @@ const mapDispatchToProps = dispatch => ({
 
 class EssosMarket extends Component {
 	state = {
-		activeJumbo: null
+		activeJumbo: null,
+		jumbotronItems: [],
+		featuredItems: [],
+		jumboLoading: true
 	}
-	componentDidMount() {
+
+	async componentDidMount() {
 		const { isAuthenticated, token } = this.props
 		this.props.retrieveAllMarketplaceItems()
 		if (isAuthenticated) this.props.retrieveShoppingCart(token)
 		if (isAuthenticated) this.props.retrieveUserWishlist(token)
 		if (isAuthenticated) this.props.getUserSocialFeed(token)
+		const jumbotronData = await this.retrieveFeaturedItems()
 	}
 	
 	handleWishlistClick = (itemId) => {
@@ -158,6 +163,47 @@ class EssosMarket extends Component {
 		})		
 	}
 
+	 retrieveFeaturedItems = () => {
+		return fetch('http://localhost:3001/storeItem?lookup=queryBannerItems', {
+			headers:{
+				'Content-Type': 'application/json'
+			},
+			method: 'GET',
+			mode: 'cors',
+		})
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+		.then(json => {
+			const { jumbotronItems, featuredItems } = json
+			this.setState({
+				jumbotronItems,
+				featuredItems,
+				jumboLoading: false
+			})
+		})
+		.catch(err => console.log(err))
+	}
+
+	generateJumbotronTargetbox = () => {
+		console.log(this.state.jumbotronItems)
+		return this.state.jumbotronItems.map((item, index) => {
+    		const targetNo = index + 1
+	    	return(
+	    		<React.Fragment>
+	    		<div className={`jumbotarget${targetNo} jumbotron-context-box`}>
+	    			<div className={`jumbotarget${targetNo}__notif`}> 
+	    				<h6> Add to Cart </h6>
+	    			</div>
+	   			</div>
+	   			<div className={`jumbotarget${targetNo}__companion context-container`}>
+	    			<h6> {item.itemName} </h6>
+	    			<p style={{color: 'green'}}> {`$${item.itemPrice}`} </p>
+	    			<button> See Details </button>
+	    		</div>
+	    		</React.Fragment>
+	    	)
+   		})
+	}
+
 	render() {
 		const { marketplaceItems, shoppingCart } = this.props
 		
@@ -191,36 +237,9 @@ class EssosMarket extends Component {
 	              	</div>
 	              </div>
 	          </header>
-	          
 	          <div className='jumbotron'>
 	            <img className='jumbotron-greeter' src='./assets/store-splash/greeting4.jpg' />
-	            <div className={`hatcontainer1 jumbotron-context-box`}>
-	            	<div className='hatcontainer1__notif'> 
-	            		<h6> Add to Cart </h6>
-	            	</div>
-	            	<div className='hat1-bullseye' />
-	            </div>
-	           	<div className='hatcontainer-1-companion context-container'>
-	            	<h6> Custom Fitted </h6>
-	            	<p style={{color: 'green'}}> 50$ </p>
-	            	<button> See Details </button>
-	            	{ /* <div className='hatContainer1-clickerOverlayHelper' onMouseEnter={() => this.setState({ activeJumbo: 'hat1'})} onMouseLeave={() => this.setState({ activeJumbo: null})} /> */ }
-	            </div>
-
-	            <div className='teecontainer1 jumbotron-context-box' >
-	            	<div className='hatcontainer1__notif'> 
-	            	<h6> Add to Cart </h6>
-	           		</div>
-
-	            </div>
-	            <div className='pantscontainer2 jumbotron-context-box' />
-	            <div className='acccontainer1 jumbotron-context-box' />
-	            <div className='acccontainer2 jumbotron-context-box' />
-	            <div className='acccontainer3 jumbotron-context-box' />
-	            <div className='pantscontainer1 jumbotron-context-box' />
-	            <button className='greeter-button' >
-	                V See All Items V
-	            </button>
+	            	{(!this.statejumboLoading) && this.generateJumbotronTargetbox()}
 	          </div>
 	         
 	          <section className='featured-items'>

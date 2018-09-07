@@ -3,12 +3,13 @@ import { connect} from 'react-redux'
 import './styles/OmniSplash.css'
 
 import { routeToNode } from '../actions/routing'
-import { seedOmniDatabase, seedEssosMarketplace } from '../actions/seed'
+import { seedOmniDatabase, seedEssosMarketplace, seedEssosJumbotron } from '../actions/seed'
 
 const mapDispatchToProps = (dispatch) => ({
 	route: (node) => dispatch(routeToNode(node)),
 	seedOmniDatabase: () => dispatch(seedOmniDatabase()),
-	seedEssosMarketplace: () => dispatch(seedEssosMarketplace())
+	seedEssosMarketplace: () => dispatch(seedEssosMarketplace()),
+	seedEssosJumbotron: () => dispatch(seedEssosJumbotron())
 })
 
 class OmniSplash extends Component {
@@ -27,6 +28,7 @@ class OmniSplash extends Component {
 					<button onClick={event => this.props.route('/admin')} className="splash-button"> Admin Page </button>
 					<button onClick={event => this.props.seedOmniDatabase()}> Seed Omni Database </button>
 					<button onClick={event => this.props.seedEssosMarketplace()}> Seed Essos Database </button>
+					<button onClick={event => this.props.seedEssosJumbotron()}> Seed EssosJumbotron Database </button>
 				</div>
 			</div>
 		)

@@ -5,6 +5,7 @@ const Users = require('../models/schemas/users');
 
 const EssosUser = Users.EssosUser;
 const StoreItemModel = MarketplaceModels.StoreItemModel
+const StoreItemSchema = MarketplaceModels.StoreItemSchema
 
 
 module.exports.createNewStoreItem = async function(req, res, next) { 
@@ -20,8 +21,18 @@ module.exports.createNewStoreItem = async function(req, res, next) {
 }
 module.exports.getAllStoreItems = async function(req, res, next) {
 		try {
-			const foundStoreItems = await StoreItemModel.find({});
-				res.json(foundStoreItems)
+			if (req.query.lookup === 'queryBannerItems') {
+				console.log("Fetching Banner Query Query")
+				const jumbotronItems = await mongoose.model('Banner Items', StoreItemSchema, 'storeitems_banner').find({})
+				const featuredItems = await mongoose.model('Featured Items', StoreItemSchema, 'storeitems_featured').find({})
+					res.json({
+						jumbotronItems,
+						featuredItems
+					})
+			} else {
+				const foundStoreItems = await StoreItemModel.find({});
+					res.json(foundStoreItems)
+			}
 		} catch(err) { next(err) }
 }
 module.exports.getStoreItemById = async function(req, res, next) {

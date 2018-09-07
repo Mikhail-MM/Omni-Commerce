@@ -106,6 +106,8 @@ router.route('/seed/omni/')
 	.post(seed.seedOmniUsers)
 router.route('/seed/essos/')
 	.post(seed.seedEssosMarket)
+router.route('/seed/jumbo')
+	.post(seed.seedFeaturedItems)
 
 router.route('/events')
 	.get(authorize.routeEmployeeToMongoCollection, events.getEventFeed)
@@ -113,7 +115,6 @@ router.route('/events')
 
 router.route('/social/follow/:id')
 	.put(authorize.routeMarketplaceClient, social.follow)
-
 // really need to consolidate this with our old client functions and make all our endpoints more REST ful...
 router.route('/users/essos/getProfileView/ownProfile')
 	.get(authorize.routeEmployeeToMongoCollection, clients.getOwnMetadata)

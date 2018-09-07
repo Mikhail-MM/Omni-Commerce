@@ -19,7 +19,7 @@ const storeConfig = require('../models/schemas/storeConfig')
 const storeConfigSchema = storeConfig.storeConfigSchema
 
 const MarketplaceModels = require('../models/schemas/marketplace')
-const MarketplaceSchema = MarketplaceModels.MarketplaceSchema
+const StoreItemSchema = MarketplaceModels.StoreItemSchema
 const StoreItemModel = MarketplaceModels.StoreItemModel
 const ShoppingCartModel = MarketplaceModels.ShoppingCartModel
 
@@ -677,7 +677,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 }
 
 
-const seedFeaturedItems = async (req, res, next) => {
+module.exports.seedFeaturedItems = async (req, res, next) => {
 	try {
 		
 		const savedChildren = [];
@@ -720,21 +720,21 @@ const seedFeaturedItems = async (req, res, next) => {
 								itemPrice: 125,
 								tags: [`Men`],
 								numberInStock: 10,
-								imageURL: '/assets/store-splash/featured-1.jpg',
+								imageURL: '/assets/store-splash/featured-2-2.jpg',
 							},
 							{
 								itemName: 'Blue Flowy Sundress',
 								itemPrice: 98,
 								tags: [`Women`],
 								numberInStock: 10,
-								imageURL: '/assets/store-splash/featured-1.jpg',
+								imageURL: '/assets/store-splash/featured-3.jpg',
 							},
 							{
 								itemName: 'Movado Ultra Slim',
 								itemPrice: 695,
 								tags: [`Men`],
 								numberInStock: 10,
-								imageURL: '/assets/store-splash/featured-1.jpg',
+								imageURL: '/assets/store-splash/featured-4.jpg',
 							},
 						],
 					}]
@@ -767,42 +767,42 @@ const seedFeaturedItems = async (req, res, next) => {
 									itemPrice: 35,
 									tags: [`Men`],
 									numberInStock: 10,
-									imageURL: '/assets/store-splash/jumbo1.jpg',
+									imageURL: '/assets/store-splash/jumbotron-cart-1.jpg',
 								},
 								{
 									itemName: 'Paradise Graphic Tee',
 									itemPrice: 40,
 									tags: [`Men`],
 									numberInStock: 10,
-									imageURL: '/assets/store-splash/jumbo2.jpg',
+									imageURL: '/assets/store-splash/jumbotron-cart-3.jpg',
 								},
 								{
 									itemName: 'Herschel Supply Co. Backpack',
 									itemPrice: 80,
 									tags: [`Men`],
 									numberInStock: 10,
-									imageURL: '/assets/store-splash/jumbo3.jpeg',
+									imageURL: '/assets/store-splash/jumbotron-cart-2.jpeg',
 								},
 								{
 									itemName: 'Gray Canvas Mid-Calf Socks',
 									itemPrice: 20,
 									tags: [`Men`],
 									numberInStock: 10,
-									imageURL: '/assets/store-splash/jumbo4.jpg',
+									imageURL: '/assets/store-splash/jumbotron-cart-4.jpg',
 								},
 								{
 									itemName: 'True Religion Rocco Skinny Jeans',
 									itemPrice: 90,
 									tags: [`Men`],
 									numberInStock: 10,
-									imageURL: '/assets/store-splash/jumbo5.jpg',
+									imageURL: '/assets/store-splash/jumbotron-cart-5.jpg',
 								},
 								{
 									itemName: 'Nike Air Max 2',
 									itemPrice: 90,
 									tags: [`Men`],
 									numberInStock: 10,
-									imageURL: '/assets/store-splash/jumbo6.jpg',
+									imageURL: '/assets/store-splash/jumbotron-cart-6.jpg',
 								},
 							],
 						}]
@@ -893,7 +893,7 @@ const seedFeaturedItems = async (req, res, next) => {
 					sellerRef_id: savedEssosUser._id,
 					postedBy: `${essosUser.firstName} ${essosUser.lastName}`
 				}
-				const featuredItemModel = mongoose.model('Marketplace', marketplaceSchema, 'storeitems_featured');
+				const featuredItemModel = mongoose.model('Featured Items', StoreItemSchema, 'storeitems_featured');
 				const newMarketplaceItem = new featuredItemModel(itemData)
 				const savedMarketplaceItem = await newMarketplaceItem.save()
 
@@ -987,7 +987,7 @@ const seedFeaturedItems = async (req, res, next) => {
 					sellerRef_id: savedEssosUser._id,
 					postedBy: `${essosUser.firstName} ${essosUser.lastName}`
 				}
-				const jumbotronItemModel = mongoose.model('Marketplace', marketplaceSchema, 'storeitems_banner');
+				const jumbotronItemModel = mongoose.model('Banner Items', StoreItemSchema, 'storeitems_banner');
 				const newMarketplaceItem = new jumbotronItemModel(itemData)
 				const savedMarketplaceItem = await newMarketplaceItem.save()
 

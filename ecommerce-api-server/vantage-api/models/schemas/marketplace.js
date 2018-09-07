@@ -125,7 +125,7 @@ const sellerSpecificPurchaseOrder = new Schema(Object.assign({}, salesManifest, 
 
 module.exports.ShoppingCartModel = mongoose.model('ShoppingCart', shoppingCartSchema);
 module.exports.MarketplaceModel = mongoose.model('Marketplace', marketplaceSchema);
-module.exports.MarketplaceSchema = marketplaceSchema
+module.exports.StoreItemSchema = storeItemSchema
 module.exports.StoreItemModel = mongoose.model('StoreItem', storeItemSchema);
 module.exports.StripeCustomerModel = mongoose.model('StripeCustomer', stripeCustomerSchema);
 module.exports.PurchaseOrderModel = mongoose.model('PurchaseOrder', purchaseOrderSchema);
