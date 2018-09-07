@@ -891,10 +891,10 @@ module.exports.seedFeaturedItems = async (req, res, next) => {
 					tags,
 					imageURL,
 					sellerRef_id: savedEssosUser._id,
-					postedBy: `${essosUser.firstName} ${essosUser.lastName}`
+					postedBy: `${essosUser.firstName} ${essosUser.lastName}`,
+					queryMarker: 'Featured-1'
 				}
-				const featuredItemModel = mongoose.model('Featured Items', StoreItemSchema, 'storeitems_featured');
-				const newMarketplaceItem = new featuredItemModel(itemData)
+				const newMarketplaceItem = new StoreItemModel(itemData)
 				const savedMarketplaceItem = await newMarketplaceItem.save()
 
 				savedItems.push(savedMarketplaceItem)
@@ -985,10 +985,10 @@ module.exports.seedFeaturedItems = async (req, res, next) => {
 					tags,
 					imageURL,
 					sellerRef_id: savedEssosUser._id,
-					postedBy: `${essosUser.firstName} ${essosUser.lastName}`
+					postedBy: `${essosUser.firstName} ${essosUser.lastName}`,
+					queryMarker: 'Jumbotron-1',
 				}
-				const jumbotronItemModel = mongoose.model('Banner Items', StoreItemSchema, 'storeitems_banner');
-				const newMarketplaceItem = new jumbotronItemModel(itemData)
+				const newMarketplaceItem = new StoreItemModel(itemData)
 				const savedMarketplaceItem = await newMarketplaceItem.save()
 
 				savedItems.push(savedMarketplaceItem)

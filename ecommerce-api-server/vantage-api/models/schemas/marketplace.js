@@ -51,6 +51,7 @@ const storeItemSchema = new Schema({
 	marketplaceRef_id: {type: Schema.Types.ObjectId, ref: 'Marketplace'},
 	itemRef_id: {type: Schema.Types.ObjectId, ref:'StoreItem',}, // only used within shopping cart
 	reviewed: Boolean,
+	queryMarker: String,
 });
 
 // A reusable schema representing transactions in different states and instantiations

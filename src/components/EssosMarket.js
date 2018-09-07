@@ -189,7 +189,7 @@ class EssosMarket extends Component {
     		const targetNo = index + 1
 	    	return(
 	    		<React.Fragment>
-	    		<div className={`jumbotarget${targetNo} jumbotron-context-box`}>
+	    		<div className={`jumbotarget${targetNo} jumbotron-context-box`} onClick={() => this.props.showModal('CONFIRM_CART_ADDITION', {item: item})}>
 	    			<div className={`jumbotarget${targetNo}__notif`}> 
 	    				<h6> Add to Cart </h6>
 	    			</div>
@@ -202,6 +202,21 @@ class EssosMarket extends Component {
 	    		</React.Fragment>
 	    	)
    		})
+	}
+
+	generateFeaturedFeed = () => {
+		return this.state.featuredItems.map(item => {
+			return(
+				<div className='featured-card-container' onClick={() => this.props.showModal('CONFIRM_CART_ADDITION', {item: item})}> 
+					<div className='featured-image-container'>
+						<img src={item.imageURL} />
+					</div>
+					<div className='featured-nofrill-info'>
+						<h5> {item.itemName} </h5>
+					</div>
+				</div>
+			)
+		})
 	}
 
 	render() {
@@ -239,20 +254,18 @@ class EssosMarket extends Component {
 	          </header>
 	          <div className='jumbotron'>
 	            <img className='jumbotron-greeter' src='./assets/store-splash/greeting4.jpg' />
-	            	{(!this.statejumboLoading) && this.generateJumbotronTargetbox()}
+	            	{(!this.state.jumboLoading) && this.generateJumbotronTargetbox()}
 	          </div>
 	         
-	          <section className='featured-items'>
+	          <div className='featured-items'>
 	            <div className='featured-items__header-container' >
 	            <h1> Featured Products </h1>
 	            </div>
 	            <div className='featured-items__slider-container' >
-	               <img className='featured-mockup' src='./assets/store-splash/featured-1.jpg'/> 
-	               <img className='featured-mockup' src='./assets/store-splash/featured-2-2.jpg'/> 
-	               <img className='featured-mockup' src='./assets/store-splash/featured-3.jpg'/> 
-	               <img className='featured-mockup' src='./assets/store-splash/featured-4.jpg'/> 
+	               {(!this.state.jumboLoading) && this.generateFeaturedFeed()}
 	            </div>
-	          </section>
+	            	
+	          </div>
 
 	          <div className='search-bar-container'>
 	          </div>
