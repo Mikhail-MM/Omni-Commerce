@@ -34,7 +34,7 @@ const addUserPromise = async (user) => {
 }
 const generateRandomUsers = async (numUsers) => {
 	try { 
-			const response = await axios.get(`https://randomuser.me/api/?results=${numUsers}`)
+			const response = await axios.get(`https://randomuser.me/api/?results=${numUsers}&nat=us,gb,fr`)
 			const users = response.data.results
 			const userProfileAdditionQueries = users.map(async (user, index) => {
 				const avatarURL = (index < 100) ? user.picture.large : config.stockAvvys[Math.floor(Math.random() * 15)]
@@ -65,50 +65,66 @@ const generateRandomUsers = async (numUsers) => {
 	catch(err) { console.log(err) }	
 }
 
-const generateFollowers = async (selectedUsers) => {
+
+const generateFollowerPairs = async (watcher, liked) => {
+	try {
+
+	} catch (err) { console.log(err )}
+}
+
+const generateFollowers = async () => {
 	try { 
-		const users = (selectedUsers) ? selectedUsers : await EssosUserModel.find({})
+		const users = await EssosUserModel.find({})
 		console.log('all users', users)
+		let i = 0
 		for (followedUser of users) {
+				console.log('Current User:', followedUser.firstName)
+				console.log('i:', i, 'progress:', i % users.length * 100 / users.length, '%')
+			randonum = Math.floor(Math.random() * (users.length - (i + 1))) + (i + 1)
+			console.log('randonum', randonum)
+			if (randonum === i + 1) console.log("Can't slice at own position, no followers for this one.")
+				if (randonum !== i + 1) {
+							const randoFollowers = users.slice(i + 1, randonum)
+							const randoNames = randoFollowers.map(fol => fol.firstName)
+							console.log('randofollowers:', randoNames)
+							const committedFollowerPairs = randoFollowers
+							.map(async (follower) => { 
+								const makePairFollower = await EssosUserModel.findOneAndUpdate(
+									{_id: follower._id},
+									{ $push: { following: { 
+										userId: followedUser._id,
+										name: `${followedUser.firstName} ${followedUser.lastName}`,
+										avatarURL: followedUser.avatarURL,
+									}}},
+									{upsert: true, new: true},
+								)
+								const makePairFollowed = await EssosUserModel.findOneAndUpdate(
+									{_id: followedUser.id},
+									{ $push: { followers: {
+										userId: follower._id,
+										name: `${follower.firstName} ${follower.lastName}`,
+										avatarURL: follower.avatarURL,
+									}}},
+									{upsert: true, new: true},
+								)
+								return { follower: makePairFollower, followed: makePairFollowed }
+								
+							})
+							const result = await Promise.all(committedFollowerPairs)
+							console.log(result)
+						}
 
-			console.log('followed user:', followedUser.firstName)
-			const randoFollowers = users.slice(0, Math.floor(Math.random() * Math.floor(users.length)))
-			console.log('their slice of followers:', randoFollowers.length)
-			/*
-			const committedFollowerPairs = randoFollowers
-			.filter(followerToFilter => followerToFilter._id.toString() !== followedUser._id.toString())
-			.map(async (follower) => {
-
-				return({
-					follower: EssosUserModel.findOneAndUpdate({_id: follower._id}, 
-						{ $push: { following: { 
-							userId: followedUser._id,
-							name: `${followedUser.firstName} ${followedUser.lastName}`,
-							avatarURL: followedUser.avatarURL,
-						}}},
-						{upsert: true, new: true},
-					).exec(),
-					followee: EssosUserModel.findOneAndUpdate(
-						{_id: followedUser._id},
-						{ $push: { followers: {
-							userId: followedUser._id,
-							name: `${followedUser.firstName} ${followedUser.lastName}`,
-							avatarURL: followedUser.avatarURL,
-						}}},
-						{upsert: true, new: true},
-					).exec(),
-				})
-			})
-
-			const queryArray = await Promise.all(committedFollowerPairs)
-			console.log(queryArray)
-		*/
+			i++
 		}
 
 	} catch(err) { console.log(err) }
 }
 
 generateFollowers()
+
+const generateReviews = async (reviewers, items) => {
+
+}
 module.exports.seedOmniUsers = async (req, res, next) => {
 	try {
 		const savedChildren = [];
