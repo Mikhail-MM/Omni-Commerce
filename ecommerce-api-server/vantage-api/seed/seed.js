@@ -72,10 +72,9 @@ const generateFollowers = async (selectedUsers) => {
 			
 			const randoFollowers = users.sliceMath.floor(Math.floor(Math.random() * Math.floor(users.length)))
 			
-			const committedFollowerPairs = randoFollowers.map(async (follower) => {
-				
-				if (followedUser._id.toString() === follower._id.toString()) return null
-				
+			const committedFollowerPairs = randoFollowers
+			.filter(followerToFilter => follower._id.toString() !== followedUser._id.toString())
+			.map(async (follower) => {
 				return({
 					follower: EssosUserModel.findOneAndUpdate({_id: follower._id}, 
 						{ $push: { following: { 
@@ -97,7 +96,7 @@ const generateFollowers = async (selectedUsers) => {
 				})
 			})
 
-			const queryArray = await Promise.all(committedFollowerPairs.filter(pair => pair !== null))
+			const queryArray = await Promise.all(committedFollowerPairs)
 			console.log(queryArray)
 		}
 	} catch(err) { console.log(err) }
