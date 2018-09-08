@@ -120,11 +120,54 @@ const generateFollowers = async () => {
 	} catch(err) { console.log(err) }
 }
 
-generateFollowers()
 
-const generateReviews = async (reviewers, items) => {
 
+const generateRating = (mood) => {
+	console.log(mood)
+	switch(mood){
+		case('bad'): return ({
+			rating: (Math.floor(Math.random() * (3 - 0) + 0))
+		})
+		case('average'): return ({
+			rating: (Math.floor(Math.random() * (5 - 3) + 3))
+		})
+		case('good'): return ({
+			rating: (Math.floor(Math.random() * (6 - 4) + 4))
+		})
+	}
 }
+const weighRatingType = () => {
+	let distribution = Math.random()
+	console.log("DISTRIBUTION...", distribution)
+	switch(true) {
+		case(distribution > 0.9): return 'bad'
+		case(distribution > 0.5): return 'average'
+		case(distribution > 0): return 'good'
+	}
+}
+const generateReviews = async () => {
+	const allItems = await StoreItemModel.find({})
+	const allUsers = await EssosUserModel.find({})
+	for (item of allItems) {
+		let slice1 = Math.floor(Math.random() * (allUsers.length - 0) + 0)
+		let slice2 = Math.floor(Math.random() * (allUsers.length - 0) + 0)
+		while (slice1 === slice2) { slice1 = Math.floor(Math.random() * (allUsers.length - 0) + 0) }
+		const hiSlice = (slice1 > slice2) ? slice1 : slice2
+		const loSlice = (slice1 < slice2) ? slice1 : slice2
+		console.log("lo, hi ", loSlice, hiSlice )
+		const userSlice = allUsers.slice(loSlice, hiSlice)
+		const numReviews = userSlice.length
+		console.log(numReviews, 'num reviews')
+		const loadedReviewers = userSlice.map(user => ({
+				user: user,
+				review: generateRating(weighRatingType())
+			})
+		)
+		loadedReviewers.forEach(item => console.log('User:', item.user.firstName, 'Review: ', item.review))
+	}
+}
+
+generateReviews()
 module.exports.seedOmniUsers = async (req, res, next) => {
 	try {
 		const savedChildren = [];
