@@ -61,11 +61,49 @@ const generateRandomUsers = async (numUsers) => {
 				})
 			})
 			const addedUsers = await Promise.all(userProfileAdditionQueries)
-			console.log(addedUsers)
 	} 
 	catch(err) { console.log(err) }	
 }
 
+const generateFollowers = async (selectedUsers) => {
+	try { 
+		const users = (selectedUsers) ? selectedUsers : await EssosUserModel.find({})
+		for (followedUser of users) {
+			
+			const randoFollowers = users.sliceMath.floor(Math.floor(Math.random() * Math.floor(users.length)))
+			
+			const committedFollowerPairs = randoFollowers.map(async (follower) => {
+				
+				if (followedUser._id.toString() === follower._id.toString()) return null
+				
+				return({
+					follower: EssosUserModel.findOneAndUpdate({_id: follower._id}, 
+						{ $push: { following: { 
+							userId: followedUser._id,
+							name: `${followedUser.firstName} ${followedUser.lastName}`,
+							avatarURL: followedUser.avatarURL,
+						}}},
+						{upsert: true, new: true},
+					).exec(),
+					followee: EssosUserModel.findOneAndUpdate(
+						{_id: followedUser._id},
+						{ $push: { followers: {
+							userId: followedUser._id,
+							name: `${followedUser.firstName} ${followedUser.lastName}`,
+							avatarURL: followedUser.avatarURL,
+						}}},
+						{upsert: true, new: true},
+					).exec(),
+				})
+			})
+
+			const queryArray = await Promise.all(committedFollowerPairs.filter(pair => pair !== null))
+			console.log(queryArray)
+		}
+	} catch(err) { console.log(err) }
+}
+
+generateFollowers()
 
 module.exports.seedOmniUsers = async (req, res, next) => {
 	try {
@@ -696,9 +734,6 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 
 		}
 
-		const generateFollowers = (users) => {
-
-		}
 
 		const generateWishlists = (users, items) => {
 

@@ -105,7 +105,7 @@ module.exports = {
 				rating: 5,
 				review: 'These shoes go with any outfit (even a suit) change the laces if you want to switch it up. My shoes were delivered fast (2 days) in a shoe box in excellent condition!'
 			}
-		]
+		],
 		shirts: [
 			{
 				rating: 5,
