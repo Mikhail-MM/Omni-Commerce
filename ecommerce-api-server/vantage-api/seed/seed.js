@@ -68,13 +68,17 @@ const generateRandomUsers = async (numUsers) => {
 const generateFollowers = async (selectedUsers) => {
 	try { 
 		const users = (selectedUsers) ? selectedUsers : await EssosUserModel.find({})
+		console.log('all users', users)
 		for (followedUser of users) {
-			
-			const randoFollowers = users.sliceMath.floor(Math.floor(Math.random() * Math.floor(users.length)))
-			
+
+			console.log('followed user:', followedUser.firstName)
+			const randoFollowers = users.slice(0, Math.floor(Math.random() * Math.floor(users.length)))
+			console.log('their slice of followers:', randoFollowers.length)
+			/*
 			const committedFollowerPairs = randoFollowers
-			.filter(followerToFilter => follower._id.toString() !== followedUser._id.toString())
+			.filter(followerToFilter => followerToFilter._id.toString() !== followedUser._id.toString())
 			.map(async (follower) => {
+
 				return({
 					follower: EssosUserModel.findOneAndUpdate({_id: follower._id}, 
 						{ $push: { following: { 
@@ -98,12 +102,13 @@ const generateFollowers = async (selectedUsers) => {
 
 			const queryArray = await Promise.all(committedFollowerPairs)
 			console.log(queryArray)
+		*/
 		}
+
 	} catch(err) { console.log(err) }
 }
 
 generateFollowers()
-
 module.exports.seedOmniUsers = async (req, res, next) => {
 	try {
 		const savedChildren = [];
