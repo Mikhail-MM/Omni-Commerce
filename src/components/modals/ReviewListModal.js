@@ -42,16 +42,16 @@ const ReviewListModal = props => {
 				<div className='user-social__user-container'>
 					<div className='review-userbox-container'>
 						<div className='user-social__avatar-container'>
-							<img style={{borderRadius:50}} src={rating.avatarURL} />
+							<img style={{borderRadius:50, border: '.5px solid rgba(0,0,0,0.75)'}} src={rating.avatarURL} />
 						</div>
-						<div style={{fontSize: '0.75em'}}> {rating.name} </div>
+						<div style={{fontSize: '0.75em', margin: '12px'}}> {rating.name} </div>
 					</div>
 					<div className='user-social__review-container-column'>
 						<div className='review-ratings-row'>
 							{ renderRatingIconsToDOM(rating.rating) }
 						</div>
 						<div className='review-contents-container'>
-							<p style={{margin: 0, maxWidth: 600}}> {rating.review} </p>
+							<p style={{margin: 0, maxWidth: 600, textAlign: 'left'}}> {rating.review} </p>
 						</div>
 					</div>
 				</div>
@@ -62,16 +62,18 @@ const ReviewListModal = props => {
 		<div>
 			<Modal
 				isOpen={props.modalType === 'VIEW_REVIEWS_MODAL'}
-				style={modalStyle}
+				style={{...modalStyle, height:'500px', overflow: 'scroll'}}
 				contentLabel="Example Modal"
 				overlayClassName="Overlay"
 				>
-
-				<div style={{textAlign: 'center'}}>
+				<React.Fragment>
+				<div style={{textAlign: 'center', height: 'auto', maxHeight: 600, overflow: 'auto', maxWidth: 600}}>
 					<h4> {arrayType} </h4>
 					{ renderReviewsToDOM() }
-					<button onClick={() => props.hideModal()}> Cancel </button>
+					
 				</div>
+				<button onClick={() => props.hideModal()}> Cancel </button>
+				</React.Fragment>
 
 			</Modal>
 		</div>

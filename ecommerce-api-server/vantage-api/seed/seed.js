@@ -121,18 +121,21 @@ const generateFollowers = async () => {
 }
 
 
-
+const determineReview = (mood) => `${mood}`
 const generateRating = (mood) => {
 	console.log(mood)
 	switch(mood){
 		case('bad'): return ({
-			rating: (Math.floor(Math.random() * (3 - 0) + 0))
+			rating: (Math.floor(Math.random() * (3 - 0) + 0)),
+			review: determineReview(mood),
 		})
 		case('average'): return ({
-			rating: (Math.floor(Math.random() * (5 - 3) + 3))
+			rating: (Math.floor(Math.random() * (5 - 3) + 3)),
+			review: determineReview(mood),
 		})
 		case('good'): return ({
-			rating: (Math.floor(Math.random() * (6 - 4) + 4))
+			rating: (Math.floor(Math.random() * (6 - 4) + 4)),
+			review: determineReview(mood),
 		})
 	}
 }
@@ -163,7 +166,24 @@ const generateReviews = async () => {
 				review: generateRating(weighRatingType())
 			})
 		)
-		loadedReviewers.forEach(item => console.log('User:', item.user.firstName, 'Review: ', item.review))
+		const addedItemReviews = loadedReviewers.map(async (queryData) => {
+			const { rating, review } = queryData.review
+			const reviewQuery = await StoreItemModel.findOneAndUpdate(
+					{_id: item._id}, 
+					{ $push: { reviews: {
+						userId: queryData.user._id,
+						name: `${queryData.user.firstName} ${queryData.user.lastName}`,
+						avatarURL: queryData.user.avatarURL,
+						rating,
+						review,
+					}}},
+					{upsert: true, new: true},
+				)
+			return reviewQuery
+		})
+
+		const resolution = await Promise.all(addedItemReviews)
+		console.log(resolution)
 	}
 }
 
@@ -432,6 +452,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 					{
 						itemName: 'Purple Jordans',
 						itemPrice: 120,
+						description: "Excellent condition Js. All come in like-new condition with original box packaging.",
 						tags: [`Shoes - Male`],
 						numberInStock: 1,
 						imageURL: '/assets/seed/marketplace/pjordan.jpg',
@@ -439,6 +460,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 					{
 						itemName: 'Charcoal Adidas',
 						itemPrice: 59,
+						description: "Classic style, low-key color. Great posture support, solid running shoes.",
 						tags: [`Shoes - Male`],
 						numberInStock: 4,
 						imageURL: '/assets/seed/marketplace/chadidas.jpg',
@@ -446,6 +468,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 					{
 						itemName: 'Felt Slip-Ons',
 						itemPrice: 39,
+						description: "Flexible, comfortable, and easy on the feet.",
 						numberInStock: 2,
 						tags: [`Shoes - Male`, `Shoes - Female`],
 						imageURL: '/assets/seed/marketplace/fslip.jpg'
@@ -453,6 +476,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 					{
 						itemName: 'Butterfly Boots',
 						itemPrice: 60,
+						description: "Really good for the fall season.",
 						numberInStock: 3, 
 						tags: [`Shoes - Female`],
 						imageURL: '/assets/seed/marketplace/bboots.jpg',
@@ -460,6 +484,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 					{
 						itemName: 'Black Yeezys',
 						itemPrice: 435,
+						description: "Can't go wrong with the Yeezys. These are the real thing.",
 						numberInStock: 2,
 						tags: [`Shoes - Male`, `Shoes - Female`],
 						imageURL: '/assets/seed/marketplace/bfeezy.jpg',
@@ -467,6 +492,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 					{
 						itemName: 'Black Levis',
 						itemPrice: 30,
+						description: "Your basic black pair of sneakers.",
 						numberInStock: 10,
 						tags: [`Shoes - Male`, `Shoes - Female`],
 						imageURL: '/assets/seed/marketplace/blevi.jpg'
@@ -475,6 +501,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 					{
 						itemName: 'Pink Nike Airs',
 						itemPrice: 50,
+						description: "Great running shoes",
 						numberInStock: 2,
 						tags: [`Shoes - Female`],
 						imageURL: '/assets/seed/marketplace/pnike.jpg',
@@ -482,6 +509,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 					{
 						itemName: 'Black Adidas',
 						itemPrice: 100,
+						description: "Awesome shoes. Still in great condition.",
 						numberInStock: 1,
 						tags: [`Shoes - Male`],
 						imageURL: '/assets/seed/marketplace/badidas.jpg',
@@ -489,6 +517,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 					{
 						itemName: 'Black Leather Hi-Tops',
 						itemPrice: 100,
+						description: "Awesome shoes. Perfect condition!!",
 						numberInStock: 2, 
 						tags: [`Shoes - Male`],
 						imageURL: '/assets/seed/marketplace/btop.jpg',
@@ -497,12 +526,14 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 						itemName: 'Original Air Jordan 1',
 						itemPrice: 570,
 						numberInStock: 1,
+						description: "Classic!! Only have a few of these left.",
 						tags: [`Shoes - Male`],
 						imageURL: '/assets/seed/marketplace/j1.jpg',
 					},
 					{
 						itemName: 'Tribal Canvas Vans',
 						itemPrice: 88,
+						description: "Vans are always comfy. We will have other cool designs in soon .. follow us!!",
 						numberInStock: 1,
 						tags: [`Shoes - Male`, `Shoes - Female`],
 						imageURL: '/assets/seed/marketplace/tribals.jpg'
@@ -510,6 +541,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 					{
 						itemName: 'Loafmaster Loafers',
 						itemPrice: 90,
+						description: "For dressy occasions.",
 						numberInStock: 2,
 						tags: [`Shoes - Male`],
 						imageURL: '/assets/seed/marketplace/loafman.jpg',
@@ -544,12 +576,14 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 						itemName: 'Panerai Luminor Marina',
 						itemPrice: 1650,
 						numberInStock: 1,
+						description: "Sleek. Luxurious. Elegant.",
 						tags: [`Watches`],
 						imageURL: '/assets/seed/marketplace/lumi.jpg',
 					},
 					{
 						itemName: 'Breitling Chronometre Certifie',
 						itemPrice: 4162,
+						description: "Opulent. Extravegant. Obscene. Flaunt your lifestyle with a certified Breitling.",
 						numberInStock: 1,
 						tags: [`Watches`],
 						imageURL: '/assets/seed/marketplace/bling.jpg',
@@ -557,6 +591,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 					{
 						itemName: 'Wood-Grain Orient Mako',
 						itemPrice: 300,
+						description: "A more modern look.",
 						numberInStock: 2,
 						tags: [`Watches`],
 						imageURL: '/assets/seed/marketplace/mako.jpg',
@@ -564,6 +599,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 					{
 						itemName: 'Sekonda Mens Classic',
 						itemPrice: 450,
+						description: "Embrace your masculinity. Wear Sekonda.",
 						numberInStock: 2,
 						tags: [`Watches`],
 						imageURL: '/assets/seed/marketplace/sekonda.jpg',
@@ -596,6 +632,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 					{
 						itemName: 'Sweater-ish CropTop',
 						itemPrice: 39,
+						description: "A nice top for fall.",
 						numberInStock: 1,
 						tags: [`Apparel - Women's`, `Tops`],
 						imageURL: '/assets/seed/marketplace/gcrop.jpg',
@@ -603,6 +640,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 					{
 						itemName: 'Navy Peacoat',
 						itemPrice: 140,
+						description: "A great jacket for late fall and early winter.",
 						numberInStock: 1,
 						tags: [`Apparel - Women's`, `Tops`],
 						imageURL: '/assets/seed/marketplace/bcoat.jpg',
@@ -610,6 +648,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 					{
 						itemName: 'Shein Bodysuit',
 						itemPrice: 40,
+						description: "Cool one-piece for the beach.",
 						numberInStock: 1,
 						tags: [`Apparel - Women's`, `Tops`, `Bottoms`],
 						imageURL: '/assets/seed/marketplace/shein.jpg',
@@ -617,6 +656,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 					{
 						itemName: 'Pink J.Crew Coat',
 						itemPrice: 70,
+						description: "Back to school vibes.",
 						numberInStock: 1,
 						tags: [`Apparel - Women's`, `Tops`],
 						imageURL: '/assets/seed/marketplace/pink.jpg',
@@ -651,6 +691,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 						itemName:'Marie Veronique Skincare Set',
 						itemPrice: 150,
 						numberInStock: 1, 
+						description: "Full set including everything you need.",
 						tags: [`Beauty`],
 						imageURL: '/assets/seed/marketplace/mv.jpg',
 					},
@@ -658,12 +699,14 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 						itemName: 'Miss Dior Fragrance',
 						itemPrice: 50,
 						numberInStock: 30,
+						description: 'Hints of Lavender and Vanilla.',
 						tags: [`Beauty`],
 						imageURL: '/assets/seed/marketplace/mdior.jpg',
 					},
 					{
 						itemName: 'Makeup Brush Set',
 						itemPrice: 29,
+						description: "Basic starter set for applying blush and concealer",
 						numberInStock: 1,
 						tags: [`Beauty`],
 						imageURL: '/assets/seed/marketplace/brushset.jpg',
@@ -671,6 +714,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 					{
 						itemName: 'Chanel No. 5',
 						itemPrice: 69,
+						description: "A good fragrance for guys and girls.",
 						numberInStock: 20,
 						tags: [`Beauty`],
 						imageURL: '/assets/seed/marketplace/chanel.jpg',
@@ -678,13 +722,15 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 					{
 						itemName: 'Glossier Blush Kit',
 						itemPrice: 40,
-						numberInStock: 1, 
+						numberInStock: 1,
+						description: "Comes with many shades for different contours.", 
 						tags: [`Beauty`],
 						imageURL: '/assets/seed/marketplace/glossier.jpg',
 					},
 					{
 						itemName: 'Prestige Mens Pomade',
 						itemPrice: 29,
+						description: "Medium hold, water and sweat resistatnt.",
 						numberInStock: 2,
 						tags: [`Beauty`],
 						imageURL: '/assets/seed/marketplace/pomade.jpg',		
@@ -692,6 +738,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 					{
 						itemName: 'Nude By Nature Concealer',
 						itemPrice: 15,
+						description: "Good for removing acne blemishes during breakouts and for help with dark spots.",
 						numberInStock: 1,
 						tags: [`Beauty`],
 						imageURL: '/assets/seed/marketplace/concealer.jpg',
@@ -852,6 +899,7 @@ module.exports.seedFeaturedItems = async (req, res, next) => {
 							{
 								itemName: 'Yellow Blouse',
 								itemPrice: 75,
+								description: "Play it casual or dressy with this bright yellow top.",
 								tags: [`Women`],
 								numberInStock: 10,
 								imageURL: '/assets/store-splash/featured-1.jpg',
@@ -859,6 +907,7 @@ module.exports.seedFeaturedItems = async (req, res, next) => {
 							{
 								itemName: 'Floral Blazer',
 								itemPrice: 125,
+								description: "Flower-Emblazoned Blazer to bring on the fun at your next party. Surprisingly fancy.",
 								tags: [`Men`],
 								numberInStock: 10,
 								imageURL: '/assets/store-splash/featured-2-2.jpg',
@@ -866,6 +915,7 @@ module.exports.seedFeaturedItems = async (req, res, next) => {
 							{
 								itemName: 'Blue Flowy Sundress',
 								itemPrice: 98,
+								description: "A sweet look for the Spring season.",
 								tags: [`Women`],
 								numberInStock: 10,
 								imageURL: '/assets/store-splash/featured-3.jpg',
@@ -873,6 +923,7 @@ module.exports.seedFeaturedItems = async (req, res, next) => {
 							{
 								itemName: 'Movado Ultra Slim',
 								itemPrice: 695,
+								description: "What time is it? Time for you to buy this watch! Minimalist & Modern.",
 								tags: [`Men`],
 								numberInStock: 10,
 								imageURL: '/assets/store-splash/featured-4.jpg',
@@ -906,6 +957,7 @@ module.exports.seedFeaturedItems = async (req, res, next) => {
 								{
 									itemName: 'BKSCO Trucker Hat',
 									itemPrice: 35,
+									description: "Adjustable fit for all sizes.",
 									tags: [`Men`],
 									numberInStock: 10,
 									imageURL: '/assets/store-splash/jumbotron-cart-1.jpg',
@@ -913,6 +965,7 @@ module.exports.seedFeaturedItems = async (req, res, next) => {
 								{
 									itemName: 'Paradise Graphic Tee',
 									itemPrice: 40,
+									description: "Psychadellic vibes.",
 									tags: [`Men`],
 									numberInStock: 10,
 									imageURL: '/assets/store-splash/jumbotron-cart-3.jpg',
@@ -920,6 +973,7 @@ module.exports.seedFeaturedItems = async (req, res, next) => {
 								{
 									itemName: 'Herschel Supply Co. Backpack',
 									itemPrice: 80,
+									description: "Stylish and sturdy backpack for Back to School",
 									tags: [`Men`],
 									numberInStock: 10,
 									imageURL: '/assets/store-splash/jumbotron-cart-2.jpeg',
@@ -927,6 +981,7 @@ module.exports.seedFeaturedItems = async (req, res, next) => {
 								{
 									itemName: 'Gray Canvas Mid-Calf Socks',
 									itemPrice: 20,
+									description: "100% Cotton",
 									tags: [`Men`],
 									numberInStock: 10,
 									imageURL: '/assets/store-splash/jumbotron-cart-4.jpg',
@@ -934,6 +989,7 @@ module.exports.seedFeaturedItems = async (req, res, next) => {
 								{
 									itemName: 'True Religion Rocco Skinny Jeans',
 									itemPrice: 90,
+									description:"That distressed look",
 									tags: [`Men`],
 									numberInStock: 10,
 									imageURL: '/assets/store-splash/jumbotron-cart-5.jpg',
@@ -941,6 +997,7 @@ module.exports.seedFeaturedItems = async (req, res, next) => {
 								{
 									itemName: 'Nike Air Max 2',
 									itemPrice: 90,
+									description: "Just Do It.",
 									tags: [`Men`],
 									numberInStock: 10,
 									imageURL: '/assets/store-splash/jumbotron-cart-6.jpg',

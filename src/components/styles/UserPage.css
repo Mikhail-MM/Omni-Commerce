@@ -204,6 +204,7 @@
 	display: flex;
 	height: auto;
 	width: auto;
+	justify-content: space-between;
 }
 .user-social__avatar-container {
 	width: 50px;
@@ -244,14 +245,18 @@
 .user-social__review-container-column {
 	display: flex;
 	flex-direction: column;
+	flex-grow: 1;
 }
 
 .review-userbox-container {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: auto;
+	width: 125px;
 	height: auto;
+}
+.review-ratings-row {
+	margin-bottom: 12px;
 }
 .metadata-loading {
 	background-color: gray;
