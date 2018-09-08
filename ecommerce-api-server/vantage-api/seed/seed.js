@@ -187,7 +187,6 @@ const generateReviews = async () => {
 	}
 }
 
-generateReviews()
 module.exports.seedOmniUsers = async (req, res, next) => {
 	try {
 		const savedChildren = [];

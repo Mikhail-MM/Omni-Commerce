@@ -62,9 +62,10 @@ const ReviewListModal = props => {
 		<div>
 			<Modal
 				isOpen={props.modalType === 'VIEW_REVIEWS_MODAL'}
-				style={{...modalStyle, height:'500px', overflow: 'scroll'}}
+				style={{...modalStyle, height:'500px', overflow: 'hidden', position: 'fixed', top: 0, right: 0, bottom: 0, left: 0,}}
 				contentLabel="Example Modal"
 				overlayClassName="Overlay"
+				htmlOpenClassName='ReactModal__Html--open'
 				>
 				<React.Fragment>
 				<div style={{textAlign: 'center', height: 'auto', maxHeight: 600, overflow: 'auto', maxWidth: 600}}>
