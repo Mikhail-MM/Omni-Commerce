@@ -66,7 +66,6 @@ const generateRandomUsers = async (numUsers) => {
 	catch(err) { console.log(err) }	
 }
 
-generateRandomUsers(200)
 
 module.exports.seedOmniUsers = async (req, res, next) => {
 	try {
