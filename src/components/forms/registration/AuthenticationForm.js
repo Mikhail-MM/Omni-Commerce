@@ -38,8 +38,8 @@ class AuthenticationForm extends Component {
 		shipping_address_city: '',
 		shipping_address_zip: '',
 		shipping_address_state: '',
-		avatarCounter: 0,
 		imageSource: stockAvvys[0],
+		avvyIndex: 0,
 		imageRAWFILE: null,
 		newImageFlag: false,
 		registrationPage: 1,
@@ -140,13 +140,20 @@ class AuthenticationForm extends Component {
 		return this.props.attemptRegistration(credentials)
 	}
 
+	randomizeIndex = (arrayLength) => {
+		return Math.floor(Math.random() * Math.floor(arrayLength))
+
+	}
 	randomizeAvvy = (e) => {
 		e.preventDefault()
+		let randIndex = this.randomizeIndex(stockAvvys.length - 1)
+		console.log(randIndex)
+
 		this.setState((prevState) => {
 			return ({
-				imageSource: stockAvvys[(prevState.avatarCounter + 1) % 6],
+				imageSource: stockAvvys[randIndex],
+				avvyIndex: randIndex,
 				newImageFlag: false,
-				avatarCounter: prevState.avatarCounter + 1,
 			})
 		})
 	}

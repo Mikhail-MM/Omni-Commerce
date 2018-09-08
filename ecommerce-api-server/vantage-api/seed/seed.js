@@ -1,10 +1,12 @@
 const uuid4 = require('uuid/v4');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-
+const axios = require('axios')
 
 const terminalItems = require('./seed-omni-item-data');
 // const omniChildren = require('./seed-omni-employees');
+
+const config = require('../models/config');
 
 const Users = require('../models/schemas/users');
 const OmniUserModel = Users.OmniUser;
@@ -23,6 +25,48 @@ const StoreItemSchema = MarketplaceModels.StoreItemSchema
 const StoreItemModel = MarketplaceModels.StoreItemModel
 const ShoppingCartModel = MarketplaceModels.ShoppingCartModel
 
+const addUserPromise = async (user) => {
+	try {
+		const newUser = new EssosUserModel(user)
+		const savedUser = await newUser.save()
+		return savedUser
+	} catch(err) { console.log(err) }
+}
+const generateRandomUsers = async (numUsers) => {
+	try { 
+			const response = await axios.get(`https://randomuser.me/api/?results=${numUsers}`)
+			const users = response.data.results
+			const userProfileAdditionQueries = users.map(async (user, index) => {
+				const avatarURL = (index < 100) ? user.picture.large : config.stockAvvys[Math.floor(Math.random() * 15)]
+				const { email, phone } = user
+				const hash = await bcrypt.hash(user.login.password, 2)
+				return addUserPromise({
+					email,
+					firstName: user.name.first,
+					lastName: user.name.last,
+					phone,
+					avatarURL,
+					mongoCollectionKey: user.login.uuid,
+					hash,
+					accountType: 'Essos',
+					billing_address_line1: user.location.street,
+					billing_address_city: user.location.city,
+					billing_address_zip: user.location.postcode,
+					billing_address_state: user.location.state,
+					shipping_address_line1: user.location.street,
+					shipping_address_city: user.location.city,
+					shipping_address_zip: user.location.postcode,
+					shipping_address_state: user.location.state,
+
+				})
+			})
+			const addedUsers = await Promise.all(userProfileAdditionQueries)
+			console.log(addedUsers)
+	} 
+	catch(err) { console.log(err) }	
+}
+
+generateRandomUsers(200)
 
 module.exports.seedOmniUsers = async (req, res, next) => {
 	try {
