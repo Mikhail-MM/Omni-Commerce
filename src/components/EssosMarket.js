@@ -230,6 +230,9 @@ class EssosMarket extends Component {
 	        
 	          <header className='app-header'>
 	              <div className='logo-container'>
+	              	<div style={{width: 50, height: 50}}>
+	              		<img src={'/assets/blogBig.svg'} />
+	              	</div>
 	              </div>
 	              <div className='account-control'>
 	              	<div className='my-notifications-button'>
