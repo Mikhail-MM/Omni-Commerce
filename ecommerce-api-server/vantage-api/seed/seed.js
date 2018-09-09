@@ -37,7 +37,7 @@ const generateRandomUsers = async (numUsers) => {
 			const response = await axios.get(`https://randomuser.me/api/?results=${numUsers}&nat=us,gb,fr`)
 			const users = response.data.results
 			const userProfileAdditionQueries = users.map(async (user, index) => {
-				const avatarURL = (index < 100) ? user.picture.large : config.stockAvvys[Math.floor(Math.random() * 15)]
+				const avatarURL = (index < 20) ? user.picture.large : config.stockAvvys[Math.floor(Math.random() * 15)]
 				const { email, phone } = user
 				const hash = await bcrypt.hash(user.login.password, 2)
 				return addUserPromise({
@@ -61,7 +61,9 @@ const generateRandomUsers = async (numUsers) => {
 				})
 			})
 			const addedUsers = await Promise.all(userProfileAdditionQueries)
+			return true
 	} 
+
 	catch(err) { console.log(err) }	
 }
 
@@ -111,11 +113,11 @@ const generateFollowers = async () => {
 								
 							})
 							const result = await Promise.all(committedFollowerPairs)
-							console.log(result)
 						}
 
 			i++
 		}
+		return true
 
 	} catch(err) { console.log(err) }
 }
@@ -183,8 +185,8 @@ const generateReviews = async () => {
 		})
 
 		const resolution = await Promise.all(addedItemReviews)
-		console.log(resolution)
 	}
+	return true
 }
 
 module.exports.seedOmniUsers = async (req, res, next) => {
@@ -633,7 +635,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 						itemPrice: 39,
 						description: "A nice top for fall.",
 						numberInStock: 1,
-						tags: [`Clothing - Women's`, `Tops`],
+						tags: [`Clothing - Women's`],
 						imageURL: '/assets/seed/marketplace/gcrop.jpg',
 					},
 					{
@@ -641,7 +643,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 						itemPrice: 140,
 						description: "A great jacket for late fall and early winter.",
 						numberInStock: 1,
-						tags: [`Clothing - Women's`, `Tops`],
+						tags: [`Clothing - Women's`],
 						imageURL: '/assets/seed/marketplace/bcoat.jpg',
 					},
 					{
@@ -649,7 +651,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 						itemPrice: 40,
 						description: "Cool one-piece for the beach.",
 						numberInStock: 1,
-						tags: [`Clothing - Women's`, `Swimwear`],
+						tags: [`Clothing - Women's`],
 						imageURL: '/assets/seed/marketplace/shein.jpg',
 					},
 					{
@@ -657,7 +659,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 						itemPrice: 70,
 						description: "Back to school vibes.",
 						numberInStock: 1,
-						tags: [`Clothing - Women's`, `Tops`],
+						tags: [`Clothing - Women's`],
 						imageURL: '/assets/seed/marketplace/pink.jpg',
 					},
 
@@ -699,7 +701,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 						itemPrice: 50,
 						numberInStock: 30,
 						description: 'Hints of Lavender and Vanilla.',
-						tags: [`Beauty`],
+						tags: [`Beauty`, 'Fragrance & Perfume'],
 						imageURL: '/assets/seed/marketplace/mdior.jpg',
 					},
 					{
@@ -707,7 +709,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 						itemPrice: 29,
 						description: "Basic starter set for applying blush and concealer",
 						numberInStock: 1,
-						tags: [`Beauty`],
+						tags: [`Beauty`, 'Make-Up'],
 						imageURL: '/assets/seed/marketplace/brushset.jpg',
 					},
 					{
@@ -715,7 +717,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 						itemPrice: 69,
 						description: "A good fragrance for guys and girls.",
 						numberInStock: 20,
-						tags: [`Beauty`],
+						tags: [`Beauty`, 'Fragrance & Perfume'],
 						imageURL: '/assets/seed/marketplace/chanel.jpg',
 					},
 					{
@@ -723,7 +725,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 						itemPrice: 40,
 						numberInStock: 1,
 						description: "Comes with many shades for different contours.", 
-						tags: [`Beauty`],
+						tags: [`Beauty`, 'Make-Up'],
 						imageURL: '/assets/seed/marketplace/glossier.jpg',
 					},
 					{
@@ -731,7 +733,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 						itemPrice: 29,
 						description: "Medium hold, water and sweat resistatnt.",
 						numberInStock: 2,
-						tags: [`Beauty`],
+						tags: [`Beauty`, 'Grooming'],
 						imageURL: '/assets/seed/marketplace/pomade.jpg',		
 					},
 					{
@@ -739,7 +741,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 						itemPrice: 15,
 						description: "Good for removing acne blemishes during breakouts and for help with dark spots.",
 						numberInStock: 1,
-						tags: [`Beauty`],
+						tags: [`Beauty`, 'Make-Up'],
 						imageURL: '/assets/seed/marketplace/concealer.jpg',
 					},
 				],	
@@ -819,7 +821,8 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 					itemPrice,
 					numberInStock,
 					tags,
-					imageURL
+					imageURL,
+					description,
 				} = item
 
 				const itemData = {
@@ -828,6 +831,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 					numberInStock,
 					tags,
 					imageURL,
+					description,
 					sellerRef_id: savedEssosUser._id,
 					postedBy: `${essosUser.firstName} ${essosUser.lastName}`
 				}
@@ -839,18 +843,9 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 			}
 		}
 
-		const populateRecommendations = (items) => {
-
-		}
-
-
-		const generateWishlists = (users, items) => {
-
-		}
-
-		const createFeaturedItems = () => {
-			
-		}
+		await generateRandomUsers(100);
+		await generateFollowers();
+		await generateReviews();
 
 		const response = {
 			savedChildren,
@@ -1078,7 +1073,8 @@ module.exports.seedFeaturedItems = async (req, res, next) => {
 					itemPrice,
 					numberInStock,
 					tags,
-					imageURL
+					imageURL,
+					description,
 				} = item
 
 				const itemData = {
@@ -1087,6 +1083,7 @@ module.exports.seedFeaturedItems = async (req, res, next) => {
 					numberInStock,
 					tags,
 					imageURL,
+					description,
 					sellerRef_id: savedEssosUser._id,
 					postedBy: `${essosUser.firstName} ${essosUser.lastName}`,
 					queryMarker: 'Featured-1'

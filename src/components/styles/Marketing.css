@@ -31,7 +31,7 @@
 	background-color: rgba(49, 60, 69, 0.95);
 	border-bottom: 1px solid gray;
 
-	transition: background-color 0.8s ease-in, height 0.8s ease-in;
+	transition: background-color 0.8s ease-out, height 0.8s ease-out;
 
 	z-index: 3;
 

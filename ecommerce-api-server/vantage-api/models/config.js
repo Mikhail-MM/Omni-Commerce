@@ -111,6 +111,48 @@ module.exports = {
 				rating: 5,
 				review: "I am 5'9 and weigh 165 and have a slim body type and the SMALL fit me perfect. I usually wear medium for most clothes but these come a little bigger. Some people have complained of how flimsy these are but actually that's what make them great that they are light and thin, that doesn't mean it is cheap and I believe they can hold their own."
 			},
-		]
-	}
+		],
+	},
+	tags: [
+		{
+			tagName: `Shoes - Men's`,
+			imageURL: '/assets/icons/shoem.svg',
+		},
+		{
+			tagName: `Shoes - Women's`,
+			imageURL: '/assets/icons/shoew.svg',
+		},
+		{
+			tagName: `Clothing - Men's`,
+			imageURL: '/assets/icons/shirt.svg',
+		},
+		{
+			tagName: `Clothing - Women's`,
+			imageURL: '/assets/icons/dress.svg',
+		},
+		{
+			tagName: 'Accessories',
+			imageURL: '/assets/icons/accnec.svg'
+		},
+		{
+			tagName: 'Watches',
+			imageURL: `/assets/icons/cat-watch.svg`
+		},
+		{
+			tagName: 'Beauty',
+			imageURL: '/assets/icons/cosmetics.svg',
+		},
+		{
+			tagName: 'Make-Up',
+			imageURL: '/assets/icons/makeup.svg',
+		},
+		{
+			tagName: 'Grooming',
+			imageURL: '/assets/icons/salon.svg',
+		},
+		{
+			tagName: 'Fragrance & Perfume',
+			imageURL: '/assets/icons/fragrance.svg',
+		},
+	],
 }
