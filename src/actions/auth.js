@@ -70,7 +70,8 @@ export function attemptRegistration(token, data, imageHandler, mode) {
 				.then(avatarURL => {
 					return fetch(`http://localhost:3001/registration/${mode}`, {
 						headers:{
-							'Content-Type': 'application/json'
+							'Content-Type': 'application/json',
+							'x-access-token': token
 						},
 						method: 'POST',
 						mode: 'cors', 
@@ -85,9 +86,11 @@ export function attemptRegistration(token, data, imageHandler, mode) {
 			})
 			.catch(err => console.log(err))
 		} else if (!imageHandler.newImageFlag) {
+			console.log(imageHandler)
 			return fetch(`http://localhost:3001/registration/${mode}`, {
 				headers:{
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
+					'x-access-token': token
 				},
 				method: 'POST',
 				mode: 'cors', 
@@ -96,6 +99,7 @@ export function attemptRegistration(token, data, imageHandler, mode) {
 			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 			.then(json => {
 				const { user } = json
+				console.log(mode)
 				dispatch(showModal('REGISTRATION_CONFIRMATION_MODAL', { user, mode: mode,}))
 			})
 			.catch(err => console.log(err))

@@ -14,7 +14,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
 	attemptLogin: (credentials) => dispatch(attemptLogIn(credentials)),
-	registerUser: (data, imageHandler, mode) =>  dispatch(attemptRegistration(null, data, imageHandler, mode)),
+	registerUser: (token, data, imageHandler, mode) =>  dispatch(attemptRegistration(token, data, imageHandler, mode)),
 
 })
 
@@ -97,7 +97,7 @@ class AuthenticationForm extends Component {
 				phone,
 				password
 			}
-				return this.props.registerUser(data, imageHandler, 'omni-master')
+				return this.props.registerUser(null, data, imageHandler, 'omni-master')
 		}
 		if (this.props.regpathEssos) {
 			const data = {
@@ -117,10 +117,20 @@ class AuthenticationForm extends Component {
 				 shipping_address_zip, 
 				 shipping_address_state,
 			}
-				return this.props.registerUser(data, imageHandler, 'essos-user') 
+				return this.props.registerUser(null, data, imageHandler, 'essos-user') 
 		}
 
-		if (this.props.regpathOmniChild) return this.handleRegistration('omniChild')
+		if (this.props.regpathOmniChild) {
+			const data = {
+				email,
+				firstName,
+				lastName,
+				phone,
+				password,
+			}
+			const { token } = this.props
+			this.props.registerUser(token, data, imageHandler, 'omni-child') 
+		} 
 
 	}
 

@@ -183,6 +183,7 @@ module.exports.registerOmniChild = async (req, res, next) => {
 			role: req.body.role,
 			isMaster: false,
 			isAdmin: false,
+			avatarURL: req.body.imageSource,
 
 			terminalIDNumber: masterAccount.employeeCounter,
 
@@ -191,11 +192,14 @@ module.exports.registerOmniChild = async (req, res, next) => {
 
 		const iteratedBossEmployeeCounter = masterAccount.employeeCounter + 1
 	
-		const newEssosChild = new EssosUser(childData);
-		const savedEssosUser = await newEssosUser.save();
+		const newOmniChild = new OmniUser(childData);
+		const savedEssosUser = await newOmniChild.save();
 
-		const iteratedBoss = await OmniUser.findByIdAndUpdate(masterAccount._id, { employeeCounter: req.body.newEmployeeCount }, { new: true }) 
-	
+		const iteratedBoss = await OmniUser.findByIdAndUpdate(masterAccount._id, { employeeCounter: iteratedBossEmployeeCounter }, { new: true }) 
+		res.json({
+			user: savedEssosUser,
+			boss: iteratedBoss,
+		})
 	} catch(err) { next(err) }
 
 }

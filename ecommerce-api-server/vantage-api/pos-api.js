@@ -100,7 +100,7 @@ router.route('/registration/omni-master/')
 router.route('/registration/essos-user/')
 	.post(register.registerEssosUser)
 router.route('/registration/omni-child/')
-	.post(register.registerOmniChild)
+	.post(authorize.routeEmployeeToMongoCollection, register.registerOmniChild)
 
 router.route('/seed/omni/')
 	.post(seed.seedOmniUsers)
