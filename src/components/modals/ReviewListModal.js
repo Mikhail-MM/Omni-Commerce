@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Modal from 'react-modal';
-import { modalStyle } from '../config';
+import { modalStyleanim } from '../config';
 import { hideModal } from '../../actions/modals';
 
 
@@ -62,7 +62,7 @@ const ReviewListModal = props => {
 		<div>
 			<Modal
 				isOpen={props.modalType === 'VIEW_REVIEWS_MODAL'}
-				style={{...modalStyle, height:'500px', overflow: 'hidden', position: 'fixed', top: 0, right: 0, bottom: 0, left: 0,}}
+				style={{...modalStyleanim, height:'500px', overflow: 'hidden', position: 'fixed', top: 0, right: 0, bottom: 0, left: 0,}}
 				contentLabel="Example Modal"
 				overlayClassName="Overlay"
 				htmlOpenClassName='ReactModal__Html--open'

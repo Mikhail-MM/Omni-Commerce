@@ -5,7 +5,7 @@ import moment from 'moment'
 import '../../styles/AdminTerminal.css'
 
 import { showModal } from '../../../actions/modals'
-
+import { routeToNode } from '../../../actions/routing'
 import { getAllEvents } from '../../../actions/events'
 import { subscribeToFeedUpdates, closeConnection } from '../../../actions/socket'
 
@@ -23,7 +23,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-
+	route: (node) => dispatch(routeToNode(node)),
 	showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps)),
 
 })
@@ -118,21 +118,21 @@ class AdminTerminal extends Component {
 				<div className='main-body-wrapper' >
 					<div className='sidebar-column'>
 						<div className='menu-box'>
-							<div className='admin-button' onClick={() => this.setState({actionComponent: 'MANAGE_EMPLOYEES'})}>
+							<div className={`admin-button${(this.state.actionComponent === 'MANAGE_EMPLOYEES') ? ' admin-button__active' : ''}`} onClick={() => this.setState({actionComponent: 'MANAGE_EMPLOYEES'})}>
 								<img className='admin-menu-icon' src='./assets/icons/emp_mng.svg' />
 								<span> Employees </span>
 							</div>
-							<div className='admin-button' onClick={() => this.setState({actionComponent: 'MANAGE_SALES_REPORTS'})}>
+							<div className={`admin-button${(this.state.actionComponent === 'MANAGE_SALES_REPORTS') ? ' admin-button__active' : ''}`} onClick={() => this.setState({actionComponent: 'MANAGE_SALES_REPORTS'})}>
 								<img className='admin-menu-icon' src='./assets/icons/analytics.svg' />
 								<span> Sales Reports </span>
 							</div>
-							<div className='admin-button' onClick={() => this.setState({actionComponent: 'MANAGE_TIMESHEETS'})}>
+							<div className={`admin-button${(this.state.actionComponent === 'MANAGE_TIMESHEETS') ? ' admin-button__active' : ''}`} onClick={() => this.setState({actionComponent: 'MANAGE_TIMESHEETS'})}>
 								<img className='admin-menu-icon' src='./assets/icons/calendar.svg' />
 								<span> Timesheets </span>
 							</div>					
 						</div>
 						<div className="menu-box__bottom">
-							<div className='admin-button'>
+							<div className='admin-button' onClick={() => this.props.route('/omni/terminal')}>
 								<img className='admin-menu-icon' src='./assets/icons/cash-register.svg' />
 								<span> Access Terminal </span>
 							</div>

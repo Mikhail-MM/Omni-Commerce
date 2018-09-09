@@ -22,6 +22,6 @@ export function fetchLoggedUsers(token) {
 		.then(json => {
 			dispatch(receiveLoggedUsers(json))
 		})
-		.catch(err => { throw new Error(err) })
+		.catch(err => { console.log(err) })
 	}
 }

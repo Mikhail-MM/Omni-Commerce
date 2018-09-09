@@ -56,14 +56,29 @@
 	height: 50px;
 
 	padding: 15px 15px;
+
+	transition: transform 0.3s ease-out, color 0.3s ease-out;
 }
 
+.admin-button:hover {
+	transform: translateX(20px);
+	color: #708FA3;
+}
+.admin-button__active {
+	transform: translateX(30px);
+	color: #708FA3;
+}
+.admin-button__active:hover {
+	transform: translateX(30px);
+	color: #708FA3;
+}
 .admin-menu-icon {
 	height: 32px;
 	width: 32px;
 
 	margin-right: 12px;
 }
+
 
 .action-column {
 	display: flex;

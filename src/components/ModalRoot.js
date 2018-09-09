@@ -18,6 +18,7 @@ import { connect } from 'react-redux'
 
 import RegistrationPickerModal from './modals/RegistrationPickerModal'
 import AuthModal from './modals/AuthModal'
+import RegistrationConfirmationModal from './modals/RegistrationConfirmationModal'
 
 import EmployeePunchClockFormModal from './modals/EmployeePunchClockFormModal'
 import WaiterCallScreenModal from './modals/WaiterCallScreenModal'
@@ -60,6 +61,7 @@ import OmniProfileModificationModal from './modals/OmniProfileModificationModal'
 const MODAL_COMPONENTS = {
 	'REGISTRATION_MODULE_PICKER': RegistrationPickerModal,
 	'AUTH_FORM_MODAL': AuthModal,
+	'REGISTRATION_CONFIRMATION_MODAL': RegistrationConfirmationModal,
 	'EMPLOYEE_PUNCH_CLOCK_FORM_MODAL': EmployeePunchClockFormModal,
 	'ADD_POINT_SALE_ITEM': AddTerminalItemModal,
 	'DISPLAY_ALL_TRANSACTIONS': TransactionHistoryModal, 
@@ -69,7 +71,7 @@ const MODAL_COMPONENTS = {
 	'CARD_PAYMENT_MODAL': CardPaymentModal, // Gets Checkout
 	'CUSTOM_ADDON_MODAL': CustomAddonModal,
 
-	'ADD_EMPLOYEE_MODAL': AuthenticationForm,
+	'ADD_EMPLOYEE_MODAL': AuthenticationForm, // Deprecated
 
 	
 	'CONFIRM_END_OF_BUSINESS_DAY': ConfirmSalesReportAggregationModal,

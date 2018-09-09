@@ -25,7 +25,7 @@ module.exports.registerOmniMaster = async (req, res, next) => {
 		const mongoCollectionKey = uuid4().slice(0, 13);
 
 		const hashedPass = await bcrypt.hash(req.body.password, 10);
-		const terminalHash = await bcrypt.hash(mongoCollectionKey);
+		const terminalHash = await bcrypt.hash(mongoCollectionKey, 10);
 		
 		
 		const userData = {
@@ -85,7 +85,7 @@ module.exports.registerOmniMaster = async (req, res, next) => {
 
 		const response = {
 			
-			savedOmniMaster,
+			user: savedOmniMaster,
 			savedOmniTerminal,
 			savedStoreConfig,
 
@@ -120,11 +120,12 @@ module.exports.registerEssosUser = async (req, res, next) => {
 			billing_address_state	: req.body.billing_address_state,
 			shipping_address_line1	: req.body.shipping_address_line1,
 			shipping_address_line2	: req.body.shipping_address_line2,
-			shipping__address_city	: req.body.shipping__address_city,
+			shipping_address_city	: req.body.shipping_address_city,
 			shipping_address_zip	: req.body.shipping_address_zip,
 			shipping_address_state	: req.body.shipping_address_state,
 
 			mongoCollectionKey: mongoCollectionKey,
+			avatarURL: req.body.avatarURL,
 
 		};
 
@@ -149,11 +150,8 @@ module.exports.registerEssosUser = async (req, res, next) => {
 
 
 		const response = {
-
-			savedEssosUser,
+			user: savedEssosUser,
 			savedShoppingCart,
-			updatedMarketplaceWithClientRef,
-
 		};
 
 		res.json(response);

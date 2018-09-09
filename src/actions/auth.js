@@ -1,5 +1,5 @@
 import { routeUserAfterLogin } from './routing'
-
+import { showModal } from './modals'
 
 function authSuccess (userInfo) {
 	console.log(userInfo)
@@ -78,7 +78,8 @@ export function attemptRegistration(token, data, imageHandler, mode) {
 					})
 					.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 					.then(json => {
-						// dispatch confirmation
+						const { user } = json
+						dispatch(showModal('REGISTRATION_CONFIRMATION_MODAL', { user, mode: mode,}))
 					})
 				})
 			})
@@ -94,7 +95,8 @@ export function attemptRegistration(token, data, imageHandler, mode) {
 			})
 			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 			.then(json => {
-				// dispatch confirmation
+				const { user } = json
+				dispatch(showModal('REGISTRATION_CONFIRMATION_MODAL', { user, mode: mode,}))
 			})
 			.catch(err => console.log(err))
 		}

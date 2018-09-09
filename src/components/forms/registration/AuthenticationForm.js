@@ -106,7 +106,16 @@ class AuthenticationForm extends Component {
 				lastName,
 				phone,
 				password,
-
+				 billing_address_line1, 
+				 billing_address_line2, 
+				 billing_address_city, 
+				 billing_address_zip, 
+				 billing_address_state, 
+				 shipping_address_line1, 
+				 shipping_address_line2, 
+				 shipping_address_city, 
+				 shipping_address_zip, 
+				 shipping_address_state,
 			}
 				return this.props.registerUser(data, imageHandler, 'essos-user') 
 		}
@@ -373,7 +382,7 @@ class AuthenticationForm extends Component {
 						</form>
 				}
 
-				{ this.props.regpathOmniMaster &&
+				{( this.props.regpathOmniMaster || this.props.regpathOmniChild ) &&
 					<form className='essos-profile-edit-form' onSubmit={(e) => this.handleSubmit(e)}>
 						<div className='avatar-selection-container'>
 							<h4> Change Avatar </h4>
@@ -440,7 +449,7 @@ class AuthenticationForm extends Component {
 								<label> Password </label>
 								<input
 									className='form-input' 
-									type='text'
+									type='password'
 									value={this.state.password}
 									onChange={(e) => this.handleChange('password', e.target.value)}
 								/>
@@ -449,7 +458,7 @@ class AuthenticationForm extends Component {
 								<label> Confirm Password </label>
 								<input
 									className='form-input' 
-									type='text'
+									type='password'
 									value={this.state.confpass}
 									onChange={(e) => this.handleChange('confpass', e.target.value)}
 								/>
@@ -477,7 +486,7 @@ class AuthenticationForm extends Component {
 								<label> Password </label>
 								<input
 									className='form-input' 
-									type='text'
+									type='password'
 									value={this.state.password}
 									onChange={(e) => this.handleChange('password', e.target.value)}
 								/>

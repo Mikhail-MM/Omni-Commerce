@@ -88,7 +88,7 @@ class EmployeeManagement extends Component {
 		return(
 				<div className='action-column'>
 					<div className='employee-actions-bar'>
-						<div className='add-employee-button' onClick={() => this.props.showModal('ADD_EMPLOYEE_MODAL', {regpathOmniChild: true})}>
+						<div className='add-employee-button' onClick={() => this.props.showModal('AUTH_FORM_MODAL', {regpathOmniChild: true})}>
 							<img className='admin-menu-icon' src='./assets/icons/add-user.svg' />
 							Add Employee
 						</div>
