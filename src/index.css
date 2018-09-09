@@ -761,3 +761,14 @@ img { object-fit: cover; height: 100%; width: 100%;}
 	background-color: rgba(0,0,0, 0.20);
 }
 
+@keyframes topfade {
+	0% {
+		top: 55%;
+		opacity: 0;
+	}
+
+	100% {
+		top: 50%;
+		opacity: 1;
+	}
+}

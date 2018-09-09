@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Modal from 'react-modal';
-import { modalStyle } from '../config';
+import { modalStyle, modalStyleanim } from '../config';
 import { hideModal } from '../../actions/modals';
 
 
@@ -17,7 +17,6 @@ const mapDispatchToProps = dispatch => ({
 
 const SocialUserListModal = props => {
 	const { userArray, arrayUserType } = props
-
 	const renderUsersToDOM = () => {
 		if (userArray.length === 0) return <h5> This user has no {arrayUserType} </h5>
 		return userArray.map(user => {
@@ -37,16 +36,18 @@ const SocialUserListModal = props => {
 		<div>
 			<Modal
 				isOpen={props.modalType === 'VIEW_USER_SOCIAL_DETAILS'}
-				style={modalStyle}
+				style={modalStyleanim}
 				contentLabel="Example Modal"
 				overlayClassName="Overlay"
+				htmlOpenClassName='ReactModal__Html--open'
 				>
-
-				<div style={{textAlign: 'center'}}>
+				<React.Fragment>
+				<div style={{textAlign: 'center', height: 'auto', maxHeight: 600, overflow: 'auto', maxWidth: 600}}>
 					<h4> {arrayUserType} </h4>
 					{ renderUsersToDOM() }
-					<button onClick={() => props.hideModal()}> Cancel </button>
 				</div>
+				<button onClick={() => props.hideModal()}> Cancel </button>
+				</React.Fragment>
 
 			</Modal>
 		</div>

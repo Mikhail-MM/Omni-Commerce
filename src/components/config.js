@@ -8,7 +8,18 @@ export const modalStyle = {
 		transform: 'translate(-50%, -50%)',
 	},
 };
-
+export const modalStyleanim = {
+	content: {
+			top: '55%',
+			left: '50%',
+			right: 'auto',
+			bottom: 'auto',
+			marginRight: '-50%',
+			transform: 'translate(-50%, -50%)',
+			animation: 'topfade 1s ease',
+			animationFillMode: 'forwards',
+		}
+}
 export const modalStyle2 = {
 	content: {
 		top: '50%',
@@ -20,7 +31,6 @@ export const modalStyle2 = {
 		backgroundImage: 'radial-gradient(circle at center, rgb(105, 61, 65), rgb(69, 27, 54) 60%, rgb(32, 4, 22))'
 	},
 };
-
 
 export const modalStyle3 = {
 	content: {
