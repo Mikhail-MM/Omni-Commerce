@@ -471,7 +471,7 @@ module.exports.seedEssosMarket = async (req, res, next) => {
 						itemPrice: 39,
 						description: "Flexible, comfortable, and easy on the feet.",
 						numberInStock: 2,
-						tags: [`Shoes - Men's`, `Shoes - Women's`, ''],
+						tags: [`Shoes - Men's`, `Shoes - Women's`,],
 						imageURL: '/assets/seed/marketplace/fslip.jpg'
 					},
 					{

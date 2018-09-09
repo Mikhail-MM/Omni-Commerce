@@ -42,9 +42,11 @@ const SocialUserListModal = props => {
 				htmlOpenClassName='ReactModal__Html--open'
 				>
 				<React.Fragment>
-				<div style={{textAlign: 'center', height: 'auto', maxHeight: 600, overflow: 'auto', maxWidth: 600}}>
+				<div style={{textAlign: 'center', height: 'auto', padding: '25px', maxHeight: 600, overflow: 'auto', maxWidth: 600}}>
+					<div>
 					<h4> {arrayUserType} </h4>
 					{ renderUsersToDOM() }
+					</div>
 				</div>
 				<button onClick={() => props.hideModal()}> Cancel </button>
 				</React.Fragment>

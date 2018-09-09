@@ -129,7 +129,7 @@ class EssosMarket extends Component {
 								</p> }
 							<p className="store-pricing"> ${item.itemPrice} </p>
 						</div>
-						<div className="cart-button button_no_border_radius" onClick={() => this.props.showModal('CONFIRM_CART_ADDITION', {item: item})} ><span> Add To Cart Icon </span> </div>
+						<div className="cart-button button_no_border_radius" onClick={() => this.props.showModal('CONFIRM_CART_ADDITION', {item: item, renderReviews: this.generateReviewHoveroverContainer})} ><span> Add To Cart Icon </span> </div>
 					</div>
 				</div>
 			)
