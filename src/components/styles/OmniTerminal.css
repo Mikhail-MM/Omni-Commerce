@@ -117,6 +117,9 @@
 	border-radius: 10px;
 }
 
+.button:hover {
+	background-color: #9BACC8;
+}
 .button__lower{
 	width: 33.33%;
 	height: 100%;
@@ -133,4 +136,8 @@
 	border: 2px #9bacc8 solid;
 	border-radius: 10px;
 
+}
+
+.button__lower:hover {
+	background-color: #FCC669;
 }

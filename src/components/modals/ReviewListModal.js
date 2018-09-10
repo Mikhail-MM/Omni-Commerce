@@ -68,7 +68,7 @@ const ReviewListModal = props => {
 				htmlOpenClassName='ReactModal__Html--open'
 				>
 				<React.Fragment>
-				<div style={{textAlign: 'center', height: 'auto', maxHeight: 600, overflow: 'auto', maxWidth: 600}}>
+				<div style={{textAlign: 'center', height: 'auto', maxHeight: 600, overflow: 'auto', maxWidth: 600, padding: 25}}>
 					<h4> {arrayType} </h4>
 					{ renderReviewsToDOM() }
 					

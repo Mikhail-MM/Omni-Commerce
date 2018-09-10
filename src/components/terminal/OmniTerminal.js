@@ -79,7 +79,7 @@ class OmniTerminal extends Component {
 					<div className='row-1-big'>
 						<div className='mainframe-container'>
 							<div className='graph' >
-										<table>
+										<table style={{width: '100%'}}>
 											<thead>
 												<tr>
 													<th> Ticket Status </th>

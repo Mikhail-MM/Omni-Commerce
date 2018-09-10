@@ -54,9 +54,10 @@
 }
 .modal-corner-hide:hover {
 	cursor: pointer;
-	transform: rotate(456deg);
+	transform: rotate(456deg) scale(1.15);
 
 }
+
 
 .modalpicker-selector {
 	display: flex;
