@@ -39,8 +39,9 @@ export const modalStyleRound = {
 		bottom: 'auto',
 		marginRight: '-50%',
 		transform: 'translate(-50%, -50%)',
-		/* backgroundImage: 'radial-gradient(circle at center, rgb(105, 61, 65), rgb(69, 27, 54) 60%, rgb(32, 4, 22))', */
-		backgroundColor: 'rgba(82, 59, 112, 0.89)',
+		/* backgroundImage: 'radial-gradient(circle at center, rgb(105, 61, 65), rgb(69, 27, 54) 60%, rgb(32, 4, 22))', 
+		backgroundColor: 'rgba(82, 59, 112, 0.89)', */
+		backgroundImage: 'linear-gradient(#414174, #523B70)',
 		borderRadius: '50px',
 		border: 'none',
 		boxShadow: '5px 5px 16px 2px rgba(0, 0, 0, .85)'
