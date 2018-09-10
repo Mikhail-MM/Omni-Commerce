@@ -165,7 +165,10 @@ class  Marketing extends Component {
 									<p> Works as intended let us bring the overlord. Absolute infallible yesu. Keep it coming keep it coming that's the great thing about it! WHeeee!!! </p>
 								</div>
 								<div className='feature-blurb__image'>
-									<img src={'/assets/externalReference/profilepagedesign.png'}/>
+									<img 
+										src={'/assets/externalReference/profilepagedesign.png'}
+										onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/externalReference/profilepagedesign.png'})}
+									/>
 								</div>
 							</div>
 							<div ref={el => this.ft2 = el } className={`feature-padded-row${(this.state.activeFeature === 'ft2') ? ' activate-feature' : ''}`}>

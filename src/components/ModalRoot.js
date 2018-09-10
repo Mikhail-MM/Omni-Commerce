@@ -19,6 +19,7 @@ import { connect } from 'react-redux'
 import RegistrationPickerModal from './modals/RegistrationPickerModal'
 import AuthModal from './modals/AuthModal'
 import RegistrationConfirmationModal from './modals/RegistrationConfirmationModal'
+import ImagePreviewModal from './modals/ImagePreviewModal'
 
 import EmployeePunchClockFormModal from './modals/EmployeePunchClockFormModal'
 import WaiterCallScreenModal from './modals/WaiterCallScreenModal'
@@ -62,10 +63,12 @@ const MODAL_COMPONENTS = {
 	'REGISTRATION_MODULE_PICKER': RegistrationPickerModal,
 	'AUTH_FORM_MODAL': AuthModal,
 	'REGISTRATION_CONFIRMATION_MODAL': RegistrationConfirmationModal,
+	'IMAGE_PREVIEW_MODAL': ImagePreviewModal,
 	'EMPLOYEE_PUNCH_CLOCK_FORM_MODAL': EmployeePunchClockFormModal,
 	'ADD_POINT_SALE_ITEM': AddTerminalItemModal,
 	'DISPLAY_ALL_TRANSACTIONS': TransactionHistoryModal, 
 	'SELECT_EMPLOYEE_OPENING_TICKET': WaiterCallScreenModal, 
+
 
 	'CASH_PAYMENT_MODAL': CashPaymentModal, // Gets CashPaymentForm
 	'CARD_PAYMENT_MODAL': CardPaymentModal, // Gets Checkout

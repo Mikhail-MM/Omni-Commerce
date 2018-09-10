@@ -34,6 +34,22 @@ export const modalStyleFadeout = {
 			padding: 0
 		}
 };
+export const modalStylePopIn = {
+	content: {		
+			top: '50%',
+			left: '50%',
+			right: 'auto',
+			bottom: 'auto',
+			marginRight: '-50%',
+			animation: 'fadeInAndScaleUp 1.0s ease',
+			animationFillMode: 'forwards',
+			padding: 0
+		},
+	oberlay: {
+		backgroundColor: 'rgba(0,0,0,0.65)',
+	}
+}
+
 export const modalStyle2 = {
 	content: {
 		top: '50%',
