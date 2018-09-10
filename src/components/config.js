@@ -10,14 +10,28 @@ export const modalStyle = {
 };
 export const modalStyleanim = {
 	content: {
-			top: '55%',
+			top: '50%',
 			left: '50%',
 			right: 'auto',
 			bottom: 'auto',
 			marginRight: '-50%',
 			transform: 'translate(-50%, -50%)',
-			animation: 'topfade 1s ease',
+			animation: 'topFadein 1s ease',
 			animationFillMode: 'forwards',
+			padding: 0
+		}
+};
+export const modalStyleFadeout = {
+	content: {
+			top: '50%',
+			left: '50%',
+			right: 'auto',
+			bottom: 'auto',
+			marginRight: '-50%',
+			transform: 'translate(-50%, -50%)',
+			animation: 'rightFadeOut 1.0s ease',
+			animationFillMode: 'both',
+			padding: 0
 		}
 };
 export const modalStyle2 = {

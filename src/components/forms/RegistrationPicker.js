@@ -27,13 +27,15 @@ class RegistrationPicker extends Component {
 			return this.props.showModal('AUTH_FORM_MODAL', {regpathOmniMaster: true})
 		}
 	}
-
+	// TODO: wrap in a composing HOC for all animateables
 	render() {
 		return(
 			<div className='registration-picker-wrapper'>
 				
 				<div className='centered-rectangle'>
-					<button className='modal-corner-hide' onClick={() => this.props.hideModal()}> Close </button>
+					<div className='modal-corner-hide' onClick={() => this.props.animateFade()}> 
+						<img src={'/assets/icons/close.svg'} />
+					</div>
 					<div className='picker-header-container'>
 						<h1> Select Module </h1>
 					</div>

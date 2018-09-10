@@ -761,7 +761,7 @@ img { object-fit: cover; height: 100%; width: 100%;}
 	background-color: rgba(0,0,0, 0.20);
 }
 
-@keyframes topfade {
+@keyframes topFadein {
 	0% {
 		top: 55%;
 		opacity: 0;
@@ -771,4 +771,16 @@ img { object-fit: cover; height: 100%; width: 100%;}
 		top: 50%;
 		opacity: 1;
 	}
+}
+
+@keyframes rightFadeOut {
+	0% {
+		left: 50%;
+		opacity: 1;
+	}
+	100% {
+		left: 55%;
+		opacity: 0;
+	}	
+
 }
