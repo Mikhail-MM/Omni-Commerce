@@ -47,7 +47,9 @@ class ImagePreviewModal extends Component {
 				<div style={{width: (window.innerWidth / 2), height: 'auto'}}>
 					<img src={this.props.imageSourceString} />
 				</div>
-
+				<div className='modal-corner-hide' onClick={() => this.props.hideModal()}> 
+						<img src={'/assets/icons/close.svg'} />
+				</div>
 			</Modal>
 		</div>
 	)}

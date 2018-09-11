@@ -174,34 +174,37 @@ class  Marketing extends Component {
 									/>
 								</div>
 							</div>
-							<div ref={el => this.ft2 = el } className={`feature-padded-row${(this.state.activeFeature === 'ft2') ? ' activate-feature' : ''}`}>
-								<div className='feature-blurb'>
-									<img src={'/assets/externalReference/profilepagedesign.png'}/>
+							<div ref={el => this.ft2 = el } className={`feature-padded-column${(this.state.activeFeature === 'ft2') ? ' activate-feature' : ''}`}>
+								<div className='feature-blurb' style={{height: 'auto', width: '75%'}}>
+									<img src={'/assets/screen-emps.png'} onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/screen-emps.png'})}/>
 								</div>
-								<div className='feature-blurb feature-blurb__text'>
-									<p> Employee management has never been easier! </p>
-									<p> Keep track of hiring and individual performance with our Admin dashboard.</p>
-									<p> Live feed ensures that you're always kept up-to-date with the minute-to-minute details of running your business without actually having to be there.</p>
-								</div>
-							</div>
-							<div ref={el => this.ft3 = el } className={`feature-padded-row${(this.state.activeFeature === 'ft3') ? ' activate-feature' : ''}`}>
 								<div className='feature-blurb feature-blurb__text'>
 									<p> Evaluate the health of your business with detailed reporting. </p>
 									<p> See your top performers, best selling products, and sales trends with the push of a button. </p>
 									<p> Aggregate business performance over time to track gross sales against cost. </p>
 								</div>
-								<div className='feature-blurb'>
-									<img src={'/assets/externalReference/profilepagedesign.png'}/>
+							</div>
+							<div ref={el => this.ft3 = el } className={`feature-padded-row${(this.state.activeFeature === 'ft3') ? ' activate-feature' : ''}`}>
+								<div className='feature-blurb__image'>
+									<img 
+										src={'/assets/externalReference/profilepagedesign.png'}
+										onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/externalReference/profilepagedesign.png'})}
+									/>
+								</div>
+								<div className='feature-blurb feature-blurb__text'>
+									<p> Evaluate the health of your business with detailed reporting. </p>
+									<p> See your top performers, best selling products, and sales trends with the push of a button. </p>
+									<p> Aggregate business performance over time to track gross sales against cost. </p>
 								</div>
 							</div>
 							<div ref={el => this.ft4 = el } className={`feature-padded-row${(this.state.activeFeature === 'ft4') ? ' activate-feature' : ''}`}>
-								<div className='feature-blurb'>
-									<img src={'/assets/externalReference/profilepagedesign.png'}/>
-								</div>
 								<div className='feature-blurb feature-blurb__text'>
 									<p> Sell your stuff online through our marketplace! </p>
 									<p>Connect with other entrepreneurs, find awesome deals, and more! </p>
 									<p> You don't have to be a brick-and-mortar business to take advantage of E-Commerce </p>
+								</div>
+								<div className='feature-blurb' style={{height: 500, width: 700}}>	
+									<img src={'/assets/screen-market.jpg'} onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/screen-market.jpg'})}/>
 								</div>
 							</div>
 						</div>

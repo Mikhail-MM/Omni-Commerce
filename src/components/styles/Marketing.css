@@ -358,6 +358,17 @@
 	transition: background-color 0.8s ease-out
 }
 
+.feature-padded-column {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	padding: 7.5% 7.5%;
+	height: auto;
+	transition: background-color 0.8s ease-out
+}
+
 .feature-blurb {
 	width: 500px;
 	height: 500px;
