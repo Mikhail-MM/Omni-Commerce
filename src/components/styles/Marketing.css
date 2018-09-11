@@ -32,7 +32,7 @@
 	background-color: rgba(49, 60, 69, 0.95);
 	border-bottom: 1px solid gray;
 
-	transition: background-color 0.5s ease-out, height 0.5s ease-out, padding 0.5s ease-out;
+	transition: background-color 0.5s ease-out, height 0.5s ease-out, padding 0.5s ease-out, transform 0.2s ease-out;
 
 	z-index: 3;
 
@@ -59,6 +59,9 @@
 .collapseNavHeader {
 	height: 60px;
 	background-color: rgba(49, 60, 69, 1.00);
+}
+.moveNavHeaderAway {
+	transform: translateY(-60px);
 }
 
 .hero-header-1 {
@@ -205,18 +208,19 @@
 	align-items: center;
 
 	position: sticky;
-	top: 50px;
+	top: 60px;
 
 	width: 100%;
 	height: 192px;
 	background-color: rgba(64,64,64);
 	padding: 12px 12px; 
 
-	transition: height 0.8s ease-out
+	transition: height 0.8s ease-out, top 0.2s ease-out;
 }
 
 .shrink-sticky {
 	height: 100px;
+	top: 0;
 	overflow: hidden;
 }
 .icon-revealer-row {

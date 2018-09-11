@@ -87,7 +87,7 @@ class  Marketing extends Component {
 					<ModalRoot />
 					<div className='screen-resizer'>
 					<div className='jumbo-image-container'>
-						<nav className={`marketing-nav${(!this.state.topOfPage) ? ' collapseNavHeader' : ''}`}>
+						<nav className={`marketing-nav${(!this.state.topOfPage) ? ' collapseNavHeader' : ''}${(this.state.manageSticky) ? ' moveNavHeaderAway': ''}`}>
 							<div className={`marketing-logo-container${(!this.state.topOfPage) ? ' collapseMarketLogo' : ''}`} >
 								<img src={'/assets/TRANSLOGOthin.svg'} />
 							</div>
