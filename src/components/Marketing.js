@@ -4,10 +4,12 @@ import { connect} from 'react-redux'
 import ModalRoot from './ModalRoot'
 
 import { showModal } from '../actions/modals'
+import { routeToNode } from '../actions/routing'
 import './styles/Marketing.css'
 
 const mapDispatchToProps = dispatch => ({
 	showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps)),
+	route: (node) => dispatch(routeToNode(node)),
 })
 
 class  Marketing extends Component {
@@ -86,13 +88,14 @@ class  Marketing extends Component {
 					<div className='screen-resizer'>
 					<div className='jumbo-image-container'>
 						<nav className={`marketing-nav${(!this.state.topOfPage) ? ' collapseNavHeader' : ''}`}>
-							<div className='left-nav' >
-								Logo
-								About
-								Product
+							<div className={`marketing-logo-container${(!this.state.topOfPage) ? ' collapseMarketLogo' : ''}`} >
+								<img src={'/assets/TRANSLOGOthin.svg'} />
 							</div>
 							<div className='right-nav'>
-								Log In
+								<button onClick={() => this.props.showModal('REGISTRATION_MODULE_PICKER', {})}> Register </button>
+								<button onClick={() => this.props.showModal('AUTH_FORM_MODAL', {
+								login: true, loginOmni: true})}> Log In </button>
+								<button onClick={() => this.props.route('/essos')}> Marketplace </button>
 							</div>
 						</nav>
 						<img src='/assets/omni-splash/jumbo-blur.jpg' />
@@ -109,7 +112,7 @@ class  Marketing extends Component {
 							>
 								Get Started
 							</button>
-							<button className='sign-in-button'>
+							<button className='sign-in-button' onClick={() => this.props.route('/essos')}>
 								View Marketplace
 							</button>
 						</div>
@@ -159,10 +162,10 @@ class  Marketing extends Component {
 						<div className='feature-set-container'>
 							<div ref={el => this.ft1 = el } className={`feature-padded-row${(this.state.activeFeature === 'ft1') ? ' activate-feature' : ''}`} >
 								<div className='feature-blurb feature-blurb__text'>
-									<p> Wow, really great cool feature here. Absolutely incredible. U will luv dis!! </p>
-									<p> Works as intended let us bring the overlord. Absolute infallible yesu. Keep it coming keep it coming that's the great thing about it! WHeeee!!! </p>
-									<p> Wow, really great cool feature here. Absolutely incredible. U will luv dis!! </p>
-									<p> Works as intended let us bring the overlord. Absolute infallible yesu. Keep it coming keep it coming that's the great thing about it! WHeeee!!! </p>
+									<p> We provide flexible payment solutions for high volume businesses. </p> 
+									<p> No expensive hardware, no hassle. </p>
+									<p> Sign up for an account and accept payments over the web. </p>
+									<p> We use Stripe to securely process payments from any major credit card provider! </p>
 								</div>
 								<div className='feature-blurb__image'>
 									<img 
@@ -176,18 +179,16 @@ class  Marketing extends Component {
 									<img src={'/assets/externalReference/profilepagedesign.png'}/>
 								</div>
 								<div className='feature-blurb feature-blurb__text'>
-									<p> Wow, really great cool feature here. Absolutely incredible. U will luv dis!! </p>
-									<p> Works as intended let us bring the overlord. Absolute infallible yesu. Keep it coming keep it coming that's the great thing about it! WHeeee!!! </p>
-									<p> Wow, really great cool feature here. Absolutely incredible. U will luv dis!! </p>
-									<p> Works as intended let us bring the overlord. Absolute infallible yesu. Keep it coming keep it coming that's the great thing about it! WHeeee!!! </p>
+									<p> Employee management has never been easier! </p>
+									<p> Keep track of hiring and individual performance with our Admin dashboard.</p>
+									<p> Live feed ensures that you're always kept up-to-date with the minute-to-minute details of running your business without actually having to be there.</p>
 								</div>
 							</div>
 							<div ref={el => this.ft3 = el } className={`feature-padded-row${(this.state.activeFeature === 'ft3') ? ' activate-feature' : ''}`}>
 								<div className='feature-blurb feature-blurb__text'>
-									<p> Wow, really great cool feature here. Absolutely incredible. U will luv dis!! </p>
-									<p> Works as intended let us bring the overlord. Absolute infallible yesu. Keep it coming keep it coming that's the great thing about it! WHeeee!!! </p>
-									<p> Wow, really great cool feature here. Absolutely incredible. U will luv dis!! </p>
-									<p> Works as intended let us bring the overlord. Absolute infallible yesu. Keep it coming keep it coming that's the great thing about it! WHeeee!!! </p>
+									<p> Evaluate the health of your business with detailed reporting. </p>
+									<p> See your top performers, best selling products, and sales trends with the push of a button. </p>
+									<p> Aggregate business performance over time to track gross sales against cost. </p>
 								</div>
 								<div className='feature-blurb'>
 									<img src={'/assets/externalReference/profilepagedesign.png'}/>
@@ -198,10 +199,9 @@ class  Marketing extends Component {
 									<img src={'/assets/externalReference/profilepagedesign.png'}/>
 								</div>
 								<div className='feature-blurb feature-blurb__text'>
-									<p> Wow, really great cool feature here. Absolutely incredible. U will luv dis!! </p>
-									<p> Works as intended let us bring the overlord. Absolute infallible yesu. Keep it coming keep it coming that's the great thing about it! WHeeee!!! </p>
-									<p> Wow, really great cool feature here. Absolutely incredible. U will luv dis!! </p>
-									<p> Works as intended let us bring the overlord. Absolute infallible yesu. Keep it coming keep it coming that's the great thing about it! WHeeee!!! </p>
+									<p> Sell your stuff online through our marketplace! </p>
+									<p>Connect with other entrepreneurs, find awesome deals, and more! </p>
+									<p> You don't have to be a brick-and-mortar business to take advantage of E-Commerce </p>
 								</div>
 							</div>
 						</div>

@@ -43,7 +43,9 @@ export const modalStylePopIn = {
 			marginRight: '-50%',
 			animation: 'fadeInAndScaleUp 1.0s ease',
 			animationFillMode: 'forwards',
-			padding: 0
+			padding: 0,
+			border: 'none',
+			background: 'none',
 		},
 	oberlay: {
 		backgroundColor: 'rgba(0,0,0,0.65)',

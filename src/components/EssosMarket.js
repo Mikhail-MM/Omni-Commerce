@@ -230,7 +230,7 @@ class EssosMarket extends Component {
 	        
 	          <header className='app-header'>
 	              <div className='logo-container'>
-	              	<div style={{width: 50, height: 50}}>
+	              	<div style={{width: 50, height: 50, cursor: 'pointer',}} onClick={() => this.props.routeToNode('/')}>
 	              		<img src={'/assets/TRANSLOGOthin.svg'} />
 	              	</div>
 	              </div>
