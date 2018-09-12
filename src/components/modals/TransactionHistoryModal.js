@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import moment from 'moment'
 
 import Modal from 'react-modal';
-import { modalStyle } from '../config';
+import { modalStyleOverflow } from '../config';
 import { hideModal } from '../../actions/modals';
 
 import { fetchCurrentTicketDetails } from '../../actions/tickets-transactions'
@@ -63,6 +63,7 @@ const TransactionHistoryDisplay = props => {
 					{ tickets && generateTicketStatusMappings() }
 				</tbody>
 			</table>
+
 	)
 }
 
@@ -72,7 +73,7 @@ const TransactionHistoryModal = props => {
 		<div>
 			<Modal
 				isOpen={props.modalType === 'DISPLAY_ALL_TRANSACTIONS'}
-				style={modalStyle}
+				style={modalStyleOverflow}
 				contentLabel="Example Modal"
 				overlayClassName="Overlay"
 				>

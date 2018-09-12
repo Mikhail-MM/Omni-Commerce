@@ -4,6 +4,7 @@ import '../styles/TerminalActionScreen.css'
 
 import ModalRoot from '../ModalRoot'
 import { showModal } from '../../actions/modals'
+import { routeToNode } from '../../actions/routing'
 
 import { 
 	setVisibleCategory, 
@@ -28,6 +29,7 @@ const mapDispatchToProps = dispatch => ({
 	updateTransactionWithMenuItem: (token, itemId, ticketId) => dispatch(updateTransactionWithMenuItem(token, itemId, ticketId)),
 	updateTicketStatus: (token, ticketId, status) => dispatch(updateTicketStatus(token, ticketId, status)),
 	removeItemFromTicket: (token, subdocId, ticketId) => dispatch(updateTransactionWithSubdocRemoval(token, subdocId, ticketId)),
+	routeToNode: (node) => dispatch(routeToNode(node)),
 })
 
 class TerminalActionScreen extends Component {
@@ -149,6 +151,9 @@ class TerminalActionScreen extends Component {
 				<ModalRoot />
 					
 				<div className='app-header__terminal-action'>
+					<div style={{width: 60, height: 60, cursor: 'pointer',}} onClick={() => this.props.routeToNode('/')}>
+	              		<img src={'/assets/TRANSLOGOthin.svg'} />
+	              	</div>
 				</div>
 					
 				<div className='main-action-wrapper'>
@@ -199,7 +204,7 @@ class TerminalActionScreen extends Component {
 											Void Ticket 
 										</div>
 									</div>
-									
+									<div> Ticket Status{(activeTicket) && `: ${activeTicket.status}`}</div>
 									{ activeTicket && this.displayPricingFromActiveTicket() }
 								
 								</div>

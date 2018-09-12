@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Modal from 'react-modal';
-import { modalStyle } from '../config';
+import { modalStyle, modalStylePopIn } from '../config';
 import { showModal, hideModal } from '../../actions/modals';
 
 
@@ -22,25 +22,31 @@ const PaymentTypeSelectionModal = props => {
 		<div>
 			<Modal
 				isOpen={props.modalType === 'CASH_OR_CARD_MODAL'}
-				style={modalStyle}
+				style={modalStylePopIn}
 				contentLabel="Example Modal"
 				overlayClassName="Overlay"
 				>
 
-				<div style={{display: 'flex'}}className='centered-modal-wrapper'>
-					<div 
-						style={{width: 56, height: 56, borderRadius:30, backgroundColor: 'red'}} 
-						className='payment-selection-icon' 
-						onClick={() => props.showModal('CARD_PAYMENT_MODAL', {})}
-					>
-						<img src='/assets/icons/credit-card.svg' />
+				<div className='payment-choice-wrapper'>
+					<div className='payment-section-segment'>
+						<div 
+							style={{width: 100, height: 100, }} 
+							className='payment-selection-icon' 
+							onClick={() => props.showModal('CARD_PAYMENT_MODAL', {})}
+						>
+							<img src='/assets/icons/credit-card.svg' />
+						</div>
+						<h5> Debit & Credit </h5>
 					</div>
-					<div 
-						style={{width: 56, height: 56, borderRadius:30, backgroundColor: 'red'}} 
-						className='payment-selection-icon' 
-						onClick={() => props.showModal('CASH_PAYMENT_MODAL', {})}
-					>
-						<img src='/assets/icons/change.svg' />
+					<div className='payment-section-segment'>
+						<div 
+							style={{width: 100, height: 100, }} 
+							className='payment-selection-icon' 
+							onClick={() => props.showModal('CASH_PAYMENT_MODAL', {})}
+						>
+							<img style={{marginTop: '25px'}} src='/assets/icons/change.svg' />
+						</div>
+						<h5> Cash </h5>
 					</div>
 				</div>
 				<button onClick={() => props.hideModal()}> Cancel </button>

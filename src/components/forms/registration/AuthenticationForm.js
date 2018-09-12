@@ -479,6 +479,13 @@ class AuthenticationForm extends Component {
 					</form>
 				}
 				{ this.props.login &&
+					<React.Fragment>
+					<div className='avatar-selection-container'>
+						<h3 style={{paddingBottom: '12px'}}> Omni Commerce </h3>
+						<div style={{width: 150, height: 150}}>
+							<img src={'/assets/TRANSLOGOthin.svg'} />
+						</div>
+					</div>
 					<form className='essos-profile-edit-form' onSubmit={(e) => this.handleSubmit(e)}>
 						<div className='essos-reg-form-row'>
 							<div className='form-label-input-container' style={{width: '100%', height: 'auto'}}>
@@ -505,6 +512,7 @@ class AuthenticationForm extends Component {
 						<input className='splash-button' value={this.props.login ? 'Log In' : 'Register'} type='submit' />
 						<button onClick={() => this.props.hideModal()}> Cancel </button>
 					</form>
+					</React.Fragment>
 				}
 			</div>
 		)

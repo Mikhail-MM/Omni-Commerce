@@ -8,6 +8,20 @@ export const modalStyle = {
 		transform: 'translate(-50%, -50%)',
 	},
 };
+export const modalStyleOverflow = {
+	content: {
+		top: '50%',
+		left: '50%',
+		right: 'auto',
+		bottom: 'auto',
+		marginRight: '-50%',
+		transform: 'translate(-50%, -50%)',
+		maxHeight: '85%',
+		paddingRight: '50px',
+		width: 'auto',
+		overflowY: 'auto'
+	},
+}
 export const modalStyleanim = {
 	content: {
 			top: '50%',

@@ -1,5 +1,5 @@
 import { routeUserAfterLogin } from './routing'
-import { showModal } from './modals'
+import { showModal, hideModal } from './modals'
 
 function authSuccess (userInfo) {
 	console.log(userInfo)
@@ -39,6 +39,7 @@ export function attemptLogIn(credentials) {
 		.then(json => {
 			dispatch(authSuccess(json))
 			dispatch(routeUserAfterLogin(json.accountType))
+			dispatch(hideModal())
 		})
 		.catch(err => dispatch(authFail(err.message)))
 	}
