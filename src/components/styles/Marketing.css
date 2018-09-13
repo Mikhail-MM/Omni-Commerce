@@ -43,7 +43,18 @@
 	padding: 2px 2px;
 	transition: height 0.5s ease-out, width 0.5s ease-out;
 }
+.marketing-logo-container:hover {
+	animation: spin 2s infinite ease;
+}
 
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(1080deg);
+	}
+}
 .splash-link {
 	position: relative;
 	text-decoration: none;
