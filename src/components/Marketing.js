@@ -184,9 +184,7 @@ class  Marketing extends Component {
 								<div className='feature-blurb feature-blurb__text' style={{height: 'auto', marginTop: 50}}>
 									<div>
 										<h2 style={{textAlign: 'center'}}> Employee Management </h2>
-										<p> Evaluate the health of your business with detailed reporting. </p>
-										<p> See your top performers, best selling products, and sales trends with the push of a button. </p>
-										<p> Aggregate business performance over time to track gross sales against cost. </p>
+										<p> Employee management has never been easier! Keep track of hiring and individual performance with our Admin dashboard. Live feed ensures that you're always kept up-to-date with the minute-to-minute details of running your business without actually having to be there.</p>
 									</div>
 								</div>
 							</div>

@@ -40,7 +40,6 @@
 .marketing-logo-container {
 	height: 90px;
 	width: 90px;
-	padding: 2px 2px;
 	transition: height 0.5s ease-out, width 0.5s ease-out;
 }
 .marketing-logo-container:hover {
@@ -390,6 +389,8 @@
 	align-items: center;
 	width: 100%;
 	height: auto;
+
+	font-family: "Ubuntu", sans-serif;
 }
 
 .feature-padded-row {
