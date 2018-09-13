@@ -92,10 +92,11 @@ class  Marketing extends Component {
 								<img src={'/assets/TRANSLOGOthin.svg'} />
 							</div>
 							<div className='right-nav'>
-								<button onClick={() => this.props.showModal('REGISTRATION_MODULE_PICKER', {})}> Register </button>
-								<button onClick={() => this.props.showModal('AUTH_FORM_MODAL', {
-								login: true, loginOmni: true})}> Log In </button>
-								<button onClick={() => this.props.route('/essos')}> Marketplace </button>
+								<a className='splash-link' onClick={() => this.props.route('/essos')}> Online Marketplace </a>
+								<a className='splash-link' onClick={() => this.props.showModal('REGISTRATION_MODULE_PICKER', {})}> Register </a>
+								<a className='splash-link' onClick={() => this.props.showModal('AUTH_FORM_MODAL', {
+								login: true, loginOmni: true})}> Log In </a>
+								
 							</div>
 						</nav>
 						<img src='/assets/omni-splash/jumbo-blur.jpg' />
@@ -171,17 +172,18 @@ class  Marketing extends Component {
 								<div className='feature-blurb__image'>
 									<img 
 										src={'/assets/pos.jpg'}
-										onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/externalReference/profilepagedesign.png'})}
+										onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/pos.jpg'})}
 									/>
 								</div>
 							</div>
 							<div ref={el => this.ft2 = el } className={`feature-padded-column${(this.state.activeFeature === 'ft2') ? ' activate-feature' : ''}`}>
-								<h2> Employee Management </h2>
+								
 								<div className='feature-blurb' style={{height: 'auto', width: '75%'}}>
 									<img src={'/assets/screen-emps.png'} onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/screen-emps.png'})}/>
 								</div>
 								<div className='feature-blurb feature-blurb__text' style={{height: 'auto', marginTop: 50}}>
 									<div>
+										<h2 style={{textAlign: 'center'}}> Employee Management </h2>
 										<p> Evaluate the health of your business with detailed reporting. </p>
 										<p> See your top performers, best selling products, and sales trends with the push of a button. </p>
 										<p> Aggregate business performance over time to track gross sales against cost. </p>
