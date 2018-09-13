@@ -186,3 +186,43 @@ td {
 .event-user-name {
 	color: #4183c4;
 }
+
+/* Charting */
+
+.chart-container__full-row {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	width: 100%;
+	height: auto;
+}
+
+.chart-container__columns {
+	display: flex;
+
+	width: 100%;
+	height: auto;
+}
+
+.gross-chart-dimensions {
+	height: 500px;
+	width: 500px;
+}
+.itembars-container {
+	width: 70%;
+	height: auto;
+}
+.itempie-chart-container {
+	width: 100%;
+	max-height:50%;
+}
+.half-column-chartcontainer-divider {
+	width: 30%;
+	height: 100%;
+}
+
+.category-pie-container {
+	width: 100%;
+	max-height:50%;
+}

@@ -119,7 +119,7 @@ class  Marketing extends Component {
 					</div>
 					</div>
 					<div className='splash-intro'>
-						<h2> Payments Made Easy! </h2>
+						<h2 style={{textAlign: 'center'}}> Payments Made Easy! </h2>
 						<p> Omni is an E-Commerce platform aimed at empowering small businesses and individual entrepreneurs by facilitating the ability to easily accept cash and credit card payments. </p>  
 					</div>
 					<div style={{width: '100%', height: 'auto', backgroundColor: '#AA3939'}} ref={el => this.stickyElContainer = el}>
@@ -162,46 +162,53 @@ class  Marketing extends Component {
 						<div className='feature-set-container'>
 							<div ref={el => this.ft1 = el } className={`feature-padded-row${(this.state.activeFeature === 'ft1') ? ' activate-feature' : ''}`} >
 								<div className='feature-blurb feature-blurb__text'>
-									<p> We provide flexible payment solutions for high volume businesses. </p> 
-									<p> No expensive hardware, no hassle. </p>
-									<p> Sign up for an account and accept payments over the web. </p>
-									<p> We use Stripe to securely process payments from any major credit card provider! </p>
+									<div className='blurb-center-wrapper'>
+										<h2> Point of Sale Software </h2>
+										<p> We provide flexible payment solutions for high volume businesses in retail and hospitality. No expensive hardware - our applications are compatible with all devices that can connect to the internet. </p>
+										<p> Sign up for an account to build your store profile and accept payments securely. We utilize <a style={{textDecoration:'none'}}href='https://stripe.com'> Stripe </a> to ensure your information is secure from attackers. We use Stripe to securely process payments from any major credit card provider! </p>
+									</div>
 								</div>
 								<div className='feature-blurb__image'>
 									<img 
-										src={'/assets/externalReference/profilepagedesign.png'}
+										src={'/assets/pos.jpg'}
 										onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/externalReference/profilepagedesign.png'})}
 									/>
 								</div>
 							</div>
 							<div ref={el => this.ft2 = el } className={`feature-padded-column${(this.state.activeFeature === 'ft2') ? ' activate-feature' : ''}`}>
+								<h2> Employee Management </h2>
 								<div className='feature-blurb' style={{height: 'auto', width: '75%'}}>
 									<img src={'/assets/screen-emps.png'} onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/screen-emps.png'})}/>
 								</div>
-								<div className='feature-blurb feature-blurb__text'>
-									<p> Evaluate the health of your business with detailed reporting. </p>
-									<p> See your top performers, best selling products, and sales trends with the push of a button. </p>
-									<p> Aggregate business performance over time to track gross sales against cost. </p>
+								<div className='feature-blurb feature-blurb__text' style={{height: 'auto', marginTop: 50}}>
+									<div>
+										<p> Evaluate the health of your business with detailed reporting. </p>
+										<p> See your top performers, best selling products, and sales trends with the push of a button. </p>
+										<p> Aggregate business performance over time to track gross sales against cost. </p>
+									</div>
 								</div>
 							</div>
 							<div ref={el => this.ft3 = el } className={`feature-padded-row${(this.state.activeFeature === 'ft3') ? ' activate-feature' : ''}`}>
-								<div className='feature-blurb__image'>
+								<div className='feature-blurb__image' style={{height: '650px', width: '650px'}}>
 									<img 
-										src={'/assets/externalReference/profilepagedesign.png'}
+										src={'/assets/stats.jpg'}
 										onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/externalReference/profilepagedesign.png'})}
 									/>
 								</div>
 								<div className='feature-blurb feature-blurb__text'>
-									<p> Evaluate the health of your business with detailed reporting. </p>
-									<p> See your top performers, best selling products, and sales trends with the push of a button. </p>
-									<p> Aggregate business performance over time to track gross sales against cost. </p>
+									<div className='blurb-center-wrapper'>
+										<h2> Metrics & Sales Reporting </h2>
+										<p> Evaluate the health of your business with detailed sales reports sent to your account, accessible anywhere. See your top performers, best selling products, and sales trends with the push of a button. Aggregate business performance over time to track gross sales against cost. </p>
+									</div>
 								</div>
 							</div>
 							<div ref={el => this.ft4 = el } className={`feature-padded-row${(this.state.activeFeature === 'ft4') ? ' activate-feature' : ''}`}>
 								<div className='feature-blurb feature-blurb__text'>
-									<p> Sell your stuff online through our marketplace! </p>
-									<p>Connect with other entrepreneurs, find awesome deals, and more! </p>
-									<p> You don't have to be a brick-and-mortar business to take advantage of E-Commerce </p>
+									<div className='blurb-center-wrapper'>
+										<h2> Online Marketplace </h2>
+										<p> Sell your stuff online through our marketplace! Connect with other entrepreneurs, find awesome deals, and more! </p>
+										<p> You don't have to be a brick-and-mortar business to take advantage of E-Commerce </p>
+									</div>
 								</div>
 								<div className='feature-blurb' style={{height: 500, width: 700}}>	
 									<img src={'/assets/screen-market.jpg'} onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/screen-market.jpg'})}/>

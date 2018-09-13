@@ -387,7 +387,14 @@
 .feature-blurb__image {
 	width: 700px;
 }
-
+.blurb-center-wrapper {
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+}
+.blurb-center-wrapper h2 {
+	text-align: center;
+}
 .activate-feature {
 	background-color:/* #AA3939 */ #C196C7;
 }
