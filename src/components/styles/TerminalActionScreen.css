@@ -19,7 +19,7 @@ td {
 }
 .app-header__terminal-action {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 
   width: 100%;
   height: 60px;
@@ -195,10 +195,10 @@ td {
  .payment-choice-wrapper {
  	display: flex;
  	justify-content: space-around;
- 	width: 300px;
+ 	width: 500px;
  	height: 200px;
 
- 	background-color: rgba(0,0,0,0.25);
+ 	background-color: rgba(0,0,0,0.85);
 
  }
 
@@ -212,6 +212,7 @@ td {
  	width: 50%;
 
  	color: white;
+ 	background-color: rgba(0,0,0,0.25);
  	transition: color 0.8s ease;
 
  }
@@ -221,7 +222,7 @@ td {
  transition: transform 0.8s ease;
 }
 .payment-section-segment:hover {
- 	background-color: rgba(255,255,255,0.25);
+ 	background-color: rgba(255,255,255,0.55);
  	color: #D3EFB3;
  }
 
