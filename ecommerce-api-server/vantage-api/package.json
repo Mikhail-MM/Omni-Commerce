@@ -51,5 +51,9 @@
     "underscore": "^1.8.3",
     "uuid": "^3.1.0",
     "which": "^1.3.0"
-  }
+  },
+   "scripts": {
+    "start": "cd ecommerce-api-server/vantage-api && node pos-api",
+    "heroku-postbuild": "cd ecommerce-api-server/vantage-api && yarn install && cd .. && cd .. && yarn install && yarn build"
+  },
 }
