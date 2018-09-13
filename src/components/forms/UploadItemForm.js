@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { TagMap } from '../config';
+
 import '../styles/UploadItemForm.css'
 
 import { modifyOmniTerminalItem, createNewMenuItem } from '../../actions/terminalItems'
 import { updateMarketplaceItem, postEssosItem } from '../../actions/marketplace'
 import { showModal } from '../../actions/modals'
+
+
 
 const initialState = {
 	itemName: '',
@@ -215,43 +219,33 @@ class UploadItemForm extends Component {
 
 	renderTagSelectionMenu = () => {
 		// Export tags array to config
-		const tags = [
-			{ 
-				tagName: `Shoes - Male`,
-				iconURL: `/assets/icons/box.svg`
-			},
-			{ 
-				tagName: `Shoes - Female`,
-				iconURL: `/assets/icons/box.svg`
-			},
-		]
-
+		const tags = Object.keys(TagMap)
 		return tags.map(tag => {
-			if (!this.state.tags.includes(tag.tagName)) return (
+			if (!this.state.tags.includes(tag)) return (
 				<div 
 					className='essos-category-tag-label' 
 					style={{backgroundColor: 'gray'}}
-					onClick={ () => this.handleTagChange(tag.tagName) }
+					onClick={ () => this.handleTagChange(tag) }
 				> 
 					<div className='tag-icon-container' >
-						<img src={tag.iconURL} />
+						<img src={TagMap[tag]} />
 					</div>
 					<div className='tag-label-container'>
-						{tag.tagName}
+						{tag}
 					</div>
 				</div>
 			)
-			else if (this.state.tags.includes(tag.tagName)) return (
+			else if (this.state.tags.includes(tag)) return (
 				<div 
 					className='essos-category-tag-label' 
 					style={{backgroundColor: 'red'}}
-					onClick={ () => this.handleTagChange(tag.tagName) }
+					onClick={ () => this.handleTagChange(tag) }
 				> 
 					<div className='tag-icon-container' >
-						<img src={tag.iconURL} />
+						<img src={TagMap[tag]} />
 					</div>
 					<div className='tag-label-container'>
-						{tag.tagName}
+						{tag}
 					</div>
 				</div>
 			)
