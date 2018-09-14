@@ -8,6 +8,7 @@ export function retrieveAllItemsForSale() {
 				'Content-Type': 'application/json',
 			},
 			method: 'GET',
+			mode: 'no-cors',
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {

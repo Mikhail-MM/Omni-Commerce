@@ -1,4 +1,4 @@
-export const hostURI = 'https://still-beach-13809.herokuapp.com/';
+export const hostURI = 'https://still-beach-13809.herokuapp.com';
 export const modalStyle = {
 	content: {
 		top: '50%',
