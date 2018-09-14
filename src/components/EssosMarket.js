@@ -39,6 +39,8 @@ class EssosMarket extends Component {
 
 	async componentDidMount() {
 		const { isAuthenticated, token } = this.props
+		console.log("Essos component mounted. Running props to retrieve all marketplace items")
+		console.log("Checking isauthenticated:", isAuthenticated)
 		this.props.retrieveAllMarketplaceItems()
 		if (isAuthenticated) this.props.retrieveShoppingCart(token)
 		if (isAuthenticated) this.props.retrieveUserWishlist(token)
