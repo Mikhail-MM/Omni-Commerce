@@ -9,7 +9,10 @@ export function retrieveAllItemsForSale() {
 			method: 'GET',
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
-		.then(json => dispatch(receiveItems(json)))
+		.then(json => {
+			console.log("Data...: ", json)
+			dispatch(receiveItems(json))
+		})
 		.catch(err => console.log(err))
 	}
 }

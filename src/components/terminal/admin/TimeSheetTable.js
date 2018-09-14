@@ -26,7 +26,7 @@ class SalesAnalyticsContainer extends Component {
 	}
 
 	fetchAllSalesReports = (token) => {
-		return fetch('http://localhost:3001/timesheets', {
+		return fetch('/timesheets', {
 				headers:{
 					'Content-Type': 'application/json',
 					'x-access-token': token,
