@@ -6,7 +6,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const winston = require('winston')
-winston.log('Winston Logger Initiaized. This is it baby!')
+winston.log('info', 'Hello log files!', {  
+  someKey: 'some-value'
+})
 const path = require('path');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
@@ -312,7 +314,7 @@ if (dev) {
 //	Production Error Handler
 
 app.use(function(err, req, res, next) {
-	winston.log('error: ', err)
+	
 	res.status(err.status || 500).send();
 });
 
