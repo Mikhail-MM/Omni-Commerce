@@ -90,7 +90,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 
 
 /*
-router.route('/clients/lookupEmployees')
+router.route('/clients/lookupEmployees')mongodb://localhost/vantageAPI-2
 	.get(authorize.adminRequired, clients.findAllEmployees)
 */
 
