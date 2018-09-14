@@ -31,13 +31,12 @@ class EmployeeManagement extends Component {
 	}
 
 	findMyEmployees = (token) => {
-		return fetch('http://localhost:3001/employees/find_all', {
+		return fetch('/employees/find_all', {
 				headers:{
 					'Content-Type': 'application/json',
 					'x-access-token': token,
 				},
 				method: 'GET',
-				mode: 'cors'
 			})
 			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 			.then(json => {

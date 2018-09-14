@@ -31,13 +31,12 @@ class SalesAnalyticsContainer extends Component {
 	}
 
 	fetchAllSalesReports = (token) => {
-		return fetch('http://localhost:3001/salesReports', {
+		return fetch('/salesReports', {
 				headers:{
 					'Content-Type': 'application/json',
 					'x-access-token': token,
 				},
 				method: 'GET',
-				mode: 'cors'
 			})
 			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 			.then(json => {

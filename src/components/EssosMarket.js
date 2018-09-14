@@ -165,12 +165,11 @@ class EssosMarket extends Component {
 
 	 retrieveFeaturedItems = () => {
 	 	// This can be moved to a selector to filter all items by queryMarker string
-		return fetch('http://localhost:3001/storeItem?lookup=queryBannerItems', {
+		return fetch('/storeItem?lookup=queryBannerItems', {
 			headers:{
 				'Content-Type': 'application/json'
 			},
 			method: 'GET',
-			mode: 'cors',
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
