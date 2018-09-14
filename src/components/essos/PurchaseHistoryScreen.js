@@ -27,13 +27,12 @@ class PurchaseHistoryScreen extends Component {
 	}
 
 	fetchPurchaseHistory = async (token) => {
-		return fetch('http://localhost:3001/purchaseorders/userLookup/', {
+		return fetch('/purchaseorders/userLookup/', {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-access-token': token
 			},
-			method: 'GET',
-			mode: 'cors',		
+			method: 'GET',	
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {

@@ -28,13 +28,12 @@ export function setVisibleCategory(category) {
 
 export function fetchTickets(token) {
 	return dispatch => {
-		return fetch('http://localhost:3001/transactions', {
+		return fetch('/transactions', {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token
 			},
 			method: 'GET',
-			mode: 'cors'
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => dispatch(organizeTicketsByStatus(json)))
@@ -45,13 +44,12 @@ export function fetchTickets(token) {
 export function createNewTicket(token, createdBy) {
 	const data = { createdBy: createdBy, createdAt: Date.now(), status: "Open"}
 	return dispatch => {
-		return fetch('http://localhost:3001/transactions', {
+		return fetch('/transactions', {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token
 			},
 			method: 'POST',
-			mode: 'cors',
 			body: JSON.stringify(data),
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
@@ -66,7 +64,7 @@ export function createNewTicket(token, createdBy) {
 }
 
 export function fetchCurrentTicketDetails(token, ticket_Id) {
-	const url = 'http://localhost:3001/transactions/' + ticket_Id;
+	const url = `/transactions/${ticket_Id}`;
 	return dispatch => {
 		return fetch(url, {
 			headers:{
@@ -74,7 +72,6 @@ export function fetchCurrentTicketDetails(token, ticket_Id) {
 				'x-access-token': token,
 			},
 			method: 'GET',
-			mode: 'cors',
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => dispatch(receiveCurrentTicket(json)))
@@ -84,7 +81,7 @@ export function fetchCurrentTicketDetails(token, ticket_Id) {
 }
 
 export function updateTransactionWithMenuItem(token, menuItem_Id, currentTransaction_Id) {
-	const url = 'http://localhost:3001/menus/noIDhack/' + menuItem_Id;
+	const url = '/menus/noIDhack/' + menuItem_Id;
 	return dispatch => {
 		return fetch(url, {
 			headers:{
@@ -92,18 +89,16 @@ export function updateTransactionWithMenuItem(token, menuItem_Id, currentTransac
 				'x-access-token': token,
 			},
 			method: 'GET',
-			mode: 'cors',
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
-			const url = 'http://localhost:3001/transactions/addItem/' + currentTransaction_Id;
+			const url = '/transactions/addItem/' + currentTransaction_Id;
 			return fetch(url, {
 				headers:{
 					'Content-Type': 'application/json',
 					'x-access-token': token,
 				},
 				method: 'PUT',
-				mode: 'cors',
 				body: JSON.stringify(json),
 			})
 			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
@@ -115,7 +110,7 @@ export function updateTransactionWithMenuItem(token, menuItem_Id, currentTransac
 
 
 export function updateTicketStatus(token, ticket_Id, ticketStatus) {
-	const url = 'http://localhost:3001/transactions/' + ticket_Id
+	const url = `/transactions/${ticket_Id}`
 	const data = { status: ticketStatus }
 	return dispatch => {
 		return fetch(url, {
@@ -124,7 +119,6 @@ export function updateTicketStatus(token, ticket_Id, ticketStatus) {
 				'x-access-token': token,
 			},
 			method: 'PUT',
-			mode: 'cors',
 			body: JSON.stringify(data),
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
@@ -134,7 +128,7 @@ export function updateTicketStatus(token, ticket_Id, ticketStatus) {
 
 
 export function updateTransactionWithRequestedAddon(token, currentTransaction_Id, addOn) {
-	const url = 'http://localhost:3001/transactions/requestAddon/' + currentTransaction_Id
+	const url = `/transactions/requestAddon/${currentTransaction_Id}`
 	return dispatch => {
 		return fetch(url, {
 			headers:{
@@ -142,7 +136,6 @@ export function updateTransactionWithRequestedAddon(token, currentTransaction_Id
 				'x-access-token': token,
 			},
 			method: 'PUT',
-			mode: 'cors',
 			body: addOn,
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
@@ -152,7 +145,7 @@ export function updateTransactionWithRequestedAddon(token, currentTransaction_Id
 }
 
 export function updateTransactionWithSubdocRemoval(token, subdoc_Id, currentTransaction_Id) {
-	const url = 'http://localhost:3001/transactions/removeItem/' + currentTransaction_Id
+	const url = `/transactions/removeItem/${currentTransaction_Id}`
 	const data = { subdoc_Id: subdoc_Id }
 	return dispatch => {
 		return fetch(url, {
@@ -161,7 +154,6 @@ export function updateTransactionWithSubdocRemoval(token, subdoc_Id, currentTran
 				'x-access-token': token,
 			},
 			method: 'PUT',
-			mode: 'cors',
 			body: JSON.stringify(data),
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))

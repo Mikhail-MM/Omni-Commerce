@@ -10,13 +10,12 @@ function receiveLoggedUsers(loggedUsers) {
 
 export function fetchLoggedUsers(token) {
 	return dispatch => {
-		return fetch('http://localhost:3001/storeconfig', {
+		return fetch('/storeconfig', {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token
 			},
 			method: 'GET',
-			mode: 'cors'
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.errorText))
 		.then(json => {

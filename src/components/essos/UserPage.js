@@ -52,12 +52,11 @@ class UserPage extends Component {
 
 	fetchProfilePageMetadata = (userID) => {
 		const { token } = this.props
-		if (!this.props.selfProfileView) return fetch(`http://localhost:3001/users/essos/getProfileView/${this.props.match.params.id}`, {
+		if (!this.props.selfProfileView) return fetch(`/users/essos/getProfileView/${this.props.match.params.id}`, {
 				headers:{
 					'Content-Type': 'application/json',
 				},
 				method: 'GET',
-				mode: 'cors'
 			})
 			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 			.then(json => {
@@ -65,14 +64,13 @@ class UserPage extends Component {
 				return json
 			})
 			.catch(err => console.log(err))
-		if (this.props.selfProfileView) return fetch(`http://localhost:3001/users/essos/getProfileView/ownProfile`, {
+		if (this.props.selfProfileView) return fetch(`/users/essos/getProfileView/ownProfile`, {
 			headers:{
 					'Content-Type': 'application/json',
 					'x-access-token': token,
 					'x-user-pathway': 'Essos',
 				},
 				method: 'GET',
-				mode: 'cors'
 			})
 			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 			.then(json => {

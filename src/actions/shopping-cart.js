@@ -4,13 +4,12 @@ export function retrieveShoppingCart(token) {
 	console.log("Sending token to server for shopping cart retrieval")
 	console.log(token)
 	return dispatch => {
-		return fetch('http://localhost:3001/shoppingCart/userLookup/', {
+		return fetch('/shoppingCart/userLookup/', {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token
 			},
 			method: 'GET',
-			mode: 'cors'
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
@@ -21,7 +20,7 @@ export function retrieveShoppingCart(token) {
 }
 
 export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountAlreadyInCart) {
-	const url = 'http://localhost:3001/storeItem/' + itemId
+	const url = '/storeItem/' + itemId
 
 	console.log("amountRequested, ammountAlreadyInCart: ", amountRequested, amountAlreadyInCart)
 
@@ -32,7 +31,6 @@ export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountA
 				'x-access-token': token,
 			},
 			method: 'GET',
-			mode: 'cors'
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
@@ -49,13 +47,12 @@ export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountA
 
 				if (amountThatCanBeFulfilled > 0) {
 					console.log("Filling cart with partial request")
-					return fetch('http://localhost:3001/shoppingCart/addItem', {
+					return fetch('/shoppingCart/addItem', {
 					headers:{
 						'Content-Type': 'application/json',
 						'x-access-token': token,
 					},
 					method: 'PUT',
-					mode: 'cors',
 					body: JSON.stringify({
 						itemName: json.itemName,
 						itemPrice: json.itemPrice,
@@ -101,13 +98,12 @@ export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountA
 
 			} else if ( amountAlreadyInCart + amountRequested <= json.numberInStock ){
 				console.log("If statement running: Item DB is greater than or equal to amount requested + amount already in cart")
-				return fetch('http://localhost:3001/shoppingCart/addItem', {
+				return fetch('/shoppingCart/addItem', {
 					headers:{
 						'Content-Type': 'application/json',
 						'x-access-token': token,
 					},
 					method: 'PUT',
-					mode: 'cors',
 					body: JSON.stringify({
 						itemName: json.itemName,
 						itemPrice: json.itemPrice,
@@ -134,13 +130,12 @@ export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountA
 
 export function validateCartAndProceedToPayment(token) {
 	return dispatch => { // check validation, watch for flags, dispatch to payment gateway or just bring up a modal 
-		fetch('http://localhost:3001/shoppingCart/checkOut/', {
+		fetch('/shoppingCart/checkOut/', {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token,
 			},
 			method: 'POST',
-			mode: 'cors',
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json =>{
@@ -167,13 +162,12 @@ export function pullItemFromCart(token, subdocId) {
 	console.log(subdocId);
 	const data = { _id: subdocId }
 	return dispatch => {
-		fetch('http://localhost:3001/shoppingCart/removeItem/',{ 
+		fetch('/shoppingCart/removeItem/',{ 
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token,
 			},
 			method: 'PUT',
-			mode: 'cors',
 			body: JSON.stringify(data),
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))

@@ -2,13 +2,12 @@ import { showModal } from './modals'
 
 export function fetchAllTicketsAndGenerateSalesReport(token) {
 	return dispatch => {
-		return fetch('http://localhost:3001/salesReports', {
+		return fetch('/salesReports', {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token
 			},
 			method: 'POST',
-			mode: 'cors',
 			body:JSON.stringify({})
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
@@ -26,13 +25,12 @@ export function lookUpSalesReportsByDate(token, beginDate, endDate) {
 	console.log(data.beginDate)
 	console.log(data.endDate)
 	return dispatch => {
-		return fetch('http://localhost:3001/salesReports/aggregate/', {
+		return fetch('/salesReports/aggregate/', {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token
 			},
 			method: 'POST',
-			mode: 'cors',
 			body: JSON.stringify(data)
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
@@ -43,13 +41,12 @@ export function lookUpSalesReportsByDate(token, beginDate, endDate) {
 
 export function getSalesReportById(token, id) {
 	return dispatch => {
-		return fetch(`http://localhost:3001/salesReports/${id}`, {
+		return fetch(`/salesReports/${id}`, {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token
 			},
 			method: 'GET',
-			mode: 'cors',
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => dispatch(receiveSalesReport(json)))

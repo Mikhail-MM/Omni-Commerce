@@ -14,13 +14,12 @@ function organizeItemsToCategories(ArrayOfAllMenuItemObjects) {
 
 export function fetchMenuItems(token) {
 	return dispatch => {
-		return fetch('http://localhost:3001/menus', {
+		return fetch('/menus', {
 			headers:{ 
 				'Content-Type': 'application/json',
 				'x-access-token': token
 			},
 			method: 'GET',
-			mode: 'cors',
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => dispatch(organizeItemsToCategories(json)))
@@ -30,20 +29,18 @@ export function fetchMenuItems(token) {
 
 export function createNewMenuItem(token, data, imageFile) {
 	return dispatch => {
-		fetch('http://localhost:3001/menus', {
+		fetch('/menus', {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token
 			},
 				method: 'POST',
-				mode: 'cors',
 				body: JSON.stringify(data),
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(newMenuItemJSON => {
-			return fetch(`http://localhost:3001/sign-s3?fileName=${imageFile.name}&fileType=${imageFile.type}`, {
+			return fetch(`/sign-s3?fileName=${imageFile.name}&fileType=${imageFile.type}`, {
 				method: 'GET',
-				mode: 'cors',
 			})
 			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 			.then(signedRequestJSON => {
@@ -51,7 +48,7 @@ export function createNewMenuItem(token, data, imageFile) {
 				return fetch(signedRequest, {
 					headers: {
 						// Use empty string because S3 expects Origin Header
-						'Origin': 'http://localhost:3000',
+						'Origin': 'https://still-beach-13809.herokuapp.com/',
 					},
 					method: 'PUT', 
 					body: imageFile,
@@ -63,13 +60,12 @@ export function createNewMenuItem(token, data, imageFile) {
 						return fileOnBucketurl
 				})
 				.then(persistedBucketURL => {
-					return fetch(`http://localhost:3001/menus/${newMenuItemJSON._id}`, {
+					return fetch(`/menus/${newMenuItemJSON._id}`, {
 						headers: {
 							'Content-Type': 'application/json',
 							'x-access-token': token,
 						},
 						method: 'PUT',
-						mode: 'cors',
 						body: JSON.stringify({ imageURL: persistedBucketURL })
 					})
 					.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
@@ -88,28 +84,26 @@ export function createNewMenuItem(token, data, imageFile) {
 
 export function modifyOmniTerminalItem(token, itemID, data, imageHandler) {
 	return dispatch => {
-		return fetch(`http://localhost:3001/menus/${itemID}`, {
+		return fetch(`/menus/${itemID}`, {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-access-token': token,
 			},
 			method: 'PUT',
-			mode: 'cors',
 			body: JSON.stringify(data),
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
 			if (imageHandler.newImageFlag) { 
-				return fetch(`http://localhost:3001/sign-s3?fileName=${imageHandler.imageSource.name}&fileType=${imageHandler.imageSource.type}`, {
+				return fetch(`/sign-s3?fileName=${imageHandler.imageSource.name}&fileType=${imageHandler.imageSource.type}`, {
 					method: 'GET',
-					mode: 'cors',
 				})
 				.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 				.then(signedRequestJSON => {
 					const { signedRequest, fileOnBucketurl } = signedRequestJSON
 					return fetch(signedRequest, {
 						headers: {
-							'Origin': 'http://localhost:3000',
+							'Origin': 'https://still-beach-13809.herokuapp.com/',
 						},
 						method: 'PUT', 
 						body: imageHandler.imageSource,
@@ -121,13 +115,12 @@ export function modifyOmniTerminalItem(token, itemID, data, imageHandler) {
 							return fileOnBucketurl
 					})
 					.then(persistedBucketURL => {
-						return fetch(`http://localhost:3001/menus/${itemID}`, {
+						return fetch(`/menus/${itemID}`, {
 							headers: {
 								'Content-Type': 'application/json',
 								'x-access-token': token,
 							},
 							method: 'PUT',
-							mode: 'cors',
 							body: JSON.stringify({ imageURL: persistedBucketURL })
 						})
 						.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
@@ -152,13 +145,12 @@ export function modifyOmniTerminalItem(token, itemID, data, imageHandler) {
 
 export function deleteTerminalItem(token, itemID) {
 	return dispatch => {
-		return fetch(`http://localhost:3001/menus/${itemID}`, {
+		return fetch(`/menus/${itemID}`, {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-access-token': token,
 			},
 			method: 'DELETE',
-			mode: 'cors',
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(deletedItem => {

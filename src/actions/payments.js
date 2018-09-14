@@ -1,5 +1,5 @@
 export function sendCashPaymentToApi(authToken, cashTendered, transaction_id) {
-	const url = 'http://localhost:3001/transactions/' + transaction_id
+	const url = '/transactions/' + transaction_id
 	const data = {
 		payment: {
 			paymentType: "Cash",
@@ -13,18 +13,16 @@ export function sendCashPaymentToApi(authToken, cashTendered, transaction_id) {
 				'x-access-token': authToken,
 			},
 			method: 'GET',
-			mode: 'cors',
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
 			data.parentTransaction = json;
-			fetch('http://localhost:3001/payments/cash', {
+			fetch('/payments/cash', {
 				headers:{
 					'Content-Type': 'application/json',
 					'x-access-token': authToken
 				},
 				method: 'POST',
-				mode: 'cors',
 				body: JSON.stringify(data),
 			})
 			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
@@ -54,7 +52,7 @@ export function sendCashPaymentToApi(authToken, cashTendered, transaction_id) {
 
 export function sendStripeTokenToApi(authToken, stripeToken, transaction_id) {
 	// Need to ask API for price of the damn thang
-	const url = 'http://localhost:3001/transactions/' + transaction_id
+	const url = '/transactions/' + transaction_id
 	const data = {}
 	return dispatch => {
 		fetch(url, {
@@ -63,7 +61,6 @@ export function sendStripeTokenToApi(authToken, stripeToken, transaction_id) {
 				'x-access-token': authToken,
 			},
 			method: 'GET',
-			mode:'cors'
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
@@ -73,13 +70,12 @@ export function sendStripeTokenToApi(authToken, stripeToken, transaction_id) {
 				transactionId: transaction_id,
 			}
 
-			return fetch('http://localhost:3001/payments/stripe', {
+			return fetch('payments/stripe', {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': authToken
 			},
 			method: 'POST',
-			mode: 'cors',
 			body: JSON.stringify(data)
 			})
 			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
@@ -95,7 +91,7 @@ export function sendStripeTokenToApi(authToken, stripeToken, transaction_id) {
 }
 
 function updateTransactionWithStripePaymentDetails(authToken, transaction_id, paymentJson) {
-	const url = 'http://localhost:3001/transactions/' + transaction_id
+	const url = '/transactions/' + transaction_id
 	console.log(paymentJson)
 	console.log(paymentJson.outcome)
 	const data = {
@@ -152,9 +148,7 @@ function updateTransactionWithStripePaymentDetails(authToken, transaction_id, pa
 				'Content-Type': 'application/json',
 				'x-access-token': authToken
 			},
-			method: 'PUT',
-			mode: 'cors',
-			body: JSON.stringify(data),
+			method: 'PUT',			body: JSON.stringify(data),
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => console.log(json))
@@ -164,13 +158,12 @@ function updateTransactionWithStripePaymentDetails(authToken, transaction_id, pa
 
 export function beginCartPaymentValidationCascade(authToken, token) {
 	return dispatch => {
-		return fetch('http://localhost:3001/shoppingCart/payment/', {
+		return fetch('/shoppingCart/payment/', {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': authToken
 			},
 			method: 'POST',
-			mode: 'cors',
 			body: JSON.stringify({stripeToken: token})
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))

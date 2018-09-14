@@ -25,13 +25,12 @@ class ShipmentOrderScreen extends Component {
 	}
 
 	fetchShipmentRequests = async (token) => {
-		return fetch('http://localhost:3001/sellorders/userLookup/', {
+		return fetch('/sellorders/userLookup/', {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-access-token': token,
 			},
 			method: 'GET',
-			mode: 'cors',		
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
@@ -81,13 +80,12 @@ class ShipmentOrderScreen extends Component {
 	handleStatusUpdate = (requestId, itemId, newStatus) => {
 		const { token } = this.props
 
-		return fetch('http://localhost:3001/essos/updateOrderStatus', {
+		return fetch('/essos/updateOrderStatus', {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-access-token': token,			
 			},
 			method: 'PUT',
-			mode: 'cors',
 			body: JSON.stringify({
 				sellOrderId: requestId,
 				itemSubdocId: itemId,

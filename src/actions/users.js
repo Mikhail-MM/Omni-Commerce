@@ -1,28 +1,26 @@
 export function updateProfileData(token, userID, data, imageHandler, mode) {
 	return dispatch => {
-		return fetch(`http://localhost:3001/clients/${userID}`, {
+		return fetch(`/clients/${userID}`, {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-access-token': token,
 				'x-user-pathway': mode,
 			},
 			method: 'PUT',
-			mode: 'cors',
 			body: JSON.stringify(data)
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
 			if (imageHandler.newImageFlag) {
-				return fetch(`http://localhost:3001/sign-s3?fileName=${imageHandler.imageSource.name}&fileType=${imageHandler.imageSource.type}`, {
+				return fetch(`/sign-s3?fileName=${imageHandler.imageSource.name}&fileType=${imageHandler.imageSource.type}`, {
 					method: 'GET',
-					mode: 'cors',
 				})
 				.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 				.then(signedRequestJSON => {
 					const { signedRequest, fileOnBucketurl } = signedRequestJSON
 					return fetch(signedRequest, {
 						headers: {
-							'Origin': 'http://localhost:3000',
+							'Origin': 'https://still-beach-13809.herokuapp.com/',
 						},
 						method: 'PUT', 
 						body: imageHandler.imageSource,
@@ -33,14 +31,13 @@ export function updateProfileData(token, userID, data, imageHandler, mode) {
 							return fileOnBucketurl
 					})
 					.then(imageURL => {
-						return fetch(`http://localhost:3001/clients/${userID}`, {
+						return fetch(`/clients/${userID}`, {
 							headers: {
 								'Content-Type': 'application/json',
 								'x-access-token': token,
 								'x-user-pathway': mode,
 							},
 							method: 'PUT',
-							mode: 'cors',
 							body: JSON.stringify({ avatarURL: imageURL })
 						})
 						.then(response => response.ok ? response.json() : Promise.reject(response.statusText))

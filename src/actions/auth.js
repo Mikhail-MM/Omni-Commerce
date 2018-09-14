@@ -27,12 +27,11 @@ export function logOut() {
 export function attemptLogIn(credentials) {
 	console.log(credentials)
 	return dispatch => {
-		return fetch('http://localhost:3001/authorize', {
+		return fetch('/authorize', {
 		headers:{
 			'Content-Type': 'application/json'
 		},
 		method: 'POST',
-		mode: 'cors', 
 		body: JSON.stringify(credentials)
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
@@ -49,16 +48,15 @@ export function attemptLogIn(credentials) {
 export function attemptRegistration(token, data, imageHandler, mode) {
 	return dispatch => {
 		if (imageHandler.newImageFlag) {
-			return fetch(`http://localhost:3001/sign-s3?fileName=${imageHandler.imageSource.name}&fileType=${imageHandler.imageSource.type}`, {
+			return fetch(`/sign-s3?fileName=${imageHandler.imageSource.name}&fileType=${imageHandler.imageSource.type}`, {
 				method: 'GET',
-				mode: 'cors',
 			})
 			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 			.then(signedRequestJSON => {
 				const { signedRequest, fileOnBucketurl } = signedRequestJSON
 				return fetch(signedRequest, {
 					headers: {
-						'Origin': 'http://localhost:3000',
+						'Origin': 'https://still-beach-13809.herokuapp.com/',
 					},
 					method: 'PUT', 
 					body: imageHandler.imageSource,
@@ -69,13 +67,12 @@ export function attemptRegistration(token, data, imageHandler, mode) {
 						return fileOnBucketurl
 				})
 				.then(avatarURL => {
-					return fetch(`http://localhost:3001/registration/${mode}`, {
+					return fetch(`/registration/${mode}`, {
 						headers:{
 							'Content-Type': 'application/json',
 							'x-access-token': token
 						},
-						method: 'POST',
-						mode: 'cors', 
+						method: 'POST', 
 						body: JSON.stringify({...data, avatarURL})
 					})
 					.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
@@ -88,13 +85,12 @@ export function attemptRegistration(token, data, imageHandler, mode) {
 			.catch(err => console.log(err))
 		} else if (!imageHandler.newImageFlag) {
 			console.log(imageHandler)
-			return fetch(`http://localhost:3001/registration/${mode}`, {
+			return fetch(`/registration/${mode}`, {
 				headers:{
 					'Content-Type': 'application/json',
 					'x-access-token': token
 				},
 				method: 'POST',
-				mode: 'cors', 
 				body: JSON.stringify({...data, avatarURL: imageHandler.imageSource})
 			})
 			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))

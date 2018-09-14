@@ -52,13 +52,12 @@ class AddReviewModal extends Component {
 
 		if (!this.state.inputReceived) return console.log("Please input rating")
 
-		return fetch(`http://localhost:3001/storeItem/ratings/${itemId}`, {
+		return fetch(`/storeItem/ratings/${itemId}`, {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-access-token': token,			
 			},
 			method: 'PUT',
-			mode: 'cors',
 			body: JSON.stringify({
 				rating,
 				review,

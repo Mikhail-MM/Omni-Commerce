@@ -1,11 +1,10 @@
 export function seedOmniDatabase() {
 	return dispatch => {
-		return fetch('http://localhost:3001/seed/omni/', {
+		return fetch('/seed/omni/', {
 		headers:{
 			'Content-Type': 'application/json'
 		},
 		method: 'POST',
-		mode: 'cors', 
 		body: JSON.stringify({})
 		}) 
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
@@ -15,12 +14,11 @@ export function seedOmniDatabase() {
 
 export function seedEssosMarketplace() {
 	return dispatch => {
-		return fetch('http://localhost:3001/seed/essos/', {
+		return fetch('/seed/essos/', {
 		headers:{
 			'Content-Type': 'application/json'
 		},
 		method: 'POST',
-		mode: 'cors', 
 		body: JSON.stringify({})
 		}) 
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
@@ -30,12 +28,11 @@ export function seedEssosMarketplace() {
 
 export function seedEssosJumbotron() {
 	return dispatch => {
-		return fetch('http://localhost:3001/seed/jumbo', {
+		return fetch('/seed/jumbo', {
 			headers:{
 				'Content-Type': 'application/json'
 			},
 			method: 'POST',
-			mode: 'cors', 
 			body: JSON.stringify({})
 		}) 
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))

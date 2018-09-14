@@ -49,13 +49,12 @@ const PaymentCheckoutForm = props => {
 		}
 		if (props.apiStripePath === 'Essos') {
 			// Get Client Metadata -- Shipping and Billing info -- This should be provided by the customer on the cart checkout form instead of being tied permanently to account...
-			fetch('http://localhost:3001/client/metadata', {
+			fetch('/client/metadata', {
 				headers:{
 					'Content-Type': 'application/json',
 					'x-access-token': authToken,
 				},
-				method: 'GET',
-				mode: 'cors',	
+				method: 'GET',	
 			})
 			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 			.then(json => {

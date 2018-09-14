@@ -2,12 +2,11 @@ import { showModal, hideModal } from './modals'
 
 export function retrieveAllItemsForSale() {
 	return dispatch => {	
-		return fetch('http://localhost:3001/storeItem', {
+		return fetch('/storeItem', {
 			headers:{
 				'Content-Type': 'application/json',
 			},
 			method: 'GET',
-			mode: 'cors'
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => dispatch(receiveItems(json)))
@@ -18,28 +17,26 @@ export function retrieveAllItemsForSale() {
 export function updateMarketplaceItem(token, itemID, data, imageHandler) {
 	console.log("Updating Marketplace Item - What is Image handler? ", imageHandler)
 	return dispatch => {
-		return fetch(`http://localhost:3001/storeItem/${itemID}`, {
+		return fetch(`/storeItem/${itemID}`, {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-access-token': token
 			},
 			method: 'PUT',
-			mode: 'cors',
 			body: JSON.stringify(data)
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
 			if (imageHandler.newImageFlag) {
-				return fetch(`http://localhost:3001/sign-s3?fileName=${imageHandler.imageSource.name}&fileType=${imageHandler.imageSource.type}`, {
+				return fetch(`/sign-s3?fileName=${imageHandler.imageSource.name}&fileType=${imageHandler.imageSource.type}`, {
 					method: 'GET',
-					mode: 'cors',
 				})
 				.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 				.then(signedRequestJSON => {
 					const { signedRequest, fileOnBucketurl } = signedRequestJSON
 					return fetch(signedRequest, {
 						headers: {
-							'Origin': 'http://localhost:3000',
+							'Origin': 'https://still-beach-13809.herokuapp.com/',
 						},
 						method: 'PUT', 
 						body: imageHandler.imageSource,
@@ -50,13 +47,12 @@ export function updateMarketplaceItem(token, itemID, data, imageHandler) {
 							return fileOnBucketurl
 					})
 					.then(persistedBucketURL => {
-						return fetch(`http://localhost:3001/storeItem/${itemID}`, {
+						return fetch(`/storeItem/${itemID}`, {
 							headers: {
 								'Content-Type': 'application/json',
 								'x-access-token': token,
 							},	
 							method: 'PUT',
-							mode: 'cors',
 							body: JSON.stringify({ imageURL: persistedBucketURL })				
 						})
 						.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
@@ -80,20 +76,18 @@ export function updateMarketplaceItem(token, itemID, data, imageHandler) {
 
 export function postEssosItem(token, data, imageFile) {
 	return dispatch => {
-		return fetch('http://localhost:3001/storeItem', {
+		return fetch('/storeItem', {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-access-token': token,
 			},
 			method: 'POST',
-			mode: 'cors',
 			body: JSON.stringify(data)
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(newItemJSON => {
-			return fetch(`http://localhost:3001/sign-s3?fileName=${imageFile.name}&fileType=${imageFile.type}`, {
+			return fetch(`/sign-s3?fileName=${imageFile.name}&fileType=${imageFile.type}`, {
 				method: 'GET',
-				mode: 'cors',
 			})
 			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 			.then(signedRequestJSON => {
@@ -102,7 +96,7 @@ export function postEssosItem(token, data, imageFile) {
 				return fetch(signedRequest, {
 					headers: {
 						// Use empty string because S3 expects Origin Header
-						'Origin': 'http://localhost:3000',
+						'Origin': 'https://still-beach-13809.herokuapp.com/',
 					},
 					method: 'PUT', 
 					body: imageFile,
@@ -115,13 +109,12 @@ export function postEssosItem(token, data, imageFile) {
 				})
 				.then(persistedBucketURL => {
 					console.log(persistedBucketURL)
-					return fetch(`http://localhost:3001/storeItem/${newItemJSON._id}`, {
+					return fetch(`/storeItem/${newItemJSON._id}`, {
 						headers: {
 							'Content-Type': 'application/json',
 							'x-access-token': token,
 						},
 						method: 'PUT',
-						mode: 'cors',
 						body: JSON.stringify({imageURL: persistedBucketURL}),
 					})
 					.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
@@ -139,13 +132,12 @@ export function postEssosItem(token, data, imageFile) {
 
 export function deleteMarketplaceItem(token, itemID) {
 	return dispatch => {
-		return fetch(`http://localhost:3001/storeItem/${itemID}`, {
+		return fetch(`/storeItem/${itemID}`, {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-access-token': token,
 			},
 			method: 'DELETE',
-			mode: 'cors',
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(deletedItem => {
@@ -160,13 +152,12 @@ export function deleteMarketplaceItem(token, itemID) {
 export function addItemToWishlist(token, itemId, mode) {
 	return dispatch => {
 		const controllerMode = { mode }
-		return fetch(`http://localhost:3001/storeItem/wishlist/${itemId}`, {
+		return fetch(`/storeItem/wishlist/${itemId}`, {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-access-token': token,			
 			},
 			method: 'PUT',
-			mode: 'cors',
 			body: JSON.stringify(controllerMode)
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
@@ -179,13 +170,12 @@ export function addItemToWishlist(token, itemId, mode) {
 
 export function getUserWishlist(token) {
 	return dispatch => {
-		return fetch(`http://localhost:3001/storeItem/wishlist`, {
+		return fetch(`/storeItem/wishlist`, {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-access-token': token,			
 			},
 			method: 'GET',
-			mode: 'cors',	
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => dispatch(receiveWishlist(json)))

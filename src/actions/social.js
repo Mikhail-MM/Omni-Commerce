@@ -1,13 +1,12 @@
 export const followUser = (token, userId, mode) => {
 	return dispatch => {
 		const controllerMode = { mode }
-		return fetch(`http://localhost:3001/social/follow/${userId}`, {
+		return fetch(`/social/follow/${userId}`, {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-access-token': token,			
 			},
 			method: 'PUT',
-			mode: 'cors',
 			body: JSON.stringify(controllerMode)
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
@@ -18,13 +17,12 @@ export const followUser = (token, userId, mode) => {
 
 export const getUserSocialFeed = (token) => {
 	return dispatch => {
-		return fetch(`http://localhost:3001/users/essos/getProfileView/ownProfile`, {
+		return fetch(`/users/essos/getProfileView/ownProfile`, {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-access-token': token,			
 			},
 			method: 'GET',
-			mode: 'cors',
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => dispatch(receiveFollowFeed(json.following)))
