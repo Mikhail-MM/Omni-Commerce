@@ -5,6 +5,7 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
+const winston = require('winston')
 
 const path = require('path');
 const logger = require('morgan');
@@ -279,11 +280,13 @@ router.route('/payments/cash')
 router.route('/test')
 	.get(shoppingCarts.test);
 
+router.route('*')
+	.get((req, res) => {
+		res.sendFile(path.join(__dirname+'/client/build/index.html'))
+	});
+	
 app.use('/', router);
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname+'/client/build/index.html'));
-});
 
 // Socket.IO //
 
@@ -309,6 +312,7 @@ if (dev) {
 //	Production Error Handler
 
 app.use(function(err, req, res, next) {
+	winston.log('error: ', err)
 	res.status(err.status || 500).send();
 });
 
