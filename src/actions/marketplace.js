@@ -3,7 +3,7 @@ import { hostURI } from '../components/config'
 export function retrieveAllItemsForSale() {
 	console.log("We need to get some items!!!")
 	return dispatch => {	
-		return fetch(`${hostURI}/storeItem`, {
+		return fetch(`/storeItem`, {
 			headers:{
 				'Content-Type': 'application/json',
 			},
