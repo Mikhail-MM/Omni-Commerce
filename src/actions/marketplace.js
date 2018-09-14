@@ -1,8 +1,8 @@
 import { showModal, hideModal } from './modals'
-
+import { hostURI } from '../components/config'
 export function retrieveAllItemsForSale() {
 	return dispatch => {	
-		return fetch('/storeItem', {
+		return fetch(`${hostURI}/storeItem`, {
 			headers:{
 				'Content-Type': 'application/json',
 			},
