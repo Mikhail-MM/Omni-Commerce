@@ -24,7 +24,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 const config = require('./models/config');
-
+require('dotenv').config()
 
 
 
@@ -42,7 +42,6 @@ const transactions = require('./controllers/transactions');
 const authorize = require('./controllers/authorize');
 const timesheets = require('./controllers/timeSheets')
 const register = require('./controllers/registration');
-require('dotenv').config()
 
 const storeConfig = require('./controllers/storeConfig')
 const salesReports = require('./controllers/salesReports')
@@ -62,7 +61,7 @@ const router = express.Router();
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect(`mongodb://${process.env.MLABS_USERS}:${process.env.MLABS_PW}@ds113000.mlab.com:13000/omninova`, { useMongoClient: true });
+mongoose.connect(`mongodb://${process.env.MLABS_USER}:${process.env.MLABS_PW}@ds113000.mlab.com:13000/omninova`, { useMongoClient: true });
 
 if(app.get('env') === 'development') var dev = true;
 if (dev) app.use(logger('dev'));
