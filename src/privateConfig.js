@@ -1,0 +1,1 @@
+export const stripeAPIkey = 'pk_test_Q8EAc1ouDI8bu1EnNFjDlkTB'

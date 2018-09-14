@@ -18,9 +18,6 @@
 .env.production.local
 \ecommerce-api-server\vantage-api
 
-# private config
-src/privateConfig.js
-
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
