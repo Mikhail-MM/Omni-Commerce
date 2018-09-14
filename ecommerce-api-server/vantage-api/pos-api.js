@@ -59,7 +59,7 @@ const seed = require('./seed/seed')
 const router = express.Router(); 
 
 
-mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise; 
 
 mongoose.connect(`mongodb://${process.env.MLABS_USER}:${process.env.MLABS_PW}@ds113000.mlab.com:13000/omninova`, { useMongoClient: true });
 
