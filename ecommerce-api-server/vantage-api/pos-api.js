@@ -98,7 +98,7 @@ router.route('/clients/lookupEmployees')mongodb://localhost/vantageAPI-2
 	.get(authorize.adminRequired, clients.findAllEmployees)
 */
 
-
+console.log("Gettin to da routes!")
 
 router.route('/sign-s3')
 	.get(aws.signS3Request)
@@ -295,6 +295,7 @@ app.use('/', router);
 //	Error Handling Middleware	//
 ///		404 Handler			  ///
 
+console.log("Down to da handlers!")
 app.use(function(req, res, next){
 	var err = new Error("Response Status: 404; Page Not Found")
 	err.status = 404
@@ -317,8 +318,9 @@ app.use(function(err, req, res, next) {
 	res.status(err.status || 500).send();
 });
 
+console.log("About to listen!!!")
 
-server.listen(process.env.PORT);
+server.listen(PORT, '0.0.0.0');
 
 console.log('Listening at http://localhost: %s in %s mode',
 	server.address().port, app.get('env'));
