@@ -289,7 +289,7 @@ router.route('*')
 app.use('/', router);
 
 */
-app.get('/storeItem/', storeItems.getAllStoreItems)
+app.get('/storeItem/', storeItems.getAllStoreItems);
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 app.get('*', (req, res) => {
@@ -326,8 +326,5 @@ app.use(function(err, req, res, next) {
 
 
 server.listen(config.port);
-
-console.log('Listening at http://localhost: %s in %s mode',
-	server.address().port, app.get('env'));
 
 module.exports = app;
