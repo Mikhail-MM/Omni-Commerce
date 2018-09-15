@@ -31,13 +31,11 @@ require('dotenv').config()
 
 const app = express();
 const server = require('http').createServer(app);
-console.log(server)
 const PORT = process.env.PORT || 5000
 console.log("What's the port? ", PORT)
 console.log("Created Server")
 const socketIO = require('./socket/initialize').initialize(server);
-console.log("Created SocketIO instance")
-console.log(socketIO)
+console.log("Created SocketIO instance, but it is undefined (Returns nothing)")
 console.log("Moving right on along!...")
 
 const clients = require('./controllers/clients');
@@ -63,9 +61,9 @@ const social = require('./controllers/social')
 const aws = require('./controllers/aws')
 
 const seed = require('./seed/seed')
-
+console.log("loaded all controllers")
 const router = express.Router(); 
-console.log("Loaded all dependencies")
+console.log("Loaded express router")
 
 mongoose.Promise = global.Promise; 
 
@@ -76,7 +74,7 @@ console.log("Mongoose connection establishment")
 if(app.get('env') === 'development') var dev = true;
 if (dev) app.use(logger('dev'));
 if(app.get('env') === 'production') {
-	return
+	console.log("Environment is production")
 	// Init script can be built to instantiate first Admin
 };
 
@@ -320,7 +318,7 @@ if (dev) {
 //	Production Error Handler
 
 app.use(function(err, req, res, next) {
-	
+	console.log(err)
 	res.status(err.status || 500).send();
 });
 
