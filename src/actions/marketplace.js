@@ -10,7 +10,7 @@ export function retrieveAllItemsForSale() {
 			method: 'GET',
 			mode: 'no-cors',
 		})
-		.then(response => res.text())
+		.then(res => res.text())
 		.then(text => console.log(text))
 		.catch(err => console.log(err))
 	}
