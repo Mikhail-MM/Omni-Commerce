@@ -280,10 +280,6 @@ router.route('/payments/cash')
 router.route('/test')
 	.get(shoppingCarts.test);
 
-router.route('/')
-	.get((req, res) => {
-  		res.sendFile(path.join(__dirname+'/client/build/index.html'));
-	});
 
 app.use('/', router);
 
