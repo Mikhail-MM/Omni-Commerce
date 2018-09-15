@@ -98,7 +98,7 @@ router.route('/clients/lookupEmployees')mongodb://localhost/vantageAPI-2
 
 
 // New Registration Pathways
-
+/*
 router.route('/sign-s3')
 	.get(aws.signS3Request)
 router.route('/registration/omni-master/')
@@ -289,6 +289,11 @@ router.route('*')
 
 app.use('/', router);
 
+*/
+app.get('/api/storeItem/', storeItems.getAllStoreItems)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname+'/client/build/index.html'));
+});
 
 // Socket.IO //
 
