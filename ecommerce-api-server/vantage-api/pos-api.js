@@ -264,7 +264,7 @@ router.route('/storeItem/:id')
 	.get(storeItems.getStoreItemById)
 	.put(storeItems.updateStoreItemById)
 	.delete(authorize.routeMarketplaceClient, storeItems.deleteStoreItem);
-router.route('/storeItem/')
+router.route('/api/storeItem/')
 	.get(storeItems.getAllStoreItems)
 	.post(authorize.routeMarketplaceClient, storeItems.createNewStoreItem);
 
@@ -282,12 +282,12 @@ router.route('/payments/cash')
 router.route('/test')
 	.get(shoppingCarts.test);
 
-	
-app.use('/', router);
-
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
+	
+app.use('/', router);
+
 
 // Socket.IO //
 
