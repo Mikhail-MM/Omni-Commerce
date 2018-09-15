@@ -1,5 +1,4 @@
 const sio = require('socket.io')
-const config = require('./models/config');
 let io;
 
 exports.io = () => {
