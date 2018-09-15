@@ -31,6 +31,7 @@ require('dotenv').config()
 
 const app = express();
 const server = require('http').createServer(app);
+console.log(server)
 const PORT = process.env.PORT || 5000
 console.log("What's the port? ", PORT)
 console.log("Created Server")
