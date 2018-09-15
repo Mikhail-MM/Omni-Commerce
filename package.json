@@ -29,6 +29,11 @@
     "underscore": "^1.9.1",
     "victory": "^30.2.0"
   },
+  "scripts": {
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
   "engines": {
     "node": "8.11.3"
   }
