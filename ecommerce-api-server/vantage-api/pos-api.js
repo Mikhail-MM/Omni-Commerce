@@ -323,6 +323,6 @@ console.log("About to listen!!!")
 server.listen(PORT, '0.0.0.0');
 
 console.log('Listening at http://localhost: %s in %s mode',
-	server.address().port, app.get('env'));
+	PORT, app.get('env'));
 
 module.exports = app;
