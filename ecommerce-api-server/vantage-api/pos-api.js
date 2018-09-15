@@ -2,6 +2,7 @@
 //				Dependencies					  //
 ////////////////////////////////////////////////////
 
+console.log("your app..is somehow running...")
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -30,7 +31,9 @@ require('dotenv').config()
 
 const app = express();
 const server = require('http').createServer(app);
+console.log("Created Server")
 const socketIO = require('./socket/initialize').initialize(server)
+console.log("Created SocketIO instance")
 
 const clients = require('./controllers/clients');
 const images = require('./controllers/images');
