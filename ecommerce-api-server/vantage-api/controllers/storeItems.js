@@ -21,7 +21,6 @@ module.exports.createNewStoreItem = async function(req, res, next) {
 }
 module.exports.getAllStoreItems = async function(req, res, next) {
 		try {
-			winston.log("Received request for store items.")
 			if (req.query.lookup === 'queryBannerItems') {
 				console.log("Fetching Banner Query Query")
 				const jumbotronItems = await StoreItemModel.find({queryMarker: 'Jumbotron-1'})
