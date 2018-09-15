@@ -291,9 +291,9 @@ app.use('/', router);
 */
 app.get('/storeItem/', storeItems.getAllStoreItems);
 
-app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(path.join(__dirname, '/../../build')));
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname+'/client/build/index.html'));
+  res.sendFile(path.join(__dirname+'/../../build/index.html'));
 });
 
 // Socket.IO //
@@ -325,6 +325,6 @@ app.use(function(err, req, res, next) {
 });
 
 
-server.listen(config.port);
+server.listen(process.env.PORT);
 
 module.exports = app;
