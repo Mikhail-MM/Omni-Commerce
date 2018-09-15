@@ -315,4 +315,7 @@ app.use(function(err, req, res, next) {
 
 server.listen(process.env.PORT);
 
+console.log('Listening at http://localhost: %s in %s mode',
+	server.address().port, app.get('env'));
+
 module.exports = app;
