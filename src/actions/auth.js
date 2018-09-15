@@ -32,7 +32,7 @@ export function attemptLogIn(credentials) {
 			'Content-Type': 'application/json'
 		},
 		method: 'POST',
-		mode: 'no-cors'
+		mode: 'no-cors',
 		body: JSON.stringify(credentials)
 		})
 		.then(response => {
