@@ -265,9 +265,7 @@ router.route('/storeItem/:id')
 	.put(storeItems.updateStoreItemById)
 	.delete(authorize.routeMarketplaceClient, storeItems.deleteStoreItem);
 router.route('/api/storeItem/')
-	.get(storeItems.getAllStoreItems)
 	.post(authorize.routeMarketplaceClient, storeItems.createNewStoreItem);
-
 
 router.route('/storeconfig')
 	.get(authorize.routeEmployeeToMongoCollection, storeConfig.getLoggedUsers);
@@ -282,11 +280,13 @@ router.route('/payments/cash')
 router.route('/test')
 	.get(shoppingCarts.test);
 
+app.get('/api/storeItem/', storeItems.getAllStoreItems)
+
 router.route('*')
 	.get((req, res) => {
   		res.sendFile(path.join(__dirname+'/client/build/index.html'));
 	});
-	
+
 app.use('/', router);
 
 
