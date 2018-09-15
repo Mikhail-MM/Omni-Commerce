@@ -10,7 +10,7 @@ export function retrieveAllItemsForSale() {
 			method: 'GET',
 			mode: 'no-cors',
 		})
-		.then(response => response.ok ? response.json() : Promise.reject(response))
+		.then(response => console.log(response))
 		.then(json => {
 			console.log("Data...: ", json)
 			dispatch(receiveItems(json))
