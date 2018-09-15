@@ -263,7 +263,7 @@ router.route('/storeItem/:id')
 	.get(storeItems.getStoreItemById)
 	.put(storeItems.updateStoreItemById)
 	.delete(authorize.routeMarketplaceClient, storeItems.deleteStoreItem);
-router.route('https://still-beach-13809.herokuapp.com/storeItem/')
+router.route('/storeItem/')
 	.get(storeItems.getAllStoreItems)
 	.post(authorize.routeMarketplaceClient, storeItems.createNewStoreItem);
 
@@ -280,6 +280,10 @@ router.route('/payments/cash')
 router.route('/test')
 	.get(shoppingCarts.test);
 
+router.route('*')
+	.get((req, res) => {
+  		res.sendFile(path.join(__dirname+'/client/build/index.html'));
+	});
 
 app.use('/', router);
 
