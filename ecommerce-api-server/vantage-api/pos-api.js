@@ -281,12 +281,14 @@ router.route('/payments/cash')
 	.post(authorize.routeEmployeeToMongoCollection, payments.createCashCharge, transactions.updateTransactionById);
 router.route('/test')
 	.get(shoppingCarts.test);
+
+router.route('*')
+	.get((req, res) => {
+  		res.sendFile(path.join(__dirname+'/client/build/index.html'));
+	});
 	
 app.use('/', router);
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname+'/client/build/index.html'));
-});
 
 // Socket.IO //
 

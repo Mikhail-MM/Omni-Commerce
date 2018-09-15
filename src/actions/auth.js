@@ -32,9 +32,13 @@ export function attemptLogIn(credentials) {
 			'Content-Type': 'application/json'
 		},
 		method: 'POST',
+		mode: 'no-cors'
 		body: JSON.stringify(credentials)
 		})
-		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+		.then(response => {
+			console.log(response)
+			return 'test'
+		})
 		.then(json => {
 			dispatch(authSuccess(json))
 			dispatch(routeUserAfterLogin(json.accountType))
@@ -42,7 +46,6 @@ export function attemptLogIn(credentials) {
 		})
 		.catch(err => dispatch(authFail(err.message)))
 	}
-
 }
 
 export function attemptRegistration(token, data, imageHandler, mode) {
