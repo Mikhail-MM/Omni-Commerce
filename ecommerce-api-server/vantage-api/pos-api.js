@@ -31,6 +31,8 @@ require('dotenv').config()
 
 const app = express();
 const server = require('http').createServer(app);
+const PORT = process.env.PORT || 5000
+console.log("What's the port? ", PORT)
 console.log("Created Server")
 const socketIO = require('./socket/initialize').initialize(server)
 console.log("Created SocketIO instance")
