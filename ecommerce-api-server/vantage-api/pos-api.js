@@ -5,10 +5,7 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
-const winston = require('winston')
-winston.log('info', 'Hello log files!', {  
-  someKey: 'some-value'
-})
+
 const path = require('path');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
