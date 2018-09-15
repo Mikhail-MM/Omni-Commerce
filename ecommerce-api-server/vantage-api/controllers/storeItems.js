@@ -30,9 +30,7 @@ module.exports.getAllStoreItems = async function(req, res, next) {
 						featuredItems
 					})
 			} else {
-				winston.log("Finding these items...")
 				const foundStoreItems = await StoreItemModel.find({});
-				winston.log(foundStoreItems)
 					res.json(foundStoreItems)
 			}
 		} catch(err) { next(err) }
