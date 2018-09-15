@@ -34,8 +34,10 @@ const server = require('http').createServer(app);
 const PORT = process.env.PORT || 5000
 console.log("What's the port? ", PORT)
 console.log("Created Server")
-const socketIO = require('./socket/initialize').initialize(server)
+const socketIO = require('./socket/initialize').initialize(server);
 console.log("Created SocketIO instance")
+console.log(socketIO)
+console.log("Moving right on along!...")
 
 const clients = require('./controllers/clients');
 const images = require('./controllers/images');
@@ -62,11 +64,13 @@ const aws = require('./controllers/aws')
 const seed = require('./seed/seed')
 
 const router = express.Router(); 
-
+console.log("Loaded all dependencies")
 
 mongoose.Promise = global.Promise; 
 
+console.log("Booting mongoose promise library")
 mongoose.connect(`mongodb://${process.env.MLABS_USER}:${process.env.MLABS_PW}@ds113000.mlab.com:13000/omninova`, { useMongoClient: true });
+console.log("Mongoose connection establishment")
 
 if(app.get('env') === 'development') var dev = true;
 if (dev) app.use(logger('dev'));
@@ -84,6 +88,7 @@ app.use('/*', function(req, res, next) {
   next();
 });
 
+console.log("Linking to static firectory")
 app.use(express.static(path.join(__dirname, '/../../build')));
 
 
@@ -320,7 +325,7 @@ app.use(function(err, req, res, next) {
 
 console.log("About to listen!!!")
 
-server.listen(PORT, '0.0.0.0');
+server.listen(PORT);
 
 console.log('Listening at http://localhost: %s in %s mode',
 	PORT, app.get('env'));
