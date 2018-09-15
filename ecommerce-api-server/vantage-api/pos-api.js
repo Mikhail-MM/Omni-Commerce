@@ -82,6 +82,7 @@ app.use('/*', function(req, res, next) {
   next();
 });
 
+app.use(express.static(path.join(__dirname, '/../../build')));
 
 
 ////////////////////////////////////////////////////////////
@@ -96,8 +97,7 @@ router.route('/clients/lookupEmployees')mongodb://localhost/vantageAPI-2
 */
 
 
-// New Registration Pathways
-/*
+
 router.route('/sign-s3')
 	.get(aws.signS3Request)
 router.route('/registration/omni-master/')
@@ -263,7 +263,8 @@ router.route('/storeItem/:id')
 	.get(storeItems.getStoreItemById)
 	.put(storeItems.updateStoreItemById)
 	.delete(authorize.routeMarketplaceClient, storeItems.deleteStoreItem);
-router.route('/api/storeItem/')
+router.route('/storeItem/')
+	.get(storeItems.getAllStoreItems)
 	.post(authorize.routeMarketplaceClient, storeItems.createNewStoreItem);
 
 router.route('/storeconfig')
@@ -279,25 +280,12 @@ router.route('/payments/cash')
 router.route('/test')
 	.get(shoppingCarts.test);
 
-app.get('/api/storeItem/', storeItems.getAllStoreItems)
-
-router.route('*')
+router.route('/')
 	.get((req, res) => {
   		res.sendFile(path.join(__dirname+'/client/build/index.html'));
 	});
 
 app.use('/', router);
-
-*/
-app.get('/storeItem/', storeItems.getAllStoreItems);
-
-app.use(express.static(path.join(__dirname, '/../../build')));
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname+'/../../build/index.html'));
-});
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname+'/../../build/index.html'));
-});
 
 // Socket.IO //
 
