@@ -10,11 +10,8 @@ export function retrieveAllItemsForSale() {
 			method: 'GET',
 			mode: 'no-cors',
 		})
-		.then(response => console.log(response))
-		.then(json => {
-			console.log("Data...: ", json)
-			dispatch(receiveItems(json))
-		})
+		.then(response => res.text())
+		.then(text => console.log(text))
 		.catch(err => console.log(err))
 	}
 }
