@@ -289,7 +289,7 @@ router.route('*')
 app.use('/', router);
 
 */
-app.get('/api/storeItem/', storeItems.getAllStoreItems)
+app.get('/storeItem/', storeItems.getAllStoreItems)
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 app.get('*', (req, res) => {
