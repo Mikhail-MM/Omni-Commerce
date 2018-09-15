@@ -263,7 +263,7 @@ router.route('/storeItem/:id')
 	.get(storeItems.getStoreItemById)
 	.put(storeItems.updateStoreItemById)
 	.delete(authorize.routeMarketplaceClient, storeItems.deleteStoreItem);
-router.route('/storeItem/')
+router.route('https://still-beach-13809.herokuapp.com/storeItem/')
 	.get(storeItems.getAllStoreItems)
 	.post(authorize.routeMarketplaceClient, storeItems.createNewStoreItem);
 
