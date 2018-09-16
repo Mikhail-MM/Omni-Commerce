@@ -72,12 +72,12 @@ class  Marketing extends Component {
 		console.log("Sticky Container y Coord: ", this.stickyElContainer.getBoundingClientRect().y)
 		console.log("Sticky Element y Coord: ", this.stickyEl.getBoundingClientRect().y)
 		console.log("Handle Sticky State?", this.state.manageSticky)
-		if (this.stickyElContainer.getBoundingClientRect().y !== this.stickyEl.getBoundingClientRect().y && !this.state.manageSticky) { 
+		if (this.stickyElContainer.getBoundingClientRect().height !== this.stickyEl.getBoundingClientRect().height && !this.state.manageSticky) { 
 			this.setState({
 				manageSticky: true
 			})
 		}
-		if (this.stickyElContainer.getBoundingClientRect().y === this.stickyEl.getBoundingClientRect().y && this.state.manageSticky) {
+		if (this.stickyElContainer.getBoundingClientRect().height === this.stickyEl.getBoundingClientRect().height && this.state.manageSticky) {
 			this.setState({
 				manageSticky: false
 			})
