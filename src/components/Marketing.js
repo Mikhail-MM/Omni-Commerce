@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect} from 'react-redux'
+import { throttle } from 'underscore'
 
 import ModalRoot from './ModalRoot'
 
@@ -19,11 +20,11 @@ class  Marketing extends Component {
 		scrollDir: null,
 	}
 	componentDidMount() {
-		window.addEventListener('scroll', this.handleScroll)
+		window.addEventListener('scroll', throttle(this.handleScroll, 500))
 	}
 
 	componentWillUnmount() {
-		window.removeEventListener('scroll', this.handleScroll)
+		window.removeEventListener('scroll', throttle(this.handleScroll, 500))
 	}
 
 	uniqueCollisionFreePrevScrollTop = null
@@ -81,6 +82,7 @@ class  Marketing extends Component {
 
 		this.uniqueCollisionFreePrevScrollTop = scrollTop
 	}
+
 	render(){
 			return(
 				<div className='marketing-wrapper'>
