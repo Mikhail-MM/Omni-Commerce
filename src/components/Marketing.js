@@ -68,16 +68,16 @@ class  Marketing extends Component {
 			})
 		}
 		console.log("Do we have refs at all?", this.stickyElContainer, this.stickyEl)
-		console.log("getClientBoundingRect().y deprecated on legacy browsers and safari. Viewing Height instead for CONTAINER + STICKYEL", this.stickyElContainer.getBoundingClientRect(), this.stickyEl.getBoundingClientRect())
+		console.log("getClientBoundingRect().y deprecated on legacy browsers and safari. Viewing Height instead for CONTAINER + STICKYEL", this.stickyElContainer.getBoundingClientRect(), this.stickyEl.getBoundingClientRect() )
 		console.log("Sticky Container y Coord: ", this.stickyElContainer.getBoundingClientRect().y)
 		console.log("Sticky Element y Coord: ", this.stickyEl.getBoundingClientRect().y)
 		console.log("Handle Sticky State?", this.state.manageSticky)
-		if (this.stickyElContainer.getBoundingClientRect().height !== this.stickyEl.getBoundingClientRect().height && !this.state.manageSticky) { 
+		if (this.stickyElContainer.getBoundingClientRect().top !== this.stickyEl.getBoundingClientRect().top && !this.state.manageSticky) { 
 			this.setState({
 				manageSticky: true
 			})
 		}
-		if (this.stickyElContainer.getBoundingClientRect().height === this.stickyEl.getBoundingClientRect().height && this.state.manageSticky) {
+		if (this.stickyElContainer.getBoundingClientRect().top === this.stickyEl.getBoundingClientRect().top && this.state.manageSticky) {
 			this.setState({
 				manageSticky: false
 			})
