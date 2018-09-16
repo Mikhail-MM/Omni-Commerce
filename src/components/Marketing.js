@@ -20,11 +20,11 @@ class  Marketing extends Component {
 		scrollDir: null,
 	}
 	componentDidMount() {
-		window.addEventListener('scroll', throttle(this.handleScroll, 500))
+		window.addEventListener('scroll', throttle(this.handleScroll, 100))
 	}
 
 	componentWillUnmount() {
-		window.removeEventListener('scroll', throttle(this.handleScroll, 500))
+		window.removeEventListener('scroll', throttle(this.handleScroll, 100))
 	}
 
 	uniqueCollisionFreePrevScrollTop = null
