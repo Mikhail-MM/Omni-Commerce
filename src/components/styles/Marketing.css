@@ -318,20 +318,20 @@
 
 .co1-move {
 	width: 125px;
-	transform: translateX(calc(100% - 500px - 7.5% + 50px));
+	left: calc(100% - 500px - 7.5% + 50px);
 }
 .co2-move {
 	width: 125px;
-	transform: translateX(calc(100% - 375px - 7.5% + 50px));
+	left: calc(100% - 375px - 7.5% + 50px);
 }
 .co3-move {
 	width: 125px;
-	transform: translateX(calc(100% - 250px - 7.5% + 50px));
+	left: calc(100% - 250px - 7.5% + 50px);
 }
 
 .co4-move {
 	width: 125px;
-	transform: translateX(calc(100% - 125px - 7.5% + 50px));
+	left: calc(100% - 125px - 7.5% + 50px);
 }
 
 @keyframes hoverme {
