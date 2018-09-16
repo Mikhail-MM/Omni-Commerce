@@ -40,7 +40,6 @@ class  Marketing extends Component {
 	handleScroll = (event) => {
 		let scrollTop = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop)
 		let viewportCenter = (window.innerHeight / 2)
-		console.log("Finding Scrolltop: ", scrollTop)
 		this.determineActiveFeature(viewportCenter, {ft1 : this.ft1.getBoundingClientRect(), ft2: this.ft2.getBoundingClientRect(), ft3: this.ft3.getBoundingClientRect(), ft4: this.ft4.getBoundingClientRect()})
 
 		if (this.uniqueCollisionFreePrevScrollTop && scrollTop > this.uniqueCollisionFreePrevScrollTop && this.state.scrollDir !== 'Scrolling Down') { 
@@ -68,7 +67,8 @@ class  Marketing extends Component {
 				manageSticky: false
 			})
 		}
-		console.log(this.stickyElContainer.getBoundingClientRect().y !== this.stickyEl.getBoundingClientRect().y && !this.state.manageSticky)
+
+		console.log(this.stickyElContainer.getBoundingClientRect().y !== this.stickyEl.getBoundingClientRect().y)
 		if (this.stickyElContainer.getBoundingClientRect().y !== this.stickyEl.getBoundingClientRect().y && !this.state.manageSticky) { 
 			this.setState({
 				manageSticky: true
