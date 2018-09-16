@@ -67,7 +67,7 @@ class  Marketing extends Component {
 				manageSticky: false
 			})
 		}
-
+		console.log("Do we have refs at all?", this.stickyElContainer, this.stickyEl)
 		console.log("Sticky Container y Coord: ", this.stickyElContainer.getBoundingClientRect().y)
 		console.log("Sticky Element y Coord: ", this.stickyEl.getBoundingClientRect().y)
 		console.log("Handle Sticky State?", this.state.manageSticky)
