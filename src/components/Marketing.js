@@ -126,42 +126,74 @@ class  Marketing extends Component {
 						<p> Omni is an E-Commerce platform aimed at empowering small businesses and individual entrepreneurs by facilitating the ability to easily accept cash and credit card payments. </p>  
 					</div>
 					<div style={{width: '100%', height: 'auto', backgroundColor: '#AA3939'}} ref={el => this.stickyElContainer = el}>
-						<div className={`icon-revealer-container${(this.state.manageSticky) ? ' shrink-sticky' : ''}`} ref={el => this.stickyEl = el}>
-							<div className='icon-revealer-row'>
-								<div ref={el => this.img1 = el} style={(this.state.activeFeature === 'ft1') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co1${(this.state.manageSticky) ? ' co1-move' : ''}`}>
-									<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
-										<img src='/assets/omni-splash/icons/payment-method.svg' />
-									</div>
-									<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Compliant Payments </h4>
-									<div className='informatic-blurb__text'>
+						<MediaQuery minWidth={2} maxWidth={798}>
+                 				<div className={`icon-revealer-container${(this.state.manageSticky) ? ' shrink-sticky' : ''}`} ref={el => this.stickyEl = el}>
+                 					<div className='icon-revealer-row'>
+                 						<div ref={el => this.img1 = el} style={(this.state.activeFeature === 'ft1') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
+                 							<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
+												<img src='/assets/omni-splash/icons/payment-method.svg' />
+											</div>
+											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Compliant Payments </h4>
+                 						</div>
+                 						<div ref={el => this.img2 = el} style={(this.state.activeFeature === 'ft2') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
+                 							<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
+												<img src='/assets/omni-splash/icons/online-shop.svg' />
+											</div>
+											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Compliant Payments </h4>
+                 						</div>
+                 						<div ref={el => this.img3 = el} style={(this.state.activeFeature === 'ft3') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
+                 							<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
+												<img src='/assets/omni-splash/icons/stats.svg' />
+											</div>
+											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Compliant Payments </h4>
+                 						</div>
+                 						<div ref={el => this.img3 = el} style={(this.state.activeFeature === 'ft4') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb-mobile'>
+                 							<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
+												<img src='/assets/omni-splash/icons/smartphone.svg' />
+											</div>
+											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Compliant Payments </h4>
+                 						</div>
+                 					</div>
+                 				</div>
+                 			</MediaQuery>
+                 			<MediaQuery minWidth={799}>
+                 				<div className={`icon-revealer-container${(this.state.manageSticky) ? ' shrink-sticky' : ''}`} ref={el => this.stickyEl = el}>
+									<div className='icon-revealer-row'>
+										<div ref={el => this.img1 = el} style={(this.state.activeFeature === 'ft1') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co1${(this.state.manageSticky) ? ' co1-move' : ''}`}>
+											<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
+												<img src='/assets/omni-splash/icons/payment-method.svg' />
+											</div>
+											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Compliant Payments </h4>
+											<div className='informatic-blurb__text'>
+											</div>
+										</div>
+										<div ref={el => this.img2 = el} style={(this.state.activeFeature === 'ft2') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co2${(this.state.manageSticky) ? ' co2-move' : ''}`}>
+											<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
+												<img src='/assets/omni-splash/icons/online-shop.svg' />
+											</div>
+											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Remote Business Management </h4>
+											<div className='informatic-blurb__text'>
+											</div>
+										</div>
+										<div ref={el => this.img3 = el} style={(this.state.activeFeature === 'ft3') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co3${(this.state.manageSticky) ? ' co3-move' : ''}`}>
+											<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
+												<img src='/assets/omni-splash/icons/stats.svg' />						
+											</div>
+											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Metrics and Statistics </h4>
+											<div className='informatic-blurb__text'>
+											</div>
+										</div>
+										<div ref={el => this.img4 = el} style={(this.state.activeFeature === 'ft4') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co4${(this.state.manageSticky) ? ' co4-move' : ''}`}>
+											<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
+												<img src='/assets/omni-splash/icons/smartphone.svg' />
+											</div>
+											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Personal Marketplace </h4>
+											<div className='informatic-blurb__text'>
+											</div>
+										</div>
 									</div>
 								</div>
-								<div ref={el => this.img2 = el} style={(this.state.activeFeature === 'ft2') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co2${(this.state.manageSticky) ? ' co2-move' : ''}`}>
-									<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
-										<img src='/assets/omni-splash/icons/online-shop.svg' />
-									</div>
-									<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Remote Business Management </h4>
-									<div className='informatic-blurb__text'>
-									</div>
-								</div>
-								<div ref={el => this.img3 = el} style={(this.state.activeFeature === 'ft3') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co3${(this.state.manageSticky) ? ' co3-move' : ''}`}>
-									<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
-										<img src='/assets/omni-splash/icons/stats.svg' />						
-									</div>
-									<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Metrics and Statistics </h4>
-									<div className='informatic-blurb__text'>
-									</div>
-								</div>
-								<div ref={el => this.img4 = el} style={(this.state.activeFeature === 'ft4') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co4${(this.state.manageSticky) ? ' co4-move' : ''}`}>
-									<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
-										<img src='/assets/omni-splash/icons/smartphone.svg' />
-									</div>
-									<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Personal Marketplace </h4>
-									<div className='informatic-blurb__text'>
-									</div>
-								</div>
-							</div>
-						</div>
+                 			</MediaQuery>
 						<div className='feature-set-container'>
 							<div ref={el => this.ft1 = el } className={`feature-padded-row${(this.state.activeFeature === 'ft1') ? ' activate-feature' : ''}`} >
 								<div className='feature-blurb feature-blurb__text'>

@@ -252,7 +252,6 @@
 	width: 100%;
 	height: 192px;
 	background-color: rgba(64,64,64);
-	padding: 12px 12px; 
 
 	transition: height 0.8s ease-out, top 0.2s ease-out;
 }
@@ -440,4 +439,20 @@
 
 .activate-feature .feature-blurb {
 	color: #F3FBBC;
+}
+
+@media (max-width: 796px) {
+	.informatic-blurb {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		position: static;
+
+		text-align: center;
+		color: rgba(255, 255, 255, 0.85);
+
+		transition: 0.8s width ease-out;
+
+	}
 }
