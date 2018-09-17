@@ -41,6 +41,7 @@ class  Marketing extends Component {
 	}
 
 	handleScroll = (event) => {
+		if (this.stickyElContainer === null || this.stickyEl === null) return
 		let scrollTop = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop)
 		let viewportCenter = (window.innerHeight / 2)
 		this.determineActiveFeature(viewportCenter, {ft1 : this.ft1.getBoundingClientRect(), ft2: this.ft2.getBoundingClientRect(), ft3: this.ft3.getBoundingClientRect(), ft4: this.ft4.getBoundingClientRect()})
