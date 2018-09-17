@@ -126,7 +126,7 @@ class  Marketing extends Component {
 					<div style={{width: '100%', height: 'auto', backgroundColor: '#AA3939'}} ref={el => this.stickyElContainer = el}>
 						<div className={`icon-revealer-container${(this.state.manageSticky) ? ' shrink-sticky' : ''}`} ref={el => this.stickyEl = el}>
 							<div className='icon-revealer-row'>
-								<div ref={el => this.img1 = el} style={(this.state.activeFeature === 'ft1') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co1${(this.state.manageSticky) ? ' co1-move' : ''}`}>
+								<div ref={el => this.img1 = el} style={(this.state.activeFeature === 'ft1') ? ((this.state.manageSticky) ? {animation: 'hoverme1 0.8s infinite ease-out'} : {}) : {}} className={`informatic-blurb abs-ico-co1${(this.state.manageSticky) ? ' co1-move' : ''}`}>
 									<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 										<img src='/assets/omni-splash/icons/payment-method.svg' />
 									</div>
@@ -134,7 +134,7 @@ class  Marketing extends Component {
 									<div className='informatic-blurb__text'>
 									</div>
 								</div>
-								<div ref={el => this.img2 = el} style={(this.state.activeFeature === 'ft2') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co2${(this.state.manageSticky) ? ' co2-move' : ''}`}>
+								<div ref={el => this.img2 = el} style={(this.state.activeFeature === 'ft2') ? ((this.state.manageSticky) ? {animation: 'hoverme2 0.8s infinite ease-out'} : {}) : {}} className={`informatic-blurb abs-ico-co2${(this.state.manageSticky) ? ' co2-move' : ''}`}>
 									<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 										<img src='/assets/omni-splash/icons/online-shop.svg' />
 									</div>
@@ -142,7 +142,7 @@ class  Marketing extends Component {
 									<div className='informatic-blurb__text'>
 									</div>
 								</div>
-								<div ref={el => this.img3 = el} style={(this.state.activeFeature === 'ft3') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co3${(this.state.manageSticky) ? ' co3-move' : ''}`}>
+								<div ref={el => this.img3 = el} style={(this.state.activeFeature === 'ft3') ? ((this.state.manageSticky) ? {animation: 'hoverme3 0.8s infinite ease-out'} : {}) : {}} className={`informatic-blurb abs-ico-co3${(this.state.manageSticky) ? ' co3-move' : ''}`}>
 									<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 										<img src='/assets/omni-splash/icons/stats.svg' />						
 									</div>
@@ -150,7 +150,7 @@ class  Marketing extends Component {
 									<div className='informatic-blurb__text'>
 									</div>
 								</div>
-								<div ref={el => this.img4 = el} style={(this.state.activeFeature === 'ft4') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co4${(this.state.manageSticky) ? ' co4-move' : ''}`}>
+								<div ref={el => this.img4 = el} style={(this.state.activeFeature === 'ft4') ? ((this.state.manageSticky) ? {animation: 'hoverme4 0.8s infinite ease-out'} : {}) : {}} className={`informatic-blurb abs-ico-co4${(this.state.manageSticky) ? ' co4-move' : ''}`}>
 									<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 										<img src='/assets/omni-splash/icons/smartphone.svg' />
 									</div>

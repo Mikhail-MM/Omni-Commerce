@@ -346,6 +346,51 @@
 		transform: translateY(-3px);
 	}
 }
+@keyframes hoverme1 {
+	0% {
+		transform: translateY(-3px) translateX(calc(100vw - 500px - 7.5vw + 50px - 7.194vw));
+	}
+	50% {
+		transform: translateY(3px) translateX(calc(100vw - 500px - 7.5vw + 50px - 7.194vw));
+	}
+	100% {
+		transform: translateY(-3px) translateX(calc(100vw - 500px - 7.5vw + 50px - 7.194vw));
+	}
+}
+@keyframes hoverme2 {
+	0% {
+		transform: translateY(-3px) translateX(calc(100vw - 375px - 7.5vw + 50px - 30.325vw));
+	}
+	50% {
+		transform: translateY(3px) translateX(calc(100vw - 375px - 7.5vw + 50px - 30.325vw));
+	}
+	100% {
+		transform: translateY(-3px) translateX(calc(100vw - 375px - 7.5vw + 50px - 30.325vw));
+	}
+}
+@keyframes hoverme3 {
+	0% {
+		transform: translateY(-3px) translateX(calc(100vw - 250px - 7.5vw + 50px - 58.55143vw));
+	}
+	50% {
+		transform: translateY(3px) translateX(calc(100vw - 250px - 7.5vw + 50px - 58.55143vw));
+	}
+	100% {
+		transform: translateY(-3px) translateX(calc(100vw - 250px - 7.5vw + 50px - 58.55143vw));
+	}
+}
+@keyframes hoverme3 {
+	0% {
+		transform: translateY(-3px) translateX(calc(100vw - 125px - 7.5vw + 50px - 82.09201vw));
+	}
+	50% {
+		transform: translateY(3px) translateX(calc(100vw - 125px - 7.5vw + 50px - 82.09201vw));
+	}
+	100% {
+		transform: translateY(-3px) translateX(calc(100vw - 125px - 7.5vw + 50px - 82.09201vw));
+	}
+}
+
 @keyframes hover {
 	0% {
 		transform: translateY(0px);
