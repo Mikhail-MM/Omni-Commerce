@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
 
+import MediaQuery from 'react-responsive'
+
 import '../../styles/AdminTerminal.css'
 
 import { showModal } from '../../../actions/modals'
@@ -111,45 +113,65 @@ class AdminTerminal extends Component {
 		const AdminActionDisplayComponent = AdminComponentMap[this.state.actionComponent]
 
 		return(
-			<div className='admin-page-wrapper'>
-				<ModalRoot />
-				<div className='app-header-admin'>
-				</div>
-				<div className='main-body-wrapper' >
-					<div className='sidebar-column'>
-						<div className='menu-box'>
-							<div className={`admin-button${(this.state.actionComponent === 'MANAGE_EMPLOYEES') ? ' admin-button__active' : ''}`} onClick={() => this.setState({actionComponent: 'MANAGE_EMPLOYEES'})}>
-								<img className='admin-menu-icon' src='./assets/icons/emp_mng.svg' />
-								<span> Employees </span>
-							</div>
-							<div className={`admin-button${(this.state.actionComponent === 'MANAGE_SALES_REPORTS') ? ' admin-button__active' : ''}`} onClick={() => this.setState({actionComponent: 'MANAGE_SALES_REPORTS'})}>
-								<img className='admin-menu-icon' src='./assets/icons/analytics.svg' />
-								<span> Sales Reports </span>
-							</div>
-							<div className={`admin-button${(this.state.actionComponent === 'MANAGE_TIMESHEETS') ? ' admin-button__active' : ''}`} onClick={() => this.setState({actionComponent: 'MANAGE_TIMESHEETS'})}>
-								<img className='admin-menu-icon' src='./assets/icons/calendar.svg' />
-								<span> Timesheets </span>
-							</div>					
+			<React.Fragment>
+				<MediaQuery minWidth={2} maxWidth={798}>
+					<div className='mobile-admin-wrapper'>
+						<div className='mobile-admin__header'>
+							<button> Term </button>
+							<div style={{width: 50, height:50, backgroundColor: 'red'}} />
+							<button> Notif </button>
 						</div>
-						<div className="menu-box__bottom">
-							<div className='admin-button' onClick={() => this.props.route('/omni/terminal')}>
-								<img className='admin-menu-icon' src='./assets/icons/cash-register.svg' />
-								<span> Access Terminal </span>
-							</div>
-							<div className='admin-button'>
-								<img className='admin-menu-icon' src='./assets/icons/logout.svg' />
-								<span> Log Out </span>
-							</div>		
+						<div className='mobile-admin__body'>
+						</div>
+						<div className='mobile-admin__footer-navigation'>
+							<button className='mobile-admin__footer-navigation__button'> Employees </button>
+							<button className='mobile-admin__footer-navigation__button'> Sales Reports </button>
+							<button className='mobile-admin__footer-navigation__button'> Timesheets </button>
 						</div>
 					</div>
+				</MediaQuery>
+				<MediaQuery minWidth={799}>
+					<div className='admin-page-wrapper'>
+						<ModalRoot />
+						<div className='app-header-admin'>
+						</div>
+						<div className='main-body-wrapper' >
+							<div className='sidebar-column'>
+								<div className='menu-box'>
+									<div className={`admin-button${(this.state.actionComponent === 'MANAGE_EMPLOYEES') ? ' admin-button__active' : ''}`} onClick={() => this.setState({actionComponent: 'MANAGE_EMPLOYEES'})}>
+										<img className='admin-menu-icon' src='./assets/icons/emp_mng.svg' />
+										<span> Employees </span>
+									</div>
+									<div className={`admin-button${(this.state.actionComponent === 'MANAGE_SALES_REPORTS') ? ' admin-button__active' : ''}`} onClick={() => this.setState({actionComponent: 'MANAGE_SALES_REPORTS'})}>
+										<img className='admin-menu-icon' src='./assets/icons/analytics.svg' />
+										<span> Sales Reports </span>
+									</div>
+									<div className={`admin-button${(this.state.actionComponent === 'MANAGE_TIMESHEETS') ? ' admin-button__active' : ''}`} onClick={() => this.setState({actionComponent: 'MANAGE_TIMESHEETS'})}>
+										<img className='admin-menu-icon' src='./assets/icons/calendar.svg' />
+										<span> Timesheets </span>
+									</div>					
+								</div>
+								<div className="menu-box__bottom">
+									<div className='admin-button' onClick={() => this.props.route('/omni/terminal')}>
+										<img className='admin-menu-icon' src='./assets/icons/cash-register.svg' />
+										<span> Access Terminal </span>
+									</div>
+									<div className='admin-button'>
+										<img className='admin-menu-icon' src='./assets/icons/logout.svg' />
+										<span> Log Out </span>
+									</div>		
+								</div>
+							</div>
 
-					<AdminActionDisplayComponent />
+							<AdminActionDisplayComponent />
 
-					<div className='feed-column'>
-						{this.state.eventFeed && this.renderEventFeedToDOM()}
+							<div className='feed-column'>
+								{this.state.eventFeed && this.renderEventFeedToDOM()}
+							</div>
+						</div>
 					</div>
-				</div>
-			</div>
+				</MediaQuery>
+			</React.Fragment>
 		)
 	}
 }
