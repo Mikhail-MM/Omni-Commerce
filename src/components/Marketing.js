@@ -72,8 +72,7 @@ class  Marketing extends Component {
 				manageSticky: false
 			})
 		}
-		console.log(stickyElementRef.getBoundingClientRect().top)
-		console.log(stickyElContainer.getBoundingClientRect().top)
+
 		if (this.stickyElContainer.getBoundingClientRect().top !== stickyElementRef.getBoundingClientRect().top && !this.state.manageSticky) { 
 			this.setState({
 				manageSticky: true
@@ -132,7 +131,7 @@ class  Marketing extends Component {
 					</div>
 					<div style={{width: '100%', height: 'auto', backgroundColor: '#AA3939'}} ref={el => this.stickyElContainer = el}>
 						<MediaQuery minWidth={2} maxWidth={798}>
-                 				<div className={`icon-revealer-container${(this.state.manageSticky) ? ' shrink-sticky' : ''}`} ref={el => this.stickyEl = el}>
+                 				<div className={`icon-revealer-container${(this.state.manageSticky) ? ' shrink-sticky' : ''}`} ref={el => this.stickyElMobile = el}>
                  					<div className='icon-revealer-row'>
                  						<div style={(this.state.activeFeature === 'ft1') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
                  							<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
