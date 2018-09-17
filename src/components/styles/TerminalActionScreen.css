@@ -229,3 +229,82 @@ td {
 .payment-section-segment:hover > .payment-selection-icon img {
  	transform: scale(1.25);
  }
+
+
+/* Mobile */
+
+  .mobile-action-wrapper {
+ 	display: flex;
+ 	flex-direction: column;
+ 	align-items: center;
+
+ 	position: relative;
+
+ 	overflow: hidden;
+
+ 	width: 100%;
+ 	height: 100%;
+
+ 	min-height: 100vh;
+ 
+ }
+
+ .mobile-action-sidebar {
+ 	display: flex;
+ 	flex-direction: column;
+ 	align-items: center;
+
+ 	height: 100%;
+ 	width: 100%;
+
+ 	position: absolute;
+
+ 	top: 0;
+ 	bottom: 0;
+ 	left: 0;
+ 	right: 0;
+
+ 	transition: transform 0.3s;
+
+ 	transform: translateX(100%);
+
+ 	background-color: rgba(0,0,0,0.15);
+ }
+
+ .activeSidebarMenu {
+ 	transform: translateX(0%);
+ }
+
+ .mobile-action__header {
+ 	display: flex;
+ 	justify-content: center;
+ 	align-items: center;
+
+ 	width: 100%;
+ 	height: 50px;
+ }
+
+ .mobile-action__body {
+ 	display: flex;
+ 	flex-direction: column;
+ 	align-items: center;
+ 	width: 100%;
+ 	height: calc(100% - 50px - 75px);
+ }
+
+ .mobile-action__footer-navigation {
+ 	display: flex;
+ 	width: 100%;
+ 	height:75px;
+ }
+
+ .mobile-action__navigation-button {
+ 	width: 50%;
+ 	height: 100%;
+ }
+
+
+
+ .mobile-action-sidebar__body {
+ 	overflow: auto;
+ }

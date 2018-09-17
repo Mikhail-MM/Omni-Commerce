@@ -8,6 +8,7 @@ const stateMap = {
 	terminalItemsReducer: {
 		isInvalidated: false,
 		isFetching: false,
+		menuItems: [],
 	},
 	ticketTrackingReducer: {
 		isInvalidated: false,
