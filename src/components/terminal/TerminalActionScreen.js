@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import '../styles/TerminalActionScreen.css'
 
 import ModalRoot from '../ModalRoot'
 import { showModal } from '../../actions/modals'
 import { routeToNode } from '../../actions/routing'
+
+import '../styles/TerminalActionScreen.css'
 
 import { 
 	setVisibleCategory, 

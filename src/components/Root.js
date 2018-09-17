@@ -9,13 +9,18 @@ import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory'
 import rootReducer from '../reducers/reducers'
 
+import MediaQuery from 'react-responsive'
+
 import OmniSplash from './OmniSplash'
 
 import EssosMarket from './EssosMarket'
 import UserPage from './essos/UserPage'
 
 import OmniTerminal from './terminal/OmniTerminal'
+
 import TerminalActionScreen from './terminal/TerminalActionScreen'
+import TerminalActionMobile from './terminal/responsive/TerminalActionMobile'
+
 import AdminTerminal from './terminal/admin/AdminTerminal'
 
 
@@ -64,7 +69,18 @@ export default class Root extends Component {
 
                  		<Route exact path='/omni/terminal' component={OmniTerminal} />
                  		<Route exact path='/omni/terminal/modifyItems' render={(props) => <TerminalActionScreen {...props} modify /> } /> 
-                 		<Route exact path='/omni/terminal/tickets' component={TerminalActionScreen} />
+                 		<Route exact path='/omni/terminal/tickets' component={(props) => {
+                 			return (
+                 			                 			<React.Fragment>
+                 				                 			<MediaQuery minWidth={2} maxWidth={798}>
+                 				                 				<TerminalActionMobile {...props}/>
+                 				                 			</MediaQuery> 
+                 				                 			<MediaQuery minWidth={799}>
+                 				                 				<TerminalActionScreen {...props}/>
+                 				                 			</MediaQuery>
+                 				                 		</React.Fragment>
+                 			)
+                 		}} />
                  		<Route exact path='/essos/user/:id' component={UserPage} />
                  		<Route exact path='/essos/profile/' render={(props) => <UserPage {...props} selfProfileView /> } />
                  		<Route exact path='/uiplayground' component={Playground} />
