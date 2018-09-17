@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect} from 'react-redux'
 import { throttle } from 'underscore'
 
+import MediaQuery from 'react-responsive'
+
 import ModalRoot from './ModalRoot'
 
 import { showModal } from '../actions/modals'
