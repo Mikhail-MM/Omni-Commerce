@@ -41,9 +41,10 @@ class  Marketing extends Component {
 	}
 
 	handleScroll = (event) => {
-		if (this.stickyElContainer === null || this.stickyEl === null) return
 		let scrollTop = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop)
 		let viewportCenter = (window.innerHeight / 2)
+		const stickyElementRef = (window.innerWidth <= 798) ? this.stickyElMobile : this.stickyEl
+
 		this.determineActiveFeature(viewportCenter, {ft1 : this.ft1.getBoundingClientRect(), ft2: this.ft2.getBoundingClientRect(), ft3: this.ft3.getBoundingClientRect(), ft4: this.ft4.getBoundingClientRect()})
 
 		if (this.uniqueCollisionFreePrevScrollTop && scrollTop > this.uniqueCollisionFreePrevScrollTop && this.state.scrollDir !== 'Scrolling Down') { 
@@ -72,12 +73,12 @@ class  Marketing extends Component {
 			})
 		}
 
-		if (this.stickyElContainer.getBoundingClientRect().top !== this.stickyEl.getBoundingClientRect().top && !this.state.manageSticky) { 
+		if (this.stickyElContainer.getBoundingClientRect().top !== stickyElementRef.getBoundingClientRect().top && !this.state.manageSticky) { 
 			this.setState({
 				manageSticky: true
 			})
 		}
-		if (this.stickyElContainer.getBoundingClientRect().top === this.stickyEl.getBoundingClientRect().top && this.state.manageSticky) {
+		if (this.stickyElContainer.getBoundingClientRect().top === stickyElementRef.getBoundingClientRect().top && this.state.manageSticky) {
 			this.setState({
 				manageSticky: false
 			})
@@ -132,25 +133,25 @@ class  Marketing extends Component {
 						<MediaQuery minWidth={2} maxWidth={798}>
                  				<div className={`icon-revealer-container${(this.state.manageSticky) ? ' shrink-sticky' : ''}`} ref={el => this.stickyEl = el}>
                  					<div className='icon-revealer-row'>
-                 						<div ref={el => this.img1 = el} style={(this.state.activeFeature === 'ft1') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
+                 						<div style={(this.state.activeFeature === 'ft1') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
                  							<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 												<img src='/assets/omni-splash/icons/payment-method.svg' />
 											</div>
 											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Compliant Payments </h4>
                  						</div>
-                 						<div ref={el => this.img2 = el} style={(this.state.activeFeature === 'ft2') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
+                 						<div style={(this.state.activeFeature === 'ft2') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
                  							<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 												<img src='/assets/omni-splash/icons/online-shop.svg' />
 											</div>
 											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Compliant Payments </h4>
                  						</div>
-                 						<div ref={el => this.img3 = el} style={(this.state.activeFeature === 'ft3') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
+                 						<div style={(this.state.activeFeature === 'ft3') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
                  							<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 												<img src='/assets/omni-splash/icons/stats.svg' />
 											</div>
 											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Compliant Payments </h4>
                  						</div>
-                 						<div ref={el => this.img3 = el} style={(this.state.activeFeature === 'ft4') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb-mobile'>
+                 						<div style={(this.state.activeFeature === 'ft4') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb-mobile'>
                  							<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 												<img src='/assets/omni-splash/icons/smartphone.svg' />
 											</div>
@@ -162,7 +163,7 @@ class  Marketing extends Component {
                  			<MediaQuery minWidth={799}>
                  				<div className={`icon-revealer-container${(this.state.manageSticky) ? ' shrink-sticky' : ''}`} ref={el => this.stickyEl = el}>
 									<div className='icon-revealer-row'>
-										<div ref={el => this.img1 = el} style={(this.state.activeFeature === 'ft1') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co1${(this.state.manageSticky) ? ' co1-move' : ''}`}>
+										<div style={(this.state.activeFeature === 'ft1') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co1${(this.state.manageSticky) ? ' co1-move' : ''}`}>
 											<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 												<img src='/assets/omni-splash/icons/payment-method.svg' />
 											</div>
@@ -170,7 +171,7 @@ class  Marketing extends Component {
 											<div className='informatic-blurb__text'>
 											</div>
 										</div>
-										<div ref={el => this.img2 = el} style={(this.state.activeFeature === 'ft2') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co2${(this.state.manageSticky) ? ' co2-move' : ''}`}>
+										<div style={(this.state.activeFeature === 'ft2') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co2${(this.state.manageSticky) ? ' co2-move' : ''}`}>
 											<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 												<img src='/assets/omni-splash/icons/online-shop.svg' />
 											</div>
@@ -178,7 +179,7 @@ class  Marketing extends Component {
 											<div className='informatic-blurb__text'>
 											</div>
 										</div>
-										<div ref={el => this.img3 = el} style={(this.state.activeFeature === 'ft3') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co3${(this.state.manageSticky) ? ' co3-move' : ''}`}>
+										<div style={(this.state.activeFeature === 'ft3') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co3${(this.state.manageSticky) ? ' co3-move' : ''}`}>
 											<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 												<img src='/assets/omni-splash/icons/stats.svg' />						
 											</div>
@@ -186,7 +187,7 @@ class  Marketing extends Component {
 											<div className='informatic-blurb__text'>
 											</div>
 										</div>
-										<div ref={el => this.img4 = el} style={(this.state.activeFeature === 'ft4') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co4${(this.state.manageSticky) ? ' co4-move' : ''}`}>
+										<div style={(this.state.activeFeature === 'ft4') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co4${(this.state.manageSticky) ? ' co4-move' : ''}`}>
 											<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 												<img src='/assets/omni-splash/icons/smartphone.svg' />
 											</div>
