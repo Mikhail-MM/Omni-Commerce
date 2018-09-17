@@ -466,7 +466,7 @@
 	}
 }
 
-@media (max-width: 320px) {
+@media (max-width: 420px) {
 	.hero-header-1 {
 		font-size: 1.65em;
 	}
