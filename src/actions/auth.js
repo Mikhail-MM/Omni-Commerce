@@ -25,20 +25,16 @@ export function logOut() {
 }
 
 export function attemptLogIn(credentials) {
-	console.log(credentials)
 	return dispatch => {
 		return fetch('/authorize', {
 		headers:{
 			'Content-Type': 'application/json'
 		},
 		method: 'POST',
-		mode: 'no-cors',
+		mode: 'cors', 
 		body: JSON.stringify(credentials)
 		})
-		.then(response => {
-			console.log(response)
-			return 'test'
-		})
+		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
 			dispatch(authSuccess(json))
 			dispatch(routeUserAfterLogin(json.accountType))
@@ -46,6 +42,7 @@ export function attemptLogIn(credentials) {
 		})
 		.catch(err => dispatch(authFail(err.message)))
 	}
+
 }
 
 export function attemptRegistration(token, data, imageHandler, mode) {
