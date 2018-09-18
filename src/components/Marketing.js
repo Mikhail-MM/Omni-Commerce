@@ -204,7 +204,7 @@ class  Marketing extends Component {
 								</div>
                  			</MediaQuery>
 						<div className='feature-set-container'>
-							<div ref={el => this.ft1 = el } className={`feature-padded-row${(this.state.activeFeature === 'ft1') ? ' activate-feature' : ''}`} >
+							<div ref={el => this.ft1 = el } className={`feature-padded-row bigCol${(this.state.activeFeature === 'ft1') ? ' activate-feature' : ''}`} >
 								<div className='feature-blurb feature-blurb__text'>
 									<div className='blurb-center-wrapper'>
 										<h2> Point of Sale Software </h2>
@@ -212,7 +212,7 @@ class  Marketing extends Component {
 										<p> Sign up for an account to build your store profile and accept payments securely. We utilize <a style={{textDecoration:'none'}}href='https://stripe.com'> Stripe </a> to ensure your information is secure from attackers. We use Stripe to securely process payments from any major credit card provider! </p>
 									</div>
 								</div>
-								<div className='feature-blurb__image'>
+								<div className='feature-blurb__image bigImg'>
 									<img 
 										src={'/assets/pos.jpg'}
 										onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/pos.jpg'})}
@@ -221,7 +221,7 @@ class  Marketing extends Component {
 							</div>
 							<div ref={el => this.ft2 = el } className={`feature-padded-column reverse${(this.state.activeFeature === 'ft2') ? ' activate-feature' : ''}`}>
 								
-								<div className='feature-blurb' style={{height: 'auto', width: '75%'}}>
+								<div className='feature-blurb bigImg' style={{height: 'auto', width: '75%'}}>
 									<img src={'/assets/screen-emps.png'} onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/screen-emps.png'})}/>
 								</div>
 								<div className='feature-blurb feature-blurb__text' style={{height: 'auto', marginTop: 50}}>
