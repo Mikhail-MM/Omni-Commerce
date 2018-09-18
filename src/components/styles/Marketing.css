@@ -521,12 +521,20 @@
 	.sticky-headers {
 		font-size: 0.8em;
 	}
-}
-
-@media (max-width: 350px) {
+	.splash-link {
+		margin: 0 2px;
+		font-size: 0.75em;
+	}
 	.hero-header-1 {
 		font-size: 1.65em;
 		max-width: 300px;
 		left: calc(50% - 150px);
+	}
+}
+
+@media (max-width: 350px) {
+	.splash-link {
+		margin: 0 2px;
+		font-size: 0.70em;
 	}
 }
