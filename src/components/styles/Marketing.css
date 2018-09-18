@@ -484,6 +484,9 @@
 		height: 100px;
 		top: 0;
 	}
+	.informatic-blurb {
+		top: 5px;
+	}
 	.informatic-blurb__icon {
 		height: 65px;
 		width: 65px;
