@@ -216,7 +216,15 @@ class TerminalActionMobile extends Component {
 						</div>
 					</div>
 					<div className='mobile-action__header'>
-						Mobile Layout Wireframe
+						Mobile Layout Wireframe <span className='mobile-action__navigation-button'
+							onClick={() => this.setState({
+								showSidebar: true,
+								sidebarContent: 'category'
+							})}> Add </span> <span className='mobile-action__navigation-button'
+							onClick={() => this.setState({
+								showSidebar: true,
+								sidebarContent: 'tickets'
+							})}> AllTix </span>
 					</div>
 					<div className='mobile-action__body'>
 						<div className='mobile-action__body__table-container'>
@@ -261,26 +269,6 @@ class TerminalActionMobile extends Component {
 								Payment
 							</div>
 						</div>
-					</div>
-					<div className='mobile-action__footer-navigation'>
-						<button 
-							className='mobile-action__navigation-button'
-							onClick={() => this.setState({
-								showSidebar: true,
-								sidebarContent: 'category'
-							})}
-						>
-							Add Item
-						</button>
-						<button 
-							className='mobile-action__navigation-button'
-							onClick={() => this.setState({
-								showSidebar: true,
-								sidebarContent: 'tickets'
-							})}
-						>
-							See Tickets
-						</button>
 					</div>
 				</div>
 		)

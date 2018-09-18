@@ -530,6 +530,9 @@
 	.hero-header-2 {
 		font-size: 2.2em;
 	}
+	.informatic-blurb {
+		top: 5px;
+	}
 	.informatic-blurb__icon {
 		height: 65px;
 		width: 65px;
@@ -593,6 +596,9 @@
 		font-size: 1.65em;
 		max-width: 300px;
 		left: calc(50% - 150px);
+	}
+	.icon-revealer-row {
+		padding: 6px 0;
 	}
 }
 

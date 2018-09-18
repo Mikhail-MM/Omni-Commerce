@@ -116,17 +116,19 @@ class AdminTerminal extends Component {
 			<React.Fragment>
 				<MediaQuery minWidth={2} maxWidth={798}>
 					<div className='mobile-admin-wrapper'>
+						<ModalRoot />
 						<div className='mobile-admin__header'>
 							<button> Term </button>
 							<div style={{width: 50, height:50, backgroundColor: 'red'}} />
 							<button> Notif </button>
 						</div>
 						<div className='mobile-admin__body'>
+							<AdminActionDisplayComponent />
 						</div>
 						<div className='mobile-admin__footer-navigation'>
-							<button className='mobile-admin__footer-navigation__button'> Employees </button>
-							<button className='mobile-admin__footer-navigation__button'> Sales Reports </button>
-							<button className='mobile-admin__footer-navigation__button'> Timesheets </button>
+							<button className='mobile-admin__footer-navigation__button' onClick={() => this.setState({actionComponent: 'MANAGE_EMPLOYEES'})}> Employees </button>
+							<button className='mobile-admin__footer-navigation__button' onClick={() => this.setState({actionComponent: 'MANAGE_SALES_REPORTS'})}> Sales Reports </button>
+							<button className='mobile-admin__footer-navigation__button' onClick={() => this.setState({actionComponent: 'MANAGE_TIMESHEETS'})}> Timesheets </button>
 						</div>
 					</div>
 				</MediaQuery>
