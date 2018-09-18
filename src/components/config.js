@@ -126,6 +126,7 @@ export const fullScreenMobileModal = {
 		zIndex: 1000,
 		borderRadius: 5,
 		padding: 0,
+		overflow: 'auto'
 	},
 };
 
