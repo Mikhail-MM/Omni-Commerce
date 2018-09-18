@@ -78,21 +78,22 @@ class OmniTerminal extends Component {
 		<React.Fragment>
 			<MediaQuery minWidth={2} maxWidth={798}>
 				<div className='mobile-terminal-wrapper'>
+					<ModalRoot />
 					<div className='mobile-terminal__header'>
 						<h6> Mobile Terminal Wireframe </h6>
 					</div>
 					<div className='mobile-terminal__body'>
 						<div className='mobile-terminal__button-row-container'>
-							<button className='button'> Clock In </button>
-							<button className='button'> Clock Out </button>
+							<button className='button' onClick={() => this.props.showModal('EMPLOYEE_PUNCH_CLOCK_FORM_MODAL', {formSelector: "Clock In"})}> Clock In </button>
+							<button className='button' onClick={() => this.props.showModal('EMPLOYEE_PUNCH_CLOCK_FORM_MODAL', {formSelector: "Clock Out"})}> Clock Out </button>
 						</div>
 						<div className='mobile-terminal__button-row-container'>
-							<button className='button'> See All Transactions </button>
-							<button className='button'> Modify Items </button>
+							<button className='button' onClick={() => this.props.showModal('DISPLAY_ALL_TRANSACTIONS', {})}> See All Transactions </button>
+							<button className='button' onClick={() => this.props.routeToNode('/omni/terminal/modifyItems')}> Modify Items </button>
 						</div>
 						<div className='mobile-terminal__button-row-container'>
-							<button className='button'> New Ticket </button>
-							<button className='button'> Close Out </button>
+							<button className='button' onClick={() => this.props.showModal('SELECT_EMPLOYEE_OPENING_TICKET', {})}> New Ticket </button>
+							<button className='button' onClick={() => this.props.showModal('CONFIRM_END_OF_BUSINESS_DAY', {})}> Close Out </button>
 						</div>
 					</div>
 				</div>
