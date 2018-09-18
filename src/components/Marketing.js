@@ -214,7 +214,7 @@ class  Marketing extends Component {
 									/>
 								</div>
 							</div>
-							<div ref={el => this.ft2 = el } className={`feature-padded-column${(this.state.activeFeature === 'ft2') ? ' activate-feature' : ''}`}>
+							<div ref={el => this.ft2 = el } className={`feature-padded-column reverse${(this.state.activeFeature === 'ft2') ? ' activate-feature' : ''}`}>
 								
 								<div className='feature-blurb' style={{height: 'auto', width: '75%'}}>
 									<img src={'/assets/screen-emps.png'} onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/screen-emps.png'})}/>
@@ -226,8 +226,8 @@ class  Marketing extends Component {
 									</div>
 								</div>
 							</div>
-							<div ref={el => this.ft3 = el } className={`feature-padded-row${(this.state.activeFeature === 'ft3') ? ' activate-feature' : ''}`}>
-								<div className='feature-blurb__image' style={{height: '650px', width: '650px'}}>
+							<div ref={el => this.ft3 = el } className={`feature-padded-row reverse${(this.state.activeFeature === 'ft3') ? ' activate-feature' : ''}`}>
+								<div className='feature-blurb__image chart-image'>
 									<img 
 										src={'/assets/stats.jpg'}
 										onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/externalReference/profilepagedesign.png'})}
@@ -248,7 +248,7 @@ class  Marketing extends Component {
 										<p> You don't have to be a brick-and-mortar business to take advantage of E-Commerce </p>
 									</div>
 								</div>
-								<div className='feature-blurb' style={{height: 500, width: 700}}>	
+								<div className='feature-blurb market-image'>	
 									<img src={'/assets/screen-market.jpg'} onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/screen-market.jpg'})}/>
 								</div>
 							</div>

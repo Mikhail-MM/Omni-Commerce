@@ -441,6 +441,15 @@
 	color: #F3FBBC;
 }
 
+.chart-image {
+	height: 650px;
+	width: 650px;		
+}
+.market-image {
+	width: 700px;
+	height: 500px;
+}
+
 @media (max-width: 796px) {
 	.informatic-blurb {
 		display: flex;
@@ -464,6 +473,38 @@
 	.hero-header-2 {
 		font-size: 2.2em;
 	}
+	.informatic-blurb__icon {
+		height: 65px;
+		width: 65px;
+	}
+	.feature-blurb {
+		width: 100%;
+		height: auto;
+	}
+	.feature-padded-row {
+		flex-direction: column;
+	}
+	.blurb-center-wrapper {
+		text-align: center;
+	}
+	.feature-padded-column {
+		text-align: center;
+	}
+	.feature-blurb__image {
+		width: 100%;
+		height: auto;
+	}
+	.chart-image {
+		width: 100%;
+		height: auto;
+	}
+	.market-image {
+		width: 100%;
+		height: auto;
+	}
+	.reverse {
+		flex-direction: column-reverse;
+	}
 }
 
 @media (max-width: 420px) {
@@ -472,5 +513,14 @@
 	}
 	.hero-header-2 {
 		font-size: 1.65em;
+	}
+
+}
+
+@media (max-width: 350px) {
+	.hero-header-1 {
+		font-size: 1.65em;
+		max-width: 300px;
+		left: calc(50% - 150px);
 	}
 }
