@@ -121,6 +121,7 @@
 @media (max-width: 600px) {
 	.registration-form-wrapper {
 		height: auto;
+		min-height: 100%;
 	}
 	.essos-profile-edit-form {
 		width: 100%;
