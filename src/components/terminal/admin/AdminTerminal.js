@@ -116,11 +116,19 @@ class AdminTerminal extends Component {
 			<React.Fragment>
 				<MediaQuery minWidth={2} maxWidth={798}>
 					<div className='mobile-admin-wrapper'>
+						<div className={`mobile-notif-overlay${(this.state.showOverlay) ? ' notif-overlay-active' : '' }`}>
+							<div className='mobile-notif-overlay__header'> 
+								<h6> Notifications </h6>
+								<div className='mobile-notif-overlay__body'>
+									{this.state.eventFeed && this.renderEventFeedToDOM()}
+								</div>
+							</div>
+						</div>
 						<ModalRoot />
 						<div className='mobile-admin__header'>
 							<button> Term </button>
 							<div style={{width: 50, height:50, backgroundColor: 'red'}} />
-							<button> Notif </button>
+							<button onClick={() => this.setState(prevState => ({showOverlay: !prevState.showOverlay}))}> Notif </button>
 						</div>
 						<div className='mobile-admin__body'>
 							<AdminActionDisplayComponent />
