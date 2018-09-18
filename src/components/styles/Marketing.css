@@ -504,3 +504,21 @@
 
 	}
 }
+
+@media (max-width: 700px) {
+	.hero-header-1 {
+		font-size: 2.2em;
+	}
+	.hero-header-2 {
+		font-size: 2.2em;
+	}
+}
+
+@media (max-width: 320px) {
+	.hero-header-1 {
+		font-size: 1.65em;
+	}
+	.hero-header-2 {
+		font-size: 1.65em;
+	}
+}

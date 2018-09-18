@@ -43,6 +43,15 @@ class  Marketing extends Component {
 		let scrollTop = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop)
 		let viewportCenter = (window.innerHeight / 2)
 		
+		const stickyElementRef = (window.innerWidth <= 798) ? this.stickyElMobile : this.stickyEl
+		/*
+		const iconRef1 = (window.innerWidth <= 798) ? this.img1m : this.img1
+		const iconRef2 = (window.innerWidth <= 798) ? this.img2m : this.img2
+		const iconRef3 = (window.innerWidth <= 798) ? this.img3m : this.img3
+		const iconRef4 = (window.innerWidth <= 798) ? this.img4m : this.img4
+		*/
+		console.log(stickyElementRef.getBoundingClientRect().top)
+		console.log(this.stickyElContainer.getBoundingClientRect().top)
 		this.determineActiveFeature(viewportCenter, {ft1 : this.ft1.getBoundingClientRect(), ft2: this.ft2.getBoundingClientRect(), ft3: this.ft3.getBoundingClientRect(), ft4: this.ft4.getBoundingClientRect()})
 
 		if (this.uniqueCollisionFreePrevScrollTop && scrollTop > this.uniqueCollisionFreePrevScrollTop && this.state.scrollDir !== 'Scrolling Down') { 
@@ -70,12 +79,12 @@ class  Marketing extends Component {
 				manageSticky: false
 			})
 		}
-		if (this.stickyElContainer.getBoundingClientRect().y !== this.stickyEl.getBoundingClientRect().y && !this.state.manageSticky) { 
+		if (this.stickyElContainer.getBoundingClientRect().y !== stickyElementRef.getBoundingClientRect().y && !this.state.manageSticky) { 
 			this.setState({
 				manageSticky: true
 			})
 		}
-		if (this.stickyElContainer.getBoundingClientRect().y === this.stickyEl.getBoundingClientRect().y && this.state.manageSticky) {
+		if (this.stickyElContainer.getBoundingClientRect().y === stickyElementRef.getBoundingClientRect().y && this.state.manageSticky) {
 			this.setState({
 				manageSticky: false
 			})
@@ -127,27 +136,27 @@ class  Marketing extends Component {
 					</div>
 					<div style={{width: '100%', height: 'auto', backgroundColor: '#AA3939'}} ref={el => this.stickyElContainer = el}>
                  			<MediaQuery minWidth={2} maxWidth={798}>
-                 				<div className={`icon-revealer-container${(this.state.manageSticky) ? ' shrink-sticky' : ''}`} ref={el => this.stickyEl = el}>
+                 				<div className={`icon-revealer-container${(this.state.manageSticky) ? ' shrink-sticky' : ''}`} ref={el => this.stickyElMobile = el}>
                  					<div className='icon-revealer-row'>
-                 						<div ref={el => this.img1 = el} style={(this.state.activeFeature === 'ft1') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
+                 						<div ref={el => this.img1m = el} style={(this.state.activeFeature === 'ft1') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
                  							<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 												<img src='/assets/omni-splash/icons/payment-method.svg' />
 											</div>
 											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Compliant Payments </h4>
                  						</div>
-                 						<div ref={el => this.img2 = el} style={(this.state.activeFeature === 'ft2') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
+                 						<div ref={el => this.img2m = el} style={(this.state.activeFeature === 'ft2') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
                  							<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 												<img src='/assets/omni-splash/icons/online-shop.svg' />
 											</div>
 											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Compliant Payments </h4>
                  						</div>
-                 						<div ref={el => this.img3 = el} style={(this.state.activeFeature === 'ft3') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
+                 						<div ref={el => this.img3m = el} style={(this.state.activeFeature === 'ft3') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
                  							<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 												<img src='/assets/omni-splash/icons/stats.svg' />
 											</div>
 											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Compliant Payments </h4>
                  						</div>
-                 						<div ref={el => this.img3 = el} style={(this.state.activeFeature === 'ft4') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb-mobile'>
+                 						<div ref={el => this.img3m = el} style={(this.state.activeFeature === 'ft4') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb-mobile'>
                  							<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 												<img src='/assets/omni-splash/icons/smartphone.svg' />
 											</div>
