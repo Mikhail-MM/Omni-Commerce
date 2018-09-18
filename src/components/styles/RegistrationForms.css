@@ -117,3 +117,12 @@
 .essos-avatar-preview-container img {
 	border-radius: 100px;
 }
+
+@media (max-width: 600px) {
+	.registration-form-wrapper {
+		height: auto;
+	}
+	.essos-profile-edit-form {
+		width: 100%;
+	}
+}

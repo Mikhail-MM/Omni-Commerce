@@ -539,6 +539,9 @@
 		margin: 0 2px;
 		font-size: 0.75em;
 	}
+	.icon-revealer-row {
+		padding: 6px 0;
+	}
 	.hero-header-1 {
 		font-size: 1.65em;
 		max-width: 300px;
