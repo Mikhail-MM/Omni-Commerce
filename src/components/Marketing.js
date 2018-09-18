@@ -138,29 +138,29 @@ class  Marketing extends Component {
                  			<MediaQuery minWidth={2} maxWidth={798}>
                  				<div className={`icon-revealer-container${(this.state.manageSticky) ? ' shrink-sticky' : ''}`} ref={el => this.stickyElMobile = el}>
                  					<div className='icon-revealer-row'>
-                 						<div ref={el => this.img1m = el} style={(this.state.activeFeature === 'ft1') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
+                 						<div style={(this.state.activeFeature === 'ft1') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
                  							<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 												<img src='/assets/omni-splash/icons/payment-method.svg' />
 											</div>
 											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Compliant Payments </h4>
                  						</div>
-                 						<div ref={el => this.img2m = el} style={(this.state.activeFeature === 'ft2') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
+                 						<div style={(this.state.activeFeature === 'ft2') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
                  							<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 												<img src='/assets/omni-splash/icons/online-shop.svg' />
 											</div>
-											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Compliant Payments </h4>
+											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Remote Business Management </h4>
                  						</div>
-                 						<div ref={el => this.img3m = el} style={(this.state.activeFeature === 'ft3') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
+                 						<div style={(this.state.activeFeature === 'ft3') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
                  							<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 												<img src='/assets/omni-splash/icons/stats.svg' />
 											</div>
-											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Compliant Payments </h4>
+											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}>  Metrics and Statistics  </h4>
                  						</div>
-                 						<div ref={el => this.img3m = el} style={(this.state.activeFeature === 'ft4') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb-mobile'>
+                 						<div style={(this.state.activeFeature === 'ft4') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb-mobile'>
                  							<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 												<img src='/assets/omni-splash/icons/smartphone.svg' />
 											</div>
-											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Compliant Payments </h4>
+											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}>  Personal Marketplace  </h4>
                  						</div>
                  					</div>
                  				</div>
