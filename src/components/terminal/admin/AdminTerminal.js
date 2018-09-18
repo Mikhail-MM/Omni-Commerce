@@ -134,9 +134,21 @@ class AdminTerminal extends Component {
 							<AdminActionDisplayComponent />
 						</div>
 						<div className='mobile-admin__footer-navigation'>
-							<button className='mobile-admin__footer-navigation__button' onClick={() => this.setState({actionComponent: 'MANAGE_EMPLOYEES'})}> Employees </button>
-							<button className='mobile-admin__footer-navigation__button' onClick={() => this.setState({actionComponent: 'MANAGE_SALES_REPORTS'})}> Sales Reports </button>
-							<button className='mobile-admin__footer-navigation__button' onClick={() => this.setState({actionComponent: 'MANAGE_TIMESHEETS'})}> Timesheets </button>
+							<div className='mobile-admin__footer-navigation__button' onClick={() => this.setState({actionComponent: 'MANAGE_EMPLOYEES'})}> 
+								<div className={`mobile-admin__footer-navigation__button__icon${(this.state.actionComponent === 'MANAGE_EMPLOYEES') ? ' mobile-admin__footer-navigation__button__icon__active' : ''}`}>
+									<img className='mobile-admin-menu-icon' src='./assets/icons/emp_mng.svg' />
+								</div>
+							 </div>
+							<div className='mobile-admin__footer-navigation__button' onClick={() => this.setState({actionComponent: 'MANAGE_SALES_REPORTS'})}> 
+								<div className={`mobile-admin__footer-navigation__button__icon${(this.state.actionComponent === 'MANAGE_SALES_REPORTS') ? ' mobile-admin__footer-navigation__button__icon__active' : ''}`}>
+									<img className='mobile-admin-menu-icon' src='./assets/icons/analytics.svg' />
+								</div>
+							</div>
+							<div className='mobile-admin__footer-navigation__button' onClick={() => this.setState({actionComponent: 'MANAGE_TIMESHEETS'})}>
+							 <div className={`mobile-admin__footer-navigation__button__icon${(this.state.actionComponent === 'MANAGE_TIMESHEETS') ? ' mobile-admin__footer-navigation__button__icon__active' : ''}`}>
+									<img className='mobile-admin-menu-icon' src='./assets/icons/calendar.svg' />
+								</div>
+							 </div>
 						</div>
 					</div>
 				</MediaQuery>
