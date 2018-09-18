@@ -33,6 +33,12 @@ class AuthModal extends Component {
 		}, 500))
 	}
 	
+	componentWillUnmount() {
+		window.addEventListener('resize', throttle((event) => {
+			this.setState({viewportWidth:event.target.innerWidth})		
+		}, 500))
+	}
+
 	render() {
 		return(
 			<div>
