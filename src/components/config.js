@@ -112,6 +112,23 @@ export const modalStyle3 = {
 	},
 };
 
+export const fullScreenMobileModal = {
+	content: {
+		top: '50%',
+		left: '50%',
+		right: 'auto',
+		bottom: 'auto',
+		marginRight: '-50%',
+		transform: 'translate(-50%, -50%)',
+		border: '2px solid white',
+		height: '100vh',
+		width: '100vw',
+		zIndex: 1000,
+		borderRadius: 5,
+		padding: 0,
+	},
+};
+
 export const stockAvvys = [
 	'/assets/avatars/sa1.svg',
 	'/assets/avatars/sa1a.svg',
