@@ -107,7 +107,7 @@
 	height: auto;
 
 	left: calc(50% - 450px);
-	top: 30%;
+	top: 35%;
 
 	text-align: center;
 	font-size: 2.8em;
@@ -128,7 +128,7 @@
 	height: auto;
 
 	left: calc(50% - 200px);
-	top: 45%;
+	top: 50%;
 
 	text-align: center;
 	font-size: 2.7em;
@@ -152,7 +152,7 @@
 	height: auto;
 
 	left: calc(50% - 200px);
-	top: 60%;
+	top: 65%;
 
 	opacity: 0;
 
