@@ -441,6 +441,10 @@
 	color: #F3FBBC;
 }
 
+.sticky-headers {
+	color: white;
+}
+
 .chart-image {
 	height: 650px;
 	width: 650px;		
@@ -472,6 +476,13 @@
 	}
 	.hero-header-2 {
 		font-size: 2.2em;
+	}
+	.icon-revealer-container {
+		height: 156px;
+	}
+	.shrink-sticky {
+		height: 100px;
+		top: 0;
 	}
 	.informatic-blurb__icon {
 		height: 65px;
