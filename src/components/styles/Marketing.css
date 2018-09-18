@@ -505,6 +505,10 @@
 	.reverse {
 		flex-direction: column-reverse;
 	}
+	.splash-link {
+		margin: 0 2px;
+		font-size: 0.8em;
+	}
 }
 
 @media (max-width: 420px) {
@@ -514,7 +518,9 @@
 	.hero-header-2 {
 		font-size: 1.65em;
 	}
-
+	.sticky-headers {
+		font-size: 0.8em;
+	}
 }
 
 @media (max-width: 350px) {
