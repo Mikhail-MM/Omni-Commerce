@@ -97,6 +97,29 @@ export const modalStyleRound = {
 		backgroundColor: 'rgba(255,255,255,0.75)'
 	}
 }
+
+export const modalStyleRoundMobile = {
+	content: {
+		top: '50%',
+		left: '50%',
+		right: 'auto',
+		bottom: 'auto',
+		marginRight: '-50%',
+		transform: 'translate(-50%, -50%)',
+		width: '100%',
+		height: '100%',
+		/* backgroundImage: 'radial-gradient(circle at center, rgb(105, 61, 65), rgb(69, 27, 54) 60%, rgb(32, 4, 22))', 
+		backgroundColor: 'rgba(82, 59, 112, 0.89)', */
+		backgroundImage: 'linear-gradient(#414174, #523B70)',
+		borderRadius: '0px',
+		border: 'none',
+		boxShadow: '5px 5px 16px 2px rgba(0, 0, 0, .85)'
+	},
+	overlay: {
+		backgroundColor: 'rgba(255,255,255,0.75)'
+	}
+}
+
 export const modalStyle3 = {
 	content: {
 		top: '50%',

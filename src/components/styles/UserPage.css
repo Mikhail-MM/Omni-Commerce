@@ -324,3 +324,9 @@
 
 */
 
+@media (max-width: 720px) {
+	.main-user-header {
+		flex-direction: column;
+		align-items: center;
+	}
+}

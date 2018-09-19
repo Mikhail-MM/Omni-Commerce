@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Modal from 'react-modal';
-import { modalStyleRound, TagMap } from '../config';
+import { modalStyleRound, modalStyleRoundMobile, TagMap } from '../config';
 import { hideModal } from '../../actions/modals';
  
 import { pushItemIntoShoppingCart } from '../../actions/shopping-cart'
@@ -23,9 +23,22 @@ const mapStateToProps = state => {
 
 class ConfirmCartModal extends Component {
 	state = {
-		requestedAmount: 1
+		requestedAmount: 1,
+		viewportWidth: window.innerWidth,
 	}
 	
+	componentDidMount() {
+		window.addEventListener('resize', throttle((event) => {
+			this.setState({viewportWidth:event.target.innerWidth})		
+		}, 500))
+	}
+	
+	componentWillUnmount() {
+		window.addEventListener('resize', throttle((event) => {
+			this.setState({viewportWidth:event.target.innerWidth})		
+		}, 500))
+	}
+
 	handleChange = (input, value) => {
 		if (value > 0) {
 			this.setState({
@@ -69,7 +82,7 @@ class ConfirmCartModal extends Component {
 			<div>
 				<Modal
 					isOpen={this.props.modalType === 'CONFIRM_CART_ADDITION'}
-					style={modalStyleRound}
+					style={(this.state.viewportWidth <= 800) ? modalStyleRoundMobile : modalStyleRound}
 					contentLabel="Example Modal"
 					overlayClassName="Overlay"
 					>
