@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { throttle } from 'underscore'
 
 import Modal from 'react-modal';
 import { modalStyleRound, modalStyleRoundMobile, TagMap } from '../config';
