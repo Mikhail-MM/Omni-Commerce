@@ -175,32 +175,44 @@ class UserPage extends Component {
 						{ (this.props.selfProfileView) ? (
 							<div className='user-context-menu-button-container'>
 								<div 
-									className={(this.state.indexActive === 0 ) ? 'user-context-menu-button underlinebutton-active': 'user-context-menu-button'} 
+									className='user-menu-category-button-container'
 									onClick={() => this.setState({indexActive: 0, componentView: 'USER_MARKET_ITEMS'})}
 								>
-									 My Items 
+									<div> My Items </div>
+									<div className={`user-menu-category-button-icon-container ${(this.state.componentView === 'USER_MARKET_ITEMS') ? ' active-button-icon-container' : ''}`}>
+										<img src={'/assets/icons/upb1.svg'} />
+									</div>
 								</div>
 								<div 
-									className={(this.state.indexActive === 1 ) ? 'user-context-menu-button underlinebutton-active': 'user-context-menu-button'}  
+									className='user-menu-category-button-container'
 									onClick={() => this.setState({indexActive: 1, componentView: 'SHIPMENT_REQUESTS'})}
-								> 
-									Orders 
+								>
+									<div> My Sales </div>
+									<div className={`user-menu-category-button-icon-container ${(this.state.componentView === 'SHIPMENT_REQUESTS') ? ' active-button-icon-container' : ''}`}>
+										<img src={'/assets/icons/upb2.svg'} />
+									</div>
 								</div>
 								<div 
-									className={(this.state.indexActive === 2 ) ? 'user-context-menu-button underlinebutton-active': 'user-context-menu-button'}  
+									className='user-menu-category-button-container'
 									onClick={() => this.setState({indexActive: 2, componentView: 'PURCHASE_HISTORY'})}
-								> 
-									Purchase History 
+								>
+									<div> My Purchases </div>
+									<div className={`user-menu-category-button-icon-container ${(this.state.componentView === 'PURCHASE_HISTORY') ? ' active-button-icon-container' : ''}`}>
+										<img src={'/assets/icons/upb3.svg'} />
+									</div>
 								</div>
 								<div 
-									className={(this.state.indexActive === 3 ) ? 'user-context-menu-button underlinebutton-active': 'user-context-menu-button'}  
-									onClick={() => {
+									className='user-menu-category-button-container'
+									onClick={() => this.setState({indexActive: 3, componentView: 'PURCHASE_HISTORY'})}
+								>
+									<div> Add Item </div>
+									<div className='user-menu-category-button-icon-container' onClick={() => {
 										this.setState({indexActive:3})
 										this.props.showModal('DATABASE_INTERFACE_MODAL', {module: 'Essos', action: 'upload' })
 										}
-									}
-								> 
-									Add Item 
+									} >
+										<img src={'/assets/icons/upb4.svg'} />
+									</div>
 								</div>
 							</div>							
 						   ) : (
