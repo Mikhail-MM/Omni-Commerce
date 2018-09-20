@@ -41,7 +41,7 @@ export function sendCashPaymentToApi(authToken, cashTendered, transaction_id) {
 					body: JSON.stringify(data),
 				})
 				.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
-				.then(json => console.log(json))
+				.then(json => dispatch(showModal('PAYMENT_CONFIRMATION_MODAL', {mode: 'Cash', payment: json})))
 				.catch(err => console.log(err))
 			}) // Dispatch an event for the Cashier - Cash Register Screen
 			.catch(err => console.log(err))

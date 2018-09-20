@@ -101,7 +101,12 @@ class ConfirmCartModal extends Component {
 							{(this.props.renderReviews) && this.props.renderReviews(item.reviews)}
 							<p> {item.description} </p>
 							<input type='number' value={this.state.requestedAmount} onChange={e => this.handleChange('requestedAmount', e.target.value)} />
-							<button onClick={() => this.addItemToCart(item._id)}>Add To Cart</button>
+							<button onClick={() => {
+								if (!isAuthenticated || instanceType !== 'Essos') { this.props.showModal('AUTH_FORM_MODAL', { login: true, loginEssos: true }) }
+								else if (isAuthenticated && instanceType === 'Essos') {this.addItemToCart(item._id)}}}
+							>
+								Add To Cart
+							</button>
 
 							<button onClick={() => this.props.hideModal()}> Cancel </button>
 						</div>

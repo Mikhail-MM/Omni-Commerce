@@ -56,7 +56,21 @@
 
 	border-bottom: 2px #9bacc8 solid;	
 }
-
+.terminal-table-display__header {
+	background-color: rgb(252, 214, 105);
+	color: rgb(82, 95, 127);
+}
+.terminal-table-display__header ~ tbody tr {
+	text-align: center;
+}
+.terminal-table-display__header tr th {
+	border: none;
+}
+.terminal-history-row:hover {
+	background-color: rgba(0,0,0,0.5);
+	cursor: pointer;
+	color: white;
+}
 .row__statistics {
 	display: flex;
 	justify-content: space-around;

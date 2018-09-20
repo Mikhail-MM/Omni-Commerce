@@ -219,7 +219,7 @@ class  Marketing extends Component {
 								<div className='feature-blurb' style={{height: 'auto', width: '75%'}}>
 									<img src={'/assets/screen-emps.png'} onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/screen-emps.png'})}/>
 								</div>
-								<div className='feature-blurb feature-blurb__text' style={{height: 'auto', marginTop: 50}}>
+								<div className='feature-blurb feature-blurb__text' style={{height: 'auto'}}>
 									<div>
 										<h2 style={{textAlign: 'center'}}> Employee Management </h2>
 										<p> Employee management has never been easier! Keep track of hiring and individual performance with our Admin dashboard. Live feed ensures that you're always kept up-to-date with the minute-to-minute details of running your business without actually having to be there.</p>
@@ -230,7 +230,6 @@ class  Marketing extends Component {
 								<div className='feature-blurb__image chart-image'>
 									<img 
 										src={'/assets/stats.jpg'}
-										onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/externalReference/profilepagedesign.png'})}
 									/>
 								</div>
 								<div className='feature-blurb feature-blurb__text'>

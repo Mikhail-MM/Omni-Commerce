@@ -4,7 +4,7 @@ import { throttle } from 'underscore'
 
 
 import Modal from 'react-modal';
-import { modalStyle3, fullScreenMobileModal } from '../config';
+import { modalStyle3, fullScreenMobileModal, modalStyleanim } from '../config';
 import { hideModal } from '../../actions/modals';
 
 import AuthenticationForm from '../forms/registration/AuthenticationForm';
@@ -44,7 +44,7 @@ class AuthModal extends Component {
 			<div>
 					<Modal
 						isOpen={this.props.modalType === 'AUTH_FORM_MODAL'}
-						style={(this.state.viewportWidth <= 800) ? fullScreenMobileModal : modalStyle3}
+						style={(this.state.viewportWidth <= 800) ? fullScreenMobileModal : modalStyleanim}
 						contentLabel="Example Modal"
 						overlayClassName="Overlay"
 						>

@@ -11,12 +11,12 @@ import { showModal } from '../actions/modals'
 import { routeToNode } from '../actions/routing'
 
 const mapStateToProps = state => {
-	const { token, isAuthenticated } = state.authReducer
+	const { token, isAuthenticated, instanceType } = state.authReducer
 	const { marketplaceItems } = state.marketplaceItemsReducer
 	const { shoppingCart } = state.shoppingCartReducer
 	const { wishlist } = state.wishlistReducer
 
-	return { token, isAuthenticated, marketplaceItems, shoppingCart, wishlist }
+	return { token, isAuthenticated, instanceType, marketplaceItems, shoppingCart, wishlist }
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -222,7 +222,7 @@ class EssosMarket extends Component {
 	}
 
 	render() {
-		const { marketplaceItems, shoppingCart } = this.props
+		const { isAuthenticated, instanceType, marketplaceItems, shoppingCart } = this.props
 		
 		return(
 			<div className='app-root'>  
@@ -251,7 +251,13 @@ class EssosMarket extends Component {
 	              		</div>
 	              	</div>
 
-	              	<div onClick={() => this.props.routeToNode('/essos/profile/')}className='my-store-button'>
+	              	<div onClick={
+	              		() => {
+	              			if (!isAuthenticated || instanceType !== 'Essos') { this.props.showModal('AUTH_FORM_MODAL', { login: true, loginEssos: true }) }
+	              			else if (isAuthenticated && instanceType === 'Essos') { this.props.routeToNode('/essos/profile/') }
+	              		}}
+	              		className='my-store-button'
+	              	>
 	              		<img className='my-store-icon' src='./assets/icons/online-store.svg' />
 	              		<span> My Shop </span>
 	              	</div>

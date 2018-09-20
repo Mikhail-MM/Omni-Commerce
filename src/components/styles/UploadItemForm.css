@@ -29,6 +29,7 @@
 
 	width: 100%;
 	height: auto;
+
 }
 
 .essos-category-tag-label {
@@ -36,10 +37,13 @@
 	justify-content: space-around;
 	align-items: center;
 	
-	width: auto;
+	border: 2px solid gray;
+	width: 200px;
 	height: 40px;
+	font-size: 0.8em;
 
-	transition: background-color 0.8s ease-out;
+	transition: border 0.8s ease-out;
+	margin: 2px 0;
 }
 
 .tag-icon-container {
@@ -48,10 +52,13 @@
 }
 
 .tag-label-container {
+	display: flex;
+	align-items: center;
 	width: 100px;
 	height: 100%;
 	color: black;
 }
+
 .omni-item-form-wrapper {
 	display: flex;
 	flex-direction: column;

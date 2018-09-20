@@ -33,6 +33,7 @@ const TransactionHistoryDisplay = props => {
 							props.hideModal()
 							fetchCurrentTicketDetails(token, ticket._id)}
 						}
+						className='terminal-history-row'
 					>
 						<td> {ticket.status} </td>
 						<td> {ticket.createdBy} </td>
@@ -51,7 +52,7 @@ const TransactionHistoryDisplay = props => {
 
 		return (
 			<table>
-				<thead>
+				<thead className='terminal-table-display__header'> 
 					<tr>
 						<th> Ticket Status </th>
 						<th> Created By </th>

@@ -224,7 +224,6 @@ class UploadItemForm extends Component {
 			if (!this.state.tags.includes(tag)) return (
 				<div 
 					className='essos-category-tag-label' 
-					style={{backgroundColor: 'gray'}}
 					onClick={ () => this.handleTagChange(tag) }
 				> 
 					<div className='tag-icon-container' >
@@ -238,7 +237,7 @@ class UploadItemForm extends Component {
 			else if (this.state.tags.includes(tag)) return (
 				<div 
 					className='essos-category-tag-label' 
-					style={{backgroundColor: 'red'}}
+					style={{border: '2px solid red'}}
 					onClick={ () => this.handleTagChange(tag) }
 				> 
 					<div className='tag-icon-container' >
@@ -315,15 +314,15 @@ class UploadItemForm extends Component {
 					</div>
 					<div className='essos-product-details-modify-column'>
 						<div>
+							<div className='tag-selection-input-container'>
+								{ this.renderTagSelectionMenu() }
+							</div>
 							<label> Name </label>
 							<input 
 								type='text'
 								value={this.state.itemName}
 								onChange={(event) => this.handleChange('itemName', event.target.value)}
 							/>
-						</div>
-						<div className='tag-selection-input-container'>
-							{ this.renderTagSelectionMenu() }
 						</div>
 						<div>
 							<label> Price </label>
