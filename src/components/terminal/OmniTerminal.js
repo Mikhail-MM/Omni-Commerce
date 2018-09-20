@@ -106,7 +106,7 @@ class OmniTerminal extends Component {
 							<div className='mainframe-container'>
 								<div className='graph' >
 											<table style={{width: '100%'}}>
-												<thead>
+												<thead className='terminal-table-display__header'>
 													<tr>
 														<th> Ticket Status </th>
 														<th> Created By </th>

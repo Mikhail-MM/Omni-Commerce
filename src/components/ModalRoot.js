@@ -41,6 +41,7 @@ import ConfirmSalesReportAggregationModal from './modals/ConfirmSalesReportAggre
 import SalesAggregationSuccessModal from './modals/SalesAggregationSuccessModal'
 
 import PaymentTypeSelectionModal from './modals/PaymentTypeSelectionModal'
+import PaymentSuccessModal from './modals/PaymentSuccessModal'
 
 import DatabaseInterfaceModal from './modals/DatabaseInterfaceModal'
 import UploadSuccessModal from './modals/UploadSuccessModal'
@@ -58,6 +59,7 @@ import ConfirmDeletionModal from './modals/ConfirmDeletionModal'
 import EssosProfileModificationModal from './modals/EssosProfileModificationModal'
 
 import OmniProfileModificationModal from './modals/OmniProfileModificationModal'
+
 
 const MODAL_COMPONENTS = {
 	'REGISTRATION_MODULE_PICKER': RegistrationPickerModal,
@@ -96,6 +98,7 @@ const MODAL_COMPONENTS = {
 	'VIEW_REVIEWS_MODAL':ReviewListModal,
 	
 	'CASH_OR_CARD_MODAL': PaymentTypeSelectionModal,
+	'PAYMENT_CONFIRMATION_MODAL': PaymentSuccessModal,
 
 	'DATABASE_INTERFACE_MODAL': DatabaseInterfaceModal,
 	'SHOW_ITEM_UPLOAD_SUCCESS_MODAL': UploadSuccessModal,

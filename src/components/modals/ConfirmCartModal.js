@@ -4,7 +4,7 @@ import { throttle } from 'underscore';
 
 import Modal from 'react-modal';
 import { modalStyleRound, modalStyleRoundMobile, TagMap } from '../config';
-import { hideModal } from '../../actions/modals';
+import { hideModal, showModal } from '../../actions/modals';
  
 import { pushItemIntoShoppingCart } from '../../actions/shopping-cart'
 
@@ -12,11 +12,12 @@ import '../styles/ProductPage.css'
 
 const mapDispatchToProps = dispatch => ({
 	hideModal: () => dispatch(hideModal()),
+	showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps)),
 	pushItemIntoShoppingCart: (token, itemID, requestedAmount, existingCountInCart) => dispatch(pushItemIntoShoppingCart(token, itemID, requestedAmount, existingCountInCart)),
 })
 
 const mapStateToProps = state => {
-	const { token } = state.authReducer
+	const { isAuthenticated, instanceType, token } = state.authReducer
 	const { modalType, modalProps } = state.modalReducer
 	const { shoppingCart } = state.shoppingCartReducer
 	return { token, modalType, modalProps, shoppingCart }
@@ -78,7 +79,7 @@ class ConfirmCartModal extends Component {
 	}
 
 	render() {
-		const { item } = this.props
+		const { isAuthenticated, instanceType, item } = this.props
 		return(
 			<div>
 				<Modal
@@ -101,7 +102,12 @@ class ConfirmCartModal extends Component {
 							{(this.props.renderReviews) && this.props.renderReviews(item.reviews)}
 							<p> {item.description} </p>
 							<input type='number' value={this.state.requestedAmount} onChange={e => this.handleChange('requestedAmount', e.target.value)} />
-							<button onClick={() => this.addItemToCart(item._id)}>Add To Cart</button>
+							<button onClick={() => {
+								if (!isAuthenticated || instanceType !== 'Essos') { this.props.showModal('AUTH_FORM_MODAL', { login: true, loginEssos: true }) }
+								else if (isAuthenticated && instanceType === 'Essos') {this.addItemToCart(item._id)}}}
+							>
+								Add To Cart
+							</button>
 
 							<button onClick={() => this.props.hideModal()}> Cancel </button>
 						</div>
