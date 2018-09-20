@@ -170,8 +170,7 @@ td {
 
 
 .event-container {
-	display: flex;
-	flex-direction: column;
+	display: block;
 
 	width: 100%;
 	height: auto;
