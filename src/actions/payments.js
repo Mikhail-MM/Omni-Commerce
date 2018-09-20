@@ -1,3 +1,4 @@
+import { showModal } from './modals'
 export function sendCashPaymentToApi(authToken, cashTendered, transaction_id) {
 	const url = '/transactions/' + transaction_id
 	const data = {
