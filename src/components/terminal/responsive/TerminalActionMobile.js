@@ -175,9 +175,18 @@ class TerminalActionMobile extends Component {
 
 		return(
 			<div className='pricing-container'>
-				<div> {`SubTotal: ${activeTicket.subTotal}`} </div>
-				<div> {`Tax: ${activeTicket.tax}`} </div>
-				<div> {`Total: ${activeTicket.total}`} </div>
+				<div style={{display: 'flex', justifyContent: 'space-around'}}> 
+					<span> Subtotal: </span> 
+					<span>{`$${activeTicket.subTotal}`} </span> 
+				</div>
+				<div style={{display: 'flex', justifyContent: 'space-around'}}> 
+					<span> Tax: </span> 
+					<span>{`$${activeTicket.tax}`} </span> 
+				</div>
+				<div style={{display: 'flex', justifyContent: 'space-around'}}> 
+					<span> Total: </span> 
+					<span>{`$${activeTicket.total}`} </span> 
+				</div>
 			</div>
 		)
 	}
