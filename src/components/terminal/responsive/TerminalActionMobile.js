@@ -216,15 +216,32 @@ class TerminalActionMobile extends Component {
 						</div>
 					</div>
 					<div className='mobile-action__header'>
-						Mobile Layout Wireframe <span className='mobile-action__navigation-button'
-							onClick={() => this.setState({
+						<button style={{width: 50, height: 50, marginRight: 50}} className='mobile-action-button' onClick={() => this.props.routeToNode('/omni/terminal')}> 
+							<img src={'/assets/icons/previous.svg'} />
+						</button>
+						<img style={{width: 50, height: 50, marginLeft: 5}} src={'/assets/TRANSLOGOthin.svg'} />
+						<div className='mobile-action__header__action-buttons-container'>
+							<button 
+								style={{width: 50, height: 50, marginRight: 5}}
+								onClick={() => this.setState({
 								showSidebar: true,
 								sidebarContent: 'category'
-							})}> Add </span> <span className='mobile-action__navigation-button'
-							onClick={() => this.setState({
+								})}
+								className='mobile-action-button'
+							> 
+								<img src={'/assets/icons/plus.svg'} />
+							</button>
+							<button 
+								style={{width: 50, height: 50}}
+								onClick={() => this.setState({
 								showSidebar: true,
 								sidebarContent: 'tickets'
-							})}> AllTix </span>
+								})}
+								className='mobile-action-button'
+							> 
+								<img src={'/assets/icons/list.svg'} />
+							</button>
+						</div>
 					</div>
 					<div className='mobile-action__body'>
 						<div className='mobile-action__body__table-container'>

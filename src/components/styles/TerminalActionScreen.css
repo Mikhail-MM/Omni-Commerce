@@ -286,7 +286,7 @@ td {
 
  .mobile-action__header {
  	display: flex;
- 	justify-content: center;
+ 	justify-content: space-between;
  	align-items: center;
 
  	width: 100%;
@@ -296,7 +296,17 @@ td {
    	color: white;
   	border-bottom: 1px solid rgb(255,255,255, 0.45);
  }
+  .mobile-action-button {
+ 	padding: 0;
+ 	background-color: rgba(255,255,255,0.50);
+ 	padding: 5px 5px;
+ 	outline: none;
+ 	border: none;
+ }
 
+ .mobile-action-button:hover {
+ 	background-color: rgb(66, 64, 244);;
+ }
  .mobile-action__body {
  	display: flex;
  	flex-direction: column;
