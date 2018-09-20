@@ -400,7 +400,7 @@ h1, h2, h3, h4, h5, h6 {
   transition: border 0.5s ease-out;
 }
 .jumbotron-context-box:hover {
-  border: 7px dashed white;
+  border: 12px dashed white;
   border-radius: 5px;
   animation: breathe 3s infinite;
 }
