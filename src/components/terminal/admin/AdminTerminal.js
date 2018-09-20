@@ -40,6 +40,7 @@ class AdminTerminal extends Component {
 	state = {
 		actionComponent: 'MANAGE_EMPLOYEES',
 		eventFeed: [],
+		showOverlay: false,
 	}
 	
 	async componentDidMount() {

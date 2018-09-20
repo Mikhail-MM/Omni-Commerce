@@ -162,8 +162,8 @@ class TerminalActionMobile extends Component {
 					<tr key={item._id} className={`ledger-row${(index === array.length - 1) ? ' fade-in-row' : ''}`}>
 						<td>{item.itemName}</td>
 						<td>${item.itemPrice}</td>
-						<td>{ (index === array.length - 1) ? <button  onClick={() => this.props.showModal('CUSTOM_ADDON_MODAL', {})}>AddOn</button> : null }</td>
-						<td><button  onClick={() => this.props.removeItemFromTicket(token, item._id, activeTicket._id)}>Remove</button></td>	 
+						<td>{ (index === array.length - 1) ? <img style={{height: 24, width: 24, cursor: 'pointer'}}  src={'/assets/icons/greenplus.svg'} onClick={() => this.props.showModal('CUSTOM_ADDON_MODAL', {})} /> : null }</td>
+						<td><img  style={{height: 24, width: 24, cursor: 'pointer'}}  src={'/assets/icons/close.svg'} onClick={() => this.props.removeItemFromTicket(token, item._id, activeTicket._id)} /></td>	  
 					</tr>
 			)
 

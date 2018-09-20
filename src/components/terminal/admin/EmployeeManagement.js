@@ -58,7 +58,7 @@ class EmployeeManagement extends Component {
 							<td> {fullName} </td>
 							<td> {employee.phone} </td>
 							<td> {employee.email} </td>
-							<td> <div className='fireButton'> Revoke Access </div> </td>
+							<td> <img style={{height: 24, width: 24, cursor: 'pointer'}}  src={'/assets/icons/greenplus.svg'} /> </td>
 					</tr>
 				)
 			} else if (this.state.workerSearch) {
@@ -69,7 +69,7 @@ class EmployeeManagement extends Component {
 							<td> {fullName} </td>
 							<td> {employee.phone} </td>
 							<td> {employee.email} </td>
-							<td> <div className='fireButton'> Revoke Access </div> </td>
+							<td> <img style={{height: 24, width: 24, cursor: 'pointer'}}  src={'/assets/icons/greenplus.svg'} /> </td>
 						</tr>
 					)
 				}
@@ -104,25 +104,11 @@ class EmployeeManagement extends Component {
 									<td> Name </td>
 									<td> Phone </td>
 									<td> Email </td>
-									<td> 86 </td>
+									<td> Remove </td>
 								</tr>
 							</thead>
 							<tbody className='omni-table-body'>
 								{ this.state.myEmployees && this.renderEmployeeTableToDOM() }
-								<tr>
-									<td> <img className='employee-avatar-image' src='./assets/avatars/44.jpg'/> </td>
-									<td> Emily Kim</td>
-									<td> (904)-751-4123 </td>
-									<td> eK41@gmail.com </td>
-									<td> <div className='fireButton'> Revoke Access </div> </td>
-								</tr>
-								<tr>
-									<td> <img className='employee-avatar-image' src='./assets/avatars/32.jpg'/> </td>
-									<td> Adrian Chavez </td>
-									<td> (904)-751-4123 </td>
-									<td> bigmUn3y@exxon.com </td>
-									<td> <div className='fireButton'> Revoke Access </div> </td>
-								</tr>
 							</tbody>
 						</table>
 					</div>
