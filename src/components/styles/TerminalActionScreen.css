@@ -136,6 +136,10 @@ td {
 
 }
 
+.ledger-tbody td {
+	border: none;
+}
+
 .table-container {
 	flex-grow: 1;
 

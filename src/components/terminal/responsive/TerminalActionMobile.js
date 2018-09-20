@@ -216,10 +216,10 @@ class TerminalActionMobile extends Component {
 						</div>
 					</div>
 					<div className='mobile-action__header'>
-						<button style={{width: 50, height: 50, marginRight: 50}} className='mobile-action-button' onClick={() => this.props.routeToNode('/omni/terminal')}> 
+						<button style={{width: 50, height: 50, marginRight: 35}} className='mobile-action-button' onClick={() => this.props.routeToNode('/omni/terminal')}> 
 							<img src={'/assets/icons/previous.svg'} />
 						</button>
-						<img style={{width: 50, height: 50, marginLeft: 5}} src={'/assets/TRANSLOGOthin.svg'} />
+						<img style={{width: 50, height: 50}} src={'/assets/TRANSLOGOthin.svg'} />
 						<div className='mobile-action__header__action-buttons-container'>
 							<button 
 								style={{width: 50, height: 50, marginRight: 5}}
