@@ -20,7 +20,7 @@ const mapStateToProps = state => {
 	const { isAuthenticated, instanceType, token } = state.authReducer
 	const { modalType, modalProps } = state.modalReducer
 	const { shoppingCart } = state.shoppingCartReducer
-	return { token, modalType, modalProps, shoppingCart }
+	return { token, modalType, isAuthenticated, instanceType, modalProps, shoppingCart }
 }
 
 class ConfirmCartModal extends Component {
