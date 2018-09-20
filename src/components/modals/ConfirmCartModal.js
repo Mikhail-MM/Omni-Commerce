@@ -12,16 +12,16 @@ import '../styles/ProductPage.css'
 
 const mapDispatchToProps = dispatch => ({
 	hideModal: () => dispatch(hideModal()),
+	showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps)),
 	pushItemIntoShoppingCart: (token, itemID, requestedAmount, existingCountInCart) => dispatch(pushItemIntoShoppingCart(token, itemID, requestedAmount, existingCountInCart)),
 })
 
 const mapStateToProps = state => {
-	const { token } = state.authReducer
+	const { isAuthenticated, instanceType, token } = state.authReducer
 	const { modalType, modalProps } = state.modalReducer
 	const { shoppingCart } = state.shoppingCartReducer
-	return { token, modalType, modalProps, shoppingCart }
+	return { token, modalType, isAuthenticated, instanceType, modalProps, shoppingCart }
 }
-
 class ConfirmCartModal extends Component {
 	state = {
 		requestedAmount: 1,
