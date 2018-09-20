@@ -1,6 +1,14 @@
 .analytics-table {
 	width: 100%;
 }
+.analytics-table tbody tr:hover{
+	color: white;
+	cursor: pointer;
+}
+.analytics-table tbody tr:hover > td {
+	background-color: rgba(0,0,0,0.5);
+	color: white;
+}
 .admin-page-wrapper{
 	display: flex;
 	flex-direction: column;
