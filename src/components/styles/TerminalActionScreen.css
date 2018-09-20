@@ -99,12 +99,19 @@ td {
 .ledger-table th, .ledger-table td {
 	border: 0.5px solid white;
 }
+.ledger-row{
+	text-align: center;
+}
+.ledger-row:hover {
+	background-color: rgba(255,255,255,0.9);
+	color: black;
+}
 .ledger-table__header {
 	width: 100%;
 	text-align: center;
-
+	color: black;
+	background-color: rgba(255,255,255,0.85);
 }
-
 .fade-in-row {
 	opacity: 0;
 	animation: fadeInTableRow 0.5s;
@@ -164,6 +171,7 @@ td {
 .pricing-container {
 	display: flex;
 	flex-direction: column;
+	width: 150px;
 }
 
 .checkout-button {
@@ -276,6 +284,7 @@ td {
  	transform: translateX(100%);
 
  	background-color: rgb(42, 42, 42);
+ 	z-index: 100;
  }
 
  .activeSidebarMenu {
@@ -301,6 +310,9 @@ td {
  	padding: 5px 5px;
  	outline: none;
  	border: none;
+ }
+  .mobile-action-button:hover {
+ 	background-color: rgb(66, 64, 244);
  }
 
  .mobile-action__body {

@@ -566,7 +566,6 @@ h1, h2, h3, h4, h5, h6 {
 .account-control {
   display: flex;
   align-items: center;
-  margin-right: 25px;
 }
 .my-store-button {
   display: flex;
@@ -790,3 +789,9 @@ h1, h2, h3, h4, h5, h6 {
   border: 3px solid white;
 }
 
+@media (max-height: 720px) {
+  .featured-items__header-container {
+    text-align: center;
+    padding: 0;
+  }
+}

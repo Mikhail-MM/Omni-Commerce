@@ -123,8 +123,8 @@ class TerminalActionScreen extends Component {
 					<tr key={item._id} className={`ledger-row${(index === array.length - 1) ? ' fade-in-row' : ''}`}>
 						<td>{item.itemName}</td>
 						<td>${item.itemPrice}</td>
-						<td>{ (index === array.length - 1) ? <button  onClick={() => this.props.showModal('CUSTOM_ADDON_MODAL', {})}>AddOn</button> : null }</td>
-						<td><button  onClick={() => this.props.removeItemFromTicket(token, item._id, activeTicket._id)}>Remove</button></td>	 
+<td>{ (index === array.length - 1) ? <img style={{height: 24, width: 24, cursor: 'pointer'}}  src={'/assets/icons/greenplus.svg'} onClick={() => this.props.showModal('CUSTOM_ADDON_MODAL', {})} /> : null }</td>
+						<td><img  style={{height: 24, width: 24, cursor: 'pointer'}}  src={'/assets/icons/close.svg'} onClick={() => this.props.removeItemFromTicket(token, item._id, activeTicket._id)} /></td>	  
 					</tr>
 			)
 
@@ -136,9 +136,18 @@ class TerminalActionScreen extends Component {
 
 		return(
 			<div className='pricing-container'>
-				<div> {`SubTotal: ${activeTicket.subTotal}`} </div>
-				<div> {`Tax: ${activeTicket.tax}`} </div>
-				<div> {`Total: ${activeTicket.total}`} </div>
+				<div style={{display: 'flex', justifyContent: 'space-between'}}> 
+					<span> Subtotal: </span> 
+					<span>{`$${activeTicket.subTotal}`} </span> 
+				</div>
+				<div style={{display: 'flex', justifyContent: 'space-between'}}> 
+					<span> Tax: </span> 
+					<span>{`$${activeTicket.tax}`} </span> 
+				</div>
+				<div style={{display: 'flex', justifyContent: 'space-between'}}> 
+					<span> Total: </span> 
+					<span>{`$${activeTicket.total}`} </span> 
+				</div>
 			</div>
 		)
 	}
