@@ -58,7 +58,7 @@ class EmployeeManagement extends Component {
 							<td> {fullName} </td>
 							<td> {employee.phone} </td>
 							<td> {employee.email} </td>
-							<td> <img style={{height: 24, width: 24, cursor: 'pointer'}}  src={'/assets/icons/greenplus.svg'} /> </td>
+							<td> <img style={{height: 24, width: 24, cursor: 'pointer'}}  src={'/assets/icons/close.svg'} /> </td>
 					</tr>
 				)
 			} else if (this.state.workerSearch) {
@@ -69,7 +69,7 @@ class EmployeeManagement extends Component {
 							<td> {fullName} </td>
 							<td> {employee.phone} </td>
 							<td> {employee.email} </td>
-							<td> <img style={{height: 24, width: 24, cursor: 'pointer'}}  src={'/assets/icons/greenplus.svg'} /> </td>
+							<td> <img style={{height: 24, width: 24, cursor: 'pointer'}}  src={'/assets/icons/close.svg'} /> </td>
 						</tr>
 					)
 				}

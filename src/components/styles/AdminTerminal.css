@@ -1,3 +1,6 @@
+.analytics-table {
+	width: 100%;
+}
 .admin-page-wrapper{
 	display: flex;
 	flex-direction: column;

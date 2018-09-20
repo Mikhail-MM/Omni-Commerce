@@ -64,6 +64,8 @@ class SalesAnalyticsContainer extends Component {
 	renderChartsToDOM = () => {
 		const { salesReport, reportLoaded } = this.props
 
+		console.log(salesReport)
+		console.log(salesReport.categoryMetrics)
 		const formatCategoryPie = salesReport.categoryMetrics.map(categoryData => {
 			return {x: categoryData.dataKey, y: categoryData.dataValue}
 		})
