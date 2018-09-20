@@ -245,7 +245,7 @@ class AuthenticationForm extends Component {
 									<label> Password </label>
 									<input
 										className='form-input' 
-										type='text'
+										type='password'
 										value={this.state.password}
 										onChange={(e) => this.handleChange('password', e.target.value)}
 									/>
@@ -254,7 +254,7 @@ class AuthenticationForm extends Component {
 									<label> Confirm Password </label>
 									<input
 										className='form-input' 
-										type='text'
+										type='password'
 										value={this.state.confpass}
 										onChange={(e) => this.handleChange('confpass', e.target.value)}
 									/>
