@@ -4,7 +4,7 @@ import { throttle } from 'underscore'
 
 import Modal from 'react-modal';
 import { modalStyleRound, modalStyleRoundMobile, TagMap } from '../config';
-import { hideModal } from '../../actions/modals';
+import { showModal, hideModal } from '../../actions/modals';
  
 import { pushItemIntoShoppingCart } from '../../actions/shopping-cart'
 
@@ -78,7 +78,7 @@ class ConfirmCartModal extends Component {
 	}
 
 	render() {
-		const { item } = this.props
+		const { isAuthenticated, instanceType, item } = this.props
 		return(
 			<div>
 				<Modal
