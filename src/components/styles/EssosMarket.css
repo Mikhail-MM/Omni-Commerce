@@ -557,6 +557,11 @@ h1, h2, h3, h4, h5, h6 {
   color: rgb(255, 255, 255, 0.75);
   margin: 0;
 }
+.store-link:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 .item-wishlist-counter {
   font-size: .75em;
   padding-left: 8px;

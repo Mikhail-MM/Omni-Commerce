@@ -129,6 +129,8 @@ class AdminTerminal extends Component {
 							<img src={'/assets/icons/cash-register.svg'} onClick={() => this.props.route('/omni/terminal')} style={{width: 50, height:50, padding: '5px 5px', cursor: 'pointer'}} />
 							<img src={'/assets/TRANSLOGOthin.svg'} style={{width: 50, height:50}} />
 							<img src={'/assets/icons/bell.svg'} onClick={() => this.setState(prevState => ({showOverlay: !prevState.showOverlay}))} style={{width: 50, height:50, padding: '5px 5px', cursor: 'pointer'}} />
+						</div>
+						<div className='mobile-admin__body'>
 							<AdminActionDisplayComponent />
 						</div>
 						<div className='mobile-admin__footer-navigation'>
