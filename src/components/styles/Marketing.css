@@ -476,7 +476,8 @@
 
 	}
 	.feature-blurb {
-		padding: 0;
+		padding-top: 0;
+		padding-bottom: 35px;
 	}
 }
 
