@@ -407,14 +407,14 @@
 	justify-content: space-between;
 	align-items: center;
 	width: 100%;
-	padding: 7.5% 7.5%;
+	padding: 75px 10%;
 	height: auto;
 	transition: background-color 0.8s ease-out, color 0.8s ease-out;
 }
 
 .feature-blurb {
 	width: 500px;
-	height: 500px;
+	height: auto;
 	color: white;
 }
 .feature-blurb__text {
@@ -423,7 +423,8 @@
 	justify-content: space-around;
 }
 .feature-blurb__image {
-	width: 700px;
+	width: 100%;
+	height: auto;
 }
 .blurb-center-wrapper {
 	display: flex;

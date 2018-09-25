@@ -129,7 +129,7 @@ class  Marketing extends Component {
 						<h2 style={{textAlign: 'center'}}> Payments Made Easy! </h2>
 						<p> Omni is an E-Commerce platform aimed at empowering small businesses and individual entrepreneurs by facilitating the ability to easily accept cash and credit card payments. </p>  
 					</div>
-					<div style={{width: '100%', height: 'auto', backgroundColor: '#333'}} ref={el => this.stickyElContainer = el}>
+					<div style={{width: '100%', height: 'auto', backgroundColor: '#313C45'}} ref={el => this.stickyElContainer = el}>
 						<MediaQuery minWidth={2} maxWidth={798}>
                  				<div className={`icon-revealer-container${(this.state.manageSticky) ? ' shrink-sticky' : ''}`} ref={el => this.stickyElMobile = el}>
                  					<div className='icon-revealer-row'>
@@ -201,7 +201,7 @@ class  Marketing extends Component {
 						<div className='feature-set-container'>
 							<div ref={el => this.ft1 = el } className={`feature-padded-column${(this.state.activeFeature === 'ft1') ? ' activate-feature' : ''}`} >
 								<div className='blurb-center-wrapper'>
-									<h2> Point of Sale Software </h2>
+									<h2 style={{padding: '25px 0'}}> Point of Sale Software </h2>
 								</div>
 								<div className='feature-blurb__image'>
 									<img 
@@ -217,13 +217,14 @@ class  Marketing extends Component {
 								</div>
 							</div>
 							<div ref={el => this.ft2 = el } className={`feature-padded-column reverse${(this.state.activeFeature === 'ft2') ? ' activate-feature' : ''}`}>
-								
-								<div className='feature-blurb' style={{height: 'auto', width: '75%'}}>
+								<div>
+									<h2 style={{padding: '25px 0'}}> Employee Management </h2>
+								</div>
+								<div className='feature-blurb' style={{height: 'auto', width: '100%'}}>
 									<img src={'/assets/screen-emps.png'} onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/screen-emps.png'})}/>
 								</div>
 								<div className='feature-blurb feature-blurb__text' style={{height: 'auto'}}>
 									<div>
-										<h2 style={{textAlign: 'center'}}> Employee Management </h2>
 										<p> Employee management has never been easier! Keep track of hiring and individual performance with our Admin dashboard. Live feed ensures that you're always kept up-to-date with the minute-to-minute details of running your business without actually having to be there.</p>
 									</div>
 								</div>
