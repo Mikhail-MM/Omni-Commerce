@@ -201,7 +201,7 @@ class  Marketing extends Component {
 						<div className='feature-set-container'>
 							<div ref={el => this.ft1 = el } className={`feature-padded-column${(this.state.activeFeature === 'ft1') ? ' activate-feature' : ''}`} >
 								<div className='blurb-center-wrapper'>
-									<h2 style={{padding: '35px 0'}}> Point of Sale Software </h2>
+									<h2 style={{padding: '35px 0'}}> Point of Sale </h2>
 								</div>
 								<div className='feature-blurb__image'>
 									<img 
