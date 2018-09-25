@@ -129,7 +129,7 @@ class  Marketing extends Component {
 						<h2 style={{textAlign: 'center'}}> Payments Made Easy! </h2>
 						<p> Omni is an E-Commerce platform aimed at empowering small businesses and individual entrepreneurs by facilitating the ability to easily accept cash and credit card payments. </p>  
 					</div>
-					<div style={{width: '100%', height: 'auto', backgroundColor: '#F8D583'}} ref={el => this.stickyElContainer = el}>
+					<div style={{width: '100%', height: 'auto', backgroundColor: '#AE9DCB'}} ref={el => this.stickyElContainer = el}>
 						<MediaQuery minWidth={2} maxWidth={798}>
                  				<div className={`icon-revealer-container${(this.state.manageSticky) ? ' shrink-sticky' : ''}`} ref={el => this.stickyElMobile = el}>
                  					<div className='icon-revealer-row'>
@@ -201,7 +201,7 @@ class  Marketing extends Component {
 						<div className='feature-set-container'>
 							<div ref={el => this.ft1 = el } className={`feature-padded-column${(this.state.activeFeature === 'ft1') ? ' activate-feature' : ''}`} >
 								<div className='blurb-center-wrapper'>
-									<h2 style={{padding: '25px 0'}}> Point of Sale Software </h2>
+									<h2 style={{padding: '35px 0'}}> Point of Sale Software </h2>
 								</div>
 								<div className='feature-blurb__image'>
 									<img 
@@ -218,7 +218,7 @@ class  Marketing extends Component {
 							</div>
 							<div ref={el => this.ft2 = el } className={`feature-padded-column reverse${(this.state.activeFeature === 'ft2') ? ' activate-feature' : ''}`}>
 								<div>
-									<h2 style={{padding: '25px 0'}}> Employee Management </h2>
+									<h2 style={{padding: '35px 0'}}> Employee Management </h2>
 								</div>
 								<div className='feature-blurb' style={{height: 'auto', width: '100%'}}>
 									<img src={'/assets/screen-emps.png'} onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/screen-emps.png'})}/>

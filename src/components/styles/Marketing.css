@@ -388,6 +388,7 @@
 	align-items: center;
 	width: 100%;
 	height: auto;
+	color: rgba(0,0,0,0.5);
 
 	font-family: "Ubuntu", sans-serif;
 }
@@ -410,7 +411,7 @@
 	padding-top: 0;
 	padding-left: 10%;
 	padding-right: 10%;
-	padding-bottom: 100px;
+	padding-bottom: 70px;
 	height: auto;
 	transition: background-color 0.8s ease-out, color 0.8s ease-out;
 }
@@ -438,7 +439,7 @@
 	text-align: center;
 }
 .activate-feature {
-	background-color:/* #AA3939  #C196C7 */ rgba(170, 57, 57, 0.90);
+	background-color:/* #AA3939  #C196C7 */ rgba(170, 57, 57, 0.85);
 }
 
 .activate-feature .feature-blurb {
