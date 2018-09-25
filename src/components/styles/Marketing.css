@@ -462,9 +462,6 @@
 }
 
 @media (max-width: 796px) {
-	.feature-blurb .feature-blurb__text {
-		padding: 0;
-	}
 	.informatic-blurb {
 		display: flex;
 		flex-direction: column;
@@ -477,6 +474,9 @@
 
 		transition: 0.8s width ease-out;
 
+	}
+	.feature-blurb {
+		padding: 0;
 	}
 }
 
