@@ -87,7 +87,7 @@ app.use('/*', function(req, res, next) {
   next();
 });
 
-console.log("Linking to static firectory")
+console.log("Linking to static directory")
 app.use(express.static(path.join(__dirname, '/../../build')));
 
 

@@ -434,7 +434,7 @@
 	text-align: center;
 }
 .activate-feature {
-	background-color:/* #AA3939 */ #C196C7;
+	background-color:/* #AA3939  #C196C7 */ rgba(170, 57, 57, 0.75);
 }
 
 .activate-feature .feature-blurb {

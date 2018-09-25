@@ -129,7 +129,7 @@ class  Marketing extends Component {
 						<h2 style={{textAlign: 'center'}}> Payments Made Easy! </h2>
 						<p> Omni is an E-Commerce platform aimed at empowering small businesses and individual entrepreneurs by facilitating the ability to easily accept cash and credit card payments. </p>  
 					</div>
-					<div style={{width: '100%', height: 'auto', backgroundColor: '#AA3939'}} ref={el => this.stickyElContainer = el}>
+					<div style={{width: '100%', height: 'auto', backgroundColor: '#333'}} ref={el => this.stickyElContainer = el}>
 						<MediaQuery minWidth={2} maxWidth={798}>
                  				<div className={`icon-revealer-container${(this.state.manageSticky) ? ' shrink-sticky' : ''}`} ref={el => this.stickyElMobile = el}>
                  					<div className='icon-revealer-row'>
