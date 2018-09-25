@@ -460,7 +460,11 @@
 	width: 700px;
 	height: 500px;
 }
-
+@media (max-width: 1400px) {
+	.feature-padded-row {
+		flex-direction: column;
+	}
+}
 @media (max-width: 796px) {
 	.informatic-blurb {
 		display: flex;
@@ -505,9 +509,6 @@
 	.feature-blurb {
 		width: 100%;
 		height: auto;
-	}
-	.feature-padded-row {
-		flex-direction: column;
 	}
 	.blurb-center-wrapper {
 		text-align: center;
