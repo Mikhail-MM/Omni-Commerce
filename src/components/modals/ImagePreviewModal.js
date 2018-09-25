@@ -44,7 +44,7 @@ class ImagePreviewModal extends Component {
 				contentLabel="Example Modal"
 				overlayClassName="Overlay"
 				>
-				<div style={{width: (window.innerWidth / 2), height: 'auto'}}>
+				<div style={{width: '100%', height: 'auto'}}>
 					<img src={this.props.imageSourceString} />
 				</div>
 				<div className='modal-corner-hide' onClick={() => this.props.hideModal()}> 
