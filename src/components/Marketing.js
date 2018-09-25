@@ -200,18 +200,18 @@ class  Marketing extends Component {
                  			</MediaQuery>
 						<div className='feature-set-container'>
 							<div ref={el => this.ft1 = el } className={`feature-padded-row${(this.state.activeFeature === 'ft1') ? ' activate-feature' : ''}`} >
-								<div className='feature-blurb feature-blurb__text'>
-									<div className='blurb-center-wrapper'>
-										<h2> Point of Sale Software </h2>
-										<p> We provide flexible payment solutions for high volume businesses in retail and hospitality. No expensive hardware - our applications are compatible with all devices that can connect to the internet. </p>
-										<p> Sign up for an account to build your store profile and accept payments securely. We utilize <a style={{textDecoration:'none'}}href='https://stripe.com'> Stripe </a> to ensure your information is secure from attackers. We use Stripe to securely process payments from any major credit card provider! </p>
-									</div>
+								<div className='blurb-center-wrapper'>
+									<h2> Point of Sale Software </h2>
 								</div>
 								<div className='feature-blurb__image'>
 									<img 
 										src={'/assets/pos.jpg'}
 										onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/pos.jpg'})}
 									/>
+								</div>
+								<div className='feature-blurb feature-blurb__text'>
+										<p> We provide flexible payment solutions for high volume businesses in retail and hospitality. No expensive hardware - our applications are compatible with all devices that can connect to the internet. </p>
+										<p> Sign up for an account to build your store profile and accept payments securely. We utilize <a style={{textDecoration:'none'}}href='https://stripe.com'> Stripe </a> to ensure your information is secure from attackers. We use Stripe to securely process payments from any major credit card provider! </p>
 								</div>
 							</div>
 							<div ref={el => this.ft2 = el } className={`feature-padded-column reverse${(this.state.activeFeature === 'ft2') ? ' activate-feature' : ''}`}>
