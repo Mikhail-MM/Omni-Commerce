@@ -388,7 +388,7 @@
 	align-items: center;
 	width: 100%;
 	height: auto;
-	color: rgba(0,0,0,0.5);
+	color: rgba(255,255,255,0.75);
 
 	font-family: "Ubuntu", sans-serif;
 }
@@ -411,7 +411,7 @@
 	padding-top: 0;
 	padding-left: 10%;
 	padding-right: 10%;
-	padding-bottom: 70px;
+	padding-bottom: 35px;
 	height: auto;
 	transition: background-color 0.8s ease-out, color 0.8s ease-out;
 }
@@ -425,6 +425,7 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
+	padding-top: 35px;
 }
 .feature-blurb__image {
 	width: 100%;
@@ -442,7 +443,7 @@
 	background-color:/* #AA3939  #C196C7 */ rgba(170, 57, 57, 0.85);
 }
 
-.activate-feature .feature-blurb {
+.activate-feature {
 	color: #F3FBBC;
 }
 
