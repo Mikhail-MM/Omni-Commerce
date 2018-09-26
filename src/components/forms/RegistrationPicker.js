@@ -62,7 +62,7 @@ class RegistrationPicker extends Component {
 							<h4 className='fade-in-text'> Register to use our Point-of-Sale management service for your retail storefront. Accept cash and card payments, manage employees, and gain access to valuable statistics and analytics. </h4>
 						}
 					</div>
-					{(this.state.renderButton) && <button className='sign-in-button' onClick={() => this.handleRegistrationInitiationRequest()}> Begin Registation </button> }
+					{(this.state.renderButton) && <button className='sign-in-button' onClick={() => this.handleRegistrationInitiationRequest()} style={{opacity: 0, animation: 'fadeIn 2s ease 1.5s', animationFillMode: 'forwards'}}> Begin Registation </button> }
 				</div>
 			</div>
 		)
