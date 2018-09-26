@@ -32,7 +32,7 @@ class RegistrationPicker extends Component {
 		return(
 			<div className='registration-picker-wrapper' style={{maxWidth: '100%', maxHeight: '100%'}}>
 				
-				<div className='centered-rectangle'>
+				<div className='centered-rectangle' style={{maxWidth: '100%', maxHeight: '100%'}}>
 					<div className='modal-corner-hide' onClick={() => this.props.animateFade()}> 
 						<img src={'/assets/icons/close.svg'} />
 					</div>
