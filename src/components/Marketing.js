@@ -244,7 +244,7 @@ class  Marketing extends Component {
 							</div>
 							<div ref={el => this.ft4 = el } className={`feature-padded-row${(this.state.activeFeature === 'ft4') ? ' activate-feature' : ''}`}>
 								<div className='feature-blurb feature-blurb__text'>
-									<div className='blurb-center-wrapper'>
+									<div className='blurb-center-wrapper' style={{padding: 0}}>
 										<h2> Online Marketplace </h2>
 										<p> Sell your stuff online through our marketplace! Connect with other entrepreneurs, find awesome deals, and more! </p>
 										<p> You don't have to be a brick-and-mortar business to take advantage of E-Commerce </p>

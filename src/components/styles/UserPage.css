@@ -1,3 +1,7 @@
+.user-page-wrapper {
+	height: 100%;
+	width: 100%;
+}
 .product-page-wrapper {
 	display: flex;
 	flex-direction: column;
