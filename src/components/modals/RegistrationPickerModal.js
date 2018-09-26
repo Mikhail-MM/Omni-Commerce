@@ -38,6 +38,8 @@ class RegistrationModulePickerModal extends Component {
 	throttledListener = throttle(this.handleViewportChange, 500)
 
 	animateFade = () => {
+		if (this.state.viewportWidth <= 800) return this.props.hideModal()
+
 		this.setState({
 			handleClose: true
 		})
@@ -45,7 +47,7 @@ class RegistrationModulePickerModal extends Component {
 			this.props.hideModal()
 			this.setState({
 				handleClose: false
-			})}, 2000)
+			})}, 1100)
 	}
 
 	render(){
