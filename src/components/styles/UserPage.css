@@ -26,7 +26,7 @@
 	align-items: center;
 
 	width: 400px;
-	height: 100%;
+	height: auto;
 }
 .user-menu-category-button {
 	width: auto;
@@ -66,7 +66,7 @@
 	justify-content: flex-end;
 
 	width: calc(100% - 400px);
-	height: 100%;
+	height: auto;
 }
 
 .user-content-wrapper{
