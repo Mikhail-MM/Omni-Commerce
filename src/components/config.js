@@ -33,7 +33,9 @@ export const modalStyleanim = {
 			transform: 'translate(-50%, -50%)',
 			animation: 'topFadein 1s ease',
 			animationFillMode: 'forwards',
-			padding: 0
+			padding: 0,
+			maxHeight: '100%',
+			maxWidth: '100%',
 		}
 };
 export const modalStyleFadeout = {

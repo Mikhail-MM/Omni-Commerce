@@ -30,7 +30,7 @@ class RegistrationPicker extends Component {
 	// TODO: wrap in a composing HOC for all animateables
 	render() {
 		return(
-			<div className='registration-picker-wrapper'>
+			<div className='registration-picker-wrapper' style={{maxWidth: '100%', maxHeight: '100%'}}>
 				
 				<div className='centered-rectangle'>
 					<div className='modal-corner-hide' onClick={() => this.props.animateFade()}> 
@@ -62,7 +62,7 @@ class RegistrationPicker extends Component {
 							<h4 className='fade-in-text'> Register to use our Point-of-Sale management service for your retail storefront. Accept cash and card payments, manage employees, and gain access to valuable statistics and analytics. </h4>
 						}
 					</div>
-					{(this.state.renderButton) && <button className='fade-in-button' onClick={() => this.handleRegistrationInitiationRequest()}> Begin Registation </button> }
+					{(this.state.renderButton) && <button className='sign-in-button' onClick={() => this.handleRegistrationInitiationRequest()}> Begin Registation </button> }
 				</div>
 			</div>
 		)

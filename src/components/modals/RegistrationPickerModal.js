@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { throttle } from 'underscore'
 
 import Modal from 'react-modal';
-import { modalStyle, modalStyleanim, modalStyleFadeout } from '../config';
+import { modalStyle, modalStyleanim, modalStyleFadeout, fullScreenMobileModal } from '../config';
 import { hideModal } from '../../actions/modals';
 
 import RegistrationPicker from '../forms/RegistrationPicker'
@@ -16,7 +17,25 @@ const mapDispatchToProps = dispatch => ({
 })
 
 class RegistrationModulePickerModal extends Component {
-	state = { handleClose: false }
+	state = { 
+		handleClose: false, 
+		viewportWidth: window.innerWidth
+	}
+
+	componentDidMount() {
+		window.addEventListener('resize', this.throttledListener)
+	}
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.throttledListener)
+	}
+	
+	handleViewportChange = (event) => {
+		this.setState({
+			viewportWidth: event.target.innerWidth
+		})
+	}
+
+	throttledListener = throttle(this.handleViewportChange, 500)
 
 	animateFade = () => {
 		this.setState({
@@ -34,7 +53,7 @@ class RegistrationModulePickerModal extends Component {
 		<div>
 			<Modal
 				isOpen={this.props.modalType === 'REGISTRATION_MODULE_PICKER'}
-				style={(this.state.handleClose) ? modalStyleFadeout : modalStyleanim}
+				style={(this.state.viewportWidth <= 800) ? fullScreenMobileModal : (this.state.handleClose) ? modalStyleFadeout : modalStyleanim }
 				contentLabel="Example Modal"
 				overlayClassName="Overlay"
 				>
