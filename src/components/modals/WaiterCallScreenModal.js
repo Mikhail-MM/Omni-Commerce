@@ -57,6 +57,8 @@ const WaiterCallScreenModal = props => {
 				style={modalStyle}
 				contentLabel="Employee Manifest"
 				overlayClassName="Overlay"
+				shouldCloseOnOverlayClick={true}
+				onRequestClose={() => props.hideModal()}
 				>
 				<WaiterCallScreenMenu token={token} loggedInUsers={loggedInUsers} createNewTicket={createNewTicket} hideModal={hideModal}/>
 				<button onClick={() => hideModal()}> Cancel </button>

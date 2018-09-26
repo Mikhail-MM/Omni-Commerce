@@ -44,6 +44,8 @@ const CartInvalidationModal = props => {
 				style={modalStyle}
 				contentLabel="Example Modal"
 				overlayClassName="Overlay"
+				shouldCloseOnOverlayClick={true}
+				onRequestClose={() => props.hideModal()}
 				>
 				<div>
 					<h4> Some items were removed from your shopping cart. The seller does not have sufficient stock to fulfill your entire order. </h4>

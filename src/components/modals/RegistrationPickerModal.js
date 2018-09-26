@@ -58,6 +58,8 @@ class RegistrationModulePickerModal extends Component {
 				style={(this.state.viewportWidth <= 800) ? fullScreenMobileModal : (this.state.handleClose) ? modalStyleFadeout : modalStyleanim }
 				contentLabel="Example Modal"
 				overlayClassName="Overlay"
+				shouldCloseOnOverlayClick={true}
+				onRequestClose={() => this.props.hideModal()}
 				>
 				<RegistrationPicker animateFade={this.animateFade}/>
 

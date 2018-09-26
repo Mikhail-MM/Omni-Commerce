@@ -23,6 +23,8 @@ const UploadSuccessModal = props => {
 				style={modalStyle}
 				contentLabel="Example Modal"
 				overlayClassName="Overlay"
+				shouldCloseOnOverlayClick={true}
+				onRequestClose={() => props.hideModal()}
 				>
 				<div>
 					<h2> Item Uploade Success, logging props in console </h2>

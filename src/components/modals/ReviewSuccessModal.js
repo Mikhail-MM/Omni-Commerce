@@ -23,6 +23,8 @@ const ReviewSuccessModal = props => {
 				style={modalStyle}
 				contentLabel="Example Modal"
 				overlayClassName="Overlay"
+				shouldCloseOnOverlayClick={true}
+				onRequestClose={() => props.hideModal()}
 				>
 					<div className='review-modal-container'>
 						<div>

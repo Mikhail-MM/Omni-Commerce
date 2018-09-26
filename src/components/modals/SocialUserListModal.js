@@ -40,6 +40,8 @@ const SocialUserListModal = props => {
 				contentLabel="Example Modal"
 				overlayClassName="Overlay"
 				htmlOpenClassName='ReactModal__Html--open'
+				shouldCloseOnOverlayClick={true}
+				onRequestClose={() => props.hideModal()}
 				>
 				<React.Fragment>
 				<div style={{textAlign: 'center', height: 'auto', padding: 25, maxHeight: 500, overflow: 'auto', maxWidth: 600}}>

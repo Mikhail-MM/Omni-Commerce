@@ -27,6 +27,8 @@ class PaymentSuccess extends Component {
 						style={modalStyle3}
 						contentLabel="Example Modal"
 						overlayClassName="Overlay"
+						shouldCloseOnOverlayClick={true}
+						onRequestClose={() => this.props.hideModal()}
 						>
 						<div style={{display: 'flex', flexDirection: 'column'}}>
 							<h4> Payment Successful! </h4>

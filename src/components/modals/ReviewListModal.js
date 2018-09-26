@@ -66,6 +66,8 @@ const ReviewListModal = props => {
 				contentLabel="Example Modal"
 				overlayClassName="Overlay"
 				htmlOpenClassName='ReactModal__Html--open'
+				shouldCloseOnOverlayClick={true}
+				onRequestClose={() => props.hideModal()}
 				>
 				<React.Fragment>
 				<div style={{textAlign: 'center', height: 'auto', maxHeight: 600, overflow: 'auto', maxWidth: 600, padding: 25}}>

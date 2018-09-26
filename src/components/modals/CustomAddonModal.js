@@ -72,6 +72,8 @@ const CustomAddonModal = props => {
 				style={modalStyle}
 				contentLabel="Example Modal"
 				overlayClassName="Overlay"
+				shouldCloseOnOverlayClick={true}
+				onRequestClose={() => props.hideModal()}
 				>
 
 				<AddCustomAddonForm 

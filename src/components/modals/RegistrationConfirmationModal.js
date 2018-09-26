@@ -27,6 +27,8 @@ const RegistrationConfirmationModal = props => {
 				contentLabel="Example Modal"
 				overlayClassName="Overlay"
 				htmlOpenClassName='ReactModal__Html--open'
+				shouldCloseOnOverlayClick={true}
+				onRequestClose={() => props.hideModal()}
 				>
 				<div>
 					{(props.mode === 'omni-child') ? 

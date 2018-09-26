@@ -86,6 +86,8 @@ class ConfirmCartModal extends Component {
 					style={(this.state.viewportWidth <= 800) ? modalStyleRoundMobile : modalStyleRound}
 					contentLabel="Example Modal"
 					overlayClassName="Overlay"
+					shouldCloseOnOverlayClick={true}
+					onRequestClose={() => this.props.hideModal()}
 					>
 					<div className='item-preview-container'>
 						<div className='product-image-container'>

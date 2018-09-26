@@ -50,6 +50,8 @@ class AuthModal extends Component {
 						style={(this.state.viewportWidth <= 800) ? fullScreenMobileModal : modalStyleanim}
 						contentLabel="Example Modal"
 						overlayClassName="Overlay"
+						shouldCloseOnOverlayClick={true}
+						onRequestClose={() => this.props.hideModal()}
 						>
 						<AuthenticationForm {...this.props} />
 					</Modal>

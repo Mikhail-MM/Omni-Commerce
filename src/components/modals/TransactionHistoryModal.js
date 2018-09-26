@@ -77,6 +77,8 @@ const TransactionHistoryModal = props => {
 				style={modalStyleOverflow}
 				contentLabel="Example Modal"
 				overlayClassName="Overlay"
+				shouldCloseOnOverlayClick={true}
+				onRequestClose={() => props.hideModal()}
 				>
 
 				<TransactionHistoryDisplay 

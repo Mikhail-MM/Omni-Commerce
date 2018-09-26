@@ -43,6 +43,8 @@ const UserWishlistPreviewPreview = props => {
 				style={modalStyle}
 				contentLabel="Example Modal"
 				overlayClassName="Overlay"
+				shouldCloseOnOverlayClick={true}
+				onRequestClose={() => props.hideModal()}
 				>
 
 				<div style={{textAlign: 'center'}}>

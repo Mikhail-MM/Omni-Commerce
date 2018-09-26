@@ -105,6 +105,8 @@ class OmniProfileModificationModal extends Component {
 				style={modalStyle}
 				contentLabel="Example Modal"
 				overlayClassName="Overlay"
+				shouldCloseOnOverlayClick={true}
+				onRequestClose={() => this.props.hideModal()}
 				>	
 				<form className='essos-profile-edit-form' onSubmit={(e) => this.handleSubmit(e)}>
 					<div className='avatar-selection-container'>

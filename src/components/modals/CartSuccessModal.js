@@ -26,6 +26,8 @@ const CartSuccessModal = props => {
 				style={modalStyle}
 				contentLabel="Example Modal"
 				overlayClassName="Overlay"
+				shouldCloseOnOverlayClick={true}
+				onRequestClose={() => this.props.hideModal()}
 				>
 
 				<div>

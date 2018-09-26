@@ -43,6 +43,8 @@ class ImagePreviewModal extends Component {
 				style={Animation_Map[this.props.animationKey]}
 				contentLabel="Example Modal"
 				overlayClassName="Overlay"
+				shouldCloseOnOverlayClick={true}
+				onRequestClose={() => this.props.hideModal()}
 				>
 				<div style={{width: '100%', height: 'auto'}}>
 					<img src={this.props.imageSourceString} />

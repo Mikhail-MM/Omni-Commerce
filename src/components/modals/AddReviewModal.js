@@ -76,6 +76,8 @@ class AddReviewModal extends Component {
 				style={modalStyle}
 				contentLabel="Example Modal"
 				overlayClassName="Overlay"
+				shouldCloseOnOverlayClick={true}
+				onRequestClose={() => this.props.hideModal()}
 				>
 					<div className='product-review-container'>
 						<div className='product-review-image-preview'>
