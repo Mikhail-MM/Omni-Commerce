@@ -30,9 +30,9 @@ class RegistrationPicker extends Component {
 	// TODO: wrap in a composing HOC for all animateables
 	render() {
 		return(
-			<div className='registration-picker-wrapper' style={{maxWidth: '100%', maxHeight: '100%'}}>
+			<div className='registration-picker-wrapper'>
 				
-				<div className='centered-rectangle' style={{maxWidth: '100%', maxHeight: '100%'}}>
+				<div className='centered-rectangle'>
 					<div className='modal-corner-hide' onClick={() => this.props.animateFade()}> 
 						<img src={'/assets/icons/close.svg'} />
 					</div>
