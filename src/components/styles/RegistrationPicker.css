@@ -159,4 +159,13 @@
 		width: 50px;
 		height: 50px;
 	}
+	.reg-selection-header {
+		font-size: 0.8em;
+	}
+	.centered-rectangle {
+		margin-top: 86px;
+	}
+	.fade-in-text {
+		margin: 16px 0;
+	}
 }

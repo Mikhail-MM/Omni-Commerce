@@ -36,6 +36,7 @@ export const modalStyleanim = {
 			padding: 0,
 			maxHeight: '100%',
 			maxWidth: '100%',
+			zIndex: 100
 		}
 };
 export const modalStyleFadeout = {
