@@ -6,7 +6,9 @@ exports.io = () => {
 }
 
 exports.initialize = (server) => {
-	io = sio(server, { origins: '*:*'})
+	io = sio(server, { 
+		origins: '*:*',
+	})
 
 	io.on('connection', (client) => {
 		console.log("User Connected.")
@@ -15,3 +17,7 @@ exports.initialize = (server) => {
 		})
 	})
 }
+
+/*  An interesting option, currently undoccumented in the SocketIO docs 
+	https://github.com/socketio/socket.io-client/issues/1140#issuecomment-325958737
+*/

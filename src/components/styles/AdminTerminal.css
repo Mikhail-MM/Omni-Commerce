@@ -271,6 +271,7 @@ td {
 	transform: translateY(calc(100% + 50px));
 	background-color: rgb(242, 246, 250);
 	overflow-y: auto;
+	z-index: 1000;
 }
 .mobile-notif-overlay__body {
 	padding: 0 10%;
