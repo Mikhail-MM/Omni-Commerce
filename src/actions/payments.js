@@ -71,7 +71,7 @@ export function sendStripeTokenToApi(authToken, stripeToken, transaction_id) {
 				transactionId: transaction_id,
 			}
 
-			return fetch('payments/stripe', {
+			return fetch('/payments/stripe', {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': authToken
