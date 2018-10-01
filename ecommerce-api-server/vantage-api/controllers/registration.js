@@ -45,7 +45,7 @@ module.exports.registerOmniMaster = async (req, res, next) => {
 			isMaster: true,
 			isAdmin: true,
 
-			teminalIDNumber: 1,
+			terminalIDNumber: 1,
 			employeeCounter: 2,
 
 			mongoCollectionKey: mongoCollectionKey,
@@ -60,12 +60,13 @@ module.exports.registerOmniMaster = async (req, res, next) => {
 			isAdmin: false,
 			isMaster: false,
 
-			teminalIDNumber: 0,
+			terminalIDNumber: 0,
 
 			mongoCollectionKey: mongoCollectionKey,
 
 		};
 
+	
 		const newOmniMaster = new OmniUser(userData);
 		const newOmniTerminal = new OmniUser(terminalData);
 
