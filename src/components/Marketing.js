@@ -73,12 +73,14 @@ class  Marketing extends Component {
 			})
 		}
 
-		if (this.stickyElContainer.getBoundingClientRect().top < stickyElementRef.getBoundingClientRect().top && !this.state.manageSticky) { 
+		if (this.stickyElContainer.getBoundingClientRect().top < (stickyElementRef.getBoundingClientRect().top - 50) && !this.state.manageSticky) { 
 			this.setState({
 				manageSticky: true
 			})
 		}
-		if (this.stickyElContainer.getBoundingClientRect().top === (stickyElementRef.getBoundingClientRect().top - 50) && this.state.manageSticky) {
+		// if (this.stickyElContainer.getBoundingClientRect().top === stickyElementRef.getBoundingClientRect().top - 50) is used as a trigger rule
+		// It will never be reset properly
+		if (this.stickyElContainer.getBoundingClientRect().top === stickyElementRef.getBoundingClientRect().top && this.state.manageSticky) {
 			this.setState({
 				manageSticky: false
 			})
