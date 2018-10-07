@@ -5,6 +5,7 @@
 console.log("your app..is somehow running...")
 
 const express = require('express');
+const sslRedirect = require('heroku-ssl-redirect');
 const mongoose = require('mongoose');
 
 const path = require('path');
@@ -79,6 +80,7 @@ if(app.get('env') === 'production') {
 };
 
 app.use(bodyParser.json());
+app.use(sslRedirect());
 
 app.use('/*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");

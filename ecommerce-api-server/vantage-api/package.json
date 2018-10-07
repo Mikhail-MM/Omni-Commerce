@@ -25,6 +25,7 @@
     "express": "^4.16.2",
     "glob": "^7.1.2",
     "graceful-fs": "^4.1.11",
+    "heroku-ssl-redirect": "^0.0.4",
     "jwt-simple": "^0.5.1",
     "minimatch": "^3.0.4",
     "mkdirp": "^0.5.1",
