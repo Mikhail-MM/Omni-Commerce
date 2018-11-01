@@ -94,7 +94,7 @@
 }
 .collapseNavHeader {
 	height: 60px;
-	background-color: rgba(49, 60, 69, 1.00);
+	background-color: rgba(245, 186, 54);
 }
 .moveNavHeaderAway {
 	transform: translateY(-60px);
@@ -238,7 +238,8 @@
 }
 
 .splash-intro {
-	padding: 0 7.5%;
+	padding: 120px 7.5%;
+	background-color: rgba(78, 103, 184, 0.9);
 }
 
 .icon-revealer-container {
@@ -251,7 +252,7 @@
 
 	width: 100%;
 	height: 192px;
-	background-color: rgba(64,64,64);
+	background-color: rgb(81, 91, 122);
 
 	transition: height 0.8s ease-out, top 0.2s ease-out;
 }
