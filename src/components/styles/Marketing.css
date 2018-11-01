@@ -1,3 +1,7 @@
+#root {
+	height: auto;
+}
+
 .marketing-wrapper {
 	display: flex;
 	flex-direction: column;
@@ -440,7 +444,14 @@
 	text-align: center;
 }
 .activate-feature {
-	background-color:/* #AA3939  #C196C7  rgba(170, 57, 57, 0.85) */ #f5ba36;
+	background-color:/* #AA3939  #C196C7  rgba(170, 57, 57, 0.85)   #f5ba36 */ #ae9dcb;
+}
+
+.mkt-ft {
+	background-color: rgb(170, 57, 57);
+}
+.mkf-ft {
+	background-color: #FFA15C;
 }
 
 .activate-feature,

@@ -201,7 +201,7 @@ class  Marketing extends Component {
 								</div>
                  			</MediaQuery>
 						<div className='feature-set-container'>
-							<div ref={el => this.ft1 = el } className={`feature-padded-column${(this.state.activeFeature === 'ft1') ? ' activate-feature' : ''}`} >
+							<div ref={el => this.ft1 = el } className={`mkt-ft feature-padded-column${(this.state.activeFeature === 'ft1') ? ' activate-feature' : ''}`} >
 								<div className='blurb-center-wrapper'>
 									<h2 style={{padding: '35px 0'}}> Transaction Processing </h2>
 								</div>
@@ -218,7 +218,7 @@ class  Marketing extends Component {
 									</div>
 								</div>
 							</div>
-							<div ref={el => this.ft2 = el } className={`feature-padded-column${(this.state.activeFeature === 'ft2') ? ' activate-feature' : ''}`}>
+							<div ref={el => this.ft2 = el } className={`mkf-ft feature-padded-column${(this.state.activeFeature === 'ft2') ? ' activate-feature' : ''}`}>
 								<div>
 									<h2 style={{padding: '35px 0'}}> Employee Management </h2>
 								</div>
@@ -231,7 +231,7 @@ class  Marketing extends Component {
 									</div>
 								</div>
 							</div>
-							<div ref={el => this.ft3 = el } className={`feature-padded-row reverse${(this.state.activeFeature === 'ft3') ? ' activate-feature' : ''}`}>
+							<div ref={el => this.ft3 = el } className={`mkf-ft feature-padded-row reverse${(this.state.activeFeature === 'ft3') ? ' activate-feature' : ''}`}>
 								<div className='feature-blurb__image chart-image'>
 									<img 
 										src={'/assets/stats.jpg'}
@@ -244,7 +244,7 @@ class  Marketing extends Component {
 									</div>
 								</div>
 							</div>
-							<div ref={el => this.ft4 = el } className={`feature-padded-row${(this.state.activeFeature === 'ft4') ? ' activate-feature' : ''}`}>
+							<div ref={el => this.ft4 = el } className={`mkt-ft feature-padded-row${(this.state.activeFeature === 'ft4') ? ' activate-feature' : ''}`}>
 								<div className='feature-blurb feature-blurb__text'>
 									<div className='blurb-center-wrapper' style={{padding: 0}}>
 										<h2> Online Marketplace </h2>
