@@ -50,8 +50,8 @@ class  Marketing extends Component {
 		const iconRef3 = (window.innerWidth <= 798) ? this.img3m : this.img3
 		const iconRef4 = (window.innerWidth <= 798) ? this.img4m : this.img4
 		*/
-		console.log(stickyElementRef.getBoundingClientRect().top)
-		console.log(this.stickyElContainer.getBoundingClientRect().top)
+		console.log(this.stickyElContainer.getBoundingClientRect().y)
+		console.log(stickyElementRef.getBoundingClientRect().y)
 		this.determineActiveFeature(viewportCenter, {ft1 : this.ft1.getBoundingClientRect(), ft2: this.ft2.getBoundingClientRect(), ft3: this.ft3.getBoundingClientRect(), ft4: this.ft4.getBoundingClientRect()})
 
 		if (this.uniqueCollisionFreePrevScrollTop && scrollTop > this.uniqueCollisionFreePrevScrollTop && this.state.scrollDir !== 'Scrolling Down') { 
@@ -79,7 +79,7 @@ class  Marketing extends Component {
 				manageSticky: false
 			})
 		}
-		if (this.stickyElContainer.getBoundingClientRect().y !== stickyElementRef.getBoundingClientRect().y && !this.state.manageSticky) { 
+		if (this.stickyElContainer.getBoundingClientRect().y < (stickyElementRef.getBoundingClientRect().y - 50) && !this.state.manageSticky) { 
 			this.setState({
 				manageSticky: true
 			})

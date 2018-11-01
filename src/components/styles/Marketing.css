@@ -238,7 +238,8 @@
 }
 
 .splash-intro {
-	padding: 0 7.5%;
+	padding: 120px 7.5%;
+	background-color: rgba(78, 103, 184, 0.9);
 }
 
 .icon-revealer-container {
@@ -251,7 +252,7 @@
 
 	width: 100%;
 	height: 192px;
-	background-color: rgba(64,64,64);
+	background-color: rgba(92, 89, 129);
 
 	transition: height 0.8s ease-out, top 0.2s ease-out;
 }
@@ -266,8 +267,6 @@
 
 	width: 100%;
 	height: 100%;
-
-	padding: 12px 0;
 }
 
 
@@ -480,11 +479,19 @@
 	text-align: center;
 }
 .activate-feature {
-	background-color:/* #AA3939 */ #C196C7;
+	background-color:/* #AA3939  #C196C7 */ #ae9dcb;
+}
+
+.mkt-ft {
+	background-color: rgb(170, 57, 57);
+}
+.mkf-ft {
+	background-color: #FFA15C;
 }
 
 .activate-feature .feature-blurb {
 	color: #F3FBBC;
+	text-shadow: 1px 1px 1px #aaa;
 }
 
 .chart-image {
@@ -607,4 +614,8 @@
 		margin: 0 2px;
 		font-size: 0.70em;
 	}
+}
+/* Fix blurb bounds being crushed */
+html, body, #root {
+	height: auto;
 }

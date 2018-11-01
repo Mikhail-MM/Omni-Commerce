@@ -28,16 +28,20 @@ class AuthModal extends Component {
 	}
 
 	componentDidMount() {
-		window.addEventListener('resize', throttle((event) => {
-			this.setState({viewportWidth:event.target.innerWidth})		
-		}, 500))
+		window.addEventListener('resize', this.throttledListener)
 	}
 	componentWillUnmount() {
-		window.addEventListener('resize', throttle((event) => {
-			this.setState({viewportWidth:event.target.innerWidth})		
-		}, 500))
+		window.removeEventListener('resize', this.throttledListener)
 	}
 	
+	handleViewportChange = (event) => {
+		this.setState({
+			viewportWidth: event.target.innerWidth
+		})
+	}
+
+	throttledListener = throttle(this.handleViewportChange, 500)
+
 	render() {
 		return(
 			<div>
@@ -46,6 +50,8 @@ class AuthModal extends Component {
 						style={(this.state.viewportWidth <= 800) ? fullScreenMobileModal : modalStyleanim}
 						contentLabel="Example Modal"
 						overlayClassName="Overlay"
+						shouldCloseOnOverlayClick={true}
+						onRequestClose={() => this.props.hideModal()}
 						>
 						<AuthenticationForm {...this.props} />
 					</Modal>

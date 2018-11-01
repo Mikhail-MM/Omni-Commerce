@@ -137,6 +137,10 @@ td {
 
 }
 
+.ledger-tbody td {
+	border: none;
+}
+
 .table-container {
 	flex-grow: 1;
 
@@ -167,6 +171,7 @@ td {
 	align-items: center;
 
 	height: 115px;
+	color: white;
 }
 
 .pricing-container {
@@ -255,7 +260,7 @@ td {
 
  	width: 100%;
  	height: 100%;
-
+ 	color: white;
  	min-height: 100vh;
  }
  .mobile-action__body__table-container {
