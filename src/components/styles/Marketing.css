@@ -94,7 +94,7 @@
 }
 .collapseNavHeader {
 	height: 60px;
-	background-color: rgba(245, 186, 54);
+	background-color: /* rgba(245, 186, 54) Cray Yellow */ rgba(49, 60, 69, 1.00);
 }
 .moveNavHeaderAway {
 	transform: translateY(-60px);
@@ -441,7 +441,7 @@
 	text-align: center;
 }
 .activate-feature {
-	background-color:/* #AA3939  #C196C7 */ rgba(170, 57, 57, 0.85);
+	background-color:/* #AA3939  #C196C7  rgba(170, 57, 57, 0.85) */ #f5ba36;
 }
 
 .activate-feature,
