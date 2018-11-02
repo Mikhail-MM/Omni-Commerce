@@ -248,6 +248,7 @@
 
 .icon-revealer-container {
 	display: flex;
+	z-index: 100;
 	flex-direction: column;
 	align-items: center;
 	position: -webkit-sticky;
@@ -258,12 +259,14 @@
 	height: 192px;
 	background-color: rgb(81, 91, 122);
 
-	transition: height 0.8s ease-out, top 0.2s ease-out, background-color 0.8s ease-out;
+	box-shadow: 0px 0px 0px transparent;
+	transition: height 0.8s ease-out, top 0.2s ease-out, background-color 0.8s ease-out, box-shadow 0.8s ease-out
 }
 
 .shrink-sticky {
 	height: 100px;
 	top: 0;
+	box-shadow: 0px 10px 12px rgba(0,0,0,0.15)
 }
 .icon-revealer-row {
 	display: flex;
@@ -399,7 +402,7 @@
 
 .feature-padded-row {
 	display: flex;
-	justify-content: space-between;
+	justify-content: center;
 	width: 100%;
 	padding: 35px 7.5%;
 	height: auto;
@@ -408,10 +411,12 @@
 
 .feature-padded-column {
 	display: flex;
+	position: relative;
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
 	width: 100%;
+	min-height: 600px;
 	padding-top: 0;
 	padding-left: 10%;
 	padding-right: 10%;
@@ -586,4 +591,41 @@
 		margin: 0 2px;
 		font-size: 0.70em;
 	}
+}
+
+@media (min-width: 1600px) {
+
+.feature-padded-row {
+	justify-content: flex-end;
+
+}
+
+.feature-padded-column {
+	align-items: flex-end;
+}
+
+.skewframe {
+	transition: transform .4s ease, left 0.4s ease, top 0.4s ease;
+	transform: rotate(5.3deg) skew(0.5deg);
+    box-shadow: 2px 4px 55px black;
+    position: absolute;
+    height: 400px;
+    width: auto;
+    left: -400px;
+    border: 2px solid white;
+    top: 120px;
+}
+
+.skewframe:hover {
+	transform: rotate(5.3deg) skew(0.5deg) scale(1.5);
+}
+.activate-feature > .skewframe {
+	left: 100px;
+	top: 100px;
+	transform: rotate(0deg) skew(0deg) scale(1.2);
+}
+.activate-feature > .skewframe:hover {
+	transform: rotate(5.3deg) skew(0.5deg) scale(1.5);
+}
+
 }

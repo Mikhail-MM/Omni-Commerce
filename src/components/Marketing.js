@@ -76,18 +76,17 @@ class  Marketing extends Component {
 			})
 		}
 
-		if (this.stickyElContainer.getBoundingClientRect().top < (stickyElementRef.getBoundingClientRect().top - 65) && !this.state.manageSticky) { 
+		if (this.stickyElContainer.getBoundingClientRect().top < (stickyElementRef.getBoundingClientRect().top - 50) && !this.state.manageSticky) { 
 			this.setState({
 				manageSticky: true
 			})
-		}
-		// if (this.stickyElContainer.getBoundingClientRect().top === stickyElementRef.getBoundingClientRect().top - 50) is used as a trigger rule
-		// It will never be reset properly
-		if (this.stickyElContainer.getBoundingClientRect().top === stickyElementRef.getBoundingClientRect().top && this.state.manageSticky) {
+		} else if (this.stickyElContainer.getBoundingClientRect().top === stickyElementRef.getBoundingClientRect().top && this.state.manageSticky) {
 			this.setState({
 				manageSticky: false
 			})
 		}
+		// if (this.stickyElContainer.getBoundingClientRect().top === stickyElementRef.getBoundingClientRect().top - 50) is used as a trigger rule
+		// It will never be reset properly
 
 		this.uniqueCollisionFreePrevScrollTop = scrollTop
 	}
@@ -208,7 +207,7 @@ class  Marketing extends Component {
 								<div className='blurb-center-wrapper'>
 									<h2 style={{padding: '35px 0'}}> Transaction Processing </h2>
 								</div>
-								<div className='feature-blurb__image'>
+								<div className={`feature-blurb__image${(window.innerWidth >= 1600) ? ' skewframe' : ''}`}>
 									<img 
 										src={'/assets/pos.jpg'}
 										onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/pos.jpg'})}
@@ -225,7 +224,7 @@ class  Marketing extends Component {
 								<div>
 									<h2 style={{padding: '35px 0'}}> Employee Management </h2>
 								</div>
-								<div className='feature-blurb' style={{height: 'auto', width: '100%'}}>
+								<div className={`feature-blurb ${(window.innerWidth >= 1600) ? ' skewframe' : ''}`} style={{height: '400px', width: 'auto'}}>
 									<img src={'/assets/screen-emps.png'} onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/screen-emps.png'})}/>
 								</div>
 								<div className='feature-blurb feature-blurb__text' style={{height: 'auto'}}>
@@ -234,8 +233,8 @@ class  Marketing extends Component {
 									</div>
 								</div>
 							</div>
-								<div ref={el => this.ft3 = el } className={`mkf-ft feature-padded-row reverse${(this.state.activeFeature === 'ft3') ? ' activate-feature' : ''}`}>
-								<div className='feature-blurb__image chart-image'>
+								<div ref={el => this.ft3 = el } className={`mkf-ft feature-padded-row reverse${(this.state.activeFeature === 'ft3') ? ' activate-feature' : ''}`} style={{position: 'relative', minHeight: 700}}>
+								<div className='feature-blurb__image chart-image skewframe'>
 									<img 
 										src={'/assets/stats.jpg'}
 									/>
@@ -247,7 +246,7 @@ class  Marketing extends Component {
 									</div>
 								</div>
 							</div>
-							<div ref={el => this.ft4 = el } className={`mkl-ft feature-padded-row${(this.state.activeFeature === 'ft4') ? ' activate-feature' : ''}`}>
+							<div ref={el => this.ft4 = el } className={`mkl-ft feature-padded-row${(this.state.activeFeature === 'ft4') ? ' activate-feature' : ''}`} style={{position: 'relative', minHeight: 700}}>
 								<div className='feature-blurb feature-blurb__text'>
 									<div className='blurb-center-wrapper' style={{padding: 0}}>
 										<h2> Online Marketplace </h2>
@@ -255,7 +254,7 @@ class  Marketing extends Component {
 										<p> You don't have to be a brick-and-mortar business to take advantage of E-Commerce </p>
 									</div>
 								</div>
-								<div className='feature-blurb market-image'>	
+								<div className={`feature-blurb market-image ${(window.innerWidth >= 1600) ? ' skewframe' : ''}`}>	
 									<img src={'/assets/screen-market.jpg'} onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/screen-market.jpg'})}/>
 								</div>
 							</div>
