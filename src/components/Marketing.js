@@ -80,14 +80,13 @@ class  Marketing extends Component {
 			this.setState({
 				manageSticky: true
 			})
-		}
-		// if (this.stickyElContainer.getBoundingClientRect().top === stickyElementRef.getBoundingClientRect().top - 50) is used as a trigger rule
-		// It will never be reset properly
-		if (this.stickyElContainer.getBoundingClientRect().top === stickyElementRef.getBoundingClientRect().top && this.state.manageSticky) {
+		} else if (this.stickyElContainer.getBoundingClientRect().top === stickyElementRef.getBoundingClientRect().top && this.state.manageSticky) {
 			this.setState({
 				manageSticky: false
 			})
 		}
+		// if (this.stickyElContainer.getBoundingClientRect().top === stickyElementRef.getBoundingClientRect().top - 50) is used as a trigger rule
+		// It will never be reset properly
 
 		this.uniqueCollisionFreePrevScrollTop = scrollTop
 	}
@@ -208,7 +207,7 @@ class  Marketing extends Component {
 								<div className='blurb-center-wrapper'>
 									<h2 style={{padding: '35px 0'}}> Transaction Processing </h2>
 								</div>
-								<div className='feature-blurb__image'>
+								<div className='feature-blurb__image skewframe'>
 									<img 
 										src={'/assets/pos.jpg'}
 										onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/pos.jpg'})}

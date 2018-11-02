@@ -408,10 +408,12 @@
 
 .feature-padded-column {
 	display: flex;
+	position: relative;
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
 	width: 100%;
+	min-height: 600px;
 	padding-top: 0;
 	padding-left: 10%;
 	padding-right: 10%;
@@ -586,4 +588,21 @@
 		margin: 0 2px;
 		font-size: 0.70em;
 	}
+}
+
+.skewframe {
+	transition: transform .4s ease, left 0.4s ease;
+	transform: rotate(5.3deg) skew(0.5deg);
+    box-shadow: 2px 4px 55px black;
+    position: absolute;
+    height: 400px;
+    width: 800px;
+    left: -400px;
+    border: 2px solid white;
+    top: 100px;
+}
+
+.activate-feature > .skewframe {
+	left: 400px;
+	transform: rotate(0deg) skew(0deg) scale(1.2);
 }
