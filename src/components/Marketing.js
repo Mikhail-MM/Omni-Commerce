@@ -31,7 +31,10 @@ class  Marketing extends Component {
 
 	uniqueCollisionFreePrevScrollTop = null
 
-	determineActiveFeature = (viewportCenter, objectOfVerticallyStackedRows) => {
+	determineActiveFeature = (viewportCenter, objectOfVerticallyStackedRows, stickyBarRef) => {
+		if ((stickyBarRef.top <= viewportCenter) && (stickyBarRef.bottom >= viewportCenter)) return this.setState({
+				activeFeature: 'none'
+			})
 		Object.keys(objectOfVerticallyStackedRows).forEach(featureKey => {
 			const domRECT = objectOfVerticallyStackedRows[featureKey]
 			if ((domRECT.top <= viewportCenter) && (domRECT.bottom >= viewportCenter)) return this.setState({
@@ -45,7 +48,7 @@ class  Marketing extends Component {
 		let viewportCenter = (window.innerHeight / 2)
 		const stickyElementRef = (window.innerWidth <= 798) ? this.stickyElMobile : this.stickyEl
 
-		this.determineActiveFeature(viewportCenter, {ft1 : this.ft1.getBoundingClientRect(), ft2: this.ft2.getBoundingClientRect(), ft3: this.ft3.getBoundingClientRect(), ft4: this.ft4.getBoundingClientRect()})
+		this.determineActiveFeature(viewportCenter, {ft1 : this.ft1.getBoundingClientRect(), ft2: this.ft2.getBoundingClientRect(), ft3: this.ft3.getBoundingClientRect(), ft4: this.ft4.getBoundingClientRect()}, stickyElementRef.getBoundingClientRect())
 
 		if (this.uniqueCollisionFreePrevScrollTop && scrollTop > this.uniqueCollisionFreePrevScrollTop && this.state.scrollDir !== 'Scrolling Down') { 
 			this.setState({
@@ -201,6 +204,23 @@ class  Marketing extends Component {
 								</div>
                  			</MediaQuery>
 						<div className='feature-set-container'>
+							<div ref={el => this.ft1 = el } className={`mkt-ft feature-padded-column${(this.state.activeFeature === 'ft1') ? ' activate-feature' : ''}`} >
+								<div className='blurb-center-wrapper'>
+									<h2 style={{padding: '35px 0'}}> Transaction Processing </h2>
+								</div>
+								<div className='feature-blurb__image'>
+									<img 
+										src={'/assets/pos.jpg'}
+										onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/pos.jpg'})}
+									/>
+								</div>
+								<div className='feature-blurb feature-blurb__text'>
+									<div className='blurb-center-wrapper'>
+										<p> We provide flexible payment solutions for high volume businesses in retail and hospitality. No expensive hardware - our applications are compatible with all devices that can connect to the internet. </p>
+										<p> Sign up for an account to build your store profile and accept payments securely. We utilize <a style={{textDecoration:'none'}}href='https://stripe.com'> Stripe </a> to ensure your information is secure from attackers. We use Stripe to securely process payments from any major credit card provider! </p>
+									</div>
+								</div>
+							</div>
 							<div ref={el => this.ft2 = el } className={`mkv-ft feature-padded-column${(this.state.activeFeature === 'ft2') ? ' activate-feature' : ''}`}>
 								<div>
 									<h2 style={{padding: '35px 0'}}> Employee Management </h2>
@@ -224,23 +244,6 @@ class  Marketing extends Component {
 									<div className='blurb-center-wrapper'>
 										<h2> Metrics & Sales Reporting </h2>
 										<p> Evaluate the health of your business with detailed sales reports sent to your account, accessible anywhere. See your top performers, best selling products, and sales trends with the push of a button. Aggregate business performance over time to track gross sales against cost. </p>
-									</div>
-								</div>
-							</div>
-							<div ref={el => this.ft1 = el } className={`mkt-ft feature-padded-column${(this.state.activeFeature === 'ft1') ? ' activate-feature' : ''}`} >
-								<div className='blurb-center-wrapper'>
-									<h2 style={{padding: '35px 0'}}> Transaction Processing </h2>
-								</div>
-								<div className='feature-blurb__image'>
-									<img 
-										src={'/assets/pos.jpg'}
-										onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/pos.jpg'})}
-									/>
-								</div>
-								<div className='feature-blurb feature-blurb__text'>
-									<div className='blurb-center-wrapper'>
-										<p> We provide flexible payment solutions for high volume businesses in retail and hospitality. No expensive hardware - our applications are compatible with all devices that can connect to the internet. </p>
-										<p> Sign up for an account to build your store profile and accept payments securely. We utilize <a style={{textDecoration:'none'}}href='https://stripe.com'> Stripe </a> to ensure your information is secure from attackers. We use Stripe to securely process payments from any major credit card provider! </p>
 									</div>
 								</div>
 							</div>
