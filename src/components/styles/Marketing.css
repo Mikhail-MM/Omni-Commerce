@@ -243,7 +243,7 @@
 
 .splash-intro {
 	padding: 120px 7.5%;
-	background-color: rgba(78, 103, 184, 0.9);
+	background-color: rgba(78, 103, 184, 1);
 }
 
 .icon-revealer-container {
@@ -258,7 +258,11 @@
 	height: 192px;
 	background-color: rgb(81, 91, 122);
 
-	transition: height 0.8s ease-out, top 0.2s ease-out;
+	transition: height 0.8s ease-out, top 0.2s ease-out, background-color 0.8s ease-out;
+}
+
+.shrink-sticky {
+	background-color: rgba(78, 103, 184, 1);
 }
 
 .shrink-sticky {
@@ -449,6 +453,9 @@
 
 .mkt-ft {
 	background-color: rgb(170, 57, 57);
+}
+.mkv-ft {
+	background-color: #ae9dcb;
 }
 .mkf-ft {
 	background-color: #FFA15C;

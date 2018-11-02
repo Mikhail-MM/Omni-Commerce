@@ -201,6 +201,32 @@ class  Marketing extends Component {
 								</div>
                  			</MediaQuery>
 						<div className='feature-set-container'>
+							<div ref={el => this.ft2 = el } className={`mkv-ft feature-padded-column${(this.state.activeFeature === 'ft2') ? ' activate-feature' : ''}`}>
+								<div>
+									<h2 style={{padding: '35px 0'}}> Employee Management </h2>
+								</div>
+								<div className='feature-blurb' style={{height: 'auto', width: '100%'}}>
+									<img src={'/assets/screen-emps.png'} onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/screen-emps.png'})}/>
+								</div>
+								<div className='feature-blurb feature-blurb__text' style={{height: 'auto'}}>
+									<div>
+										<p> Employee management has never been easier! Keep track of hiring and individual performance with our Admin dashboard. Live feed ensures that you're always kept up-to-date with the minute-to-minute details of running your business without actually having to be there.</p>
+									</div>
+								</div>
+							</div>
+								<div ref={el => this.ft3 = el } className={`mkf-ft feature-padded-row reverse${(this.state.activeFeature === 'ft3') ? ' activate-feature' : ''}`}>
+								<div className='feature-blurb__image chart-image'>
+									<img 
+										src={'/assets/stats.jpg'}
+									/>
+								</div>
+								<div className='feature-blurb feature-blurb__text'>
+									<div className='blurb-center-wrapper'>
+										<h2> Metrics & Sales Reporting </h2>
+										<p> Evaluate the health of your business with detailed sales reports sent to your account, accessible anywhere. See your top performers, best selling products, and sales trends with the push of a button. Aggregate business performance over time to track gross sales against cost. </p>
+									</div>
+								</div>
+							</div>
 							<div ref={el => this.ft1 = el } className={`mkt-ft feature-padded-column${(this.state.activeFeature === 'ft1') ? ' activate-feature' : ''}`} >
 								<div className='blurb-center-wrapper'>
 									<h2 style={{padding: '35px 0'}}> Transaction Processing </h2>
@@ -218,33 +244,7 @@ class  Marketing extends Component {
 									</div>
 								</div>
 							</div>
-							<div ref={el => this.ft2 = el } className={`mkl-ft feature-padded-column${(this.state.activeFeature === 'ft2') ? ' activate-feature' : ''}`}>
-								<div>
-									<h2 style={{padding: '35px 0'}}> Employee Management </h2>
-								</div>
-								<div className='feature-blurb' style={{height: 'auto', width: '100%'}}>
-									<img src={'/assets/screen-emps.png'} onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/screen-emps.png'})}/>
-								</div>
-								<div className='feature-blurb feature-blurb__text' style={{height: 'auto'}}>
-									<div>
-										<p> Employee management has never been easier! Keep track of hiring and individual performance with our Admin dashboard. Live feed ensures that you're always kept up-to-date with the minute-to-minute details of running your business without actually having to be there.</p>
-									</div>
-								</div>
-							</div>
-							<div ref={el => this.ft3 = el } className={`mkf-ft feature-padded-row reverse${(this.state.activeFeature === 'ft3') ? ' activate-feature' : ''}`}>
-								<div className='feature-blurb__image chart-image'>
-									<img 
-										src={'/assets/stats.jpg'}
-									/>
-								</div>
-								<div className='feature-blurb feature-blurb__text'>
-									<div className='blurb-center-wrapper'>
-										<h2> Metrics & Sales Reporting </h2>
-										<p> Evaluate the health of your business with detailed sales reports sent to your account, accessible anywhere. See your top performers, best selling products, and sales trends with the push of a button. Aggregate business performance over time to track gross sales against cost. </p>
-									</div>
-								</div>
-							</div>
-							<div ref={el => this.ft4 = el } className={`mkt-ft feature-padded-row${(this.state.activeFeature === 'ft4') ? ' activate-feature' : ''}`}>
+							<div ref={el => this.ft4 = el } className={`mkl-ft feature-padded-row${(this.state.activeFeature === 'ft4') ? ' activate-feature' : ''}`}>
 								<div className='feature-blurb feature-blurb__text'>
 									<div className='blurb-center-wrapper' style={{padding: 0}}>
 										<h2> Online Marketplace </h2>
