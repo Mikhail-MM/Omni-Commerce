@@ -218,7 +218,7 @@ class  Marketing extends Component {
 									</div>
 								</div>
 							</div>
-							<div ref={el => this.ft2 = el } className={`mkf-ft feature-padded-column${(this.state.activeFeature === 'ft2') ? ' activate-feature' : ''}`}>
+							<div ref={el => this.ft2 = el } className={`mkl-ft feature-padded-column${(this.state.activeFeature === 'ft2') ? ' activate-feature' : ''}`}>
 								<div>
 									<h2 style={{padding: '35px 0'}}> Employee Management </h2>
 								</div>
