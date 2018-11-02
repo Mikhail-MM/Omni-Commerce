@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect} from 'react-redux'
+import { throttle } from 'underscore'
 
 import MediaQuery from 'react-responsive'
 
@@ -21,11 +22,11 @@ class  Marketing extends Component {
 		scrollDir: null,
 	}
 	componentDidMount() {
-		window.addEventListener('scroll', this.handleScroll)
+		window.addEventListener('scroll', throttle(this.handleScroll, 100))
 	}
 
 	componentWillUnmount() {
-		window.removeEventListener('scroll', this.handleScroll)
+		window.removeEventListener('scroll', throttle(this.handleScroll, 100))
 	}
 
 	uniqueCollisionFreePrevScrollTop = null
@@ -42,16 +43,8 @@ class  Marketing extends Component {
 	handleScroll = (event) => {
 		let scrollTop = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop)
 		let viewportCenter = (window.innerHeight / 2)
-		
 		const stickyElementRef = (window.innerWidth <= 798) ? this.stickyElMobile : this.stickyEl
-		/*
-		const iconRef1 = (window.innerWidth <= 798) ? this.img1m : this.img1
-		const iconRef2 = (window.innerWidth <= 798) ? this.img2m : this.img2
-		const iconRef3 = (window.innerWidth <= 798) ? this.img3m : this.img3
-		const iconRef4 = (window.innerWidth <= 798) ? this.img4m : this.img4
-		*/
-		console.log(this.stickyElContainer.getBoundingClientRect().y)
-		console.log(stickyElementRef.getBoundingClientRect().y)
+
 		this.determineActiveFeature(viewportCenter, {ft1 : this.ft1.getBoundingClientRect(), ft2: this.ft2.getBoundingClientRect(), ft3: this.ft3.getBoundingClientRect(), ft4: this.ft4.getBoundingClientRect()})
 
 		if (this.uniqueCollisionFreePrevScrollTop && scrollTop > this.uniqueCollisionFreePrevScrollTop && this.state.scrollDir !== 'Scrolling Down') { 
@@ -79,12 +72,15 @@ class  Marketing extends Component {
 				manageSticky: false
 			})
 		}
-		if (this.stickyElContainer.getBoundingClientRect().y < (stickyElementRef.getBoundingClientRect().y - 50) && !this.state.manageSticky) { 
+
+		if (this.stickyElContainer.getBoundingClientRect().top < (stickyElementRef.getBoundingClientRect().top - 50) && !this.state.manageSticky) { 
 			this.setState({
 				manageSticky: true
 			})
 		}
-		if (this.stickyElContainer.getBoundingClientRect().y === stickyElementRef.getBoundingClientRect().y && this.state.manageSticky) {
+		// if (this.stickyElContainer.getBoundingClientRect().top === stickyElementRef.getBoundingClientRect().top - 50) is used as a trigger rule
+		// It will never be reset properly
+		if (this.stickyElContainer.getBoundingClientRect().top === stickyElementRef.getBoundingClientRect().top && this.state.manageSticky) {
 			this.setState({
 				manageSticky: false
 			})
@@ -92,6 +88,7 @@ class  Marketing extends Component {
 
 		this.uniqueCollisionFreePrevScrollTop = scrollTop
 	}
+
 	render(){
 			return(
 				<div className='marketing-wrapper'>
@@ -134,8 +131,8 @@ class  Marketing extends Component {
 						<h2 style={{textAlign: 'center'}}> Payments Made Easy! </h2>
 						<p> Omni is an E-Commerce platform aimed at empowering small businesses and individual entrepreneurs by facilitating the ability to easily accept cash and credit card payments. </p>  
 					</div>
-					<div style={{width: '100%', height: 'auto', backgroundColor: '#AA3939'}} ref={el => this.stickyElContainer = el}>
-                 			<MediaQuery minWidth={2} maxWidth={798}>
+					<div style={{width: '100%', height: 'auto', backgroundColor: '#AE9DCB'}} ref={el => this.stickyElContainer = el}>
+						<MediaQuery minWidth={2} maxWidth={798}>
                  				<div className={`icon-revealer-container${(this.state.manageSticky) ? ' shrink-sticky' : ''}`} ref={el => this.stickyElMobile = el}>
                  					<div className='icon-revealer-row'>
                  						<div style={(this.state.activeFeature === 'ft1') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
@@ -164,11 +161,11 @@ class  Marketing extends Component {
                  						</div>
                  					</div>
                  				</div>
-                 			</MediaQuery> 
+                 			</MediaQuery>
                  			<MediaQuery minWidth={799}>
-		                 		<div className={`icon-revealer-container${(this.state.manageSticky) ? ' shrink-sticky' : ''}`} ref={el => this.stickyEl = el}>
+                 				<div className={`icon-revealer-container${(this.state.manageSticky) ? ' shrink-sticky' : ''}`} ref={el => this.stickyEl = el}>
 									<div className='icon-revealer-row'>
-										<div ref={el => this.img1 = el} style={(this.state.activeFeature === 'ft1') ? ((this.state.manageSticky) ? {animation: 'hoverme1 0.8s infinite ease-out'} : {}) : {}} className={`informatic-blurb abs-ico-co1${(this.state.manageSticky) ? ' co1-move' : ''}`}>
+										<div style={(this.state.activeFeature === 'ft1') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co1${(this.state.manageSticky) ? ' co1-move' : ''}`}>
 											<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 												<img src='/assets/omni-splash/icons/payment-method.svg' />
 											</div>
@@ -176,7 +173,7 @@ class  Marketing extends Component {
 											<div className='informatic-blurb__text'>
 											</div>
 										</div>
-										<div ref={el => this.img2 = el} style={(this.state.activeFeature === 'ft2') ? ((this.state.manageSticky) ? {animation: 'hoverme2 0.8s infinite ease-out'} : {}) : {}} className={`informatic-blurb abs-ico-co2${(this.state.manageSticky) ? ' co2-move' : ''}`}>
+										<div style={(this.state.activeFeature === 'ft2') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co2${(this.state.manageSticky) ? ' co2-move' : ''}`}>
 											<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 												<img src='/assets/omni-splash/icons/online-shop.svg' />
 											</div>
@@ -184,7 +181,7 @@ class  Marketing extends Component {
 											<div className='informatic-blurb__text'>
 											</div>
 										</div>
-										<div ref={el => this.img3 = el} style={(this.state.activeFeature === 'ft3') ? ((this.state.manageSticky) ? {animation: 'hoverme3 0.8s infinite ease-out'} : {}) : {}} className={`informatic-blurb abs-ico-co3${(this.state.manageSticky) ? ' co3-move' : ''}`}>
+										<div style={(this.state.activeFeature === 'ft3') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co3${(this.state.manageSticky) ? ' co3-move' : ''}`}>
 											<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 												<img src='/assets/omni-splash/icons/stats.svg' />						
 											</div>
@@ -192,7 +189,7 @@ class  Marketing extends Component {
 											<div className='informatic-blurb__text'>
 											</div>
 										</div>
-										<div ref={el => this.img4 = el} style={(this.state.activeFeature === 'ft4') ? ((this.state.manageSticky) ? {animation: 'hoverme4 0.8s infinite ease-out'} : {}) : {}} className={`informatic-blurb abs-ico-co4${(this.state.manageSticky) ? ' co4-move' : ''}`}>
+										<div style={(this.state.activeFeature === 'ft4') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co4${(this.state.manageSticky) ? ' co4-move' : ''}`}>
 											<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
 												<img src='/assets/omni-splash/icons/smartphone.svg' />
 											</div>
@@ -204,34 +201,20 @@ class  Marketing extends Component {
 								</div>
                  			</MediaQuery>
 						<div className='feature-set-container'>
-							<div ref={el => this.ft1 = el } className={`feature-padded-row bigCol${(this.state.activeFeature === 'ft1') ? ' activate-feature' : ''}`} >
-								<div className='feature-blurb feature-blurb__text'>
-									<div className='blurb-center-wrapper'>
-										<h2> Point of Sale Software </h2>
-										<p> We provide flexible payment solutions for high volume businesses in retail and hospitality. No expensive hardware - our applications are compatible with all devices that can connect to the internet. </p>
-										<p> Sign up for an account to build your store profile and accept payments securely. We utilize <a style={{textDecoration:'none'}}href='https://stripe.com'> Stripe </a> to ensure your information is secure from attackers. We use Stripe to securely process payments from any major credit card provider! </p>
-									</div>
+							<div ref={el => this.ft2 = el } className={`mkv-ft feature-padded-column${(this.state.activeFeature === 'ft2') ? ' activate-feature' : ''}`}>
+								<div>
+									<h2 style={{padding: '35px 0'}}> Employee Management </h2>
 								</div>
-								<div className='feature-blurb__image bigImg'>
-									<img 
-										src={'/assets/pos.jpg'}
-										onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/pos.jpg'})}
-									/>
-								</div>
-							</div>
-							<div ref={el => this.ft2 = el } className={`feature-padded-column reverse${(this.state.activeFeature === 'ft2') ? ' activate-feature' : ''}`}>
-								
-								<div className='feature-blurb bigImg' style={{height: 'auto', width: '75%'}}>
+								<div className='feature-blurb' style={{height: 'auto', width: '100%'}}>
 									<img src={'/assets/screen-emps.png'} onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/screen-emps.png'})}/>
 								</div>
 								<div className='feature-blurb feature-blurb__text' style={{height: 'auto'}}>
 									<div>
-										<h2 style={{textAlign: 'center'}}> Employee Management </h2>
 										<p> Employee management has never been easier! Keep track of hiring and individual performance with our Admin dashboard. Live feed ensures that you're always kept up-to-date with the minute-to-minute details of running your business without actually having to be there.</p>
 									</div>
 								</div>
 							</div>
-							<div ref={el => this.ft3 = el } className={`feature-padded-row reverse${(this.state.activeFeature === 'ft3') ? ' activate-feature' : ''}`}>
+								<div ref={el => this.ft3 = el } className={`mkf-ft feature-padded-row reverse${(this.state.activeFeature === 'ft3') ? ' activate-feature' : ''}`}>
 								<div className='feature-blurb__image chart-image'>
 									<img 
 										src={'/assets/stats.jpg'}
@@ -244,9 +227,26 @@ class  Marketing extends Component {
 									</div>
 								</div>
 							</div>
-							<div ref={el => this.ft4 = el } className={`feature-padded-row${(this.state.activeFeature === 'ft4') ? ' activate-feature' : ''}`}>
+							<div ref={el => this.ft1 = el } className={`mkt-ft feature-padded-column${(this.state.activeFeature === 'ft1') ? ' activate-feature' : ''}`} >
+								<div className='blurb-center-wrapper'>
+									<h2 style={{padding: '35px 0'}}> Transaction Processing </h2>
+								</div>
+								<div className='feature-blurb__image'>
+									<img 
+										src={'/assets/pos.jpg'}
+										onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/pos.jpg'})}
+									/>
+								</div>
 								<div className='feature-blurb feature-blurb__text'>
 									<div className='blurb-center-wrapper'>
+										<p> We provide flexible payment solutions for high volume businesses in retail and hospitality. No expensive hardware - our applications are compatible with all devices that can connect to the internet. </p>
+										<p> Sign up for an account to build your store profile and accept payments securely. We utilize <a style={{textDecoration:'none'}}href='https://stripe.com'> Stripe </a> to ensure your information is secure from attackers. We use Stripe to securely process payments from any major credit card provider! </p>
+									</div>
+								</div>
+							</div>
+							<div ref={el => this.ft4 = el } className={`mkl-ft feature-padded-row${(this.state.activeFeature === 'ft4') ? ' activate-feature' : ''}`}>
+								<div className='feature-blurb feature-blurb__text'>
+									<div className='blurb-center-wrapper' style={{padding: 0}}>
 										<h2> Online Marketplace </h2>
 										<p> Sell your stuff online through our marketplace! Connect with other entrepreneurs, find awesome deals, and more! </p>
 										<p> You don't have to be a brick-and-mortar business to take advantage of E-Commerce </p>
