@@ -76,7 +76,7 @@ class  Marketing extends Component {
 			})
 		}
 
-		if (this.stickyElContainer.getBoundingClientRect().top < (stickyElementRef.getBoundingClientRect().top - 50) && !this.state.manageSticky) { 
+		if (this.stickyElContainer.getBoundingClientRect().top < (stickyElementRef.getBoundingClientRect().top - 65) && !this.state.manageSticky) { 
 			this.setState({
 				manageSticky: true
 			})
