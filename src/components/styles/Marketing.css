@@ -262,10 +262,6 @@
 }
 
 .shrink-sticky {
-	background-color: rgba(78, 103, 184, 1);
-}
-
-.shrink-sticky {
 	height: 100px;
 	top: 0;
 }
@@ -447,9 +443,6 @@
 .blurb-center-wrapper h2 {
 	text-align: center;
 }
-.activate-feature {
-	background-color:/* #AA3939  #C196C7  rgba(170, 57, 57, 0.85)   #f5ba36 */ #ae9dcb;
-}
 
 .mkt-ft {
 	background-color: rgb(170, 57, 57);
@@ -462,6 +455,10 @@
 }
 .mkl-ft {
 	background-color: #f5ba36;
+}
+
+.activate-feature {
+	background-color:/* #AA3939  #C196C7  rgba(170, 57, 57, 0.85)   #f5ba36 */ #4e67b8;
 }
 
 .activate-feature,
