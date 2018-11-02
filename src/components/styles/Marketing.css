@@ -591,18 +591,19 @@
 }
 
 .skewframe {
-	transition: transform .4s ease, left 0.4s ease;
+	transition: transform .4s ease, left 0.4s ease, top 0.4s ease;
 	transform: rotate(5.3deg) skew(0.5deg);
     box-shadow: 2px 4px 55px black;
     position: absolute;
     height: 400px;
-    width: 800px;
+    width: auto;
     left: -400px;
     border: 2px solid white;
-    top: 100px;
+    top: 120px;
 }
 
 .activate-feature > .skewframe {
-	left: 400px;
+	left: 100px;
+	top: 100px;
 	transform: rotate(0deg) skew(0deg) scale(1.2);
 }
