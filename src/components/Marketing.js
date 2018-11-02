@@ -207,7 +207,7 @@ class  Marketing extends Component {
 								<div className='blurb-center-wrapper'>
 									<h2 style={{padding: '35px 0'}}> Transaction Processing </h2>
 								</div>
-								<div className={`feature-blurb__image${(window.innerWidth >= 1600) ? ' skewframe' : ''}`}>
+								<div className={`feature-blurb__image${(window.innerWidth >= 1400) ? ' skewframe' : ''}`}>
 									<img 
 										src={'/assets/pos.jpg'}
 										onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/pos.jpg'})}
@@ -224,7 +224,7 @@ class  Marketing extends Component {
 								<div>
 									<h2 style={{padding: '35px 0'}}> Employee Management </h2>
 								</div>
-								<div className={`feature-blurb ${(window.innerWidth >= 1600) ? ' skewframe' : ''}`} style={{height: '400px', width: 'auto'}}>
+								<div className={`feature-blurb ${(window.innerWidth >= 1400) ? ' skewframe' : ''}`} style={{height: '400px', width: 'auto'}}>
 									<img src={'/assets/screen-emps.png'} onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/screen-emps.png'})}/>
 								</div>
 								<div className='feature-blurb feature-blurb__text' style={{height: 'auto'}}>
@@ -254,7 +254,7 @@ class  Marketing extends Component {
 										<p> You don't have to be a brick-and-mortar business to take advantage of E-Commerce </p>
 									</div>
 								</div>
-								<div className={`feature-blurb market-image ${(window.innerWidth >= 1600) ? ' skewframe' : ''}`}>	
+								<div className={`feature-blurb market-image ${(window.innerWidth >= 1400) ? ' skewframe' : ''}`}>	
 									<img src={'/assets/screen-market.jpg'} onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/screen-market.jpg'})}/>
 								</div>
 							</div>
