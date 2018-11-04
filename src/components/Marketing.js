@@ -204,16 +204,16 @@ class  Marketing extends Component {
                  			</MediaQuery>
 						<div className='feature-set-container'>
 							<div ref={el => this.ft1 = el } className={`mkt-ft feature-padded-column${(this.state.activeFeature === 'ft1') ? ' activate-feature' : ''}`} >
-								<div className='blurb-center-wrapper'>
-									<h2 style={{padding: '35px 0'}}> Transaction Processing </h2>
-								</div>
-								<div className={`feature-blurb__image${(window.innerWidth >= 1400) ? ' skewframe' : ''}`}>
+								<div className={`i1 feature-blurb__image${(window.innerWidth >= 1600) ? ' skewframe' : ''}`}>
 									<img 
 										src={'/assets/pos.jpg'}
 										onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/pos.jpg'})}
 									/>
 								</div>
 								<div className='feature-blurb feature-blurb__text'>
+									<div className='blurb-center-wrapper'>
+										<h2> Transaction Processing </h2>
+									</div>
 									<div className='blurb-center-wrapper'>
 										<p> We provide flexible payment solutions for high volume businesses in retail and hospitality. No expensive hardware - our applications are compatible with all devices that can connect to the internet. </p>
 										<p> Sign up for an account to build your store profile and accept payments securely. We utilize <a style={{textDecoration:'none'}}href='https://stripe.com'> Stripe </a> to ensure your information is secure from attackers. We use Stripe to securely process payments from any major credit card provider! </p>
@@ -224,7 +224,7 @@ class  Marketing extends Component {
 								<div>
 									<h2 style={{padding: '35px 0'}}> Employee Management </h2>
 								</div>
-								<div className={`feature-blurb ${(window.innerWidth >= 1400) ? ' skewframe' : ''}`} style={{height: '400px', width: 'auto'}}>
+								<div className={`i2 feature-blurb ${(window.innerWidth >= 1600) ? ' skewframe' : ''}`}>
 									<img src={'/assets/screen-emps.png'} onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/screen-emps.png'})}/>
 								</div>
 								<div className='feature-blurb feature-blurb__text' style={{height: 'auto'}}>
@@ -234,7 +234,7 @@ class  Marketing extends Component {
 								</div>
 							</div>
 								<div ref={el => this.ft3 = el } className={`mkf-ft feature-padded-row reverse${(this.state.activeFeature === 'ft3') ? ' activate-feature' : ''}`} style={{position: 'relative', minHeight: 700}}>
-								<div className='feature-blurb__image chart-image skewframe'>
+								<div className='i3 feature-blurb__image chart-image skewframe'>
 									<img 
 										src={'/assets/stats.jpg'}
 									/>
@@ -247,14 +247,14 @@ class  Marketing extends Component {
 								</div>
 							</div>
 							<div ref={el => this.ft4 = el } className={`mkl-ft feature-padded-row${(this.state.activeFeature === 'ft4') ? ' activate-feature' : ''}`} style={{position: 'relative', minHeight: 700}}>
-								<div className='feature-blurb feature-blurb__text'>
+								<div className='i4 feature-blurb feature-blurb__text'>
 									<div className='blurb-center-wrapper' style={{padding: 0}}>
 										<h2> Online Marketplace </h2>
 										<p> Sell your stuff online through our marketplace! Connect with other entrepreneurs, find awesome deals, and more! </p>
 										<p> You don't have to be a brick-and-mortar business to take advantage of E-Commerce </p>
 									</div>
 								</div>
-								<div className={`feature-blurb market-image ${(window.innerWidth >= 1400) ? ' skewframe' : ''}`}>	
+								<div className={`feature-blurb market-image ${(window.innerWidth >= 1600) ? ' skewframe' : ''}`}>	
 									<img src={'/assets/screen-market.jpg'} onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/screen-market.jpg'})}/>
 								</div>
 							</div>
