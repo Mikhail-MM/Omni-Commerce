@@ -604,9 +604,25 @@
 }
 
 .feature-padded-column {
+	justify-content: flex-end;
 	align-items: flex-end;
 }
 
+.i1, .i2 {
+	height: 400px;
+	width: 840px;
+	z-index: 2;
+}
+
+.i3 {
+	width: 396px;
+	height: 396px;
+}
+
+.i4 {
+	width: 600px;
+	height: 400px;
+}
 
 .feature-blurb__text {
 	transform: translate(400px, 400px) rotate(-5.3deg) skew(-0.5deg);
@@ -623,8 +639,6 @@
 	transform: rotate(5.3deg) skew(0.5deg);
     box-shadow: 2px 4px 55px black;
     position: absolute;
-    height: 400px;
-    width: auto;
     left: -400px;
     border: 2px solid white;
     top: 120px;
