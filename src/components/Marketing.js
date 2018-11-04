@@ -221,13 +221,13 @@ class  Marketing extends Component {
 								</div>
 							</div>
 							<div ref={el => this.ft2 = el } className={`mkv-ft feature-padded-column${(this.state.activeFeature === 'ft2') ? ' activate-feature' : ''}`}>
-								<div>
-									<h2 style={{padding: '35px 0'}}> Employee Management </h2>
-								</div>
 								<div className={`i2 feature-blurb ${(window.innerWidth >= 1600) ? ' skewframe' : ''}`}>
 									<img src={'/assets/screen-emps.png'} onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/screen-emps.png'})}/>
 								</div>
 								<div className='feature-blurb feature-blurb__text' style={{height: 'auto'}}>
+									<div>
+										<h2 style={{padding: '35px 0'}}> Employee Management </h2>
+									</div>
 									<div>
 										<p> Employee management has never been easier! Keep track of hiring and individual performance with our Admin dashboard. Live feed ensures that you're always kept up-to-date with the minute-to-minute details of running your business without actually having to be there.</p>
 									</div>
