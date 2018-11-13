@@ -48,7 +48,7 @@ class  Marketing extends Component {
 		let viewportCenter = (window.innerHeight / 2)
 		const stickyElementRef = (window.innerWidth <= 798) ? this.stickyElMobile : this.stickyEl
 
-		this.determineActiveFeature(viewportCenter, {ft1 : this.ft1.getBoundingClientRect(), ft2: this.ft2.getBoundingClientRect(), ft3: this.ft3.getBoundingClientRect(), ft4: this.ft4.getBoundingClientRect()}, stickyElementRef.getBoundingClientRect())
+		this.determineActiveFeature(viewportCenter, {ft1 : this.ft1.getBoundingClientRect(), ft2: this.ft2.getBoundingClientRect(), ft3: this.ft3.getBoundingClientRect(), ft4: this.ft4.getBoundingClientRect(), resetter: this.resetter.getBoundingClientRect()}, stickyElementRef.getBoundingClientRect())
 
 		if (this.uniqueCollisionFreePrevScrollTop && scrollTop > this.uniqueCollisionFreePrevScrollTop && this.state.scrollDir !== 'Scrolling Down') { 
 			this.setState({
@@ -76,7 +76,7 @@ class  Marketing extends Component {
 			})
 		}
 
-		if (this.stickyElContainer.getBoundingClientRect().top < (stickyElementRef.getBoundingClientRect().top - 50) && !this.state.manageSticky) { 
+		if ((this.state.activeFeature === 'ft1') || (this.state.activeFeature === 'ft2') || (this.state.activeFeature === 'ft3') || (this.state.activeFeature === 'ft4')) { 
 			this.setState({
 				manageSticky: true
 			})
@@ -85,8 +85,6 @@ class  Marketing extends Component {
 				manageSticky: false
 			})
 		}
-		// if (this.stickyElContainer.getBoundingClientRect().top === stickyElementRef.getBoundingClientRect().top - 50) is used as a trigger rule
-		// It will never be reset properly
 
 		this.uniqueCollisionFreePrevScrollTop = scrollTop
 	}
@@ -129,7 +127,7 @@ class  Marketing extends Component {
 						</div>
 					</div>
 					</div>
-					<div className='splash-intro'>
+					<div ref={el => this.resetter = el } className='splash-intro'>
 						<h2 style={{textAlign: 'center'}}> Payments Made Easy! </h2>
 						<p> Omni is an E-Commerce platform aimed at empowering small businesses and individual entrepreneurs by facilitating the ability to easily accept cash and credit card payments. </p>  
 					</div>
