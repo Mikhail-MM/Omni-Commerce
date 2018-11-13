@@ -85,6 +85,8 @@ class  Marketing extends Component {
 				manageSticky: false
 			})
 		}
+		// if (this.stickyElContainer.getBoundingClientRect().top === stickyElementRef.getBoundingClientRect().top - 50) is used as a trigger rule
+		// It will never be reset properly
 
 		this.uniqueCollisionFreePrevScrollTop = scrollTop
 	}
