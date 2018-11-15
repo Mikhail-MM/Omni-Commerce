@@ -207,7 +207,6 @@ class  Marketing extends Component {
 								<div className={`i1 feature-blurb__image${(window.innerWidth >= 1366) ? ' skewframe' : ''}`}>
 									<img 
 										src={'/assets/pos.jpg'}
-										{/* onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/pos.jpg'})} */}
 									/>
 								</div>
 								<div className='feature-blurb feature-blurb__text'>
@@ -223,8 +222,7 @@ class  Marketing extends Component {
 							<div ref={el => this.ft2 = el } className={`mkv-ft feature-padded-column${(this.state.activeFeature === 'ft2') ? ' activate-feature' : ''}`}>
 								<div className={`i2 feature-blurb ${(window.innerWidth >= 1366) ? ' skewframe' : ''}`}>
 									<img 
-										src={'/assets/screen-emps.png'} 
-										{/* onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/screen-emps.png'})} */ }
+										src={'/assets/screen-emps.png'} 	
 									/>
 								</div>
 								<div className='feature-blurb feature-blurb__text' style={{height: 'auto'}}>
@@ -260,7 +258,6 @@ class  Marketing extends Component {
 								<div className={`feature-blurb market-image ${(window.innerWidth >= 1366) ? ' skewframe' : ''}`}>	
 									<img 
 										src={'/assets/screen-market.jpg'} 
-										{/* onClick={() => this.props.showModal('IMAGE_PREVIEW_MODAL', {animationKey: 'scaleIn', imageSourceString:'/assets/screen-market.jpg'})} */}
 									/>
 								</div>
 							</div>
