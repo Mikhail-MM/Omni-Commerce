@@ -234,13 +234,13 @@ class  Marketing extends Component {
 									</div>
 								</div>
 							</div>
-								<div ref={el => this.ft3 = el } className={`mkf-ft feature-padded-row reverse${(this.state.activeFeature === 'ft3') ? ' activate-feature' : ''}`} style={{position: 'relative', minHeight: 700}}>
+								<div ref={el => this.ft3 = el } className={`mkf-ft feature-padded-row reverse${(this.state.activeFeature === 'ft3') ? ' activate-feature' : ''}`} style={{position: 'relative', minHeight: 700, alignItems: 'flex-end'}}>
 								<div className='i3 feature-blurb__image chart-image skewframe'>
 									<img 
 										src={'/assets/stats.jpg'}
 									/>
 								</div>
-								<div className='feature-blurb feature-blurb__text' style={{alignItems: 'flex-end'}}>
+								<div className='feature-blurb feature-blurb__text'>
 									<div className='blurb-center-wrapper'>
 										<h2> Metrics & Sales Reporting </h2>
 										<p> Evaluate the health of your business with detailed sales reports sent to your account, accessible anywhere. See your top performers, best selling products, and sales trends with the push of a button. Aggregate business performance over time to track gross sales against cost. </p>
