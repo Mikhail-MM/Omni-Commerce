@@ -240,7 +240,7 @@ class  Marketing extends Component {
 										src={'/assets/stats.jpg'}
 									/>
 								</div>
-								<div className='feature-blurb feature-blurb__text'>
+								<div className='feature-blurb feature-blurb__text' style={{alignItems: 'flex-end'}}>
 									<div className='blurb-center-wrapper'>
 										<h2> Metrics & Sales Reporting </h2>
 										<p> Evaluate the health of your business with detailed sales reports sent to your account, accessible anywhere. See your top performers, best selling products, and sales trends with the push of a button. Aggregate business performance over time to track gross sales against cost. </p>
