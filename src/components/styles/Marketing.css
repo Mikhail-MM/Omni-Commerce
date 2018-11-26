@@ -414,10 +414,7 @@
 	align-items: center;
 	width: 100%;
 	min-height: 600px;
-	padding-top: 0;
-	padding-left: 10%;
-	padding-right: 10%;
-	padding-bottom: 35px;
+	padding: 64px 64px;
 	height: auto;
 	transition: background-color 0.8s ease-out, color 0.8s ease-out;
 }
@@ -456,6 +453,7 @@
 }
 .mkf-ft {
 	background-color: #FFA15C;
+	align-items: flex-end;
 }
 .mkl-ft {
 	background-color: #f5ba36;
@@ -653,4 +651,10 @@
 	transform: rotate(5.3deg) skew(0.5deg) scale(1.5);
 }
 
+}
+
+@media (max-width: 1048px) {
+	.mkf-ft {
+		align-items: center;
+	}
 }

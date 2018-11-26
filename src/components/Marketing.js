@@ -234,7 +234,7 @@ class  Marketing extends Component {
 									</div>
 								</div>
 							</div>
-								<div ref={el => this.ft3 = el } className={`mkf-ft feature-padded-row reverse${(this.state.activeFeature === 'ft3') ? ' activate-feature' : ''}`} style={{position: 'relative', minHeight: 700, alignItems: 'flex-end'}}>
+								<div ref={el => this.ft3 = el } className={`mkf-ft feature-padded-row reverse${(this.state.activeFeature === 'ft3') ? ' activate-feature' : ''}`} style={{position: 'relative', minHeight: 700}}>
 								<div className='i3 feature-blurb__image chart-image skewframe'>
 									<img 
 										src={'/assets/stats.jpg'}
