@@ -628,6 +628,7 @@
 	background-color: rgba(0,0,0,0.75);
 	z-index: 2;
 	transform: translate(0px, 0px) rotate(0deg) skew(0deg);
+	border-radius: 10px;
 }
 
 .skewframe {
