@@ -597,8 +597,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .my-cart-button {
-  position: relative;
-
   width: 50px;
   height: 50px;
 
@@ -613,6 +611,8 @@ h1, h2, h3, h4, h5, h6 {
 
     width: 500px;
     height: 500px;
+
+    max-width: 100vw;
 
     padding: 10px 10px;
 
@@ -794,13 +794,14 @@ h1, h2, h3, h4, h5, h6 {
   border: 3px solid white;
 }
 
-@media (max-height: 720px) {
+@media (max-width: 720px) {
   .featured-items__header-container {
     text-align: center;
     padding: 0;
   }
+}
+@media(max-width: 460px) {
   .my-cart-dropdown {
-    right: -150px;
-    width: 400px;
+    width: 300px;
   }
 }
