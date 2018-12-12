@@ -288,6 +288,38 @@ router.route('/payments/cash')
 router.route('/test')
 	.get(shoppingCarts.test);
 
+router.route('/mailcamp')
+	.post(async (req, res, next) => {
+		try { 
+			const feederListID = 1606386807;
+			console.log("New Email Req: ", req.body.userMail)
+			const info = await rp(`https://api.constantcontact.com/v2/contacts?api_key=qzkfq8xjtj76qddnwgvddu8h`, {
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				json: true,
+				method: 'POST',
+				body: {
+					"lists": [
+						{
+						"id": `${feederListID}`
+						},
+					],
+					"email_addresses": [
+						{
+						"email_address": `${req.body.userMail}`,
+						},
+					],
+				},
+				'auth': {
+					'bearer': '0fb8abf8-6d88-4413-a643-fab019208227',
+				},
+			})
+			console.log(info);
+			res.send("You hit that endpoint alright, brah");
+		} catch(err) { next(err) }
+	})
+	
 router.route('*')
 	.get((req, res) => {
   		res.sendFile(path.join(__dirname+'/../../build/index.html'));
