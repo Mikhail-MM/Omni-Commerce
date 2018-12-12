@@ -292,6 +292,8 @@ router.route('/mailcamp')
 	.post(async (req, res, next) => {
 		try { 
 			const feederListID = 1606386807;
+			console.log("Is there a body?")
+			console.log(req.body)
 			console.log("New Email Req: ", req.body.userMail)
 			const info = await rp(`https://api.constantcontact.com/v2/contacts?api_key=qzkfq8xjtj76qddnwgvddu8h`, {
 				headers: {
