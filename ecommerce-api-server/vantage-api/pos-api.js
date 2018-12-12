@@ -7,7 +7,7 @@ console.log("your app..is somehow running...")
 const express = require('express');
 const sslRedirect = require('heroku-ssl-redirect');
 const mongoose = require('mongoose');
-
+const rp = require('request-promise')
 const path = require('path');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
@@ -319,7 +319,7 @@ router.route('/mailcamp')
 			res.send("You hit that endpoint alright, brah");
 		} catch(err) { next(err) }
 	})
-	
+
 router.route('*')
 	.get((req, res) => {
   		res.sendFile(path.join(__dirname+'/../../build/index.html'));
