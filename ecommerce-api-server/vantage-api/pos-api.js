@@ -294,7 +294,7 @@ router.route('/mailcamp')
 			const feederListID = 1606386807;
 			console.log("Is there a body?")
 			console.log(req.body)
-			console.log("New Email Req: ", req.body.userMail)
+			console.log("New Email Req: ", req.query.userMail)
 			const info = await rp(`https://api.constantcontact.com/v2/contacts?api_key=qzkfq8xjtj76qddnwgvddu8h`, {
 				headers: {
 					'Content-Type': 'application/json',
@@ -309,15 +309,14 @@ router.route('/mailcamp')
 					],
 					"email_addresses": [
 						{
-						"email_address": `${req.body.userMail}`,
+						"email_address": `${req.query.userMail}`,
 						},
 					],
 				},
 				'auth': {
 					'bearer': '0fb8abf8-6d88-4413-a643-fab019208227',
 				},
-			})
-			console.log(info);
+			}
 			res.send("You hit that endpoint alright, brah");
 		} catch(err) { next(err) }
 	})
