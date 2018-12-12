@@ -316,7 +316,8 @@ router.route('/mailcamp')
 				'auth': {
 					'bearer': '0fb8abf8-6d88-4413-a643-fab019208227',
 				},
-			}
+			})
+			
 			res.send("You hit that endpoint alright, brah");
 		} catch(err) { next(err) }
 	})
