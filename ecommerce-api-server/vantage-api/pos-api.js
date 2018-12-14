@@ -294,7 +294,7 @@ router.route('/mailcamp')
 			const feederListID = 1606386807;
 			console.log("Is there a body?")
 			console.log(req.body)
-			res.cookie("texaspopup", "true", {maxAge: 2592000});
+			console.log(req.cookies)
 			const info = await rp(`https://api.constantcontact.com/v2/contacts?api_key=qzkfq8xjtj76qddnwgvddu8h`, {
 				headers: {
 					'Content-Type': 'application/json',
@@ -317,7 +317,7 @@ router.route('/mailcamp')
 					'bearer': '0fb8abf8-6d88-4413-a643-fab019208227',
 				},
 			})
-			
+			res.setHeader('Set-Cookie', [`texaspopup=true`]);
 			res.send("You hit that endpoint alright, brah");
 		} catch(err) { next(err) }
 	})
