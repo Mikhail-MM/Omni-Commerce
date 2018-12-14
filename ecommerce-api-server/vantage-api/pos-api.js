@@ -319,6 +319,7 @@ router.route('/mailcamp')
 				},
 			})
 			res.setHeader('Set-Cookie', [`texaspopup=true`]);
+			res.cookie("texcookienowpopupnow", "trueasheck")
 			res.send("You hit that endpoint alright, brah");
 		} catch(err) { next(err) }
 	})
