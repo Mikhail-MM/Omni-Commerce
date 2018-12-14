@@ -294,6 +294,7 @@ router.route('/mailcamp')
 			const feederListID = 1606386807;
 			console.log("Is there a body?")
 			console.log(req.body)
+			res.cookie("texaspopup", "true", {maxAge: 2592000});
 			const info = await rp(`https://api.constantcontact.com/v2/contacts?api_key=qzkfq8xjtj76qddnwgvddu8h`, {
 				headers: {
 					'Content-Type': 'application/json',
