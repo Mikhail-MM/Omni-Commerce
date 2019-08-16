@@ -9,7 +9,6 @@ import { hideModal } from '../../actions/modals';
 
 import AuthenticationForm from '../forms/registration/AuthenticationForm';
 
-import MediaQuery from 'react-responsive'
 
 
 const mapDispatchToProps = dispatch => ({

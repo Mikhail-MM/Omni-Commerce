@@ -112,7 +112,7 @@ class OmniProfileModificationModal extends Component {
 					<div className='avatar-selection-container'>
 						<h4> Change Avatar </h4>
 						<div className='essos-avatar-preview-container' >
-							<img src={this.state.imageSource} />
+							<img alt="" src={this.state.imageSource} />
 						</div>
 						<div>
 							<input 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import Modal from 'react-modal';
@@ -23,7 +23,7 @@ const SocialUserListModal = props => {
 			return(
 				<div className='user-social__user-container'>
 					<div className='user-social__avatar-container'>
-						<img style={{borderRadius:50}} src={user.avatarURL} />
+						<img alt="" style={{borderRadius:50}} src={user.avatarURL} />
 					</div>
 					<div className='user-social__name-container'>
 						<h6> {user.name} </h6>

@@ -67,7 +67,7 @@ class ConfirmCartModal extends Component {
 			return(
 				<div className='tag-icon-pair-container'>
 					<div className='tag-icon-container'>
-						<img src={TagMap[tag]} />
+						<img alt="" src={TagMap[tag]} />
 					</div>
 					<div className='tag-name-container' style={{fontSize: '0.75em'}}>
 						{tag}
@@ -91,7 +91,7 @@ class ConfirmCartModal extends Component {
 					>
 					<div className='item-preview-container'>
 						<div className='product-image-container'>
-							<img src={item.imageURL} style={{borderRadius: '50px'}}/>
+							<img alt="" src={item.imageURL} style={{borderRadius: '50px'}}/>
 						</div>
 
 						<div className='item-details-container'>

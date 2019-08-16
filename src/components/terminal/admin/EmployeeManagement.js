@@ -54,22 +54,22 @@ class EmployeeManagement extends Component {
 			if (!this.state.workerSearch) {
 				return(
 					<tr onClick={() => this.props.showModal('OMNI_EMPLOYEE_MANAGEMENT_MODAL', {profileData: employee})}>
-							<td> <img className='employee-avatar-image' src={employee.avatarURL}/> </td>
+							<td> <img alt="" className='employee-avatar-image' src={employee.avatarURL}/> </td>
 							<td> {fullName} </td>
 							<td> {employee.phone} </td>
 							<td> {employee.email} </td>
-							<td> <img style={{height: 24, width: 24, cursor: 'pointer'}}  src={'/assets/icons/close.svg'} /> </td>
+							<td> <img alt="" style={{height: 24, width: 24, cursor: 'pointer'}}  src={'/assets/icons/close.svg'} /> </td>
 					</tr>
 				)
 			} else if (this.state.workerSearch) {
 				if (fullName.toLowerCase().includes(this.state.workerSearch.toLowerCase())) {
 					return(
 						<tr onClick={() => this.props.showModal('OMNI_EMPLOYEE_MANAGEMENT_MODAL', {profileData: employee})}>
-							<td> <img className='employee-avatar-image' src={employee.avatarURL}/> </td>
+							<td> <img alt="" className='employee-avatar-image' src={employee.avatarURL}/> </td>
 							<td> {fullName} </td>
 							<td> {employee.phone} </td>
 							<td> {employee.email} </td>
-							<td> <img style={{height: 24, width: 24, cursor: 'pointer'}}  src={'/assets/icons/close.svg'} /> </td>
+							<td> <img alt="" style={{height: 24, width: 24, cursor: 'pointer'}}  src={'/assets/icons/close.svg'} /> </td>
 						</tr>
 					)
 				}
@@ -88,11 +88,11 @@ class EmployeeManagement extends Component {
 				<div className='action-column'>
 					<div className='employee-actions-bar'>
 						<div className='add-employee-button' onClick={() => this.props.showModal('AUTH_FORM_MODAL', {regpathOmniChild: true})}>
-							<img className='admin-menu-icon' src='./assets/icons/add-user.svg' />
+							<img alt="" className='admin-menu-icon' src='./assets/icons/add-user.svg' />
 							Add Employee
 						</div>
 						<div className='admin-employee-search-bar-container'>
-							<img className='admin-menu-icon' src='./assets/icons/worker.svg' />
+							<img alt="" className='admin-menu-icon' src='./assets/icons/worker.svg' />
 							<input style={{flexGrow: 1}}type='text' value={this.state.workerSearch} onChange={(e) => this.handleChange('workerSearch', e.target.value)}/>
 						</div>
 					</div>

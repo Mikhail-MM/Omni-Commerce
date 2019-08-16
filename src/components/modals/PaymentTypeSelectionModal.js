@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import Modal from 'react-modal';
@@ -36,7 +36,7 @@ const PaymentTypeSelectionModal = props => {
 							className='payment-selection-icon' 
 							onClick={() => props.showModal('CARD_PAYMENT_MODAL', {})}
 						>
-							<img src='/assets/icons/credit-card.svg' />
+							<img alt="" src='/assets/icons/credit-card.svg' />
 						</div>
 						<h5> Debit & Credit </h5>
 					</div>
@@ -46,7 +46,7 @@ const PaymentTypeSelectionModal = props => {
 							className='payment-selection-icon' 
 							onClick={() => props.showModal('CASH_PAYMENT_MODAL', {})}
 						>
-							<img style={{marginTop: '25px'}} src='/assets/icons/change.svg' />
+							<img alt="" style={{marginTop: '25px'}} src='/assets/icons/change.svg' />
 						</div>
 						<h5> Cash </h5>
 					</div>

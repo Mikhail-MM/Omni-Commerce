@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import Modal from 'react-modal';
@@ -26,7 +26,7 @@ const ReviewListModal = props => {
 							<div 
 								className='star-icon-container' 
 							>
-									<img src={(star <= rating) ? `/assets/icons/star-full.svg` : `/assets/icons/star-empty.svg`} />
+									<img alt="" src={(star <= rating) ? `/assets/icons/star-full.svg` : `/assets/icons/star-empty.svg`} />
 							</div>	
 						)
 					})
@@ -42,7 +42,7 @@ const ReviewListModal = props => {
 				<div className='user-social__user-container'>
 					<div className='review-userbox-container'>
 						<div className='user-social__avatar-container'>
-							<img style={{borderRadius:50, border: '.5px solid rgba(0,0,0,0.75)'}} src={rating.avatarURL} />
+							<img alt="" style={{borderRadius:50, border: '.5px solid rgba(0,0,0,0.75)'}} src={rating.avatarURL} />
 						</div>
 						<div style={{fontSize: '0.75em', margin: '12px'}}> {rating.name} </div>
 					</div>

@@ -90,7 +90,7 @@ class TerminalActionMobile extends Component {
   					}
   				>
   					<div className="ui-pos-item_image">
-  						<img src={item.imageURL} />
+  						<img alt="" src={item.imageURL} />
   					</div>
   					<div className="ui-pos-item_content">
   						<div className="ui-pos-item-name" style={(item.itemName.length > 20) ? {'marginTop': '2px','fontSize': '0.7em'} : {'marginTop': '2px'} }>
@@ -162,8 +162,8 @@ class TerminalActionMobile extends Component {
 					<tr key={item._id} className={`ledger-row${(index === array.length - 1) ? ' fade-in-row' : ''}`}>
 						<td>{item.itemName}</td>
 						<td>${item.itemPrice}</td>
-						<td>{ (index === array.length - 1) ? <img style={{height: 24, width: 24, cursor: 'pointer'}}  src={'/assets/icons/greenplus.svg'} onClick={() => this.props.showModal('CUSTOM_ADDON_MODAL', {})} /> : null }</td>
-						<td><img  style={{height: 24, width: 24, cursor: 'pointer'}}  src={'/assets/icons/close.svg'} onClick={() => this.props.removeItemFromTicket(token, item._id, activeTicket._id)} /></td>	  
+						<td>{ (index === array.length - 1) ? <img alt="" style={{height: 24, width: 24, cursor: 'pointer'}}  src={'/assets/icons/greenplus.svg'} onClick={() => this.props.showModal('CUSTOM_ADDON_MODAL', {})} /> : null }</td>
+						<td><img alt=""  style={{height: 24, width: 24, cursor: 'pointer'}}  src={'/assets/icons/close.svg'} onClick={() => this.props.removeItemFromTicket(token, item._id, activeTicket._id)} /></td>	  
 					</tr>
 			)
 
@@ -217,9 +217,9 @@ class TerminalActionMobile extends Component {
 					</div>
 					<div className='mobile-action__header'>
 						<button style={{width: 50, height: 50, marginRight: 35}} className='mobile-action-button' onClick={() => this.props.routeToNode('/omni/terminal')}> 
-							<img src={'/assets/icons/previous.svg'} />
+							<img alt="" src={'/assets/icons/previous.svg'} />
 						</button>
-						<img style={{width: 50, height: 50}} src={'/assets/TRANSLOGOthin.svg'} />
+						<img alt="" style={{width: 50, height: 50}} src={'/assets/TRANSLOGOthin.svg'} />
 						<div className='mobile-action__header__action-buttons-container'>
 							<button 
 								style={{width: 50, height: 50, marginRight: 5}}
@@ -229,7 +229,7 @@ class TerminalActionMobile extends Component {
 								})}
 								className='mobile-action-button'
 							> 
-								<img src={'/assets/icons/plus.svg'} />
+								<img alt="" src={'/assets/icons/plus.svg'} />
 							</button>
 							<button 
 								style={{width: 50, height: 50}}
@@ -239,7 +239,7 @@ class TerminalActionMobile extends Component {
 								})}
 								className='mobile-action-button'
 							> 
-								<img src={'/assets/icons/list.svg'} />
+								<img alt="" src={'/assets/icons/list.svg'} />
 							</button>
 						</div>
 					</div>

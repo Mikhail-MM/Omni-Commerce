@@ -138,7 +138,7 @@ class UserPage extends Component {
 											Profile Settings
 										</div>
 									   ) : (null) }
-									<img className='user-avatar-image' src={this.state.userAvatarURL} />
+									<img alt="" className='user-avatar-image' src={this.state.userAvatarURL} />
 								</div>
 								<div className='user-name-blurb' >
 									{this.state.userFullName}
@@ -180,7 +180,7 @@ class UserPage extends Component {
 								>
 									<div> My Items </div>
 									<div className={`user-menu-category-button-icon-container ${(this.state.componentView === 'USER_MARKET_ITEMS') ? ' active-button-icon-container' : ''}`}>
-										<img src={'/assets/icons/upb1.svg'} />
+										<img alt="" src={'/assets/icons/upb1.svg'} />
 									</div>
 								</div>
 								<div 
@@ -189,7 +189,7 @@ class UserPage extends Component {
 								>
 									<div> My Sales </div>
 									<div className={`user-menu-category-button-icon-container ${(this.state.componentView === 'SHIPMENT_REQUESTS') ? ' active-button-icon-container' : ''}`}>
-										<img src={'/assets/icons/upb2.svg'} />
+										<img alt="" src={'/assets/icons/upb2.svg'} />
 									</div>
 								</div>
 								<div 
@@ -198,7 +198,7 @@ class UserPage extends Component {
 								>
 									<div> My Purchases </div>
 									<div className={`user-menu-category-button-icon-container ${(this.state.componentView === 'PURCHASE_HISTORY') ? ' active-button-icon-container' : ''}`}>
-										<img src={'/assets/icons/upb3.svg'} />
+										<img alt="" src={'/assets/icons/upb3.svg'} />
 									</div>
 								</div>
 								<div 
@@ -211,7 +211,7 @@ class UserPage extends Component {
 										this.props.showModal('DATABASE_INTERFACE_MODAL', {module: 'Essos', action: 'upload' })
 										}
 									} >
-										<img src={'/assets/icons/upb4.svg'} />
+										<img alt="" src={'/assets/icons/upb4.svg'} />
 									</div>
 								</div>
 							</div>							

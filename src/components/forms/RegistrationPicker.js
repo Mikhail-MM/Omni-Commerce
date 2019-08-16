@@ -34,7 +34,7 @@ class RegistrationPicker extends Component {
 				
 				<div className='centered-rectangle'>
 					<div className='modal-corner-hide' onClick={() => this.props.animateFade()}> 
-						<img src={'/assets/icons/close.svg'} />
+						<img alt="" src={'/assets/icons/close.svg'} />
 					</div>
 					<div className='picker-header-container'>
 						<h1> Select Module </h1>
@@ -43,13 +43,13 @@ class RegistrationPicker extends Component {
 					<div className='picker-button-container'>
 						<div className='modalpicker-selector'>
 							<div onClick={() => this.setState({pathway: 'Essos', renderButton: true})} className={(this.state.pathway === 'Essos') ? "icon-container activeIcon" : "icon-container"}>
-								<img className="online-market-icon" src='./assets/registration/online-shop.svg' />
+								<img alt="" className="online-market-icon" src='./assets/registration/online-shop.svg' />
 							</div>
 							<h3 className={(this.state.pathway === 'Essos') ? "reg-selection-header activeHeader" : "reg-selection-header"}> Online Marketplace </h3>
 						</div>
 						<div className='modalpicker-selector'>
 							<div onClick={() => this.setState({pathway: 'Omni', renderButton: true})} className={(this.state.pathway === 'Omni') ? "icon-container activeIcon" : "icon-container"}>
-								<img style={{marginLeft: 10}} className="online-market-icon" src='./assets/registration/point-of-service.svg' />
+								<img alt="" style={{marginLeft: 10}} className="online-market-icon" src='./assets/registration/point-of-service.svg' />
 							</div>
 							<h3 className={(this.state.pathway === 'Omni') ? "reg-selection-header activeHeader" : "reg-selection-header"}> Point of Sale </h3>
 						</div>

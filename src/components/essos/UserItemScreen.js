@@ -39,11 +39,11 @@ class UserItemScreen extends Component {
 			return (
 				<div className="ui_card_mockup">
 					<div className='ui_card_image'>
-						<img src={item.imageURL} />
+						<img alt="" src={item.imageURL} />
 						<div className='card-image__hoverover'>
 							{ this.props.selfProfileView && 
 								<div className='modal-corner-hide' onClick={() => this.props.showModal('CONFIRM_DELETE_MODAL', { module: 'Essos', itemData: item })}> 
-									<img src={'/assets/icons/close.svg'} />
+									<img alt="" src={'/assets/icons/close.svg'} />
 								</div>  }
 						</div>
 					</div>

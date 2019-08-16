@@ -227,7 +227,7 @@ class UploadItemForm extends Component {
 					onClick={ () => this.handleTagChange(tag) }
 				> 
 					<div className='tag-icon-container' >
-						<img src={TagMap[tag]} />
+						<img alt="" src={TagMap[tag]} />
 					</div>
 					<div className='tag-label-container'>
 						{tag}
@@ -241,7 +241,7 @@ class UploadItemForm extends Component {
 					onClick={ () => this.handleTagChange(tag) }
 				> 
 					<div className='tag-icon-container' >
-						<img src={TagMap[tag]} />
+						<img alt="" src={TagMap[tag]} />
 					</div>
 					<div className='tag-label-container'>
 						{tag}
@@ -256,7 +256,7 @@ class UploadItemForm extends Component {
 			(this.props.module === 'Omni') ? (
 				<form className='omni-item-form-wrapper' onSubmit={(event) => this.handleSubmit(event)}>
 					<div className='omni-image-preview-container' >
-						<img src={this.state.imageSource} />
+						<img alt="" src={this.state.imageSource} />
 					</div>
 					<div>
 						<input 
@@ -302,7 +302,7 @@ class UploadItemForm extends Component {
 				<form className='essos-item-form-wrapper' onSubmit={(event) => this.handleSubmit(event)}>
 					<div className='essos-image-upload-column'>
 						<div className='essos-image-preview-container'>
-							<img src={this.state.imageSource} />
+							<img alt="" src={this.state.imageSource} />
 						</div>
 						<div>
 							<input 

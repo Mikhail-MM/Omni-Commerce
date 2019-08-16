@@ -85,7 +85,7 @@ class EssosMarket extends Component {
 				{	[1,2,3,4,5].map(star => {
 						return (
 							<div className='star-icon-container'>
-								<img src={(star === halfStarPosition) ? `/assets/icons/half-star.svg` : (star <= floor) ? `/assets/icons/star-full.svg` : `/assets/icons/star-empty.svg`} />
+								<img alt="" src={(star === halfStarPosition) ? `/assets/icons/half-star.svg` : (star <= floor) ? `/assets/icons/star-full.svg` : `/assets/icons/star-empty.svg`} />
 							</div>
 						)
 					})
@@ -108,7 +108,7 @@ class EssosMarket extends Component {
 			return(
 				<div className="ui_card_mockup">
 					<div className='ui_card_image'>
-						<img className='card-image-source' src={item.imageURL} />
+						<img alt="" className='card-image-source' src={item.imageURL} />
 						<div className='card-image__hoverover'>
 							{ (item.description) && <p style={{textAlign: 'center', padding: '5px 5px', margin: 0}} > {item.description} </p> }
 							{ (item.reviews) && this.generateReviewHoveroverContainer(item.reviews) }
@@ -122,7 +122,7 @@ class EssosMarket extends Component {
 								<div className={this.handleWishlistIcon(item._id)} 
 									onClick={(isAuthenticated) ? () => this.handleWishlistClick(item._id) : () => {}} >
 										<div className='wishlist-icon-message'> Add to Wishlist </div>
-										<img src='./assets/icons/gift.svg' />
+										<img alt="" src='./assets/icons/gift.svg' />
 								</div>
 							</div>
 							<p className="store-link" onClick={() => this.props.routeToNode(`/essos/user/${item.sellerRef_id}`)}> Posted By: {item.postedBy} </p>
@@ -151,7 +151,7 @@ class EssosMarket extends Component {
 			return(
 				<div className='cart-item-container-row'>
 					<div className='cart-item-mini-image-container'>
-						<img className='cart-item-mini-image' src={item.imageURL} />
+						<img alt="" className='cart-item-mini-image' src={item.imageURL} />
 					</div>
 					<div className='cart-item-descriptor-container'>
 						<div className='cart-item-name-container'>
@@ -216,7 +216,7 @@ class EssosMarket extends Component {
 			return(
 				<div className='featured-card-container' onClick={() => this.props.showModal('CONFIRM_CART_ADDITION', {item: item})}> 
 					<div className='featured-image-container'>
-						<img src={item.imageURL} />
+						<img alt="" src={item.imageURL} />
 					</div>
 					<div className='featured-nofrill-info'>
 						<h5> {item.itemName} </h5>
@@ -237,15 +237,15 @@ class EssosMarket extends Component {
 	          <header className='app-header'>
 	              <div className='logo-container'>
 	              	<div style={{width: 50, height: 50, cursor: 'pointer',}} onClick={() => this.props.routeToNode('/')}>
-	              		<img src={'/assets/TRANSLOGOthin.svg'} />
+	              		<img alt="" src={'/assets/TRANSLOGOthin.svg'} />
 	              	</div>
 	              </div>
 	              <div className='account-control'>
 	              	<div className='my-notifications-button'>
-	              		<img style={{marginTop:5}} src='./assets/icons/notification.svg' />
+	              		<img alt="" style={{marginTop:5}} src='./assets/icons/notification.svg' />
 	              	</div>
 	             	<div className='my-cart-button'>
-	              		<img className='my-cart-icon' src='./assets/icons/my-cart.svg' />
+	              		<img alt="" className='my-cart-icon' src='./assets/icons/my-cart.svg' />
 	              		<div className='my-cart-dropdown'>
 	              			<div className='shopping-cart-dropdown-container'>
 								{ shoppingCart && this.generateShoppingCartDropdownContent() }
@@ -263,13 +263,13 @@ class EssosMarket extends Component {
 	              		}}
 	              		className='my-store-button'
 	              	>
-	              		<img className='my-store-icon' src='./assets/icons/online-store.svg' />
+	              		<img alt="" className='my-store-icon' src='./assets/icons/online-store.svg' />
 	              		<span> My Shop </span>
 	              	</div>
 	              </div>
 	          </header>
 	          <div className='jumbotron'>
-	            <img className='jumbotron-greeter' src='./assets/store-splash/greeting4.jpg' />
+	            <img alt="" className='jumbotron-greeter' src='./assets/store-splash/greeting4.jpg' />
 	            	{(!this.state.jumboLoading) && this.generateJumbotronTargetbox()}
 	          </div>
 	         

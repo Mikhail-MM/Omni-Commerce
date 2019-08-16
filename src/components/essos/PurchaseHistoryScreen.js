@@ -52,7 +52,7 @@ class PurchaseHistoryScreen extends Component {
 						return (
 							<div className='purchase-order__flex-row'>
 								<div className='purchase-order__image-container'>
-									<img src={item.imageURL} />
+									<img alt="" src={item.imageURL} />
 								</div>
 								<div className='purchase-order__item-details'>
 									{item.itemName}

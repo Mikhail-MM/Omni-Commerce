@@ -37,7 +37,7 @@ class AddReviewModal extends Component {
 											})
 									}
 						>
-								<img src={(star <= this.state.rating) ? `/assets/icons/star-full.svg` : `/assets/icons/star-empty.svg`} />
+								<img alt="" src={(star <= this.state.rating) ? `/assets/icons/star-full.svg` : `/assets/icons/star-empty.svg`} />
 						</div>	
 					)
 				})
@@ -81,7 +81,7 @@ class AddReviewModal extends Component {
 				>
 					<div className='product-review-container'>
 						<div className='product-review-image-preview'>
-							<img src={this.props.item.imageURL} />
+							<img alt="" src={this.props.item.imageURL} />
 						</div>
 						<div className='review-form-container'>
 							<h4> {this.props.item.itemName} </h4>

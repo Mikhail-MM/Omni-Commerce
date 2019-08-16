@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import Modal from 'react-modal';
@@ -24,7 +24,7 @@ const UserWishlistPreviewPreview = props => {
 			return(
 				<div className='user-wishlist__wishlist-container'>
 					<div className='user-wishlist__image-container'>
-						<img src={item.imageURL} />
+						<img alt="" src={item.imageURL} />
 					</div>
 					<div className='user-wishlist__metadata-container'>
 						<h6> Item Name </h6>

@@ -110,7 +110,7 @@ class  Marketing extends Component {
 					<div className='screen-resizer'>
 					<nav className={`marketing-nav${(!this.state.topOfPage) ? ' collapseNavHeader' : ''}${(this.state.manageSticky) ? ' moveNavHeaderAway': ''}`}>
 						<div className={`marketing-logo-container${(!this.state.topOfPage) ? ' collapseMarketLogo' : ''}`} >
-							<img src={'/assets/TRANSLOGOthin.svg'} />
+							<img alt="" src={'/assets/TRANSLOGOthin.svg'} />
 						</div>
 						<div className='right-nav'>
 							<a className='splash-link' onClick={() => this.props.route('/essos')}> Online Marketplace </a>
@@ -121,7 +121,7 @@ class  Marketing extends Component {
 						</div>
 					</nav>
 					<div className='jumbo-image-container'>
-						<img src='/assets/omni-splash/jumbo-blur.jpg' />
+						<img alt="" src='/assets/omni-splash/jumbo-blur.jpg' />
 						<div className='hero-header-1' >
 							Running a Business is a <span style={{color: '#FF4734'}}> Challenge </span>
 						</div>
@@ -151,25 +151,25 @@ class  Marketing extends Component {
                  					<div className='icon-revealer-row'>
                  						<div style={(this.state.activeFeature === 'ft1') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
                  							<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
-												<img src='/assets/omni-splash/icons/payment-method.svg' />
+												<img alt="" src='/assets/omni-splash/icons/payment-method.svg' />
 											</div>
 											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Compliant Payments </h4>
                  						</div>
                  						<div style={(this.state.activeFeature === 'ft2') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
                  							<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
-												<img src='/assets/omni-splash/icons/online-shop.svg' />
+												<img alt="" src='/assets/omni-splash/icons/online-shop.svg' />
 											</div>
 											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Remote Business Management </h4>
                  						</div>
                  						<div style={(this.state.activeFeature === 'ft3') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
                  							<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
-												<img src='/assets/omni-splash/icons/stats.svg' />
+												<img alt="" src='/assets/omni-splash/icons/stats.svg' />
 											</div>
 											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}>  Metrics and Statistics  </h4>
                  						</div>
                  						<div style={(this.state.activeFeature === 'ft4') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb-mobile'>
                  							<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
-												<img src='/assets/omni-splash/icons/smartphone.svg' />
+												<img alt="" src='/assets/omni-splash/icons/smartphone.svg' />
 											</div>
 											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}>  Personal Marketplace  </h4>
                  						</div>
@@ -181,7 +181,7 @@ class  Marketing extends Component {
 									<div className='icon-revealer-row'>
 										<div style={(this.state.activeFeature === 'ft1') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co1${(this.state.manageSticky) ? ' co1-move' : ''}`}>
 											<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
-												<img src='/assets/omni-splash/icons/payment-method.svg' />
+												<img alt="" src='/assets/omni-splash/icons/payment-method.svg' />
 											</div>
 											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Compliant Payments </h4>
 											<div className='informatic-blurb__text'>
@@ -189,7 +189,7 @@ class  Marketing extends Component {
 										</div>
 										<div style={(this.state.activeFeature === 'ft2') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co2${(this.state.manageSticky) ? ' co2-move' : ''}`}>
 											<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
-												<img src='/assets/omni-splash/icons/online-shop.svg' />
+												<img alt="" src='/assets/omni-splash/icons/online-shop.svg' />
 											</div>
 											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Remote Business Management </h4>
 											<div className='informatic-blurb__text'>
@@ -197,7 +197,7 @@ class  Marketing extends Component {
 										</div>
 										<div style={(this.state.activeFeature === 'ft3') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co3${(this.state.manageSticky) ? ' co3-move' : ''}`}>
 											<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
-												<img src='/assets/omni-splash/icons/stats.svg' />						
+												<img alt="" src='/assets/omni-splash/icons/stats.svg' />						
 											</div>
 											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Metrics and Statistics </h4>
 											<div className='informatic-blurb__text'>
@@ -205,7 +205,7 @@ class  Marketing extends Component {
 										</div>
 										<div style={(this.state.activeFeature === 'ft4') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co4${(this.state.manageSticky) ? ' co4-move' : ''}`}>
 											<div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
-												<img src='/assets/omni-splash/icons/smartphone.svg' />
+												<img alt="" src='/assets/omni-splash/icons/smartphone.svg' />
 											</div>
 											<h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Personal Marketplace </h4>
 											<div className='informatic-blurb__text'>
@@ -217,7 +217,7 @@ class  Marketing extends Component {
 						<div className='feature-set-container'>
 							<div ref={el => this.ft1 = el } className={`mkt-ft feature-padded-column${(this.state.activeFeature === 'ft1') ? ' activate-feature' : ''}`} >
 								<div className={`i1 feature-blurb__image${(window.innerWidth >= 1366) ? ' skewframe' : ''}`}>
-									<img 
+									<img alt="" 
 										src={'/assets/pos.jpg'}
 									/>
 								</div>
@@ -233,7 +233,7 @@ class  Marketing extends Component {
 							</div>
 							<div ref={el => this.ft2 = el } className={`mkv-ft feature-padded-column${(this.state.activeFeature === 'ft2') ? ' activate-feature' : ''}`}>
 								<div className={`i2 feature-blurb ${(window.innerWidth >= 1366) ? ' skewframe' : ''}`}>
-									<img 
+									<img alt="" 
 										src={'/assets/screen-emps.png'} 	
 									/>
 								</div>
@@ -248,7 +248,7 @@ class  Marketing extends Component {
 							</div>
 								<div ref={el => this.ft3 = el } className={`mkf-ft feature-padded-row reverse${(this.state.activeFeature === 'ft3') ? ' activate-feature' : ''}`} style={{position: 'relative', minHeight: 700}}>
 								<div className='i3 feature-blurb__image chart-image skewframe'>
-									<img 
+									<img alt="" 
 										src={'/assets/stats.jpg'}
 									/>
 								</div>
@@ -268,7 +268,7 @@ class  Marketing extends Component {
 									</div>
 								</div>
 								<div className={`feature-blurb market-image ${(window.innerWidth >= 1366) ? ' skewframe' : ''}`}>	
-									<img 
+									<img alt="" 
 										src={'/assets/screen-market.jpg'} 
 									/>
 								</div>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react';
 import { connect } from 'react-redux'
 
 import ModalRoot from './ModalRoot'
@@ -30,7 +30,7 @@ const EssosCartCheckout = props => {
 			return(
 				<div className='cart-item-container-row'>
 					<div className='cart-item-mini-image-container'>
-						<img className='cart-item-mini-image' src={item.imageURL} />
+						<img alt="" className='cart-item-mini-image' src={item.imageURL} />
 					</div>
 					<div className='cart-item-descriptor-container'>
 						<div className='cart-item-name-container'>
@@ -56,7 +56,7 @@ const EssosCartCheckout = props => {
 				<tr>
 					<td style={{display: 'flex', justifyContent: 'space-between'}}>
 						<div style={{width: 75, height:100}}>
-							<img className='cart-item-mini-image' src={item.imageURL} />
+							<img alt="" className='cart-item-mini-image' src={item.imageURL} />
 						</div>
 						<div className='cart-item-name-container'>
 							{item.itemName}
@@ -82,7 +82,7 @@ const EssosCartCheckout = props => {
 			<div className='cart-header-menu'> 
 				<h6 style={{width: 100, height: 100, textAlign: 'center'}}> {`< Back`} </h6>
 				<div style={{width: 100, height: 100}}>
-					<img src={'/assets/TRANSLOGOthin.svg'} />
+					<img alt="" src={'/assets/TRANSLOGOthin.svg'} />
 				</div>
 				<h6 style={{width: 100, height: 100, textAlign: 'center'}}> Secure Checkout </h6>
 			</div>

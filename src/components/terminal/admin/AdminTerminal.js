@@ -127,9 +127,9 @@ class AdminTerminal extends Component {
 						</div>
 						<ModalRoot />
 						<div className='mobile-admin__header'>
-							<img src={'/assets/icons/cash-register.svg'} onClick={() => this.props.route('/omni/terminal')} style={{width: 50, height:50, padding: '5px 5px', cursor: 'pointer'}} />
-							<img src={'/assets/TRANSLOGOthin.svg'} style={{width: 50, height:50}} />
-							<img src={'/assets/icons/bell.svg'} onClick={() => this.setState(prevState => ({showOverlay: !prevState.showOverlay}))} style={{width: 50, height:50, padding: '5px 5px', cursor: 'pointer'}} />
+							<img alt="" src={'/assets/icons/cash-register.svg'} onClick={() => this.props.route('/omni/terminal')} style={{width: 50, height:50, padding: '5px 5px', cursor: 'pointer'}} />
+							<img alt="" src={'/assets/TRANSLOGOthin.svg'} style={{width: 50, height:50}} />
+							<img alt="" src={'/assets/icons/bell.svg'} onClick={() => this.setState(prevState => ({showOverlay: !prevState.showOverlay}))} style={{width: 50, height:50, padding: '5px 5px', cursor: 'pointer'}} />
 						</div>
 						<div className='mobile-admin__body'>
 							<AdminActionDisplayComponent />
@@ -137,17 +137,17 @@ class AdminTerminal extends Component {
 						<div className='mobile-admin__footer-navigation'>
 							<div className='mobile-admin__footer-navigation__button' onClick={() => this.setState({actionComponent: 'MANAGE_EMPLOYEES'})}> 
 								<div className={`mobile-admin__footer-navigation__button__icon${(this.state.actionComponent === 'MANAGE_EMPLOYEES') ? ' mobile-admin__footer-navigation__button__icon__active' : ''}`}>
-									<img className='mobile-admin-menu-icon' src='./assets/icons/emp_mng.svg' />
+									<img alt="" className='mobile-admin-menu-icon' src='./assets/icons/emp_mng.svg' />
 								</div>
 							 </div>
 							<div className='mobile-admin__footer-navigation__button' onClick={() => this.setState({actionComponent: 'MANAGE_SALES_REPORTS'})}> 
 								<div className={`mobile-admin__footer-navigation__button__icon${(this.state.actionComponent === 'MANAGE_SALES_REPORTS') ? ' mobile-admin__footer-navigation__button__icon__active' : ''}`}>
-									<img className='mobile-admin-menu-icon' src='./assets/icons/analytics.svg' />
+									<img alt="" className='mobile-admin-menu-icon' src='./assets/icons/analytics.svg' />
 								</div>
 							</div>
 							<div className='mobile-admin__footer-navigation__button' onClick={() => this.setState({actionComponent: 'MANAGE_TIMESHEETS'})}>
 							 <div className={`mobile-admin__footer-navigation__button__icon${(this.state.actionComponent === 'MANAGE_TIMESHEETS') ? ' mobile-admin__footer-navigation__button__icon__active' : ''}`}>
-									<img className='mobile-admin-menu-icon' src='./assets/icons/calendar.svg' />
+									<img alt="" className='mobile-admin-menu-icon' src='./assets/icons/calendar.svg' />
 								</div>
 							 </div>
 						</div>
@@ -162,25 +162,25 @@ class AdminTerminal extends Component {
 							<div className='sidebar-column'>
 								<div className='menu-box'>
 									<div className={`admin-button${(this.state.actionComponent === 'MANAGE_EMPLOYEES') ? ' admin-button__active' : ''}`} onClick={() => this.setState({actionComponent: 'MANAGE_EMPLOYEES'})}>
-										<img className='admin-menu-icon' src='./assets/icons/emp_mng.svg' />
+										<img alt="" className='admin-menu-icon' src='./assets/icons/emp_mng.svg' />
 										<span> Employees </span>
 									</div>
 									<div className={`admin-button${(this.state.actionComponent === 'MANAGE_SALES_REPORTS') ? ' admin-button__active' : ''}`} onClick={() => this.setState({actionComponent: 'MANAGE_SALES_REPORTS'})}>
-										<img className='admin-menu-icon' src='./assets/icons/analytics.svg' />
+										<img alt="" className='admin-menu-icon' src='./assets/icons/analytics.svg' />
 										<span> Sales Reports </span>
 									</div>
 									<div className={`admin-button${(this.state.actionComponent === 'MANAGE_TIMESHEETS') ? ' admin-button__active' : ''}`} onClick={() => this.setState({actionComponent: 'MANAGE_TIMESHEETS'})}>
-										<img className='admin-menu-icon' src='./assets/icons/calendar.svg' />
+										<img alt="" className='admin-menu-icon' src='./assets/icons/calendar.svg' />
 										<span> Timesheets </span>
 									</div>					
 								</div>
 								<div className="menu-box__bottom">
 									<div className='admin-button' onClick={() => this.props.route('/omni/terminal')}>
-										<img className='admin-menu-icon' src='./assets/icons/cash-register.svg' />
+										<img alt="" className='admin-menu-icon' src='./assets/icons/cash-register.svg' />
 										<span> Access Terminal </span>
 									</div>
 									<div className='admin-button'>
-										<img className='admin-menu-icon' src='./assets/icons/logout.svg' />
+										<img alt="" className='admin-menu-icon' src='./assets/icons/logout.svg' />
 										<span> Log Out </span>
 									</div>		
 								</div>

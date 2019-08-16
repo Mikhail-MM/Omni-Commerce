@@ -184,7 +184,7 @@ class AuthenticationForm extends Component {
 					<div className='avatar-selection-container'>
 						<h4> Change Avatar </h4>
 						<div className='essos-avatar-preview-container' >
-							<img src={this.state.imageSource} />
+							<img alt="" src={this.state.imageSource} />
 						</div>
 							<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
 								<button type='button' onClick={(e) => this.randomizeAvvy(e)}> Randomize Avatar </button>
@@ -269,7 +269,7 @@ class AuthenticationForm extends Component {
 					<React.Fragment>
 						<div className='avatar-selection-container'>
 							<div className='essos-avatar-preview-container' >
-								<img src={this.state.imageSource} />
+								<img alt="" src={this.state.imageSource} />
 							</div>
 							<h3> {`${this.state.firstName} ${this.state.lastName}`} </h3>
 						</div>
@@ -397,7 +397,7 @@ class AuthenticationForm extends Component {
 						<div className='avatar-selection-container'>
 							<h4> Change Avatar </h4>
 						<div className='essos-avatar-preview-container' >
-							<img src={this.state.imageSource} />
+							<img alt="" src={this.state.imageSource} />
 						</div>
 							<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
 								<button type='button' onClick={(e) => this.randomizeAvvy(e)}> Randomize Avatar </button>
@@ -483,7 +483,7 @@ class AuthenticationForm extends Component {
 					<div className='avatar-selection-container'>
 						<h3 style={{paddingBottom: '12px'}}> Omni Commerce </h3>
 						<div style={{width: 150, height: 150}}>
-							<img src={'/assets/TRANSLOGOthin.svg'} />
+							<img alt="" src={'/assets/TRANSLOGOthin.svg'} />
 						</div>
 					</div>
 					<form className='essos-profile-edit-form' onSubmit={(e) => this.handleSubmit(e)}>
