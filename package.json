@@ -35,9 +35,10 @@
     "heroku-postbuild": "cd ecommerce-api-server/vantage-api && yarn install && cd .. && cd .. && yarn install && yarn build",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev": "react-scripts start"
   },
   "engines": {
-    "node": "8.11.3"
+    "node": "10.16.3"
   }
 }

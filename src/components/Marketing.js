@@ -20,13 +20,20 @@ class  Marketing extends Component {
 		topOfPage: true,
 		activeFeature: null, 
 		scrollDir: null,
+		scrollHandler: null
 	}
 	componentDidMount() {
-		window.addEventListener('scroll', throttle(this.handleScroll, 100))
+		console.log(`Mounting Marketing Component - Environment: ${process.env.NODE_ENV}` )
+		const scrollHandler = throttle(this.handleScroll, 100)		
+		this.setState({
+			scrollHandler
+		})
+		window.addEventListener('scroll', scrollHandler);
 	}
 
 	componentWillUnmount() {
-		window.removeEventListener('scroll', throttle(this.handleScroll, 100))
+		const  { scrollHandler } = this.state;
+		window.removeEventListener('scroll', scrollHandler)
 	}
 
 	uniqueCollisionFreePrevScrollTop = null
@@ -96,19 +103,19 @@ class  Marketing extends Component {
 				<div className='marketing-wrapper'>
 					<ModalRoot />
 					<div className='screen-resizer'>
+					<nav className={`marketing-nav${(!this.state.topOfPage) ? ' collapseNavHeader' : ''}${(this.state.manageSticky) ? ' moveNavHeaderAway': ''}`}>
+						<div className={`marketing-logo-container${(!this.state.topOfPage) ? ' collapseMarketLogo' : ''}`} >
+							<img src={'/assets/TRANSLOGOthin.svg'} />
+						</div>
+						<div className='right-nav'>
+							<a className='splash-link' onClick={() => this.props.route('/essos')}> Online Marketplace </a>
+							<a className='splash-link' onClick={() => this.props.showModal('REGISTRATION_MODULE_PICKER', {})}> Register </a>
+							<a className='splash-link' onClick={() => this.props.showModal('AUTH_FORM_MODAL', {
+							login: true, loginOmni: true})}> Log In </a>
+							
+						</div>
+					</nav>
 					<div className='jumbo-image-container'>
-						<nav className={`marketing-nav${(!this.state.topOfPage) ? ' collapseNavHeader' : ''}${(this.state.manageSticky) ? ' moveNavHeaderAway': ''}`}>
-							<div className={`marketing-logo-container${(!this.state.topOfPage) ? ' collapseMarketLogo' : ''}`} >
-								<img src={'/assets/TRANSLOGOthin.svg'} />
-							</div>
-							<div className='right-nav'>
-								<a className='splash-link' onClick={() => this.props.route('/essos')}> Online Marketplace </a>
-								<a className='splash-link' onClick={() => this.props.showModal('REGISTRATION_MODULE_PICKER', {})}> Register </a>
-								<a className='splash-link' onClick={() => this.props.showModal('AUTH_FORM_MODAL', {
-								login: true, loginOmni: true})}> Log In </a>
-								
-							</div>
-						</nav>
 						<img src='/assets/omni-splash/jumbo-blur.jpg' />
 						<div className='hero-header-1' >
 							Running a Business is a <span style={{color: '#FF4734'}}> Challenge </span>
