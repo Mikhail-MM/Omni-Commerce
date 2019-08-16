@@ -17,8 +17,7 @@
   "dependencies": {
     "aws-sdk": "^2.304.0",
     "axios": "^0.18.0",
-    "bcrypt": "^1.0.3",
-    "bcrypt-nodejs": "0.0.3",
+    "bcrypt": "^3.0.6",
     "bignumber.js": "^5.0.0",
     "body-parser": "^1.18.2",
     "dotenv": "^4.0.0",
@@ -52,8 +51,8 @@
     "winston": "^3.1.0"
   },
   "engines": {
-    "node": "8.11.3",
-    "yarn": "1.12.3",
+    "node": "v10.16.3",
+    "yarn": "1.17.3",
     "npm": "6.4.1"
   }
 }

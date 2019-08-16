@@ -1,17 +1,26 @@
 import { showModal, hideModal } from './modals'
-import { hostURI } from '../components/config'
+
+import { 
+	hostURI,
+	corsSetting
+ } from '../components/config'
+
 export function retrieveAllItemsForSale() {
-	console.log("We need to get some items!!!")
+	const url = `${hostURI}/storeItem/`
+	console.log(url)
 	return dispatch => {	
-		return fetch(`/storeItem/`, {
+		return fetch(`${hostURI}/storeItem/`, {
 			headers:{
 				'Content-Type': 'application/json',
 			},
 			method: 'GET',
-			mode: 'no-cors',
+			mode: corsSetting,
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
-		.then(json => dispatch(receiveItems(json)))
+		.then(json => {
+			console.log(json)
+			dispatch(receiveItems(json))
+		})
 		.catch(err => console.log(err))
 	}
 }

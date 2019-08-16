@@ -2,7 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import './styles/EssosMarket.css';
 
+
 import ModalRoot from './ModalRoot'
+
+import { hostURI } from "./config.js";
 
 import { retrieveAllItemsForSale, addItemToWishlist, getUserWishlist } from '../actions/marketplace'
 import { retrieveShoppingCart } from '../actions/shopping-cart'
@@ -46,6 +49,7 @@ class EssosMarket extends Component {
 		if (isAuthenticated) this.props.retrieveUserWishlist(token)
 		if (isAuthenticated) this.props.getUserSocialFeed(token)
 		const jumbotronData = await this.retrieveFeaturedItems()
+		console.log(jumbotronData)
 	}
 	
 	handleWishlistClick = (itemId) => {
@@ -165,9 +169,9 @@ class EssosMarket extends Component {
 		})		
 	}
 
-	 retrieveFeaturedItems = () => {
-	 	// This can be moved to a selector to filter all items by queryMarker string
-		return fetch('/storeItem?lookup=queryBannerItems', {
+	 retrieveFeaturedItems = async () => {
+		const url = `${hostURI}/storeItem?lookup=queryBannerItems`
+		return fetch(url, {
 			headers:{
 				'Content-Type': 'application/json'
 			},
@@ -175,6 +179,7 @@ class EssosMarket extends Component {
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
+			console.log(json)
 			const { jumbotronItems, featuredItems } = json
 			this.setState({
 				jumbotronItems,
@@ -182,7 +187,7 @@ class EssosMarket extends Component {
 				jumboLoading: false
 			})
 		})
-		.catch(err => console.log(err))
+		.catch(err => console.error(err))
 	}
 
 	generateJumbotronTargetbox = () => {

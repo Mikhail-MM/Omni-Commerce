@@ -1,4 +1,14 @@
-export const hostURI = 'https://still-beach-13809.herokuapp.com';
+import { 
+	resolveRootURI,
+	configureCORS 
+} from '../utils/configureNetwork';
+
+export const hostURI = resolveRootURI();
+export const prodURI = "https://still-beach-13809.herokuapp.com";
+export const corsSetting = configureCORS();
+
+
+
 export const modalStyle = {
 	content: {
 		top: '50%',

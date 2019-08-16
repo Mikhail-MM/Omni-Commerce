@@ -31,13 +31,18 @@ require('dotenv').config()
 
 
 const app = express();
+
+// Consider Instantiating Server After Controllers
+
 const server = require('http').createServer(app);
-const PORT = process.env.PORT || 5000
-console.log("What's the port? ", PORT)
-console.log("Created Server")
-const socketIO = require('./socket/initialize').initialize(server);
-console.log("Created SocketIO instance, but it is undefined (Returns nothing)")
-console.log("Moving right on along!...")
+const PORT = process.env.PORT || 3001
+
+console.log(`Instantiating server at port ${PORT}...`);
+
+require('./socket/initialize').initialize(server);
+
+console.log(`Initialized WebSocket connection`)
+
 
 const clients = require('./controllers/clients');
 const images = require('./controllers/images');
@@ -69,6 +74,7 @@ console.log("Loaded express router")
 mongoose.Promise = global.Promise; 
 
 console.log("Booting mongoose promise library")
+
 mongoose.connect(`mongodb://${process.env.MLABS_USER}:${process.env.MLABS_PW}@ds113000.mlab.com:13000/omninova`, { useMongoClient: true });
 console.log("Mongoose connection establishment")
 
@@ -80,10 +86,10 @@ if(app.get('env') === 'production') {
 };
 
 app.use(bodyParser.json());
-app.use(sslRedirect());
+// app.use(sslRedirect());
 
 app.use('/*', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "https://www.texashunterproducts.com");
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.header("Access-Control-Allow-Headers", "Origin, x-access-token, x-user-pathway, x-mongo-key, X-Requested-With, Content-Type, Accept");
   res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
   res.header("Access-Control-Allow-Credentials", true);

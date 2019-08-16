@@ -22,7 +22,6 @@ module.exports.createNewStoreItem = async function(req, res, next) {
 module.exports.getAllStoreItems = async function(req, res, next) {
 		try {
 			if (req.query.lookup === 'queryBannerItems') {
-				console.log("Fetching Banner Query Query")
 				const jumbotronItems = await StoreItemModel.find({queryMarker: 'Jumbotron-1'})
 				const featuredItems = await StoreItemModel.find({queryMarker: 'Featured-1'})
 					res.json({

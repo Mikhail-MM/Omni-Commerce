@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect} from 'react-redux'
-import { throttle } from 'underscore'
+import { debounce, throttle } from 'underscore'
 
 import MediaQuery from 'react-responsive'
 
@@ -20,20 +20,25 @@ class  Marketing extends Component {
 		topOfPage: true,
 		activeFeature: null, 
 		scrollDir: null,
-		scrollHandler: null
+		scrollHandler: null,
+		debounceScroll: null,
 	}
 	componentDidMount() {
 		console.log(`Mounting Marketing Component - Environment: ${process.env.NODE_ENV}` )
-		const scrollHandler = throttle(this.handleScroll, 100)		
+		const scrollHandler = throttle(this.handleScroll, 100)
+		const debounceScroll = debounce(this.handleScroll, 100)		
 		this.setState({
-			scrollHandler
+			scrollHandler,
+			debounceScroll
 		})
 		window.addEventListener('scroll', scrollHandler);
+		window.addEventListener('scroll', debounceScroll)
 	}
 
 	componentWillUnmount() {
-		const  { scrollHandler } = this.state;
+		const  { scrollHandler, debounceScroll } = this.state;
 		window.removeEventListener('scroll', scrollHandler)
+		window.removeEventListener('scroll', debounceScroll)
 	}
 
 	uniqueCollisionFreePrevScrollTop = null
