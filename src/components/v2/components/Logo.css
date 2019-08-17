@@ -1,0 +1,24 @@
+.marketing-logo-container {
+	height: 90px;
+	width: 90px;
+	transition: height 0.5s ease-out, width 0.5s ease-out;
+}
+
+
+.marketing-logo-container:hover {
+	animation: spin 2s infinite ease;
+}
+
+.collapseMarketLogo {
+	height: 60px;
+	width: 60px;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(1080deg);
+	}
+}
