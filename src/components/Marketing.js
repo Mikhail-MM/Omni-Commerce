@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { connect} from 'react-redux';
 import { debounce, throttle } from 'underscore';
 
-import MediaQuery from 'react-responsive';
-
 import ModalRoot from './ModalRoot';
 
 import { showModal } from '../actions/modals';
@@ -14,6 +12,7 @@ import './styles/Marketing.css';
 
 import NavBar from './v2/components/NavBar';
 import Jumbotron from './v2/components/Jumbotron';
+import StickyFeatureHeader from './v2/components/StickyFeatureHeader';
 
 const mapDispatchToProps = dispatch => {
 	return {
@@ -44,6 +43,16 @@ class  Marketing extends Component {
 
 	}
 
+  setStickyFeatureBarRef = (el) => {
+    console.log(el)  
+    this.newStickyElContainer = el;
+  }
+  setMobileStickyFeatureBarRef = (el) => {
+    // These handlers are passed down to child components to store their refs for scrollEvent calculations
+    console.log(el)  
+    this.newMobileStickyElContainer = el;
+  }
+
 	componentWillUnmount() {
 		const  { scrollHandler, debounceScroll } = this.state;
 		window.removeEventListener('scroll', scrollHandler)
@@ -70,7 +79,7 @@ class  Marketing extends Component {
 	handleScroll = (event) => {
 		let scrollTop = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop)
 		let viewportCenter = (window.innerHeight / 2)
-		const stickyElementRef = (window.innerWidth <= 798) ? this.stickyElMobile : this.stickyEl
+		const stickyElementRef = (window.innerWidth <= 798) ? this.newMobileStickyElContainer : this.newStickyElContainer
 
 		this.determineActiveFeature(viewportCenter, {ft1 : this.ft1.getBoundingClientRect(), ft2: this.ft2.getBoundingClientRect(), ft3: this.ft3.getBoundingClientRect(), ft4: this.ft4.getBoundingClientRect(), resetter: this.resetter.getBoundingClientRect()})
 
@@ -119,7 +128,8 @@ class  Marketing extends Component {
 
     const { 
       topOfPage,
-      manageSticky
+      manageSticky,
+      activeFeature
     } = this.state;
     
     const { 
@@ -131,90 +141,32 @@ class  Marketing extends Component {
       <div className='marketing-wrapper'>
         <ModalRoot />
         <div className='screen-resizer'>
-        <NavBar
-          topOfPage={topOfPage}
-          manageSticky={manageSticky}
-          route={route}
-          showModal={showModal}
-        />
-        <Jumbotron 
-          showModal={showModal}
-          route={route}
-        />
+          <NavBar
+            topOfPage={topOfPage}
+            manageSticky={manageSticky}
+            route={route}
+            showModal={showModal}
+          />
+          <Jumbotron 
+            showModal={showModal}
+            route={route}
+          />
         </div>
+
         <div ref={el => this.resetter = el } className='splash-intro'>
           <h2 style={{textAlign: 'center'}}> Payments Made Easy! </h2>
           <p> Omni is an E-Commerce platform aimed at empowering small businesses and individual entrepreneurs by facilitating the ability to easily accept cash and credit card payments. </p>  
         </div>
+
+
         <div style={{width: '100%', height: 'auto', backgroundColor: '#AE9DCB'}} ref={el => this.stickyElContainer = el}>
-          <MediaQuery minWidth={2} maxWidth={798}>
-                      <div className={`icon-revealer-container${(this.state.manageSticky) ? ' shrink-sticky' : ''}`} ref={el => this.stickyElMobile = el}>
-                        <div className='icon-revealer-row'>
-                          <div style={(this.state.activeFeature === 'ft1') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
-                            <div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
-                      <img alt="" src='/assets/omni-splash/icons/payment-method.svg' />
-                    </div>
-                    <h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Compliant Payments </h4>
-                          </div>
-                          <div style={(this.state.activeFeature === 'ft2') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
-                            <div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
-                      <img alt="" src='/assets/omni-splash/icons/online-shop.svg' />
-                    </div>
-                    <h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Remote Business Management </h4>
-                          </div>
-                          <div style={(this.state.activeFeature === 'ft3') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb'>
-                            <div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
-                      <img alt="" src='/assets/omni-splash/icons/stats.svg' />
-                    </div>
-                    <h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}>  Metrics and Statistics  </h4>
-                          </div>
-                          <div style={(this.state.activeFeature === 'ft4') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className='informatic-blurb-mobile'>
-                            <div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
-                      <img alt="" src='/assets/omni-splash/icons/smartphone.svg' />
-                    </div>
-                    <h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}>  Personal Marketplace  </h4>
-                          </div>
-                        </div>
-                      </div>
-                    </MediaQuery>
-                    <MediaQuery minWidth={799}>
-                      <div className={`icon-revealer-container${(this.state.manageSticky) ? ' shrink-sticky' : ''}`} ref={el => this.stickyEl = el}>
-                <div className='icon-revealer-row'>
-                  <div style={(this.state.activeFeature === 'ft1') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co1${(this.state.manageSticky) ? ' co1-move' : ''}`}>
-                    <div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
-                      <img alt="" src='/assets/omni-splash/icons/payment-method.svg' />
-                    </div>
-                    <h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Compliant Payments </h4>
-                    <div className='informatic-blurb__text'>
-                    </div>
-                  </div>
-                  <div style={(this.state.activeFeature === 'ft2') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co2${(this.state.manageSticky) ? ' co2-move' : ''}`}>
-                    <div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
-                      <img alt="" src='/assets/omni-splash/icons/online-shop.svg' />
-                    </div>
-                    <h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Remote Business Management </h4>
-                    <div className='informatic-blurb__text'>
-                    </div>
-                  </div>
-                  <div style={(this.state.activeFeature === 'ft3') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co3${(this.state.manageSticky) ? ' co3-move' : ''}`}>
-                    <div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
-                      <img alt="" src='/assets/omni-splash/icons/stats.svg' />						
-                    </div>
-                    <h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Metrics and Statistics </h4>
-                    <div className='informatic-blurb__text'>
-                    </div>
-                  </div>
-                  <div style={(this.state.activeFeature === 'ft4') ? {animation: 'hoverme 0.8s infinite ease-out'} : {}} className={`informatic-blurb abs-ico-co4${(this.state.manageSticky) ? ' co4-move' : ''}`}>
-                    <div className={`informatic-blurb__icon${(this.state.manageSticky) ? ' shrink-icon' : ''}`}>
-                      <img alt="" src='/assets/omni-splash/icons/smartphone.svg' />
-                    </div>
-                    <h4 className={`sticky-headers${(this.state.manageSticky) ? ' sticky-header-shrink' : ''}`}> Personal Marketplace </h4>
-                    <div className='informatic-blurb__text'>
-                    </div>
-                  </div>
-                </div>
-              </div>
-                    </MediaQuery>
+          <StickyFeatureHeader 
+            setStickyFeatureBarRef={this.setStickyFeatureBarRef}
+            setMobileStickyFeatureBarRef = {this.setMobileStickyFeatureBarRef}
+            manageSticky={manageSticky}
+            activeFeature={activeFeature}
+          />
+
           <div className='feature-set-container'>
             <div ref={el => this.ft1 = el } className={`mkt-ft feature-padded-column${(this.state.activeFeature === 'ft1') ? ' activate-feature' : ''}`} >
               <div className={`i1 feature-blurb__image${(window.innerWidth >= 1366) ? ' skewframe' : ''}`}>
