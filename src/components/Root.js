@@ -27,6 +27,8 @@ import Marketing from './Marketing'
 // Load CSS from lazy-loaded Components
 import './styles/EssosMarket.css';
 
+import GlobalAuthProvider from './v2/GlobalAuthProvider';
+
 const loggerMiddleware = createLogger()
 const history = createHistory()
 
@@ -58,43 +60,47 @@ const LoadableComponents = {
 
 }
 
-
 export default class Root extends Component {
+	componentDidMount() {
+		console.log("This should run AFTER the HOC")
+	}
 	render() {
 		return (
 			<Provider store={store}>
-				<ConnectedRouter history={history}>
-					<Switch>
-						
-                  		<Route exact path='/' component={Marketing} />
-                 		<Route exact path='/essos' component={LoadableComponents.EssosMarket} />
-                 		<Route exact path='/essos/login' render={() => <AuthenticationForm login loginEssos /> } />
-                 		<Route exact path='/omni/login' render={() => <AuthenticationForm login loginOmni /> } />
-                 		<Route exact path='/register' component={RegistrationPicker} />
-                 		<Route exact path='/register/omni' render={() => <AuthenticationForm regpathOmniMaster/>} />
-                 		<Route exact path='/register/essos' render={() => <AuthenticationForm regpathEssos/>} />
+				<GlobalAuthProvider >
+					<ConnectedRouter history={history}>
+						<Switch>
+							
+							<Route exact path='/' component={Marketing} />
+							<Route exact path='/essos' component={LoadableComponents.EssosMarket} />
+							<Route exact path='/essos/login' render={() => <AuthenticationForm login loginEssos /> } />
+							<Route exact path='/omni/login' render={() => <AuthenticationForm login loginOmni /> } />
+							<Route exact path='/register' component={RegistrationPicker} />
+							<Route exact path='/register/omni' render={() => <AuthenticationForm regpathOmniMaster/>} />
+							<Route exact path='/register/essos' render={() => <AuthenticationForm regpathEssos/>} />
 
-                 		<Route exact path='/omni/terminal' component={LoadableComponents.OmniTerminal} />
-                 		<Route exact path='/omni/terminal/modifyItems' render={(props) => <TerminalActionScreen {...props} modify /> } /> 
-                 		<Route exact path='/omni/terminal/tickets/:id' component={(props) => {
-                 			return (
-                 			                 			<React.Fragment>
-                 				                 			<MediaQuery minWidth={2} maxWidth={798}>
-                 				                 				<TerminalActionMobile {...props}/>
-                 				                 			</MediaQuery> 
-                 				                 			<MediaQuery minWidth={799}>
-                 				                 				<TerminalActionScreen {...props}/>
-                 				                 			</MediaQuery>
-                 				                 		</React.Fragment>
-                 			)
-                 		}} />
-                 		<Route exact path='/essos/user/:id' component={UserPage} />
-                 		<Route exact path='/essos/profile/' render={(props) => <UserPage {...props} selfProfileView /> } />
-                 		<Route exact path='/essos/mycart' component={EssosCartCheckout} />
-                 		<Route exact path='/admin' component={LoadableComponents.AdminTerminal} />
+							<Route exact path='/omni/terminal' component={LoadableComponents.OmniTerminal} />
+							<Route exact path='/omni/terminal/modifyItems' render={(props) => <TerminalActionScreen {...props} modify /> } /> 
+							<Route exact path='/omni/terminal/tickets/:id' component={(props) => {
+								return (
+															<React.Fragment>
+																<MediaQuery minWidth={2} maxWidth={798}>
+																	<TerminalActionMobile {...props}/>
+																</MediaQuery> 
+																<MediaQuery minWidth={799}>
+																	<TerminalActionScreen {...props}/>
+																</MediaQuery>
+															</React.Fragment>
+								)
+							}} />
+							<Route exact path='/essos/user/:id' component={UserPage} />
+							<Route exact path='/essos/profile/' render={(props) => <UserPage {...props} selfProfileView /> } />
+							<Route exact path='/essos/mycart' component={EssosCartCheckout} />
+							<Route exact path='/admin' component={LoadableComponents.AdminTerminal} />
 
-					</Switch>
-				</ConnectedRouter>
+						</Switch>
+					</ConnectedRouter>
+				</GlobalAuthProvider >
 			</Provider>
 		)
 	}

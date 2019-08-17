@@ -6,9 +6,6 @@ import ModalRoot from '../ModalRoot'
 import { showModal } from '../../actions/modals'
 import { routeToNode } from '../../actions/routing'
 
-import { validateCachedToken } from '../../utils/configureAuth'
-import { authSuccess } from '../../actions/auth';
-
 import { 
 	fetchCurrentTicketDetails,
 	setVisibleCategory, 
@@ -34,7 +31,6 @@ const mapDispatchToProps = dispatch => ({
 	updateTicketStatus: (token, ticketId, status) => dispatch(updateTicketStatus(token, ticketId, status)),
 	removeItemFromTicket: (token, subdocId, ticketId) => dispatch(updateTransactionWithSubdocRemoval(token, subdocId, ticketId)),
 	routeToNode: (node) => dispatch(routeToNode(node)),
-	validateCachedAuth: (userInfo) => dispatch(authSuccess(userInfo)),
 	fetchCurrentTicketDetails: (token, ticketId) => dispatch(fetchCurrentTicketDetails(token, ticketId))
 })
 
@@ -46,18 +42,6 @@ class TerminalActionScreen extends Component {
 	// Category Selection Screen
 
 	async componentDidMount() {
-
-		const cachedAuth = await validateCachedToken();
-
-		if (cachedAuth.token) {
-			this.props.validateCachedAuth({
-				token: cachedAuth.token,
-				accountType: cachedAuth.accountType
-			})
-			this.setState({
-				refresh: true
-			})
-		}
 
 		const { 
 			token,

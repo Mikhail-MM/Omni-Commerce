@@ -23,8 +23,8 @@ import { validateCachedToken } from "../../../utils/configureAuth";
 
 const mapStateToProps = state => {
 
-	const { token } = state.authReducer
-	return { token }
+	const { token, isAuthenticated } = state.authReducer
+	return { token, isAuthenticated }
 
 }
 
@@ -52,23 +52,34 @@ class AdminTerminal extends Component {
 		loadingAuth: true
 	}
 	
-	async componentDidMount() {
-		const cachedAuth = await validateCachedToken();
-		if (cachedAuth.token) {
-			this.props.validateCachedAuth({
-				token: cachedAuth.token,
-				accountType: cachedAuth.accountType
-			})
-			this.setState({loadingAuth: false});
-		}
-		const { token } = this.props
-		const feed = await getAllEvents(token)
-		const timeFeed = [...feed].reverse()
-		this.setState({
-			eventFeed: timeFeed
-		})
+	fetchDataAndRenderChildren = async () => {
+		const { token, isAuthenticated } = this.props
 
-		subscribeToFeedUpdates(token, this.updateEventFeed)
+		if (isAuthenticated) {
+			const feed = await getAllEvents(token)
+			const timeFeed = [...feed].reverse()
+			this.setState({
+				eventFeed: timeFeed
+			})
+			subscribeToFeedUpdates(token, this.updateEventFeed)
+				// This delays rendering of child components, they have CDM Fetch Requests
+			this.setState({
+				loadingAuth: false
+			})
+		}
+	}
+
+	componentDidMount() {
+		this.fetchDataAndRenderChildren()
+	}
+
+	componentDidUpdate(prevProps) {
+		if (
+			this.props.isAuthenticated === !prevProps.isAuthenticated
+			&& this.props.isAuthenticated
+		) {
+			this.fetchDataAndRenderChildren() 
+		}
 	}
 
 	componentWillUnmount() {

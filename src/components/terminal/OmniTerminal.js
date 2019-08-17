@@ -10,9 +10,6 @@ import { fetchTickets, fetchCurrentTicketDetails } from '../../actions/tickets-t
 import { fetchLoggedUsers } from '../../actions/employees';
 import { showModal } from '../../actions/modals';
 
-import { validateCachedToken } from '../../utils/configureAuth'
-import { authSuccess } from '../../actions/auth';
-
 import ModalRoot from '../ModalRoot'
 
 import  '../styles/OmniTerminal.css'
@@ -32,28 +29,32 @@ const mapDispatchToProps = (dispatch) => ({
 	fetchTickets: (token) => dispatch(fetchTickets(token)),
 	fetchLoggedUsers: (token) => dispatch(fetchLoggedUsers(token)),
 	showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps)),
-	routeToNode: (node) => dispatch(routeToNode(node)),
-	validateCachedAuth: (userInfo) => dispatch(authSuccess(userInfo)),
+	routeToNode: (node) => dispatch(routeToNode(node))
 })
 
 class OmniTerminal extends Component {
 
-	async componentDidMount() {
-
-		const cachedAuth = await validateCachedToken();
-
-		if (cachedAuth.token) {
-			this.props.validateCachedAuth({
-				token: cachedAuth.token,
-				accountType: cachedAuth.accountType
-			})
-		}
-
+	fetchTerminalData = () => {
 		const { token } = this.props;
-
 		this.props.fetchMenuItems(token);
 		this.props.fetchTickets(token);
 		this.props.fetchLoggedUsers(token);
+	}
+
+	componentDidMount() {
+		const { isAuthenticated } = this.props;
+		if (isAuthenticated) {
+			this.fetchTerminalData()
+		}
+	}
+
+	componentDidUpdate(prevProps) {
+		if (
+			this.props.isAuthenticated === !prevProps.isAuthenticated
+			&& this.props.isAuthenticated
+		) {
+			this.fetchTerminalData()
+		}
 	}
 
 	mapTicketsToDOMByStatus = ticketStatus => {

@@ -13,6 +13,7 @@ export const validateCachedToken = async () => {
             method: 'GET',
         })
         if (response.ok) {
+            console.log("What")
             const validResponse = await response.json();
             const { validToken } = validResponse;
             if (validToken) {
@@ -21,8 +22,9 @@ export const validateCachedToken = async () => {
                     accountType
                 }
             }
+        } else {
+            return false
         }
-        return false
     } catch(err) {
         console.error(err)
         return false;

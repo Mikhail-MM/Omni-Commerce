@@ -8,16 +8,13 @@ import ModalRoot from './ModalRoot';
 
 import { showModal } from '../actions/modals';
 import { routeToNode } from '../actions/routing';
-import { authSuccess } from '../actions/auth';
 import './styles/Marketing.css';
 
-import { validateCachedToken } from "../utils/configureAuth";
 
 const mapDispatchToProps = dispatch => {
 	return {
 		showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps)),
 		route: (node) => dispatch(routeToNode(node)),
-		validateCachedAuth: (userInfo) => dispatch(authSuccess(userInfo))
 	}
 }
 
@@ -41,13 +38,6 @@ class  Marketing extends Component {
 		window.addEventListener('scroll', scrollHandler);
 		window.addEventListener('scroll', debounceScroll);
 
-		const { token, accountType } = await validateCachedToken();
-		if (token) {
-			this.props.validateCachedAuth({
-				token,
-				accountType
-			})
-		}
 	}
 
 	componentWillUnmount() {
