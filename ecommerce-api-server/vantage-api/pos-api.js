@@ -117,7 +117,7 @@ app.use('/*', function(req, res, next) {
   next();
 });
 
-console.log("Linking to static directory")
+
 app.use(express.static(path.join(__dirname, '/../../build')));
 
 
@@ -132,7 +132,6 @@ router.route('/clients/lookupEmployees')mongodb://localhost/vantageAPI-2
 	.get(authorize.adminRequired, clients.findAllEmployees)
 */
 
-console.log("Gettin to da routes!")
 
 router.route('/sign-s3')
 	.get(aws.signS3Request)
@@ -320,9 +319,7 @@ router.route('/mailcamp')
 	.post(async (req, res, next) => {
 		try { 
 			const feederListID = 1606386807;
-			console.log("Is there a body?")
-			console.log(req.body)
-			console.log(req.cookies)
+
 			const info = await rp(`https://api.constantcontact.com/v2/contacts?api_key=qzkfq8xjtj76qddnwgvddu8h`, {
 				headers: {
 					'Content-Type': 'application/json',
@@ -347,7 +344,7 @@ router.route('/mailcamp')
 			})
 			res.setHeader('Set-Cookie', [`texaspopup=true`]);
 			res.cookie("texcookienowpopupnow", "trueasheck")
-			res.send("You hit that endpoint alright, brah");
+			res.send("Request Processed.");
 		} catch(err) { next(err) }
 	})
 
@@ -364,30 +361,19 @@ app.use('/', router);
 //	Error Handling Middleware	//
 ///		404 Handler			  ///
 
-console.log("Down to da handlers!")
+
 app.use(function(req, res, next){
 	var err = new Error("Response Status: 404; Page Not Found")
 	err.status = 404
 	next(err);
 })
 
-//	Development Error Handler
-
-if (dev) {
-	app.use(function(err, req, res, next) {
-		console.log(err);
-		res.status(err.status || 500).send();
-	});
-}
-
-//	Production Error Handler
+// Error Handler
 
 app.use(function(err, req, res, next) {
 	console.log(err)
 	res.status(err.status || 500).send();
 });
-
-console.log("About to listen!!!")
 
 server.listen(PORT);
 
