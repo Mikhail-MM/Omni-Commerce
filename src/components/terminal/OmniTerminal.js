@@ -4,11 +4,14 @@ import moment from 'moment'
 
 import MediaQuery from 'react-responsive'
 
-import { routeToNode } from '../../actions/routing'
-import { fetchMenuItems } from '../../actions/terminalItems'
-import { fetchTickets, fetchCurrentTicketDetails } from '../../actions/tickets-transactions'
-import { fetchLoggedUsers } from '../../actions/employees'
-import { showModal } from '../../actions/modals'
+import { routeToNode } from '../../actions/routing';
+import { fetchMenuItems } from '../../actions/terminalItems';
+import { fetchTickets, fetchCurrentTicketDetails } from '../../actions/tickets-transactions';
+import { fetchLoggedUsers } from '../../actions/employees';
+import { showModal } from '../../actions/modals';
+
+import { validateCachedToken } from '../../utils/configureAuth'
+import { authSuccess } from '../../actions/auth';
 
 import ModalRoot from '../ModalRoot'
 
@@ -29,12 +32,23 @@ const mapDispatchToProps = (dispatch) => ({
 	fetchTickets: (token) => dispatch(fetchTickets(token)),
 	fetchLoggedUsers: (token) => dispatch(fetchLoggedUsers(token)),
 	showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps)),
-	routeToNode: (node) => dispatch(routeToNode(node))
+	routeToNode: (node) => dispatch(routeToNode(node)),
+	validateCachedAuth: (userInfo) => dispatch(authSuccess(userInfo)),
 })
 
 class OmniTerminal extends Component {
 
-	componentDidMount() {
+	async componentDidMount() {
+
+		const cachedAuth = await validateCachedToken();
+
+		if (cachedAuth.token) {
+			this.props.validateCachedAuth({
+				token: cachedAuth.token,
+				accountType: cachedAuth.accountType
+			})
+		}
+
 		const { token } = this.props;
 
 		this.props.fetchMenuItems(token);

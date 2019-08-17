@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import './styles/EssosMarket.css';
 
 
 import ModalRoot from './ModalRoot'
@@ -42,14 +41,11 @@ class EssosMarket extends Component {
 
 	async componentDidMount() {
 		const { isAuthenticated, token } = this.props
-		console.log("Essos component mounted. Running props to retrieve all marketplace items")
-		console.log("Checking isauthenticated:", isAuthenticated)
 		this.props.retrieveAllMarketplaceItems()
 		if (isAuthenticated) this.props.retrieveShoppingCart(token)
 		if (isAuthenticated) this.props.retrieveUserWishlist(token)
 		if (isAuthenticated) this.props.getUserSocialFeed(token)
 		const jumbotronData = await this.retrieveFeaturedItems()
-		console.log(jumbotronData)
 	}
 	
 	handleWishlistClick = (itemId) => {
@@ -78,7 +74,6 @@ class EssosMarket extends Component {
 		const floor = Math.floor(average)
 		let halfStarPosition = null
 		if (average > floor) { halfStarPosition = floor + 1 }
-		console.log(totalScore, average, halfStarPosition)
 		return ( 
 			<div className='ratings-menu-column'>
 				<div className='ratings-bar'>

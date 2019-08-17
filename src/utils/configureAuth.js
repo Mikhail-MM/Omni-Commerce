@@ -12,17 +12,17 @@ export const validateCachedToken = async () => {
             },
             method: 'GET',
         })
-        if (!response.ok) {
-            console.error(response);
-        }
-        const validResponse = await response.json();
-        const { validToken } = validResponse;
-        if (validToken) {
-            return {
-                token,
-                accountType
+        if (response.ok) {
+            const validResponse = await response.json();
+            const { validToken } = validResponse;
+            if (validToken) {
+                return {
+                    token,
+                    accountType
+                }
             }
-        } else return false;
+        }
+        return false
     } catch(err) {
         console.error(err)
         return false;

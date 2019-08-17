@@ -10,12 +10,16 @@ import { showModal } from '../../../actions/modals'
 import { routeToNode } from '../../../actions/routing'
 import { getAllEvents } from '../../../actions/events'
 import { subscribeToFeedUpdates, closeConnection } from '../../../actions/socket'
+import { authSuccess, logOut } from '../../../actions/auth';
+
 
 import ModalRoot from '../../ModalRoot'
 
 import EmployeeManagement from './EmployeeManagement'
 import SalesAnalytics from './SalesAnalytics'
 import TimeSheetTable from './TimeSheetTable'
+
+import { validateCachedToken } from "../../../utils/configureAuth";
 
 const mapStateToProps = state => {
 
@@ -27,7 +31,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
 	route: (node) => dispatch(routeToNode(node)),
 	showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps)),
-
+	validateCachedAuth: (userInfo) => dispatch(authSuccess(userInfo)),
+	logOut: () => { 
+		dispatch(logOut())
+		dispatch(routeToNode('/'))
+	}
 })
 
 const AdminComponentMap = {
@@ -41,9 +49,18 @@ class AdminTerminal extends Component {
 		actionComponent: 'MANAGE_EMPLOYEES',
 		eventFeed: [],
 		showOverlay: false,
+		loadingAuth: true
 	}
 	
 	async componentDidMount() {
+		const cachedAuth = await validateCachedToken();
+		if (cachedAuth.token) {
+			this.props.validateCachedAuth({
+				token: cachedAuth.token,
+				accountType: cachedAuth.accountType
+			})
+			this.setState({loadingAuth: false});
+		}
 		const { token } = this.props
 		const feed = await getAllEvents(token)
 		const timeFeed = [...feed].reverse()
@@ -132,7 +149,7 @@ class AdminTerminal extends Component {
 							<img alt="" src={'/assets/icons/bell.svg'} onClick={() => this.setState(prevState => ({showOverlay: !prevState.showOverlay}))} style={{width: 50, height:50, padding: '5px 5px', cursor: 'pointer'}} />
 						</div>
 						<div className='mobile-admin__body'>
-							<AdminActionDisplayComponent />
+						{ this.state.loadingAuth ? <div className='action-column'></div> : <AdminActionDisplayComponent /> }
 						</div>
 						<div className='mobile-admin__footer-navigation'>
 							<div className='mobile-admin__footer-navigation__button' onClick={() => this.setState({actionComponent: 'MANAGE_EMPLOYEES'})}> 
@@ -179,14 +196,14 @@ class AdminTerminal extends Component {
 										<img alt="" className='admin-menu-icon' src='./assets/icons/cash-register.svg' />
 										<span> Access Terminal </span>
 									</div>
-									<div className='admin-button'>
+									<div className='admin-button' onClick={this.props.logOut}>
 										<img alt="" className='admin-menu-icon' src='./assets/icons/logout.svg' />
 										<span> Log Out </span>
 									</div>		
 								</div>
 							</div>
 
-							<AdminActionDisplayComponent />
+							{ this.state.loadingAuth ? <div className='action-column'></div> : <AdminActionDisplayComponent /> }
 
 							<div className='feed-column'>
 								{this.state.eventFeed && this.renderEventFeedToDOM()}
