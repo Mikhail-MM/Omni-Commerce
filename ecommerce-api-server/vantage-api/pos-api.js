@@ -76,32 +76,41 @@ console.log("Booting mongoose promise library")
 mongoose.connect(`mongodb://${process.env.MLABS_USER}:${process.env.MLABS_PW}@ds113000.mlab.com:13000/omninova`, { useMongoClient: true });
 console.log("Mongoose connection establishment")
 
+app.use(bodyParser.json());
+
+
+app.use(logger('dev'));
+
 if(app.get('env') === 'development') {
-	var dev = true;
 	app.use('/*', function(req, res, next) {
 		res.header("Access-Control-Allow-Origin", "http://localhost:3000")
+		next();
 	});
 }
-if (dev) app.use(logger('dev'));
+
 if(app.get('env') === 'production') {
 	console.log("Environment is production")
 	// Init script can be built to instantiate first Admin
 	app.use(sslRedirect());
+	app.use('/*', function(req, res, next) {
+		if (req.headers.origin === "https://www.texashunterproducts.com") {
+			console.log(1)
+			  res.header("Access-Control-Allow-Origin", "https://www.texashunterproducts.com");
+		}
+		if (req.headers.origin === "https://www.omni-io.com/") {
+			console.log(2)
+			res.header("Access-Control-Allow-Origin", "https://www.omni-io.com/");
+		}
+		if (req.headers.origin === "https://still-beach-13809.herokuapp.com/") {
+			console.log(3)
+			res.header("Access-Control-Allow-Origin", "https://still-beach-13809.herokuapp.com/")
+		}
+		next();
+	});
 };
 
-app.use(bodyParser.json());
 
-app.use('/*', function(req, res, next) {
-	if (req.headers.origin === "https://www.texashunterproducts.com") {
-		  res.header("Access-Control-Allow-Origin", "https://www.texashunterproducts.com");
-	}
-	if (req.headers.origin === "https://www.omni-io.com/") {
-		res.header("Access-Control-Allow-Origin", "https://www.omni-io.com/");
-	}
-	if (req.headers.origin === "https://still-beach-13809.herokuapp.com/") {
-		res.header("Access-Control-Allow-Origin", "https://still-beach-13809.herokuapp.com/")
-	}
-	
+app.use('/*', function(req, res, next) {	
   res.header("Access-Control-Allow-Headers", "Origin, x-access-token, x-user-pathway, x-mongo-key, X-Requested-With, Content-Type, Accept");
   res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
   res.header("Access-Control-Allow-Credentials", true);
