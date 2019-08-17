@@ -5,13 +5,12 @@ function authSuccess (userInfo) {
 	console.log(userInfo)
 	return {
 	type:'USER_AUTHENTICATED',
-	userInfo
+		userInfo
 	}
 
 } 
 
 function authFail (err) {
-	console.log('sending error text to auth reducer... why is it not found? ')
 	return {
 	type: 'INVALID_CREDENTIALS',
 	errorText: err,
