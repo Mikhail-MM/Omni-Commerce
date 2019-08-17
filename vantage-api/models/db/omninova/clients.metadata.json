@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"omninova.clients"},{"v":2,"unique":true,"key":{"email":1},"name":"email_1","ns":"omninova.clients","background":true},{"v":2,"key":{"isAdmin":1},"name":"isAdmin_1","ns":"omninova.clients","background":true}],"uuid":"f73b15149e9b4d3eb8645e73d0445202"}
