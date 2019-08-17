@@ -94,8 +94,6 @@ if(app.get('env') === 'production') {
 	app.use('/*', function(req, res, next) {
 		const origin = req.get('host')
 		if (origin === "still-beach-13809.herokuapp.com" || origin === "www.omni-io.com") {
-			console.log("Heroku Project Origin Registered")
-			console.log("Omni origin registered.")
 			res.header("Access-Control-Allow-Origin", "https://still-beach-13809.herokuapp.com/")
 		} else {
 			res.header("Access-Control-Allow-Origin", "https://www.texashunterproducts.com");
