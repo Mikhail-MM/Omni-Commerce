@@ -44,6 +44,11 @@ class AuthenticationForm extends Component {
 		newImageFlag: false,
 		registrationPage: 1,
 	}
+	
+	componentDidMount() {
+		console.log("issa form")
+		console.log(this.props)
+	}
 
 	handleChange = (key, value) => {
 		this.setState({

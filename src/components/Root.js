@@ -11,16 +11,11 @@ import rootReducer from '../reducers/reducers'
 
 import MediaQuery from 'react-responsive'
 
-import UserPage from './essos/UserPage'
-
 import TerminalActionScreen from './terminal/TerminalActionScreen'
 import TerminalActionMobile from './terminal/responsive/TerminalActionMobile'
 
 
 import RegistrationPicker from './forms/RegistrationPicker'
-import AuthenticationForm from './forms/registration/AuthenticationForm'
-
-import EssosCartCheckout from './EssosCartCheckout'
 
 import Marketing from './Marketing'
 
@@ -51,11 +46,23 @@ const LoadableComponents = {
 	}),
 	OmniTerminal: Loadable({
 		loader: () => import('./terminal/OmniTerminal'),
-		loading: () => <h2> Loading... </h2>
+		loading: () => <h2> Loading... </h2>,
 	}),
 	AdminTerminal: Loadable({
 		loader: () => import('./terminal/admin/AdminTerminal'),
-		loading: () => <h2> Loading... </h2>
+		loading: () => <h2> Loading... </h2>,
+	}),
+	UserPage: Loadable({
+		loader: () => import('./essos/UserPage'),
+		loading: () => <h2> Loading... </h2>,
+	}),
+	EssosCartCheckout: Loadable({
+		loader: () => import('./EssosCartCheckout'),
+		loading: () => <h2> Loading... </h2>,
+	}),
+	AuthenticationForm: Loadable({
+		loader: () => import('./forms/registration/AuthenticationForm'),
+		loading: () => <h2> Loading... </h2>,
 	})
 
 }
@@ -73,11 +80,11 @@ export default class Root extends Component {
 							
 							<Route exact path='/' component={Marketing} />
 							<Route exact path='/essos' component={LoadableComponents.EssosMarket} />
-							<Route exact path='/essos/login' render={() => <AuthenticationForm login loginEssos /> } />
-							<Route exact path='/omni/login' render={() => <AuthenticationForm login loginOmni /> } />
+							<Route exact path='/essos/login' render={() => <LoadableComponents.AuthenticationForm login loginEssos /> } />
+							<Route exact path='/omni/login' render={() => <LoadableComponents.AuthenticationForm login loginOmni /> } />
 							<Route exact path='/register' component={RegistrationPicker} />
-							<Route exact path='/register/omni' render={() => <AuthenticationForm regpathOmniMaster/>} />
-							<Route exact path='/register/essos' render={() => <AuthenticationForm regpathEssos/>} />
+							<Route exact path='/register/omni' render={() => <LoadableComponents.AuthenticationForm regpathOmniMaster/>} />
+							<Route exact path='/register/essos' render={() => <LoadableComponents.AuthenticationForm regpathEssos/>} />
 
 							<Route exact path='/omni/terminal' component={LoadableComponents.OmniTerminal} />
 							<Route exact path='/omni/terminal/modifyItems' render={(props) => <TerminalActionScreen {...props} modify /> } /> 
@@ -93,9 +100,9 @@ export default class Root extends Component {
 															</React.Fragment>
 								)
 							}} />
-							<Route exact path='/essos/user/:id' component={UserPage} />
-							<Route exact path='/essos/profile/' render={(props) => <UserPage {...props} selfProfileView /> } />
-							<Route exact path='/essos/mycart' component={EssosCartCheckout} />
+							<Route exact path='/essos/user/:id' component={LoadableComponents.UserPage} />
+							<Route exact path='/essos/profile/' render={(props) => <LoadableComponents.UserPage {...props} selfProfileView /> } />
+							<Route exact path='/essos/mycart' component={LoadableComponents.EssosCartCheckout} />
 							<Route exact path='/admin' component={LoadableComponents.AdminTerminal} />
 
 						</Switch>
