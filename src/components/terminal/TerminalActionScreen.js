@@ -10,6 +10,7 @@ import { validateCachedToken } from '../../utils/configureAuth'
 import { authSuccess } from '../../actions/auth';
 
 import { 
+	fetchCurrentTicketDetails,
 	setVisibleCategory, 
 	updateTransactionWithMenuItem, 
 	updateTicketStatus, 
@@ -33,7 +34,8 @@ const mapDispatchToProps = dispatch => ({
 	updateTicketStatus: (token, ticketId, status) => dispatch(updateTicketStatus(token, ticketId, status)),
 	removeItemFromTicket: (token, subdocId, ticketId) => dispatch(updateTransactionWithSubdocRemoval(token, subdocId, ticketId)),
 	routeToNode: (node) => dispatch(routeToNode(node)),
-	validateCachedAuth: (userInfo) => dispatch(authSuccess(userInfo))
+	validateCachedAuth: (userInfo) => dispatch(authSuccess(userInfo)),
+	fetchCurrentTicketDetails: (token, ticketId) => dispatch(fetchCurrentTicketDetails(token, ticketId))
 })
 
 class TerminalActionScreen extends Component {
@@ -44,6 +46,7 @@ class TerminalActionScreen extends Component {
 	// Category Selection Screen
 
 	async componentDidMount() {
+
 		const cachedAuth = await validateCachedToken();
 
 		if (cachedAuth.token) {
@@ -56,7 +59,16 @@ class TerminalActionScreen extends Component {
 			})
 		}
 
+		const { 
+			token,
+		} = this.props;
+		
+		this.props.fetchCurrentTicketDetails(
+			token,
+			this.props.match.params.id
+		);
 	}
+
 	generateItemCategoryVisibilityMenu = () => {
 		const { menuItems, visibleCategory } = this.props
 

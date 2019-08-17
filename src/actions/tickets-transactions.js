@@ -58,9 +58,10 @@ export function createNewTicket(token, createdBy) {
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
+			const ticketId = json._id;
 			dispatch(fetchTickets(token))
 			dispatch(receiveCurrentTicket(json))
-			dispatch(push('/omni/terminal/tickets')) 			
+			dispatch(push(`/omni/terminal/tickets/${ticketId}`)) 			
 			}
 		)
 		.catch(err => console.log(err))
@@ -79,7 +80,7 @@ export function fetchCurrentTicketDetails(token, ticket_Id) {
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => dispatch(receiveCurrentTicket(json)))
-		.then(() => dispatch(push('/omni/terminal/tickets')))
+		.then(() => dispatch(push(`/omni/terminal/tickets/${ticket_Id}`)))
 		.catch(err => console.log(err))
 	}
 }

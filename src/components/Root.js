@@ -76,7 +76,7 @@ export default class Root extends Component {
 
                  		<Route exact path='/omni/terminal' component={LoadableComponents.OmniTerminal} />
                  		<Route exact path='/omni/terminal/modifyItems' render={(props) => <TerminalActionScreen {...props} modify /> } /> 
-                 		<Route exact path='/omni/terminal/tickets' component={(props) => {
+                 		<Route exact path='/omni/terminal/tickets/:id' component={(props) => {
                  			return (
                  			                 			<React.Fragment>
                  				                 			<MediaQuery minWidth={2} maxWidth={798}>
