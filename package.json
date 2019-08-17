@@ -31,7 +31,7 @@
     "victory": "^30.2.0"
   },
   "scripts": {
-    "start": "ls && cd /vantage-api && ls && NODE_ENV=production node pos-api",
+    "start": "ls && cd /vantage-api && ls && NODE_ENV=production node api.js",
     "heroku-postbuild": "cd /vantage-api && npm install && cd .. && yarn install --ignore-engines && yarn build",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
