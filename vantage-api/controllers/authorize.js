@@ -122,14 +122,16 @@ async function validateToken(req, res, next, authReq) {
 			req.headers['x-user-id'] = validatedClient._id;	
 			req.headers['x-marketplace-ref'] = validatedClient.marketplaceRef_id
 		}
+
+		if (authReq.validateCachedLogin) {
+			return res.json({
+				validToken: true
+			})
+		}
 		
 			next();
 
 		 } catch(err) { res.status(403).send("Could not validate token")}
-
-
-
-		
 	   
 	   } catch(err) { next(err) }
 };
@@ -148,6 +150,10 @@ exports.routeEmployeeToMongoCollection = function(req, res, next) {
 
 exports.routeMarketplaceClient = function(req, res, next) {
 	validateToken(req, res, next, { attachClientDataToRequest: true })
+}
+
+exports.validateCachedLogin = (req, res, next) => {
+	validateToken(req, res, next, { validateCachedLogin: true })
 }
 exports.sendStripeTokenMetadataToClient = function(req, res, next) {
 

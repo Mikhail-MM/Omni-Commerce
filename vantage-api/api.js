@@ -300,8 +300,12 @@ router.route('/storeItem/')
 router.route('/storeconfig')
 	.get(authorize.routeEmployeeToMongoCollection, storeConfig.getLoggedUsers);
 
+router.route('/authorize/cached')
+	.get(authorize.validateCachedLogin);
+
 router.route('/authorize')
 	.post(authorize.login);
+
 
 router.route('/payments/stripe')
 	.post(payments.createStripeCharge);
@@ -345,7 +349,8 @@ router.route('/mailcamp')
 
 router.route('*')
 	.get((req, res) => {
-  		res.sendFile(path.join(__dirname+'/../../build/index.html'));
+		console.log(path.join(__dirname+'/../build/index.html'))
+  		res.sendFile(path.join(__dirname+'/../build/index.html'));
 	});
 
 app.use('/', router);
