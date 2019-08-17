@@ -112,6 +112,9 @@ if(app.get('env') === 'production') {
 app.use('/*', function(req, res, next) {	
 	console.log("We should be able to see this on each request...")
 	console.log(req.header('origin'))
+	console.log(req.get("origin"))
+	console.log(req.headers["x-forwarded-for"])
+	console.log(req.get('host'))
   res.header("Access-Control-Allow-Headers", "Origin, x-access-token, x-user-pathway, x-mongo-key, X-Requested-With, Content-Type, Accept");
   res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
   res.header("Access-Control-Allow-Credentials", true);
