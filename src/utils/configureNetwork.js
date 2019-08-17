@@ -4,7 +4,7 @@ export const resolveRootURI = () => {
 			return "http://localhost:3001";
 		case(process.env.NODE_ENV === "production"):
 		default:
-			return "https://still-beach-13809.herokuapp.com"
+			return ""
 	}
 }
 
