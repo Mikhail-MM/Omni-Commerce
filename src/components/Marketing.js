@@ -48,16 +48,17 @@ class  Marketing extends Component {
 
 	uniqueCollisionFreePrevScrollTop = null
 
-	determineActiveFeature = (viewportCenter, objectOfVerticallyStackedRows, stickyBarRef, scrollTop) => {
-		Object.keys(objectOfVerticallyStackedRows).forEach(featureKey => {
-			const domRECT = objectOfVerticallyStackedRows[featureKey]
-			if ((domRECT.top <= viewportCenter) && (domRECT.bottom >= viewportCenter)) return this.setState({
-				activeFeature: featureKey
-			})
-		})
+	determineActiveFeature = (viewportCenter, objectOfVerticallyStackedRows) => {
 		if (objectOfVerticallyStackedRows.resetter.top > 0 ) {
 			this.setState({
 				activeFeature: 'none'
+			})
+		} else {
+			Object.keys(objectOfVerticallyStackedRows).forEach(featureKey => {
+				const domRECT = objectOfVerticallyStackedRows[featureKey]
+				if ((domRECT.top <= viewportCenter) && (domRECT.bottom >= viewportCenter)) return this.setState({
+					activeFeature: featureKey
+				})
 			})
 		}
 	}
@@ -67,7 +68,7 @@ class  Marketing extends Component {
 		let viewportCenter = (window.innerHeight / 2)
 		const stickyElementRef = (window.innerWidth <= 798) ? this.stickyElMobile : this.stickyEl
 
-		this.determineActiveFeature(viewportCenter, {ft1 : this.ft1.getBoundingClientRect(), ft2: this.ft2.getBoundingClientRect(), ft3: this.ft3.getBoundingClientRect(), ft4: this.ft4.getBoundingClientRect(), resetter: this.resetter.getBoundingClientRect()}, stickyElementRef.getBoundingClientRect(), scrollTop)
+		this.determineActiveFeature(viewportCenter, {ft1 : this.ft1.getBoundingClientRect(), ft2: this.ft2.getBoundingClientRect(), ft3: this.ft3.getBoundingClientRect(), ft4: this.ft4.getBoundingClientRect(), resetter: this.resetter.getBoundingClientRect()})
 
 		if (this.uniqueCollisionFreePrevScrollTop && scrollTop > this.uniqueCollisionFreePrevScrollTop && this.state.scrollDir !== 'Scrolling Down') { 
 			this.setState({
@@ -128,7 +129,7 @@ class  Marketing extends Component {
 						</div>
 					</nav>
 					<div className='jumbo-image-container'>
-						<img alt="" src='/assets/omni-splash/jumbo-blur.jpg' />
+						<img alt="" src='/assets/omni-splash/jumbotron.jpg' />
 						<div className='hero-header-1' >
 							Running a Business is a <span style={{color: '#FF4734'}}> Challenge </span>
 						</div>
