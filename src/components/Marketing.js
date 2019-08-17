@@ -48,16 +48,18 @@ class  Marketing extends Component {
 
 	uniqueCollisionFreePrevScrollTop = null
 
-	determineActiveFeature = (viewportCenter, objectOfVerticallyStackedRows, stickyBarRef) => {
-		if ((stickyBarRef.top <= viewportCenter) && (stickyBarRef.bottom >= viewportCenter)) return this.setState({
-				activeFeature: 'none'
-			})
+	determineActiveFeature = (viewportCenter, objectOfVerticallyStackedRows, stickyBarRef, scrollTop) => {
 		Object.keys(objectOfVerticallyStackedRows).forEach(featureKey => {
 			const domRECT = objectOfVerticallyStackedRows[featureKey]
 			if ((domRECT.top <= viewportCenter) && (domRECT.bottom >= viewportCenter)) return this.setState({
 				activeFeature: featureKey
 			})
 		})
+		if (objectOfVerticallyStackedRows.resetter.top > 0 ) {
+			this.setState({
+				activeFeature: 'none'
+			})
+		}
 	}
 
 	handleScroll = (event) => {
@@ -65,7 +67,7 @@ class  Marketing extends Component {
 		let viewportCenter = (window.innerHeight / 2)
 		const stickyElementRef = (window.innerWidth <= 798) ? this.stickyElMobile : this.stickyEl
 
-		this.determineActiveFeature(viewportCenter, {ft1 : this.ft1.getBoundingClientRect(), ft2: this.ft2.getBoundingClientRect(), ft3: this.ft3.getBoundingClientRect(), ft4: this.ft4.getBoundingClientRect(), resetter: this.resetter.getBoundingClientRect()}, stickyElementRef.getBoundingClientRect())
+		this.determineActiveFeature(viewportCenter, {ft1 : this.ft1.getBoundingClientRect(), ft2: this.ft2.getBoundingClientRect(), ft3: this.ft3.getBoundingClientRect(), ft4: this.ft4.getBoundingClientRect(), resetter: this.resetter.getBoundingClientRect()}, stickyElementRef.getBoundingClientRect(), scrollTop)
 
 		if (this.uniqueCollisionFreePrevScrollTop && scrollTop > this.uniqueCollisionFreePrevScrollTop && this.state.scrollDir !== 'Scrolling Down') { 
 			this.setState({
