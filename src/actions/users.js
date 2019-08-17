@@ -1,6 +1,11 @@
+import { 
+	hostURI,
+	corsSetting
+ } from '../components/config'
+
 export function updateProfileData(token, userID, data, imageHandler, mode) {
 	return dispatch => {
-		return fetch(`/clients/${userID}`, {
+		return fetch(`${hostURI}/clients/${userID}`, {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-access-token': token,
@@ -12,7 +17,7 @@ export function updateProfileData(token, userID, data, imageHandler, mode) {
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
 			if (imageHandler.newImageFlag) {
-				return fetch(`/sign-s3?fileName=${imageHandler.imageSource.name}&fileType=${imageHandler.imageSource.type}`, {
+				return fetch(`${hostURI}/sign-s3?fileName=${imageHandler.imageSource.name}&fileType=${imageHandler.imageSource.type}`, {
 					method: 'GET',
 				})
 				.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
@@ -31,7 +36,7 @@ export function updateProfileData(token, userID, data, imageHandler, mode) {
 							return fileOnBucketurl
 					})
 					.then(imageURL => {
-						return fetch(`/clients/${userID}`, {
+						return fetch(`${hostURI}/clients/${userID}`, {
 							headers: {
 								'Content-Type': 'application/json',
 								'x-access-token': token,

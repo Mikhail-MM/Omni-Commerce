@@ -1,8 +1,12 @@
 import { routeUserAfterLogin } from './routing'
 import { showModal, hideModal } from './modals'
 
-function authSuccess (userInfo) {
-	console.log(userInfo)
+import { 
+	hostURI,
+	corsSetting
+ } from '../components/config'
+
+export function authSuccess (userInfo) {
 	return {
 	type:'USER_AUTHENTICATED',
 		userInfo
@@ -24,17 +28,20 @@ export function logOut() {
 }
 
 export function attemptLogIn(credentials) {
+	const url = `${hostURI}/authorize`
+	console.log(url);
 	return dispatch => {
-		return fetch('/authorize', {
-		headers:{
-			'Content-Type': 'application/json'
-		},
-		method: 'POST',
-		mode: 'cors', 
-		body: JSON.stringify(credentials)
+		return fetch(url, {
+			headers:{
+				'Content-Type': 'application/json'
+			},
+			method: 'POST',
+			mode: 'cors', 
+			body: JSON.stringify(credentials)
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
+			console.log(json)
 			dispatch(authSuccess(json))
 			dispatch(routeUserAfterLogin(json.accountType))
 			dispatch(hideModal())
@@ -47,7 +54,7 @@ export function attemptLogIn(credentials) {
 export function attemptRegistration(token, data, imageHandler, mode) {
 	return dispatch => {
 		if (imageHandler.newImageFlag) {
-			return fetch(`/sign-s3?fileName=${imageHandler.imageSource.name}&fileType=${imageHandler.imageSource.type}`, {
+			return fetch(`${hostURI}/sign-s3?fileName=${imageHandler.imageSource.name}&fileType=${imageHandler.imageSource.type}`, {
 				method: 'GET',
 			})
 			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
@@ -66,7 +73,7 @@ export function attemptRegistration(token, data, imageHandler, mode) {
 						return fileOnBucketurl
 				})
 				.then(avatarURL => {
-					return fetch(`/registration/${mode}`, {
+					return fetch(`${hostURI}/registration/${mode}`, {
 						headers:{
 							'Content-Type': 'application/json',
 							'x-access-token': token
@@ -84,7 +91,7 @@ export function attemptRegistration(token, data, imageHandler, mode) {
 			.catch(err => console.log(err))
 		} else if (!imageHandler.newImageFlag) {
 			console.log(imageHandler)
-			return fetch(`/registration/${mode}`, {
+			return fetch(`${hostURI}/registration/${mode}`, {
 				headers:{
 					'Content-Type': 'application/json',
 					'x-access-token': token

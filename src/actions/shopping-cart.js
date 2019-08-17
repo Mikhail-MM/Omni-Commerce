@@ -1,10 +1,16 @@
 import { showModal } from './modals'
 
+import { 
+	hostURI,
+	corsSetting
+ } from '../components/config'
+
+
 export function retrieveShoppingCart(token) {
 	console.log("Sending token to server for shopping cart retrieval")
 	console.log(token)
 	return dispatch => {
-		return fetch('/shoppingCart/userLookup/', {
+		return fetch(`${hostURI}/shoppingCart/userLookup/`, {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token
@@ -20,7 +26,7 @@ export function retrieveShoppingCart(token) {
 }
 
 export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountAlreadyInCart) {
-	const url = '/storeItem/' + itemId
+	const url = `${hostURI}/storeItem/${itemId}`
 
 	console.log("amountRequested, ammountAlreadyInCart: ", amountRequested, amountAlreadyInCart)
 
@@ -47,7 +53,7 @@ export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountA
 
 				if (amountThatCanBeFulfilled > 0) {
 					console.log("Filling cart with partial request")
-					return fetch('/shoppingCart/addItem', {
+					return fetch(`${hostURI}/shoppingCart/addItem`, {
 					headers:{
 						'Content-Type': 'application/json',
 						'x-access-token': token,
@@ -98,7 +104,7 @@ export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountA
 
 			} else if ( amountAlreadyInCart + amountRequested <= json.numberInStock ){
 				console.log("If statement running: Item DB is greater than or equal to amount requested + amount already in cart")
-				return fetch('/shoppingCart/addItem', {
+				return fetch(`${hostURI}/shoppingCart/addItem`, {
 					headers:{
 						'Content-Type': 'application/json',
 						'x-access-token': token,
@@ -117,7 +123,6 @@ export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountA
 				})
 				.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 				.then(cartJson =>{ 
-					console.log("WHERE IS THE NAME", json)
 					dispatch(showModal('CART_ADDITION_SUCCESS_MODAL', { itemName: json.itemName }))
 					dispatch(receiveShoppingCart(cartJson)) 
 				})
@@ -130,7 +135,7 @@ export function pushItemIntoShoppingCart(token, itemId, amountRequested, amountA
 
 export function validateCartAndProceedToPayment(token) {
 	return dispatch => { // check validation, watch for flags, dispatch to payment gateway or just bring up a modal 
-		fetch('/shoppingCart/checkOut/', {
+		fetch(`${hostURI}/shoppingCart/checkOut/`, {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token,
@@ -162,7 +167,7 @@ export function pullItemFromCart(token, subdocId) {
 	console.log(subdocId);
 	const data = { _id: subdocId }
 	return dispatch => {
-		fetch('/shoppingCart/removeItem/',{ 
+		fetch(`${hostURI}/shoppingCart/removeItem/`,{ 
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token,

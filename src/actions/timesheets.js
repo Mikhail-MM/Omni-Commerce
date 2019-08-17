@@ -1,9 +1,14 @@
 import { fetchLoggedUsers } from './employees'
+import { 
+	hostURI,
+	corsSetting
+ } from '../components/config'
+
 
 export function clockEmployeeOut(token, employeeNumber) {
 	const data = {clockInNumber: employeeNumber}
 	return dispatch => {
-		return fetch('/timesheets/co', {
+		return fetch(`${hostURI}/timesheets/co`, {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token
@@ -30,7 +35,7 @@ export function clockEmployeeIn(token, employeeNumber) {
 	console.log("Data to Stringify: ")
 	console.log(data)
 	return dispatch => {
-		return fetch('/timesheets/ci', {
+		return fetch(`${hostURI}/timesheets/ci`, {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token

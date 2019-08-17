@@ -1,5 +1,9 @@
 import { push } from 'react-router-redux'
 import { groupBy } from 'underscore'
+import { 
+	hostURI,
+	corsSetting
+ } from '../components/config'
 
 
 export function receiveCurrentTicket(ticket) {
@@ -28,7 +32,7 @@ export function setVisibleCategory(category) {
 
 export function fetchTickets(token) {
 	return dispatch => {
-		return fetch('/transactions', {
+		return fetch(`${hostURI}/transactions`, {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token
@@ -44,7 +48,7 @@ export function fetchTickets(token) {
 export function createNewTicket(token, createdBy) {
 	const data = { createdBy: createdBy, createdAt: Date.now(), status: "Open"}
 	return dispatch => {
-		return fetch('/transactions', {
+		return fetch(`${hostURI}/transactions`, {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token
@@ -64,7 +68,7 @@ export function createNewTicket(token, createdBy) {
 }
 
 export function fetchCurrentTicketDetails(token, ticket_Id) {
-	const url = `/transactions/${ticket_Id}`;
+	const url = `${hostURI}/transactions/${ticket_Id}`;
 	return dispatch => {
 		return fetch(url, {
 			headers:{
@@ -81,7 +85,7 @@ export function fetchCurrentTicketDetails(token, ticket_Id) {
 }
 
 export function updateTransactionWithMenuItem(token, menuItem_Id, currentTransaction_Id) {
-	const url = '/menus/noIDhack/' + menuItem_Id;
+	const url = `${hostURI}/menus/noIDhack/${menuItem_Id}`;
 	return dispatch => {
 		return fetch(url, {
 			headers:{
@@ -92,7 +96,7 @@ export function updateTransactionWithMenuItem(token, menuItem_Id, currentTransac
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
-			const url = '/transactions/addItem/' + currentTransaction_Id;
+			const url = `${hostURI}/transactions/addItem/${currentTransaction_Id}`;
 			return fetch(url, {
 				headers:{
 					'Content-Type': 'application/json',
@@ -110,7 +114,7 @@ export function updateTransactionWithMenuItem(token, menuItem_Id, currentTransac
 
 
 export function updateTicketStatus(token, ticket_Id, ticketStatus) {
-	const url = `/transactions/${ticket_Id}`
+	const url = `${hostURI}/transactions/${ticket_Id}`
 	const data = { status: ticketStatus }
 	return dispatch => {
 		return fetch(url, {
@@ -128,7 +132,7 @@ export function updateTicketStatus(token, ticket_Id, ticketStatus) {
 
 
 export function updateTransactionWithRequestedAddon(token, currentTransaction_Id, addOn) {
-	const url = `/transactions/requestAddon/${currentTransaction_Id}`
+	const url = `${hostURI}/transactions/requestAddon/${currentTransaction_Id}`
 	return dispatch => {
 		return fetch(url, {
 			headers:{
@@ -145,7 +149,7 @@ export function updateTransactionWithRequestedAddon(token, currentTransaction_Id
 }
 
 export function updateTransactionWithSubdocRemoval(token, subdoc_Id, currentTransaction_Id) {
-	const url = `/transactions/removeItem/${currentTransaction_Id}`
+	const url = `${hostURI}/transactions/removeItem/${currentTransaction_Id}`
 	const data = { subdoc_Id: subdoc_Id }
 	return dispatch => {
 		return fetch(url, {

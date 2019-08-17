@@ -1,5 +1,10 @@
+import { 
+	hostURI,
+	corsSetting
+ } from '../components/config'
+
 export const getAllEvents = (token) => {
-		return fetch('/events', {
+		return fetch(`${hostURI}/events`, {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-access-token': token

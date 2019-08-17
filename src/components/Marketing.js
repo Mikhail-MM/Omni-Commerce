@@ -1,19 +1,26 @@
-import React, { Component } from 'react'
-import { connect} from 'react-redux'
-import { debounce, throttle } from 'underscore'
+import React, { Component } from 'react';
+import { connect} from 'react-redux';
+import { debounce, throttle } from 'underscore';
 
-import MediaQuery from 'react-responsive'
+import MediaQuery from 'react-responsive';
 
-import ModalRoot from './ModalRoot'
+import ModalRoot from './ModalRoot';
 
-import { showModal } from '../actions/modals'
-import { routeToNode } from '../actions/routing'
-import './styles/Marketing.css'
+import { showModal } from '../actions/modals';
+import { routeToNode } from '../actions/routing';
+import { authSuccess } from '../actions/auth';
+import './styles/Marketing.css';
 
-const mapDispatchToProps = dispatch => ({
-	showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps)),
-	route: (node) => dispatch(routeToNode(node)),
-})
+import { validateCachedToken } from "../utils/configureAuth";
+
+const mapDispatchToProps = dispatch => {
+	return {
+		showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps)),
+		route: (node) => dispatch(routeToNode(node)),
+		validateCachedAuth: (userInfo) => dispatch(authSuccess(userInfo))
+	}
+}
+
 
 class  Marketing extends Component {
 	state = { 
@@ -23,7 +30,7 @@ class  Marketing extends Component {
 		scrollHandler: null,
 		debounceScroll: null,
 	}
-	componentDidMount() {
+	async componentDidMount() {
 		console.log(`Mounting Marketing Component - Environment: ${process.env.NODE_ENV}` )
 		const scrollHandler = throttle(this.handleScroll, 100)
 		const debounceScroll = debounce(this.handleScroll, 100)		
@@ -32,7 +39,15 @@ class  Marketing extends Component {
 			debounceScroll
 		})
 		window.addEventListener('scroll', scrollHandler);
-		window.addEventListener('scroll', debounceScroll)
+		window.addEventListener('scroll', debounceScroll);
+
+		const { token, accountType } = await validateCachedToken();
+		if (token) {
+			this.props.validateCachedAuth({
+				token,
+				accountType
+			})
+		}
 	}
 
 	componentWillUnmount() {

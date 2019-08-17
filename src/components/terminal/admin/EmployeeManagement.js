@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 
 import { showModal } from '../../../actions/modals'
 
+import { hostURI } from '../../config';
+
 const mapStateToProps = state => {
 
 	const { token } = state.authReducer
@@ -31,7 +33,7 @@ class EmployeeManagement extends Component {
 	}
 
 	findMyEmployees = (token) => {
-		return fetch('/employees/find_all', {
+		return fetch(`${hostURI}/employees/find_all`, {
 				headers:{
 					'Content-Type': 'application/json',
 					'x-access-token': token,

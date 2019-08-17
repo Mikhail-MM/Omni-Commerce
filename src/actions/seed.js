@@ -1,6 +1,12 @@
+import { 
+	hostURI,
+	corsSetting
+ } from '../components/config'
+
+
 export function seedOmniDatabase() {
 	return dispatch => {
-		return fetch('/seed/omni/', {
+		return fetch(`${hostURI}/seed/omni/`, {
 		headers:{
 			'Content-Type': 'application/json'
 		},
@@ -14,7 +20,7 @@ export function seedOmniDatabase() {
 
 export function seedEssosMarketplace() {
 	return dispatch => {
-		return fetch('/seed/essos/', {
+		return fetch(`${hostURI}/seed/essos/`, {
 		headers:{
 			'Content-Type': 'application/json'
 		},
@@ -28,7 +34,7 @@ export function seedEssosMarketplace() {
 
 export function seedEssosJumbotron() {
 	return dispatch => {
-		return fetch('/seed/jumbo', {
+		return fetch(`${hostURI}/seed/jumbo`, {
 			headers:{
 				'Content-Type': 'application/json'
 			},

@@ -28,7 +28,7 @@ export function retrieveAllItemsForSale() {
 export function updateMarketplaceItem(token, itemID, data, imageHandler) {
 	console.log("Updating Marketplace Item - What is Image handler? ", imageHandler)
 	return dispatch => {
-		return fetch(`/storeItem/${itemID}`, {
+		return fetch(`${hostURI}/storeItem/${itemID}`, {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-access-token': token
@@ -39,7 +39,7 @@ export function updateMarketplaceItem(token, itemID, data, imageHandler) {
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
 			if (imageHandler.newImageFlag) {
-				return fetch(`/sign-s3?fileName=${imageHandler.imageSource.name}&fileType=${imageHandler.imageSource.type}`, {
+				return fetch(`${hostURI}/sign-s3?fileName=${imageHandler.imageSource.name}&fileType=${imageHandler.imageSource.type}`, {
 					method: 'GET',
 				})
 				.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
@@ -58,7 +58,7 @@ export function updateMarketplaceItem(token, itemID, data, imageHandler) {
 							return fileOnBucketurl
 					})
 					.then(persistedBucketURL => {
-						return fetch(`/storeItem/${itemID}`, {
+						return fetch(`${hostURI}/storeItem/${itemID}`, {
 							headers: {
 								'Content-Type': 'application/json',
 								'x-access-token': token,
@@ -87,7 +87,7 @@ export function updateMarketplaceItem(token, itemID, data, imageHandler) {
 
 export function postEssosItem(token, data, imageFile) {
 	return dispatch => {
-		return fetch('/storeItem', {
+		return fetch(`${hostURI}/storeItem`, {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-access-token': token,
@@ -97,7 +97,7 @@ export function postEssosItem(token, data, imageFile) {
 		})
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(newItemJSON => {
-			return fetch(`/sign-s3?fileName=${imageFile.name}&fileType=${imageFile.type}`, {
+			return fetch(`${hostURI}/sign-s3?fileName=${imageFile.name}&fileType=${imageFile.type}`, {
 				method: 'GET',
 			})
 			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
@@ -143,7 +143,7 @@ export function postEssosItem(token, data, imageFile) {
 
 export function deleteMarketplaceItem(token, itemID) {
 	return dispatch => {
-		return fetch(`/storeItem/${itemID}`, {
+		return fetch(`${hostURI}/storeItem/${itemID}`, {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-access-token': token,
@@ -163,7 +163,7 @@ export function deleteMarketplaceItem(token, itemID) {
 export function addItemToWishlist(token, itemId, mode) {
 	return dispatch => {
 		const controllerMode = { mode }
-		return fetch(`/storeItem/wishlist/${itemId}`, {
+		return fetch(`${hostURI}/storeItem/wishlist/${itemId}`, {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-access-token': token,			
@@ -181,7 +181,7 @@ export function addItemToWishlist(token, itemId, mode) {
 
 export function getUserWishlist(token) {
 	return dispatch => {
-		return fetch(`/storeItem/wishlist`, {
+		return fetch(`${hostURI}/storeItem/wishlist`, {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-access-token': token,			

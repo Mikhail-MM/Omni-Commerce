@@ -1,8 +1,14 @@
 import { showModal } from './modals'
 
+import { 
+	hostURI,
+	corsSetting
+ } from '../components/config'
+
+ 
 export function fetchAllTicketsAndGenerateSalesReport(token) {
 	return dispatch => {
-		return fetch('/salesReports', {
+		return fetch(`${hostURI}/salesReports`, {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token
@@ -25,7 +31,7 @@ export function lookUpSalesReportsByDate(token, beginDate, endDate) {
 	console.log(data.beginDate)
 	console.log(data.endDate)
 	return dispatch => {
-		return fetch('/salesReports/aggregate/', {
+		return fetch(`${hostURI}/salesReports/aggregate/`, {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token
@@ -41,7 +47,7 @@ export function lookUpSalesReportsByDate(token, beginDate, endDate) {
 
 export function getSalesReportById(token, id) {
 	return dispatch => {
-		return fetch(`/salesReports/${id}`, {
+		return fetch(`${hostURI}/salesReports/${id}`, {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token

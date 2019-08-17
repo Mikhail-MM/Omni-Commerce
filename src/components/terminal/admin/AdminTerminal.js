@@ -54,7 +54,7 @@ class AdminTerminal extends Component {
 		subscribeToFeedUpdates(token, this.updateEventFeed)
 	}
 
-	componentDidUnmount() {
+	componentWillUnmount() {
 		closeConnection()
 	}
 

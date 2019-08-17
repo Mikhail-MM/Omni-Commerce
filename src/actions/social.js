@@ -1,7 +1,13 @@
+import { 
+	hostURI,
+	corsSetting
+ } from '../components/config'
+
+ 
 export const followUser = (token, userId, mode) => {
 	return dispatch => {
 		const controllerMode = { mode }
-		return fetch(`/social/follow/${userId}`, {
+		return fetch(`${hostURI}/social/follow/${userId}`, {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-access-token': token,			
@@ -17,7 +23,7 @@ export const followUser = (token, userId, mode) => {
 
 export const getUserSocialFeed = (token) => {
 	return dispatch => {
-		return fetch(`/users/essos/getProfileView/ownProfile`, {
+		return fetch(`${hostURI}/users/essos/getProfileView/ownProfile`, {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-access-token': token,			

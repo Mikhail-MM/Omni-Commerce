@@ -1,9 +1,15 @@
 import io from 'socket.io-client'
 
+import { 
+	hostURI,
+	corsSetting
+ } from '../components/config'
+
+ 
 const socket = io('https://still-beach-13809.herokuapp.com/')
 
 export const subscribeToFeedUpdates = (token, cb) => {
-	fetch(`/users/essos/getProfileView/ownProfile`, {
+	fetch(`${hostURI}/users/essos/getProfileView/ownProfile`, {
 		headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token,

@@ -1,6 +1,13 @@
 import { showModal } from './modals'
+
+import { 
+	hostURI,
+	corsSetting
+ } from '../components/config'
+
+
 export function sendCashPaymentToApi(authToken, cashTendered, transaction_id) {
-	const url = '/transactions/' + transaction_id
+	const url = `${hostURI}/transactions/${transaction_id}`
 	const data = {
 		payment: {
 			paymentType: "Cash",
@@ -18,7 +25,7 @@ export function sendCashPaymentToApi(authToken, cashTendered, transaction_id) {
 		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
 		.then(json => {
 			data.parentTransaction = json;
-			fetch('/payments/cash', {
+			fetch(`${hostURI}/payments/cash`, {
 				headers:{
 					'Content-Type': 'application/json',
 					'x-access-token': authToken
@@ -53,7 +60,7 @@ export function sendCashPaymentToApi(authToken, cashTendered, transaction_id) {
 
 export function sendStripeTokenToApi(authToken, stripeToken, transaction_id) {
 	// Need to ask API for price of the damn thang
-	const url = '/transactions/' + transaction_id
+	const url = `${hostURI}/transactions/` + transaction_id
 	const data = {}
 	return dispatch => {
 		fetch(url, {
@@ -71,7 +78,7 @@ export function sendStripeTokenToApi(authToken, stripeToken, transaction_id) {
 				transactionId: transaction_id,
 			}
 
-			return fetch('/payments/stripe', {
+			return fetch(`${hostURI}/payments/stripe`, {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': authToken
@@ -92,7 +99,7 @@ export function sendStripeTokenToApi(authToken, stripeToken, transaction_id) {
 }
 
 function updateTransactionWithStripePaymentDetails(authToken, transaction_id, paymentJson) {
-	const url = '/transactions/' + transaction_id
+	const url = `${hostURI}/transactions/${transaction_id}`
 	console.log(paymentJson)
 	console.log(paymentJson.outcome)
 	const data = {
@@ -159,7 +166,7 @@ function updateTransactionWithStripePaymentDetails(authToken, transaction_id, pa
 
 export function beginCartPaymentValidationCascade(authToken, token) {
 	return dispatch => {
-		return fetch('/shoppingCart/payment/', {
+		return fetch(`${hostURI}/shoppingCart/payment/`, {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': authToken

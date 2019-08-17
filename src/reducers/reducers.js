@@ -46,26 +46,33 @@ const stateMap = {
 const authReducer = (state = stateMap.authReducer, action) => {
 	switch(action.type){
 	case ('USER_AUTHENTICATED'): { 
-		console.log(action.userInfo);
-		console.log(action.userInfo.token);
+		const { accountType, token } = action.userInfo;
+		window.localStorage.setItem("x-auth-token", token);
+		window.localStorage.setItem("x-account-type", accountType);
 		return Object.assign({}, state, {
 			isAuthenticated: true,
-			instanceType: action.userInfo.accountType,
-			token: action.userInfo.token,
+			instanceType: accountType,
+			token,
 			hasError: false
 			}
 		)
 	}
 	case ('INVALID_CREDENTIALS'): { 
 		return Object.assign({}, state, {
-			isAuthenticated:false,
-			hasError: true,
-			errorText: action.errorText,
+				isAuthenticated:false,
+				hasError: true,
+				errorText: action.errorText,
 			}
 		) 
 	}
 	case ('LOG_OUT'): { 
-		return stateMap.authReducer 
+		window.localStorage.removeItem("x-auth-token");
+		window.localStorage.removeItem("x-account-type");
+		return Object.assign({}, state, {
+			isAuthenticated: false,
+			hasError: false,
+			errorText: null
+		})
 	}
 	default: 
 		return state

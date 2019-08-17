@@ -5,6 +5,7 @@ import moment from 'moment'
 import { VictoryChart, VictoryAxis, VictoryTheme, VictoryLine, VictoryPie, VictoryTooltip, VictoryBar } from 'victory'
 import { getSalesReportById } from '../../../actions/sales-reporting'
 
+import { hostURI } from '../../config';
 
 const mapStateToProps = state => {
 	const { token } = state.authReducer
@@ -31,7 +32,7 @@ class SalesAnalyticsContainer extends Component {
 	}
 
 	fetchAllSalesReports = (token) => {
-		return fetch('/salesReports', {
+		return fetch(`${hostURI}/salesReports`, {
 				headers:{
 					'Content-Type': 'application/json',
 					'x-access-token': token,

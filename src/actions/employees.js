@@ -1,5 +1,10 @@
 
+import { 
+	hostURI,
+	corsSetting
+ } from '../components/config'
 
+ 
 function receiveLoggedUsers(loggedUsers) {
 	console.log(loggedUsers)
 	return {
@@ -10,7 +15,7 @@ function receiveLoggedUsers(loggedUsers) {
 
 export function fetchLoggedUsers(token) {
 	return dispatch => {
-		return fetch('/storeconfig', {
+		return fetch(`${hostURI}/storeconfig`, {
 			headers:{
 				'Content-Type': 'application/json',
 				'x-access-token': token

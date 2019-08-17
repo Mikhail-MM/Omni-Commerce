@@ -32,8 +32,6 @@ import Playground from './Playground'
 
 import EssosCartCheckout from './EssosCartCheckout'
 
-import ModalRoot from './ModalRoot'
-
 import Marketing from './Marketing'
 
 const loggerMiddleware = createLogger()

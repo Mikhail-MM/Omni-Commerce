@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
 
+import { hostURI } from '../../config';
+
 const mapStateToProps = state => {
 	const { token } = state.authReducer
 	return { token }
@@ -26,7 +28,7 @@ class SalesAnalyticsContainer extends Component {
 	}
 
 	fetchAllSalesReports = (token) => {
-		return fetch('/timesheets', {
+		return fetch(`${hostURI}/timesheets`, {
 				headers:{
 					'Content-Type': 'application/json',
 					'x-access-token': token,
