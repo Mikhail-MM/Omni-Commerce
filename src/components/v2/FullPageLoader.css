@@ -1,0 +1,14 @@
+.fp_loader_wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: radial-gradient(circle at center,#693d41,#451b36 60%,#200416);
+}
+
+.fp_loader_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}

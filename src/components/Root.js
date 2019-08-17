@@ -19,10 +19,14 @@ import RegistrationPicker from './forms/RegistrationPicker'
 
 import Marketing from './Marketing'
 
+
+
 // Load CSS from lazy-loaded Components
 import './styles/EssosMarket.css';
 
 import GlobalAuthProvider from './v2/GlobalAuthProvider';
+import FullPageLoader from './v2/FullPageLoader'
+
 
 const loggerMiddleware = createLogger()
 const history = createHistory()
@@ -42,27 +46,27 @@ const store = createStore(
 const LoadableComponents = {
 	EssosMarket: Loadable({
 		loader: () => import('./EssosMarket'),
-		loading: () => <h2> Loading... </h2>
+		loading: () => <FullPageLoader />
 	}),
 	OmniTerminal: Loadable({
 		loader: () => import('./terminal/OmniTerminal'),
-		loading: () => <h2> Loading... </h2>,
+		loading: () => <FullPageLoader />,
 	}),
 	AdminTerminal: Loadable({
 		loader: () => import('./terminal/admin/AdminTerminal'),
-		loading: () => <h2> Loading... </h2>,
+		loading: () => <FullPageLoader />,
 	}),
 	UserPage: Loadable({
 		loader: () => import('./essos/UserPage'),
-		loading: () => <h2> Loading... </h2>,
+		loading: () => <FullPageLoader />,
 	}),
 	EssosCartCheckout: Loadable({
 		loader: () => import('./EssosCartCheckout'),
-		loading: () => <h2> Loading... </h2>,
+		loading: () => <FullPageLoader />,
 	}),
 	AuthenticationForm: Loadable({
 		loader: () => import('./forms/registration/AuthenticationForm'),
-		loading: () => <h2> Loading... </h2>,
+		loading: () => <FullPageLoader />,
 	})
 
 }

@@ -18,8 +18,8 @@ const NavBar = ({ topOfPage, manageSticky, route, showModal}) => {
         topOfPage={topOfPage}/>
       <div className='right-nav'>
         <a className='splash-link' onClick={routeToMarketplace}> Online Marketplace </a>
-        <a className='splash-link' onClick={showRegistrationModal}> Register </a>
-        <a className='splash-link' onClick={showModulePicker}> Log In </a> 
+        <a className='splash-link' onClick={showModulePicker}> Register </a>
+        <a className='splash-link' onClick={showRegistrationModal}> Log In </a> 
       </div>
     </nav>
   </div>
