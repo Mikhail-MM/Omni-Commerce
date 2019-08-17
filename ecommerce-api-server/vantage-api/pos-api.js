@@ -79,11 +79,10 @@ console.log("Mongoose connection establishment")
 app.use(bodyParser.json());
 
 
-app.use(logger('dev'));
-
 if(app.get('env') === 'development') {
 	app.use('/*', function(req, res, next) {
 		res.header("Access-Control-Allow-Origin", "http://localhost:3000")
+		app.use(logger('dev'));
 		next();
 	});
 }
@@ -111,6 +110,7 @@ if(app.get('env') === 'production') {
 
 
 app.use('/*', function(req, res, next) {	
+	console.log("We should be able to see this on each request...")
   res.header("Access-Control-Allow-Headers", "Origin, x-access-token, x-user-pathway, x-mongo-key, X-Requested-With, Content-Type, Accept");
   res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
   res.header("Access-Control-Allow-Credentials", true);
