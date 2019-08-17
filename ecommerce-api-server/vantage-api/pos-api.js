@@ -92,17 +92,15 @@ if(app.get('env') === 'production') {
 	// Init script can be built to instantiate first Admin
 	app.use(sslRedirect());
 	app.use('/*', function(req, res, next) {
-		if (req.headers.origin === "https://www.texashunterproducts.com") {
-			console.log(1)
-			  res.header("Access-Control-Allow-Origin", "https://www.texashunterproducts.com");
-		}
-		if (req.headers.origin === "https://www.omni-io.com/") {
-			console.log(2)
+		const origin = req.get('host')
+		if (origin === "www.omni-io.com") {
+			console.log("Omni origin registered.")
 			res.header("Access-Control-Allow-Origin", "https://www.omni-io.com/");
-		}
-		if (req.headers.origin === "https://still-beach-13809.herokuapp.com/") {
-			console.log(3)
+		} else if (origin === "still-beach-13809.herokuapp.com") {
+			console.log("Heroku Project Origin Registered")
 			res.header("Access-Control-Allow-Origin", "https://still-beach-13809.herokuapp.com/")
+		} else {
+			res.header("Access-Control-Allow-Origin", "https://www.texashunterproducts.com");
 		}
 		next();
 	});
@@ -110,11 +108,6 @@ if(app.get('env') === 'production') {
 
 
 app.use('/*', function(req, res, next) {	
-	console.log("We should be able to see this on each request...")
-	console.log(req.header('origin'))
-	console.log(req.get("origin"))
-	console.log(req.headers["x-forwarded-for"])
-	console.log(req.get('host'))
   res.header("Access-Control-Allow-Headers", "Origin, x-access-token, x-user-pathway, x-mongo-key, X-Requested-With, Content-Type, Accept");
   res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
   res.header("Access-Control-Allow-Credentials", true);
