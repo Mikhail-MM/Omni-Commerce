@@ -1,0 +1,8 @@
+Restoring from Mlab BSON dumps to Local DB
+
+./mongorestore --uri mongodb://localhost:27017/omninova -d omninova omninova
+
+-d omninova omninova
+	+ MongoDump outputs a directory of JSON and BSON files
+	+ -d is a database name, but also the identical name of the directory which contains all the backup files.
+	+ restore file dir and mongo daemon are in Mongo's bin folder for simplicity. Absolute paths should be provided

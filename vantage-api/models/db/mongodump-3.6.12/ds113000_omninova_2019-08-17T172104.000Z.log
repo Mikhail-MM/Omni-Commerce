@@ -1,0 +1,65 @@
+
+Using mongodump at '/home/madmin/deploy/lib/src/mongodb-linux-x86_64-community-3.6.12/bin/mongodump' version '3.6.12 (community)'...
+Executing command: 
+/home/madmin/deploy/lib/src/mongodb-linux-x86_64-community-3.6.12/bin/mongodump --host localhost --port 13000 -d omninova -u **** -p **** --authenticationDatabase admin --dumpDbUsersAndRoles --out /mnt/var/misc/backup_temp/backups/5d58377f42330ff784fff504/ds113000_omninova_2019-08-17T172104.000Z
+2019-08-17T10:21:06.328-0700	dumping users and roles for omninova
+2019-08-17T10:21:06.330-0700	writing omninova.essosusers to 
+2019-08-17T10:21:06.330-0700	writing omninova.MenuItems_b5f23a01-61d0 to 
+2019-08-17T10:21:06.330-0700	writing omninova.shoppingcarts to 
+2019-08-17T10:21:06.330-0700	writing omninova.storeitems to 
+2019-08-17T10:21:06.332-0700	done dumping omninova.MenuItems_b5f23a01-61d0 (63 documents)
+2019-08-17T10:21:06.332-0700	writing omninova.omniusers to 
+2019-08-17T10:21:06.343-0700	done dumping omninova.omniusers (33 documents)
+2019-08-17T10:21:06.343-0700	writing omninova.Transactions_b5f23a01-61d0 to 
+2019-08-17T10:21:06.351-0700	done dumping omninova.Transactions_b5f23a01-61d0 (30 documents)
+2019-08-17T10:21:06.351-0700	writing omninova.b5f23a01-61d0_Events to 
+2019-08-17T10:21:06.352-0700	done dumping omninova.shoppingcarts (40 documents)
+2019-08-17T10:21:06.352-0700	writing omninova.clients to 
+2019-08-17T10:21:06.353-0700	done dumping omninova.b5f23a01-61d0_Events (28 documents)
+2019-08-17T10:21:06.353-0700	writing omninova.MenuItems_48407cbd-fbf2 to 
+2019-08-17T10:21:06.354-0700	done dumping omninova.storeitems (37 documents)
+2019-08-17T10:21:06.354-0700	writing omninova.undefined_StoreConfig to 
+2019-08-17T10:21:06.355-0700	done dumping omninova.clients (17 documents)
+2019-08-17T10:21:06.355-0700	writing omninova.b5f23a01-61d0_SalesReports to 
+2019-08-17T10:21:06.356-0700	done dumping omninova.b5f23a01-61d0_SalesReports (7 documents)
+2019-08-17T10:21:06.356-0700	writing omninova.b5f23a01-61d0_TimeSheets to 
+2019-08-17T10:21:06.358-0700	done dumping omninova.undefined_StoreConfig (11 documents)
+2019-08-17T10:21:06.358-0700	writing omninova.Transactions_0ff1e595-76ea to 
+2019-08-17T10:21:06.358-0700	done dumping omninova.b5f23a01-61d0_TimeSheets (4 documents)
+2019-08-17T10:21:06.358-0700	writing omninova.a2f64a8c-eb99_Events to 
+2019-08-17T10:21:06.359-0700	done dumping omninova.a2f64a8c-eb99_Events (3 documents)
+2019-08-17T10:21:06.360-0700	writing omninova.Transactions_a2f64a8c-eb99 to 
+2019-08-17T10:21:06.361-0700	done dumping omninova.Transactions_0ff1e595-76ea (4 documents)
+2019-08-17T10:21:06.361-0700	writing omninova.0ff1e595-76ea_TimeSheets to 
+2019-08-17T10:21:06.363-0700	done dumping omninova.Transactions_a2f64a8c-eb99 (3 documents)
+2019-08-17T10:21:06.363-0700	writing omninova.purchaseorders to 
+2019-08-17T10:21:06.366-0700	done dumping omninova.MenuItems_48407cbd-fbf2 (13 documents)
+2019-08-17T10:21:06.366-0700	writing omninova.Transactions_5475c7af-9e84 to 
+2019-08-17T10:21:06.367-0700	done dumping omninova.purchaseorders (1 document)
+2019-08-17T10:21:06.367-0700	writing omninova.MenuItems_a2f64a8c-eb99 to 
+2019-08-17T10:21:06.368-0700	done dumping omninova.Transactions_5475c7af-9e84 (1 document)
+2019-08-17T10:21:06.368-0700	writing omninova.MenuItems_0ff1e595-76ea to 
+2019-08-17T10:21:06.369-0700	done dumping omninova.MenuItems_a2f64a8c-eb99 (1 document)
+2019-08-17T10:21:06.369-0700	writing omninova.0ff1e595-76ea_StoreConfig to 
+2019-08-17T10:21:06.370-0700	done dumping omninova.0ff1e595-76ea_StoreConfig (1 document)
+2019-08-17T10:21:06.370-0700	writing omninova.d023e6a1-c02c_Events to 
+2019-08-17T10:21:06.370-0700	done dumping omninova.0ff1e595-76ea_TimeSheets (2 documents)
+2019-08-17T10:21:06.370-0700	writing omninova.b5f23a01-61d0_StoreConfig to 
+2019-08-17T10:21:06.371-0700	done dumping omninova.b5f23a01-61d0_StoreConfig (1 document)
+2019-08-17T10:21:06.371-0700	writing omninova.Transactions_d023e6a1-c02c to 
+2019-08-17T10:21:06.372-0700	done dumping omninova.Transactions_d023e6a1-c02c (1 document)
+2019-08-17T10:21:06.372-0700	writing omninova.objectlabs-system to 
+2019-08-17T10:21:06.373-0700	done dumping omninova.MenuItems_0ff1e595-76ea (1 document)
+2019-08-17T10:21:06.373-0700	writing omninova.5475c7af-9e84_Events to 
+2019-08-17T10:21:06.373-0700	done dumping omninova.objectlabs-system (1 document)
+2019-08-17T10:21:06.373-0700	writing omninova.sellershippingorders to 
+2019-08-17T10:21:06.373-0700	done dumping omninova.d023e6a1-c02c_Events (1 document)
+2019-08-17T10:21:06.373-0700	writing omninova.48407cbd-fbf2_Events to 
+2019-08-17T10:21:06.376-0700	done dumping omninova.48407cbd-fbf2_Events (1 document)
+2019-08-17T10:21:06.376-0700	writing omninova.objectlabs-system.admin.collections to 
+2019-08-17T10:21:06.378-0700	done dumping omninova.objectlabs-system.admin.collections (1 document)
+2019-08-17T10:21:06.378-0700	writing omninova.Transactions_48407cbd-fbf2 to 
+2019-08-17T10:21:06.379-0700	done dumping omninova.Transactions_48407cbd-fbf2 (1 document)
+2019-08-17T10:21:06.381-0700	done dumping omninova.5475c7af-9e84_Events (1 document)
+2019-08-17T10:21:06.386-0700	done dumping omninova.sellershippingorders (1 document)
+2019-08-17T10:21:07.052-0700	done dumping omninova.essosusers (110 documents)
