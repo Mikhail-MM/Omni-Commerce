@@ -32,7 +32,7 @@
   },
   "scripts": {
     "start": "ls && cd ecommerce-api-server/vantage-api && ls && node pos-api",
-    "heroku-postbuild": "cd ecommerce-api-server/vantage-api && yarn install && cd .. && cd .. && yarn install && yarn build",
+    "heroku-postbuild": "cd ecommerce-api-server/vantage-api && npm install && cd .. && cd .. && yarn install --ignore-engines && yarn build",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
