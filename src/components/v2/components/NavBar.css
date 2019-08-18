@@ -67,3 +67,27 @@
 .splash-link:hover::after {
 	transform: scale(1);
 }
+
+
+
+
+@media (max-width: 700px) {
+	.splash-link {
+		margin: 0 2px;
+		font-size: 0.8em;
+	}
+}
+
+@media (max-width: 420px) {
+	.splash-link {
+		margin: 0 2px;
+		font-size: 0.75em;
+	}
+}
+
+@media (max-width: 350px) {
+	.splash-link {
+		margin: 0 2px;
+		font-size: 0.70em;
+	}
+}
