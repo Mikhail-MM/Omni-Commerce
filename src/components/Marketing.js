@@ -167,6 +167,7 @@ class  Marketing extends Component {
             activeFeature={activeFeature}
           />
           
+          
           <div className='feature-set-container'>
             <div 
               ref={el => this.ft1 = el } 
@@ -175,7 +176,7 @@ class  Marketing extends Component {
                 backgroundColor: "rgb(170, 57, 57)"
               }} 
             >
-              <div className={`i1 feature-blurb__image${(window.innerWidth >= 1366) ? ' skewframe' : ''}`}>
+              <div className={`i1 feature-blurb__image skewframe`}>
                 <img alt="" 
                   src={'/assets/pos.jpg'}
                 />
@@ -197,7 +198,7 @@ class  Marketing extends Component {
               }}
             >
               <div 
-                className={`i2 feature-blurb ${(window.innerWidth >= 1366) ? ' skewframe' : ''}`}
+                className={`i2 feature-blurb__image skewframe`}
               >
                 <img alt="" 
                   src={'/assets/screen-emps.png'} 	
@@ -205,7 +206,7 @@ class  Marketing extends Component {
               </div>
               <div className='feature-blurb feature-blurb__text' style={{height: 'auto'}}>
                 <div className='blurb-center-wrapper'>
-                  <h2> Transaction Processing </h2>
+                  <h2> Employee Management </h2>
                   <p> Employee management has never been easier! Keep track of hiring and individual performance with our Admin dashboard. Live feed ensures that you're always kept up-to-date with the minute-to-minute details of running your business without actually having to be there.</p>
                 </div>
               </div>
@@ -234,14 +235,14 @@ class  Marketing extends Component {
               style={{position: 'relative', minHeight: 700, backgroundColor: "#F5BA36"}}
             >
 
-              <div className='i4 feature-blurb feature-blurb__text'>
+              <div className='feature-blurb feature-blurb__text'>
                 <div className='blurb-center-wrapper' style={{padding: 0}}>
                   <h2> Online Marketplace </h2>
                   <p> Sell your stuff online through our marketplace! Connect with other entrepreneurs, find awesome deals, and more! </p>
                   <p> You don't have to be a brick-and-mortar business to take advantage of E-Commerce </p>
                 </div>
               </div>
-              <div className={`feature-blurb market-image ${(window.innerWidth >= 1366) ? ' skewframe' : ''}`}>	
+              <div className={`i4 feature-blurb__image market-image skewframe`}>	
                 <img alt="" 
                   src={'/assets/screen-market.jpg'} 
                 />
