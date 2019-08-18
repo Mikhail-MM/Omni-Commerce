@@ -68,21 +68,19 @@
 
 }
 
-@media (max-width: 420px) {
+@media (min-width: 601px) and (max-width: 899px) {
 	.hero-header-1 {
-		font-size: 1.65em;
-	}
-	.hero-header-2 {
-		font-size: 1.65em;
+		font-size: 1.95em;
+		max-width: 600px;
+		left: calc(50% - 300px);
 	}
 }
 
-@media (max-width: 420px) {
+@media (min-width: 420px) and (max-width: 600px) {
 	.hero-header-1 {
-		font-size: 1.65em;
-	}
-	.hero-header-2 {
-		font-size: 1.65em;
+		font-size: 1.88em;
+		max-width: 400px;
+		left: calc(50% - 200px);
 	}
 }
 
@@ -93,6 +91,27 @@
 		left: calc(50% - 150px);
 	}
 }
+
+
+
+@media (max-width: 420px) {
+	.hero-header-1 {
+		font-size: 1.65em;
+	}
+	.hero-header-2 {
+		font-size: 1.65em;
+	}
+}
+
+@media (max-width: 420px) {
+	.hero-header-1 {
+		font-size: 1.65em;
+	}
+	.hero-header-2 {
+		font-size: 1.65em;
+	}
+}
+
 
 
 /* Buttons */
