@@ -166,9 +166,15 @@ class  Marketing extends Component {
             manageSticky={manageSticky}
             activeFeature={activeFeature}
           />
-
+          
           <div className='feature-set-container'>
-            <div ref={el => this.ft1 = el } className={`mkt-ft feature-padded-column${(this.state.activeFeature === 'ft1') ? ' activate-feature' : ''}`} >
+            <div 
+              ref={el => this.ft1 = el } 
+              className={`feature-padded-column${(this.state.activeFeature === 'ft1') ? ' activate-feature' : ''}`}
+              style={{
+                backgroundColor: "rgb(170, 57, 57)"
+              }} 
+            >
               <div className={`i1 feature-blurb__image${(window.innerWidth >= 1366) ? ' skewframe' : ''}`}>
                 <img alt="" 
                   src={'/assets/pos.jpg'}
@@ -177,29 +183,39 @@ class  Marketing extends Component {
               <div className='feature-blurb feature-blurb__text'>
                 <div className='blurb-center-wrapper'>
                   <h2> Transaction Processing </h2>
-                </div>
-                <div className='blurb-center-wrapper'>
                   <p> We provide flexible payment solutions for high volume businesses in retail and hospitality. No expensive hardware - our applications are compatible with all devices that can connect to the internet. </p>
                   <p> Sign up for an account to build your store profile and accept payments securely. We utilize <a style={{textDecoration:'none'}}href='https://stripe.com'> Stripe </a> to ensure your information is secure from attackers. We use Stripe to securely process payments from any major credit card provider! </p>
                 </div>
               </div>
             </div>
-            <div ref={el => this.ft2 = el } className={`mkv-ft feature-padded-column${(this.state.activeFeature === 'ft2') ? ' activate-feature' : ''}`}>
-              <div className={`i2 feature-blurb ${(window.innerWidth >= 1366) ? ' skewframe' : ''}`}>
+            
+            <div 
+              ref={el => this.ft2 = el } 
+              className={`feature-padded-column${(this.state.activeFeature === 'ft2') ? ' activate-feature' : ''}`}
+              style={{
+                backgroundColor: "#AE9DCB"
+              }}
+            >
+              <div 
+                className={`i2 feature-blurb ${(window.innerWidth >= 1366) ? ' skewframe' : ''}`}
+              >
                 <img alt="" 
                   src={'/assets/screen-emps.png'} 	
                 />
               </div>
               <div className='feature-blurb feature-blurb__text' style={{height: 'auto'}}>
-                <div>
-                  <h2 style={{padding: '35px 0'}}> Employee Management </h2>
-                </div>
-                <div>
+                <div className='blurb-center-wrapper'>
+                  <h2> Transaction Processing </h2>
                   <p> Employee management has never been easier! Keep track of hiring and individual performance with our Admin dashboard. Live feed ensures that you're always kept up-to-date with the minute-to-minute details of running your business without actually having to be there.</p>
                 </div>
               </div>
             </div>
-              <div ref={el => this.ft3 = el } className={`mkf-ft feature-padded-row reverse${(this.state.activeFeature === 'ft3') ? ' activate-feature' : ''}`} style={{position: 'relative', minHeight: 700}}>
+
+            <div 
+              ref={el => this.ft3 = el } 
+              className={`feature-padded-column ${(this.state.activeFeature === 'ft3') ? ' activate-feature' : ''}`} 
+              style={{position: 'relative', minHeight: 700, backgroundColor: "#FFA15C"}}
+            >
               <div className='i3 feature-blurb__image chart-image skewframe'>
                 <img alt="" 
                   src={'/assets/stats.jpg'}
@@ -212,7 +228,12 @@ class  Marketing extends Component {
                 </div>
               </div>
             </div>
-            <div ref={el => this.ft4 = el } className={`mkl-ft feature-padded-row${(this.state.activeFeature === 'ft4') ? ' activate-feature' : ''}`} style={{position: 'relative', minHeight: 700}}>
+            <div 
+              ref={el => this.ft4 = el } 
+              className={`feature-padded-column${(this.state.activeFeature === 'ft4') ? ' activate-feature' : ''}`} 
+              style={{position: 'relative', minHeight: 700, backgroundColor: "#F5BA36"}}
+            >
+
               <div className='i4 feature-blurb feature-blurb__text'>
                 <div className='blurb-center-wrapper' style={{padding: 0}}>
                   <h2> Online Marketplace </h2>

@@ -33,6 +33,7 @@ class AddCustomAddonForm extends Component {
 	}
 
 	handleChange = (key, value) => {
+    console.log()
 		this.setState({
 			[key]: value
 		})
@@ -47,11 +48,11 @@ class AddCustomAddonForm extends Component {
 		<form onSubmit={(event) => updateTransaction(event, token, activeTicket._id, JSON.stringify(this.state))}>
 			<label>
 				Item:
-				<input type='text' value={this.state.itemName} onChange={this.handleItemNameChange} />
+				<input type='text' value={this.state.itemName} onChange={(e) => this.handleChange('itemName', e.target.value)} />
 			</label>
 			<label>
 				Price:
-				<input type='text' value={this.state.itemPrice} onChange={this.handleItemPriceChange} />
+				<input type='text' value={this.state.itemPrice} onChange={(e) => this.handleChange('itemPrice', e.target.value)} />
 			</label>
 			<input type="submit" value="Enter new Item" />
 		</form>
