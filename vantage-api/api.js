@@ -92,10 +92,10 @@ if(app.get('env') === 'development') {
 if(app.get('env') === 'production') {
 	console.log("Environment is production")
 	// Init script can be built to instantiate first Admin
-  console.log(origin)
 	app.use(sslRedirect());
 	app.use('/*', function(req, res, next) {
 		const origin = req.get('host')
+      console.log(origin)
 		if (origin === "still-beach-13809.herokuapp.com" || origin === "www.omni-io.com") {
 			res.header("Access-Control-Allow-Origin", "https://still-beach-13809.herokuapp.com/")
 		} else if (origin === "h1-loan-visualization.herokuapp.com") {
