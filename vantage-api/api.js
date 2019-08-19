@@ -92,6 +92,7 @@ if(app.get('env') === 'development') {
 if(app.get('env') === 'production') {
 	console.log("Environment is production")
 	// Init script can be built to instantiate first Admin
+  console.log(origin)
 	app.use(sslRedirect());
 	app.use('/*', function(req, res, next) {
 		const origin = req.get('host')
