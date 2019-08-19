@@ -94,11 +94,12 @@ if(app.get('env') === 'production') {
 	// Init script can be built to instantiate first Admin
 	app.use(sslRedirect());
 	app.use('/*', function(req, res, next) {
-		const origin = req.get('host')
+		const host = req.get('host')
       console.log(JSON.stringify(req.headers))
-		if (origin === "still-beach-13809.herokuapp.com" || origin === "www.omni-io.com") {
+      console.log(req.get('origin'));
+		if (host === "still-beach-13809.herokuapp.com" || host === "www.omni-io.com") {
 			res.header("Access-Control-Allow-Origin", "https://still-beach-13809.herokuapp.com/")
-		} else if (origin === "h1-loan-visualization.herokuapp.com") {
+		} else if (req.get('origin') === "https://h1-loan-visualization.herokuapp.com" || req.get('origin') === "http://h1-loan-visualization.herokuapp.com") {
       res.header("Access-Control-Allow-Origin", "https://h1-loan-visualization.herokuapp.com")
     } else {
 			res.header("Access-Control-Allow-Origin", "https://www.texashunterproducts.com");
