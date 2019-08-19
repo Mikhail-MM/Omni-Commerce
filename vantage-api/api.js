@@ -29,6 +29,7 @@ require('dotenv').config()
 
 
 const app = express();
+app.use(logger('combined'));
 
 // Consider Instantiating Server After Controllers
 
@@ -80,11 +81,10 @@ console.log("Mongoose connection establishment")
 
 app.use(bodyParser.json());
 
-
 if(app.get('env') === 'development') {
+  console.log("Dev Env Request Thing Happening")
 	app.use('/*', function(req, res, next) {
 		res.header("Access-Control-Allow-Origin", "http://localhost:3000")
-		app.use(logger('dev'));
 		next();
 	});
 }
@@ -97,7 +97,9 @@ if(app.get('env') === 'production') {
 		const origin = req.get('host')
 		if (origin === "still-beach-13809.herokuapp.com" || origin === "www.omni-io.com") {
 			res.header("Access-Control-Allow-Origin", "https://still-beach-13809.herokuapp.com/")
-		} else {
+		} else if (origin === "h1-loan-visualization.herokuapp.com") {
+      res.header("Access-Control-Allow-Origin", "https://h1-loan-visualization.herokuapp.com")
+    } else {
 			res.header("Access-Control-Allow-Origin", "https://www.texashunterproducts.com");
 		}
 		next();
