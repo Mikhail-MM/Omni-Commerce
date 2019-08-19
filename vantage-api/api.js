@@ -64,6 +64,8 @@ const sellOrders = require('./controllers/sellOrders')
 const social = require('./controllers/social')
 const aws = require('./controllers/aws')
 
+const pg = require('./pg/init');
+
 const seed = require('./seed/seed')
 console.log("loaded all controllers")
 const router = express.Router(); 
@@ -344,6 +346,24 @@ router.route('/mailcamp')
 			res.send("Request Processed.");
 		} catch(err) { next(err) }
 	})
+
+  router.route('/loans/success')
+  .get(async (req, res, next) => {
+    try {
+      const limit = 100;
+      const docRefs = {
+        valid_loans: `SELECT * FROM public.loanstats3a_1566178721936`,
+        rejected_loans: `SELECT * FROM public.rejectstatsa_1566172155435`
+      }
+      const { offset } = req.query;
+      const { valid_loans, rejected_loans } = docRefs;
+      const results = await Promise.all([
+        pg.any(`${valid_loans} LIMIT ${limit} ${offset ? `OFFSET ${offset}` : ''}`),
+          pg.any(`${rejected_loans} LIMIT ${limit} ${offset ? `OFFSET ${offset}` : ''}`)
+      ]);
+      res.json(results);
+    } catch(err) {next(err)}
+  })
 
 router.route('*')
 	.get((req, res) => {
