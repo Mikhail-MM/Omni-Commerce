@@ -95,8 +95,6 @@ if(app.get('env') === 'production') {
 	app.use(sslRedirect());
 	app.use('/*', function(req, res, next) {
 		const host = req.get('host')
-      console.log(JSON.stringify(req.headers))
-      console.log(req.get('origin'));
 		if (host === "still-beach-13809.herokuapp.com" || host === "www.omni-io.com") {
 			res.header("Access-Control-Allow-Origin", "https://still-beach-13809.herokuapp.com/")
 		} else if (req.get('origin') === "https://h1-loan-visualization.herokuapp.com" || req.get('origin') === "http://h1-loan-visualization.herokuapp.com") {
