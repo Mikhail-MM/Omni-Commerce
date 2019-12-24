@@ -1,168 +1,177 @@
-import { push } from 'react-router-redux'
-import { groupBy } from 'underscore'
-import { 
-	hostURI,
-	corsSetting
- } from '../components/config'
-
+import { push } from 'react-router-redux';
+import { groupBy } from 'underscore';
+import { hostURI, corsSetting } from '../components/config';
 
 export function receiveCurrentTicket(ticket) {
-	return {
-		type: 'RECEIVE_CURRENT_TICKET',
-		ticket
-	}
+  return {
+    type: 'RECEIVE_CURRENT_TICKET',
+    ticket,
+  };
 }
 
 function organizeTicketsByStatus(ArrayOfAllTicketObjects) {
-
-	const categorizedTicketsByStatus = groupBy(ArrayOfAllTicketObjects, 'status');
-	console.log(categorizedTicketsByStatus);
-	return {
-		type: 'RECEIVE_TICKETS',
-		categorizedTicketsByStatus
-	}
+  const categorizedTicketsByStatus = groupBy(
+    ArrayOfAllTicketObjects,
+    'status',
+  );
+  console.log(categorizedTicketsByStatus);
+  return {
+    type: 'RECEIVE_TICKETS',
+    categorizedTicketsByStatus,
+  };
 }
 
 export function setVisibleCategory(category) {
-	return {
-		type: 'SET_VISIBLE_CATEGORY',
-		visibleCategory: category
-	}
+  return {
+    type: 'SET_VISIBLE_CATEGORY',
+    visibleCategory: category,
+  };
 }
 
 export function fetchTickets(token) {
-	return dispatch => {
-		return fetch(`${hostURI}/transactions`, {
-			headers:{
-				'Content-Type': 'application/json',
-				'x-access-token': token
-			},
-			method: 'GET',
-		})
-		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
-		.then(json => dispatch(organizeTicketsByStatus(json)))
-		.catch(err => console.log(err))
-	}
+  return (dispatch) => fetch(`${hostURI}/transactions`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    },
+    method: 'GET',
+  })
+    .then((response) => (response.ok
+      ? response.json()
+      : Promise.reject(response.statusText)))
+    .then((json) => dispatch(organizeTicketsByStatus(json)))
+    .catch((err) => console.log(err));
 }
 
 export function createNewTicket(token, createdBy) {
-	const data = { createdBy: createdBy, createdAt: Date.now(), status: "Open"}
-	return dispatch => {
-		return fetch(`${hostURI}/transactions`, {
-			headers:{
-				'Content-Type': 'application/json',
-				'x-access-token': token
-			},
-			method: 'POST',
-			body: JSON.stringify(data),
-		})
-		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
-		.then(json => {
-			const ticketId = json._id;
-			dispatch(fetchTickets(token))
-			dispatch(receiveCurrentTicket(json))
-			dispatch(push(`/omni/terminal/tickets/${ticketId}`)) 			
-			}
-		)
-		.catch(err => console.log(err))
-	}
+  const data = { createdBy, createdAt: Date.now(), status: 'Open' };
+  return (dispatch) => fetch(`${hostURI}/transactions`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    },
+    method: 'POST',
+    body: JSON.stringify(data),
+  })
+    .then((response) => (response.ok
+      ? response.json()
+      : Promise.reject(response.statusText)))
+    .then((json) => {
+      const ticketId = json._id;
+      dispatch(fetchTickets(token));
+      dispatch(receiveCurrentTicket(json));
+      dispatch(push(`/omni/terminal/tickets/${ticketId}`));
+    })
+    .catch((err) => console.log(err));
 }
 
 export function fetchCurrentTicketDetails(token, ticket_Id) {
-	const url = `${hostURI}/transactions/${ticket_Id}`;
-	return dispatch => {
-		return fetch(url, {
-			headers:{
-				'Content-Type': 'application/json',
-				'x-access-token': token,
-			},
-			method: 'GET',
-		})
-		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
-		.then(json => dispatch(receiveCurrentTicket(json)))
-		.then(() => dispatch(push(`/omni/terminal/tickets/${ticket_Id}`)))
-		.catch(err => console.log(err))
-	}
+  const url = `${hostURI}/transactions/${ticket_Id}`;
+  return (dispatch) => fetch(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    },
+    method: 'GET',
+  })
+    .then((response) => (response.ok
+      ? response.json()
+      : Promise.reject(response.statusText)))
+    .then((json) => dispatch(receiveCurrentTicket(json)))
+    .then(() => dispatch(push(`/omni/terminal/tickets/${ticket_Id}`)))
+    .catch((err) => console.log(err));
 }
 
-export function updateTransactionWithMenuItem(token, menuItem_Id, currentTransaction_Id) {
-	const url = `${hostURI}/menus/noIDhack/${menuItem_Id}`;
-	return dispatch => {
-		return fetch(url, {
-			headers:{
-				'Content-Type': 'application/json',
-				'x-access-token': token,
-			},
-			method: 'GET',
-		})
-		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
-		.then(json => {
-			const url = `${hostURI}/transactions/addItem/${currentTransaction_Id}`;
-			return fetch(url, {
-				headers:{
-					'Content-Type': 'application/json',
-					'x-access-token': token,
-				},
-				method: 'PUT',
-				body: JSON.stringify(json),
-			})
-			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
-			.then(json => dispatch(receiveCurrentTicket(json)))
-		})
-		.catch(err => console.log(err))
-	}
+export function updateTransactionWithMenuItem(
+  token,
+  menuItem_Id,
+  currentTransaction_Id,
+) {
+  const url = `${hostURI}/menus/noIDhack/${menuItem_Id}`;
+  return (dispatch) => fetch(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    },
+    method: 'GET',
+  })
+    .then((response) => (response.ok
+      ? response.json()
+      : Promise.reject(response.statusText)))
+    .then((json) => {
+      const url = `${hostURI}/transactions/addItem/${currentTransaction_Id}`;
+      return fetch(url, {
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': token,
+        },
+        method: 'PUT',
+        body: JSON.stringify(json),
+      })
+        .then((response) => (response.ok
+          ? response.json()
+          : Promise.reject(response.statusText)))
+        .then((json) => dispatch(receiveCurrentTicket(json)));
+    })
+    .catch((err) => console.log(err));
 }
-
 
 export function updateTicketStatus(token, ticket_Id, ticketStatus) {
-	const url = `${hostURI}/transactions/${ticket_Id}`
-	const data = { status: ticketStatus }
-	return dispatch => {
-		return fetch(url, {
-			headers:{
-				'Content-Type': 'application/json',
-				'x-access-token': token,
-			},
-			method: 'PUT',
-			body: JSON.stringify(data),
-		})
-		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
-		.then(json => dispatch(receiveCurrentTicket(json)))
-	}
+  const url = `${hostURI}/transactions/${ticket_Id}`;
+  const data = { status: ticketStatus };
+  return (dispatch) => fetch(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    },
+    method: 'PUT',
+    body: JSON.stringify(data),
+  })
+    .then((response) => (response.ok
+      ? response.json()
+      : Promise.reject(response.statusText)))
+    .then((json) => dispatch(receiveCurrentTicket(json)));
 }
 
-
-export function updateTransactionWithRequestedAddon(token, currentTransaction_Id, addOn) {
-	const url = `${hostURI}/transactions/requestAddon/${currentTransaction_Id}`
-	return dispatch => {
-		return fetch(url, {
-			headers:{
-				'Content-Type': 'application/json',
-				'x-access-token': token,
-			},
-			method: 'PUT',
-			body: addOn,
-		})
-		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
-		.then(json => dispatch(receiveCurrentTicket(json)))
-		.catch(err => console.log(err))
-	}
+export function updateTransactionWithRequestedAddon(
+  token,
+  currentTransaction_Id,
+  addOn,
+) {
+  const url = `${hostURI}/transactions/requestAddon/${currentTransaction_Id}`;
+  return (dispatch) => fetch(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    },
+    method: 'PUT',
+    body: addOn,
+  })
+    .then((response) => (response.ok
+      ? response.json()
+      : Promise.reject(response.statusText)))
+    .then((json) => dispatch(receiveCurrentTicket(json)))
+    .catch((err) => console.log(err));
 }
 
-export function updateTransactionWithSubdocRemoval(token, subdoc_Id, currentTransaction_Id) {
-	const url = `${hostURI}/transactions/removeItem/${currentTransaction_Id}`
-	const data = { subdoc_Id: subdoc_Id }
-	return dispatch => {
-		return fetch(url, {
-			headers:{
-				'Content-Type': 'application/json',
-				'x-access-token': token,
-			},
-			method: 'PUT',
-			body: JSON.stringify(data),
-		})
-		.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
-		.then(json => dispatch(receiveCurrentTicket(json)))
-		.catch(err => console.log(err))
-	}
+export function updateTransactionWithSubdocRemoval(
+  token,
+  subdoc_Id,
+  currentTransaction_Id,
+) {
+  const url = `${hostURI}/transactions/removeItem/${currentTransaction_Id}`;
+  const data = { subdoc_Id };
+  return (dispatch) => fetch(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    },
+    method: 'PUT',
+    body: JSON.stringify(data),
+  })
+    .then((response) => (response.ok
+      ? response.json()
+      : Promise.reject(response.statusText)))
+    .then((json) => dispatch(receiveCurrentTicket(json)))
+    .catch((err) => console.log(err));
 }

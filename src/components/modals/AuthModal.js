@@ -1,61 +1,69 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { throttle } from 'underscore'
-
+import { throttle } from 'underscore';
 
 import Modal from 'react-modal';
-import { modalStyle3, fullScreenMobileModal, modalStyleanim } from '../config';
+import {
+  modalStyle3,
+  fullScreenMobileModal,
+  modalStyleanim,
+} from '../config';
 import { hideModal } from '../../actions/modals';
 
 import AuthenticationForm from '../forms/registration/AuthenticationForm';
 
-
-
-const mapDispatchToProps = dispatch => ({
-	hideModal: () => dispatch(hideModal()),
-})
+const mapDispatchToProps = (dispatch) => ({
+  hideModal: () => dispatch(hideModal()),
+});
 
 const mapStateToProps = (state) => {
-	const { modalType, modalProps } = state.modalReducer
-	return { modalType, modalProps }
-}
+  const { modalType, modalProps } = state.modalReducer;
+  return { modalType, modalProps };
+};
 
 class AuthModal extends Component {
-	
-	state = {
-		viewportWidth: window.innerWidth
-	}
+  state = {
+    viewportWidth: window.innerWidth,
+  };
 
-	componentDidMount() {
-		window.addEventListener('resize', this.throttledListener)
-	}
-	componentWillUnmount() {
-		window.removeEventListener('resize', this.throttledListener)
-	}
-	
-	handleViewportChange = (event) => {
-		this.setState({
-			viewportWidth: event.target.innerWidth
-		})
-	}
+  componentDidMount() {
+    window.addEventListener('resize', this.throttledListener);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.throttledListener);
+  }
 
-	throttledListener = throttle(this.handleViewportChange, 500)
+  handleViewportChange = (event) => {
+    this.setState({
+      viewportWidth: event.target.innerWidth,
+    });
+  };
 
-	render() {
-		return(
-			<div>
-					<Modal
-						isOpen={this.props.modalType === 'AUTH_FORM_MODAL'}
-						style={(this.state.viewportWidth <= 800) ? fullScreenMobileModal : modalStyleanim}
-						contentLabel="Example Modal"
-						overlayClassName="Overlay"
-						shouldCloseOnOverlayClick={true}
-						onRequestClose={() => this.props.hideModal()}
-						>
-						<AuthenticationForm {...this.props} />
-					</Modal>
-			</div>
-		)}
+  throttledListener = throttle(this.handleViewportChange, 500);
+
+  render() {
+    return (
+      <div>
+        <Modal
+          isOpen={this.props.modalType === 'AUTH_FORM_MODAL'}
+          style={
+            this.state.viewportWidth <= 800
+              ? fullScreenMobileModal
+              : modalStyleanim
+          }
+          contentLabel="Example Modal"
+          overlayClassName="Overlay"
+          shouldCloseOnOverlayClick={true}
+          onRequestClose={() => this.props.hideModal()}
+        >
+          <AuthenticationForm {...this.props} />
+        </Modal>
+      </div>
+    );
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AuthModal)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(AuthModal);

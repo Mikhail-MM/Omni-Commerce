@@ -1,27 +1,36 @@
 const mongoose = require('mongoose');
-const EventSchema =  require('../models/schemas/event').EventSchema
+const { EventSchema } = require('../models/schemas/event');
 
-const io = require('../socket/initialize').io()
+const io = require('../socket/initialize').io();
 
 module.exports.getEventFeed = async (req, res, next) => {
-	try {
-		
-		const EventModel = mongoose.model('Event', EventSchema, `${req.headers['x-mongo-key']}_Events`)
-		const feed = await EventModel.find({})
-			res.json(feed)
-
-	} catch(err) { next(err) }
-}
+  try {
+    const EventModel = mongoose.model(
+      'Event',
+      EventSchema,
+      `${req.headers['x-mongo-key']}_Events`,
+    );
+    const feed = await EventModel.find({});
+    res.json(feed);
+  } catch (err) {
+    next(err);
+  }
+};
 
 module.exports.postNewEvent = async (req, res, next, eventData) => {
-	try{
-		console.log("NEW EVENT BEING POSTED!")
-		
-		const EventModel = mongoose.model('Event', EventSchema, `${req.headers['x-mongo-key']}_Events`)
-		const newEvent = new EventModel(eventData)
-		const savedEvent = await newEvent.save()
-			console.log("Created new event: ", savedEvent)
-			io.emit(`getEvent_${req.headers['x-mongo-key']}`, savedEvent)
+  try {
+    console.log('NEW EVENT BEING POSTED!');
 
-	} catch(err) { next(err) }
-}
+    const EventModel = mongoose.model(
+      'Event',
+      EventSchema,
+      `${req.headers['x-mongo-key']}_Events`,
+    );
+    const newEvent = new EventModel(eventData);
+    const savedEvent = await newEvent.save();
+    console.log('Created new event: ', savedEvent);
+    io.emit(`getEvent_${req.headers['x-mongo-key']}`, savedEvent);
+  } catch (err) {
+    next(err);
+  }
+};

@@ -1,88 +1,125 @@
 const mongoose = require('mongoose');
-const Schemas = require('../models/schemas/transaction')
-const menuSchema = Schemas.menuSchema
+const Schemas = require('../models/schemas/transaction');
 
-module.exports.createNewMenuItem = async function(req, res, next) {
-	try{ 
-		
-		const MenuItemModel = mongoose.model('MenuItem', menuSchema,'MenuItems_' + req.headers['x-mongo-key'])
-		const newMenu = new MenuItemModel(req.body);
-		
-		const savedMenuItem = await newMenu.save()
+const { menuSchema } = Schemas;
 
-			res.json(savedMenuItem)
-	
-	} catch(err) { next(err) }
-}
+module.exports.createNewMenuItem = async function (req, res, next) {
+  try {
+    const MenuItemModel = mongoose.model(
+      'MenuItem',
+      menuSchema,
+      `MenuItems_${req.headers['x-mongo-key']}`,
+    );
+    const newMenu = new MenuItemModel(req.body);
 
+    const savedMenuItem = await newMenu.save();
 
-module.exports.getMenuItemByIdNoReturnId = async function (req, res, next) {
-	try { 
-		
-		const MenuItemModel = mongoose.model('MenuItem', menuSchema,'MenuItems_' + req.headers['x-mongo-key'])
-		const menuItem = await MenuItemModel.findOne({_id: req.params.id}, '-_id')
+    res.json(savedMenuItem);
+  } catch (err) {
+    next(err);
+  }
+};
 
-		if (!menuItem) return res.status(404).send("Could not find item with that ID")
+module.exports.getMenuItemByIdNoReturnId = async function (
+  req,
+  res,
+  next,
+) {
+  try {
+    const MenuItemModel = mongoose.model(
+      'MenuItem',
+      menuSchema,
+      `MenuItems_${req.headers['x-mongo-key']}`,
+    );
+    const menuItem = await MenuItemModel.findOne(
+      { _id: req.params.id },
+      '-_id',
+    );
 
-			return res.json(menuItem)
+    if (!menuItem) return res.status(404).send('Could not find item with that ID');
 
-	} catch(err) { next(err) }
-
-}
-
+    return res.json(menuItem);
+  } catch (err) {
+    next(err);
+  }
+};
 
 module.exports.getAllMenuItems = async function (req, res, next) {
-	try { 
-		
-		const MenuItemModel = mongoose.model('MenuItem', menuSchema,'MenuItems_' + req.headers['x-mongo-key'])
-		const menuItems = await MenuItemModel.find({})
+  try {
+    const MenuItemModel = mongoose.model(
+      'MenuItem',
+      menuSchema,
+      `MenuItems_${req.headers['x-mongo-key']}`,
+    );
+    const menuItems = await MenuItemModel.find({});
 
-		if (!menuItems) return res.status(404).send("Could not find items in this directory")
+    if (!menuItems) {
+      return res
+        .status(404)
+        .send('Could not find items in this directory');
+    }
 
-			return res.json(menuItems)
+    return res.json(menuItems);
+  } catch (err) {
+    next(err);
+  }
+};
 
-	} catch(err) { next(err) }
-}
+module.exports.getMenuItemById = async function (req, res, next) {
+  try {
+    const MenuItemModel = mongoose.model(
+      'MenuItem',
+      menuSchema,
+      `MenuItems_${req.headers['x-mongo-key']}`,
+    );
+    const menuItem = await MenuItemModel.findOne({
+      _id: req.params.id,
+    });
 
+    if (!menuItem) return res.status(404).send('Could not find item with that ID');
 
-module.exports.getMenuItemById = async function(req, res, next) {
-	try { 
-		
-		const MenuItemModel = mongoose.model('MenuItem', menuSchema,'MenuItems_' + req.headers['x-mongo-key'])
-		const menuItem = await MenuItemModel.findOne({_id: req.params.id})
-
-		if (!menuItem) return res.status(404).send("Could not find item with that ID") 
-
-			return res.json(menuItem)
-
-	} catch(err) { next(err) }
-}
-
+    return res.json(menuItem);
+  } catch (err) {
+    next(err);
+  }
+};
 
 module.exports.updateMenuItemById = async function (req, res, next) {
-	try { 
-		
-		const MenuItemModel = mongoose.model('MenuItem', menuSchema,'MenuItems_' + req.headers['x-mongo-key'])
-		const menuItem = await MenuItemModel.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
+  try {
+    const MenuItemModel = mongoose.model(
+      'MenuItem',
+      menuSchema,
+      `MenuItems_${req.headers['x-mongo-key']}`,
+    );
+    const menuItem = await MenuItemModel.findOneAndUpdate(
+      { _id: req.params.id },
+      req.body,
+      { new: true },
+    );
 
-		if (!menuItem) return res.status(404).send("Could not find item with that ID")
+    if (!menuItem) return res.status(404).send('Could not find item with that ID');
 
-			return res.json(menuItem)
-
-	} catch(err) { next(err) }
-}
-
+    return res.json(menuItem);
+  } catch (err) {
+    next(err);
+  }
+};
 
 module.exports.deleteMenuItemById = async function (req, res, next) {
-	try{ 
-		
-		const MenuItemModel = mongoose.model('MenuItem', menuSchema,'MenuItems_' + req.headers['x-mongo-key'])
-		const menuItem = await MenuItemModel.findOneAndRemove({_id: req.params.id})
+  try {
+    const MenuItemModel = mongoose.model(
+      'MenuItem',
+      menuSchema,
+      `MenuItems_${req.headers['x-mongo-key']}`,
+    );
+    const menuItem = await MenuItemModel.findOneAndRemove({
+      _id: req.params.id,
+    });
 
-		if (!menuItem) return res.status(404).send("No menu item with that ID!")
+    if (!menuItem) return res.status(404).send('No menu item with that ID!');
 
-			return res.json(menuItem)
-
-	} catch(err) { next(err) }
-}
-
+    return res.json(menuItem);
+  } catch (err) {
+    next(err);
+  }
+};

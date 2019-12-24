@@ -1,104 +1,116 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
 
-const omniUserSchema = new Schema({
-	email: {type: String, required: true, unique: true },
+const omniUserSchema = new Schema(
+  {
+    email: { type: String, required: true, unique: true },
 
-	firstName: String,
-	lastName: String,
-	phone: String,
-	
-	hash: { type: String, required: true },
-	accountType: String,
-	role: String,
+    firstName: String,
+    lastName: String,
+    phone: String,
 
-	avatarURL: String,
+    hash: { type: String, required: true },
+    accountType: String,
+    role: String,
 
-	isMaster: Boolean,
-	master_id: { type: Schema.Types.ObjectId, ref: 'OmniUser' },
+    avatarURL: String,
 
-	mongoCollectionKey: { type: String, index: true, required: true },
+    isMaster: Boolean,
+    master_id: { type: Schema.Types.ObjectId, ref: 'OmniUser' },
 
-	terminalIDNumber: Number,
-	 	
-	isAdmin: Boolean,
-	
-	employeeCounter: Number,
-	
-	token: String,
-	tokenCreatedAt: Date,
-	},
-	{
-		toObject:{ getters : true }	
-	}
+    mongoCollectionKey: { type: String, index: true, required: true },
+
+    terminalIDNumber: Number,
+
+    isAdmin: Boolean,
+
+    employeeCounter: Number,
+
+    token: String,
+    tokenCreatedAt: Date,
+  },
+  {
+    toObject: { getters: true },
+  },
 );
 
-const essosUserSchema = new Schema({
-	email: {type: String, required: true, unique: true },
-	hash: { type: String, required: true },
-	
-	accountType: String,
-	avatarURL: String,
-	
-	firstName: String,
-	lastName: String,
-	phone: String,
-	
-	billing_address_line1: String,
-	billing_address_line2: String,
-	billing_address_city: String,
-	billing_address_zip: String,
-	billing_address_state: String,
-	shipping_address_line1: String,
-	shipping_address_line2: String,
-	shipping_address_city: String,
-	shipping_address_zip: String,
-	shipping_address_state: String,
+const essosUserSchema = new Schema(
+  {
+    email: { type: String, required: true, unique: true },
+    hash: { type: String, required: true },
 
-	mongoCollectionKey: { type: String, index: true, required: true },
+    accountType: String,
+    avatarURL: String,
 
-	token: String,
-	tokenCreatedAt: Date,
+    firstName: String,
+    lastName: String,
+    phone: String,
 
-	marketplaceRef_id: { type: Schema.Types.ObjectId, ref: 'Marketplace' },
+    billing_address_line1: String,
+    billing_address_line2: String,
+    billing_address_city: String,
+    billing_address_zip: String,
+    billing_address_state: String,
+    shipping_address_line1: String,
+    shipping_address_line2: String,
+    shipping_address_city: String,
+    shipping_address_zip: String,
+    shipping_address_state: String,
 
-	followers: [{
-		userId: { type: Schema.Types.ObjectId, ref: 'EssosUser' },
-		name: String,
-		avatarURL: String,
-	}],
+    mongoCollectionKey: { type: String, index: true, required: true },
 
-	following: [{
-		userId: { type: Schema.Types.ObjectId, ref: 'EssosUser' },
-		name: String,
-		avatarURL: String,
-	}],
+    token: String,
+    tokenCreatedAt: Date,
 
-	wishlist: [{
-		itemId: { type: Schema.Types.ObjectId, ref: 'StoreItem' },
-		itemName: String,
-		postedBy: String,
-		imageURL: String,
-	}],
+    marketplaceRef_id: {
+      type: Schema.Types.ObjectId,
+      ref: 'Marketplace',
+    },
 
-	},
-	{
-		toObject:{ getters : true }	
-	}
+    followers: [
+      {
+        userId: { type: Schema.Types.ObjectId, ref: 'EssosUser' },
+        name: String,
+        avatarURL: String,
+      },
+    ],
+
+    following: [
+      {
+        userId: { type: Schema.Types.ObjectId, ref: 'EssosUser' },
+        name: String,
+        avatarURL: String,
+      },
+    ],
+
+    wishlist: [
+      {
+        itemId: { type: Schema.Types.ObjectId, ref: 'StoreItem' },
+        itemName: String,
+        postedBy: String,
+        imageURL: String,
+      },
+    ],
+  },
+  {
+    toObject: { getters: true },
+  },
 );
 
 const verifyPassword = (password, next) => {
-		bcrypt.compare(password, this.hash, (err, pwMatches) => {
-		if (err) return next(err);
-		next(null, pwMatches);
-	})
-}
+  bcrypt.compare(password, this.hash, (err, pwMatches) => {
+    if (err) return next(err);
+    next(null, pwMatches);
+  });
+};
 
 omniUserSchema.methods.comparePassword = verifyPassword;
 essosUserSchema.methods.comparePassword = verifyPassword;
 
 module.exports.OmniUser = mongoose.model('OmniUser', omniUserSchema);
-module.exports.EssosUser = mongoose.model('EssosUser', essosUserSchema);
-
-
+module.exports.EssosUser = mongoose.model(
+  'EssosUser',
+  essosUserSchema,
+);

@@ -1,86 +1,110 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import moment from 'moment'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import moment from 'moment';
 
 import { hostURI } from '../../config';
 
-const mapStateToProps = state => {
-	const { token } = state.authReducer
-	return { token }
-}
+const mapStateToProps = (state) => {
+  const { token } = state.authReducer;
+  return { token };
+};
 
-const mapDispatchToProps = dispatch => ({
-
-})
+const mapDispatchToProps = (dispatch) => ({});
 
 class SalesAnalyticsContainer extends Component {
-	state = {
-		allTimeSheets: []
-	}
+  state = {
+    allTimeSheets: [],
+  };
 
-	async componentDidMount() {
-		const { token } = this.props
-		const gotTimeSheets = await this.fetchAllSalesReports(token)
+  async componentDidMount() {
+    const { token } = this.props;
+    const gotTimeSheets = await this.fetchAllSalesReports(token);
 
-		this.setState({
-			allTimeSheets: gotTimeSheets
-		})
-	}
+    this.setState({
+      allTimeSheets: gotTimeSheets,
+    });
+  }
 
-	fetchAllSalesReports = (token) => {
-		return fetch(`${hostURI}/timesheets`, {
-				headers:{
-					'Content-Type': 'application/json',
-					'x-access-token': token,
-				},
-				method: 'GET',
-				mode: 'cors'
-			})
-			.then(response => response.ok ? response.json() : Promise.reject(response.statusText))
-			.then(json => {
-				return json
-			})
-			.catch(err => console.log(err))
-	}
+  fetchAllSalesReports = (token) => {
+    return fetch(`${hostURI}/timesheets`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': token,
+      },
+      method: 'GET',
+      mode: 'cors',
+    })
+      .then((response) =>
+        response.ok
+          ? response.json()
+          : Promise.reject(response.statusText),
+      )
+      .then((json) => {
+        return json;
+      })
+      .catch((err) => console.log(err));
+  };
 
-	renderTimeSheetTableToDOM = () => {
-		const { allTimeSheets } = this.state
+  renderTimeSheetTableToDOM = () => {
+    const { allTimeSheets } = this.state;
 
-		return allTimeSheets.map(timesheet => {
-			return(
-				<tr>
-					<td> {timesheet.name} </td>
-					<td> {moment(timesheet.timeIn).format('MMMM Do YYYY, h:mm:ss a')} </td>
-					<td> {moment(timesheet.timeOut).format('MMMM Do YYYY, h:mm:ss a')} </td>
-					<td> { timesheet.timeOut && moment.duration(moment(timesheet.timeOut).diff(moment(timesheet.timeIn))).asHours() } </td>
-				</tr>
-			)
-		}) 
-	}
-	render() {
-		const { allTimeSheets } = this.state
+    return allTimeSheets.map((timesheet) => {
+      return (
+        <tr>
+          <td> {timesheet.name} </td>
+          <td>
+            {' '}
+            {moment(timesheet.timeIn).format(
+              'MMMM Do YYYY, h:mm:ss a',
+            )}{' '}
+          </td>
+          <td>
+            {' '}
+            {moment(timesheet.timeOut).format(
+              'MMMM Do YYYY, h:mm:ss a',
+            )}{' '}
+          </td>
+          <td>
+            {' '}
+            {timesheet.timeOut &&
+              moment
+                .duration(
+                  moment(timesheet.timeOut).diff(
+                    moment(timesheet.timeIn),
+                  ),
+                )
+                .asHours()}{' '}
+          </td>
+        </tr>
+      );
+    });
+  };
+  render() {
+    const { allTimeSheets } = this.state;
 
-		return(
-				<div className='action-column'>
-					<div className='analytics-table-container'>
-						<table className='analytics-table'>
-							<thead className='analytics-table-head'>
-								<tr>
-									<td> Name </td>
-									<td> Time In </td>
-									<td> Time Out </td>
-									<td> Hours Worked </td>
-								</tr>
-							</thead>
-							<tbody className='omni-table-body'>
-								{ allTimeSheets && this.renderTimeSheetTableToDOM() }
-							</tbody>
-						</table>
-					</div>
-				</div>
-
-		)
-	}
+    return (
+      <div className="action-column">
+        <div className="analytics-table-container">
+          <table className="analytics-table">
+            <thead className="analytics-table-head">
+              <tr>
+                <td> Name </td>
+                <td> Time In </td>
+                <td> Time Out </td>
+                <td> Hours Worked </td>
+              </tr>
+            </thead>
+            <tbody className="omni-table-body">
+              {allTimeSheets && this.renderTimeSheetTableToDOM()}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SalesAnalyticsContainer)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SalesAnalyticsContainer);

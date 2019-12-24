@@ -1,21 +1,19 @@
-import { push } from 'react-router-redux'
+import { push } from 'react-router-redux';
 
 export function routeUserAfterLogin(accountType) {
-	return dispatch => { 
-		if ( accountType === "Child" || accountType === "Terminal" ) {
-			dispatch(push('/omni/terminal'))
-		}
-		else if ( accountType === "Master" ) { 
-			dispatch(push('/admin'))
-		}
-		else if ( accountType === "Essos") { 
-			dispatch(push('/essos'))
-		}
-	}
+  return (dispatch) => {
+    if (accountType === 'Child' || accountType === 'Terminal') {
+      dispatch(push('/omni/terminal'));
+    } else if (accountType === 'Master') {
+      dispatch(push('/admin'));
+    } else if (accountType === 'Essos') {
+      dispatch(push('/essos'));
+    }
+  };
 }
 
 export function routeToNode(node) {
-	return dispatch => {
-		dispatch(push(node))
-	}
+  return (dispatch) => {
+    dispatch(push(node));
+  };
 }

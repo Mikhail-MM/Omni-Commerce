@@ -10,7 +10,8 @@ const NavBar = ({ topOfPage, manageSticky, route, showModal}) => {
   const routeToMarketplace = () => route('/essos');
   const showRegistrationModal = () => showModal('AUTH_FORM_MODAL', {login: true, loginOmni: true})
   const showModulePicker = () => showModal('REGISTRATION_MODULE_PICKER', {})
-  return <div>
+  return (
+  <div>
     <nav 
       className={`marketing-nav${applyClass(!topOfPage, "collapseNavHeader")}${applyClass(manageSticky, "moveNavHeaderAway")}`}
     >
@@ -23,6 +24,7 @@ const NavBar = ({ topOfPage, manageSticky, route, showModal}) => {
       </div>
     </nav>
   </div>
+  )
 }
 
 export default NavBar

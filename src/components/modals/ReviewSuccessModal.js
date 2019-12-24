@@ -5,35 +5,35 @@ import Modal from 'react-modal';
 import { modalStyle } from '../config';
 import { hideModal } from '../../actions/modals';
 
-const mapDispatchToProps = dispatch => ({
-	hideModal: () => dispatch(hideModal())
-})
+const mapDispatchToProps = (dispatch) => ({
+  hideModal: () => dispatch(hideModal()),
+});
 
-const mapStateToProps = state => {
-	const { modalType, modalProps } = state.modalReducer
-	return { modalType, modalProps, }
-}
+const mapStateToProps = (state) => {
+  const { modalType, modalProps } = state.modalReducer;
+  return { modalType, modalProps };
+};
 
-const ReviewSuccessModal = props => {
+const ReviewSuccessModal = (props) => (
+  <div>
+    <Modal
+      isOpen={props.modalType === 'ADD_REVIEW_SUCCESS_MODAL'}
+      style={modalStyle}
+      contentLabel="Example Modal"
+      overlayClassName="Overlay"
+      shouldCloseOnOverlayClick
+      onRequestClose={() => props.hideModal()}
+    >
+      <div className="review-modal-container">
+        <div>
+          <h4> Your Review Was Received Successfully! </h4>
+        </div>
+      </div>
+    </Modal>
+  </div>
+);
 
-		return(
-		<div>
-			<Modal
-				isOpen={props.modalType === 'ADD_REVIEW_SUCCESS_MODAL'}
-				style={modalStyle}
-				contentLabel="Example Modal"
-				overlayClassName="Overlay"
-				shouldCloseOnOverlayClick={true}
-				onRequestClose={() => props.hideModal()}
-				>
-					<div className='review-modal-container'>
-						<div>
-							<h4> Your Review Was Received Successfully! </h4>
-						</div>
-					</div>
-			</Modal>
-		</div>
-		)
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ReviewSuccessModal)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ReviewSuccessModal);

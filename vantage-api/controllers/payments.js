@@ -1,46 +1,56 @@
-require('dotenv').config()
+require('dotenv').config();
 const _ = require('underscore');
 const stripe = require('stripe')(process.env.SECRET_KEY);
 const BigNumber = require('bignumber.js');
-const events = require('./events')
+const events = require('./events');
 
-const MarketPlaceModels = require('../models/schemas/marketplace')
+const MarketPlaceModels = require('../models/schemas/marketplace');
+
 StripeCustomerModel = MarketPlaceModels.StripeCustomerModel;
 PurchaseOrderModel = MarketPlaceModels.PurchaseOrderModel;
 sellerSpecificPurchaseOrderModel = MarketPlaceModels.sellerSpecificPurchaseOrderModel;
 
-module.exports.createCashCharge = function(req, res, next) {
-  console.log("Creating Cash Charge")
+module.exports.createCashCharge = function (req, res, next) {
+  console.log('Creating Cash Charge');
   // Needs error handling to ensure that customer didn't over/underpay due to cached redux values that didn't update for whatever reason
   req.params._id = req.body.parentTransaction._id;
-  const totalBalance = new BigNumber(req.body.parentTransaction.totalReal).round(2)
-  const customerPaid = new BigNumber(req.body.payment.cashTenderedByCustomer).round(2)
-  const refund  = customerPaid.minus(totalBalance).toNumber()
-    events.postNewEvent(req, res, next, {
-        actionType: 'Payment - Cash',
-        createdAt: Date.now(),
-        creatorId: req.body.client._id,
-        description: `Transaction Fulfilled: Customer Paid $${customerPaid} in Cash for purchase amounting to $${totalBalance}. $${refund} was refunded.`,
-        metadata: {
-          transactionId: req.body.parentTransaction._id,
-        }
-    })
-  req.body.payment.refund = refund
-  res.json(req.body)
-}
+  const totalBalance = new BigNumber(
+    req.body.parentTransaction.totalReal,
+  ).round(2);
+  const customerPaid = new BigNumber(
+    req.body.payment.cashTenderedByCustomer,
+  ).round(2);
+  const refund = customerPaid.minus(totalBalance).toNumber();
+  events.postNewEvent(req, res, next, {
+    actionType: 'Payment - Cash',
+    createdAt: Date.now(),
+    creatorId: req.body.client._id,
+    description: `Transaction Fulfilled: Customer Paid $${customerPaid} in Cash for purchase amounting to $${totalBalance}. $${refund} was refunded.`,
+    metadata: {
+      transactionId: req.body.parentTransaction._id,
+    },
+  });
+  req.body.payment.refund = refund;
+  res.json(req.body);
+};
 
-module.exports.createStripeCharge = function(req, res, next) {
+module.exports.createStripeCharge = function (req, res, next) {
   const response = {};
-	const token = req.body.stripeToken.id // stripe token id
-  const stripeAmount = new BigNumber(req.body.chargeTotal).times(100).round().toNumber()
-  console.log(stripeAmount)
-	stripe.charges.create({
-		amount: stripeAmount,
-		currency: "usd",
-		description: "A sample charge",
-		source: token
-	}, function(err, charge) {
-		if (err) return next(err)
+  const token = req.body.stripeToken.id; // stripe token id
+  const stripeAmount = new BigNumber(req.body.chargeTotal)
+    .times(100)
+    .round()
+    .toNumber();
+  console.log(stripeAmount);
+  stripe.charges.create(
+    {
+      amount: stripeAmount,
+      currency: 'usd',
+      description: 'A sample charge',
+      source: token,
+    },
+    (err, charge) => {
+      if (err) return next(err);
 
       events.postNewEvent(req, res, next, {
         actionType: 'Payment - Card',
@@ -49,182 +59,233 @@ module.exports.createStripeCharge = function(req, res, next) {
         description: `Transaction Fulfilled: Customer Paid $${stripeAmount} with Credit Card.`,
         metadata: {
           transactionId: req.body.transactionId,
-        }
-    })
+        },
+      });
 
-		res.json(charge)
-	});
-}
+      res.json(charge);
+    },
+  );
+};
 
 // TODO: Comprehensive Error Handling using Stripe API Error Test
-module.exports.saveStripeCustomerInformation = async function(req, res, next) {
-  try { 
-    
-    const token = req.body.stripeToken.id
-    const stripeAmount = new BigNumber(req.body.validatedPurchaseOrderToProcess.validatedCart.totalReal).times(100).round().toNumber()
+module.exports.saveStripeCustomerInformation = async function (
+  req,
+  res,
+  next,
+) {
+  try {
+    const token = req.body.stripeToken.id;
+    const stripeAmount = new BigNumber(
+      req.body.validatedPurchaseOrderToProcess.validatedCart.totalReal,
+    )
+      .times(100)
+      .round()
+      .toNumber();
 
-      console.log("Check for existing customers with matching Client._id")
+    console.log(
+      'Check for existing customers with matching Client._id',
+    );
 
-    const existingCustomer = StripeCustomerModel.findOne({clientRef_id: req.body.client._id})
+    const existingCustomer = StripeCustomerModel.findOne({
+      clientRef_id: req.body.client._id,
+    });
 
-      const createNewCustomer = async () => {
-              
-              console.log("Previous customer not found. Creating new customer")
+    const createNewCustomer = async () => {
+      console.log(
+        'Previous customer not found. Creating new customer',
+      );
 
-             return stripe.customers.create({
-                email: req.body.client.email,
-                shipping: {
-                  address: {
-                    line1: req.body.client.shipping_address_line1,
-                    line2: req.body.client.shipping_address_line2,
-                    city: req.body.client.shipping_address_city,
-                    postal_code: req.body.client.shipping_zip,
-                    state: req.body.client.shipping_address_state,
-                  },
-                  name: req.body.client.firstName.concat(' ', req.body.client.lastName),
-                  phone: req.body.client.phoneNumber,
-                },
-              })
-              .then( async(customer) => {
+      return stripe.customers
+        .create({
+          email: req.body.client.email,
+          shipping: {
+            address: {
+              line1: req.body.client.shipping_address_line1,
+              line2: req.body.client.shipping_address_line2,
+              city: req.body.client.shipping_address_city,
+              postal_code: req.body.client.shipping_zip,
+              state: req.body.client.shipping_address_state,
+            },
+            name: req.body.client.firstName.concat(
+              ' ',
+              req.body.client.lastName,
+            ),
+            phone: req.body.client.phoneNumber,
+          },
+        })
+        .then(async (customer) => {
+          console.log('New Stripe Customer Created:', customer);
 
-                console.log("New Stripe Customer Created:", customer)
-                
-                const customerData = Object.assign({}, customer, {clientRef_id: req.body.client._id});
-                const newCustomerModel = new StripeCustomerModel(customerData);
-                const savedCustomerEntity = await newCustomerDataModel.save();
+          const customerData = {
+            ...customer,
+            clientRef_id: req.body.client._id,
+          };
+          const newCustomerModel = new StripeCustomerModel(
+            customerData,
+          );
+          const savedCustomerEntity = await newCustomerDataModel.save();
 
-                    return savedCustomerEntity;
-              })
-          
-      }
+          return savedCustomerEntity;
+        });
+    };
 
+    const customer = existingCustomer || (await createNewCustomer());
 
-    const customer = (existingCustomer) ? existingCustomer : await createNewCustomer()
-
-      stripe.charges.create({
+    stripe.charges
+      .create({
         amount: stripeAmount,
-        currency: "usd",
+        currency: 'usd',
         customer: customer.id,
         source: token,
         shipping: customer.shipping,
-        statement_descriptor: "Omni Online Market",
-      }).then( async (charge) => {
-        
-        const appendStatusToArray = itemsBoughtArray => {
-            return itemsBoughtArray.map(cartItem => {
-              // Object spread operator does not work well on raw mongoose models
-              const { itemName, itemPrice, imageURL, numberRequested, sellerRef_id, itemRef_id, postedBy } = cartItem
-              return Object.assign({}, {
-                itemName,
-                itemPrice,
-                imageURL,
-                numberRequested,
-                sellerRef_id,
-                itemRef_id,
-                postedBy,
-                status: 'Awaiting Delivery'
-              })
-            })
-        }
+        statement_descriptor: 'Omni Online Market',
+      })
+      .then(async (charge) => {
+        const appendStatusToArray = (itemsBoughtArray) => itemsBoughtArray.map((cartItem) => {
+          // Object spread operator does not work well on raw mongoose models
+          const {
+            itemName,
+            itemPrice,
+            imageURL,
+            numberRequested,
+            sellerRef_id,
+            itemRef_id,
+            postedBy,
+          } = cartItem;
+          return {
+            itemName,
+            itemPrice,
+            imageURL,
+            numberRequested,
+            sellerRef_id,
+            itemRef_id,
+            postedBy,
+            status: 'Awaiting Delivery',
+          };
+        });
 
-        const purchaseOrderData = Object.assign({}, {itemsBought: appendStatusToArray(req.body.validatedPurchaseOrderToProcess.validatedCart.itemsBought)}, {
-          subtotalReal: req.body.validatedPurchaseOrderToProcess.validatedCart.subtotalReal,
-          subtotalDisplay: req.body.validatedPurchaseOrderToProcess.validatedCart.subtotalDisplay,
-          taxReal: req.body.validatedPurchaseOrderToProcess.validatedCart.taxReal,
-          taxDisplay: req.body.validatedPurchaseOrderToProcess.validatedCart.taxDisplay,
-          totalReal: req.body.validatedPurchaseOrderToProcess.validatedCart.totalReal,
-        }, 
-        {
+        const purchaseOrderData = {
+          itemsBought: appendStatusToArray(
+            req.body.validatedPurchaseOrderToProcess.validatedCart
+              .itemsBought,
+          ),
+          subtotalReal:
+            req.body.validatedPurchaseOrderToProcess.validatedCart
+              .subtotalReal,
+          subtotalDisplay:
+            req.body.validatedPurchaseOrderToProcess.validatedCart
+              .subtotalDisplay,
+          taxReal:
+            req.body.validatedPurchaseOrderToProcess.validatedCart
+              .taxReal,
+          taxDisplay:
+            req.body.validatedPurchaseOrderToProcess.validatedCart
+              .taxDisplay,
+          totalReal:
+            req.body.validatedPurchaseOrderToProcess.validatedCart
+              .totalReal,
           buyerRef_id: req.body.client._id,
           customerRef_id: customer._id,
-          charge: charge
-         });
+          charge,
+        };
 
-        const newPurchaseOrder = new PurchaseOrderModel(purchaseOrderData);
+        const newPurchaseOrder = new PurchaseOrderModel(
+          purchaseOrderData,
+        );
 
         const savedPurchaseOrder = await newPurchaseOrder.save();
 
-        console.log("Purchase order saved", savedPurchaseOrder)
-
+        console.log('Purchase order saved', savedPurchaseOrder);
 
         req.body.validatedPurchaseOrderToProcess.savedPurchaseOrder = savedPurchaseOrder;
 
-        console.log("Organizing all bought items by seller_id to generate order notifications")
+        console.log(
+          'Organizing all bought items by seller_id to generate order notifications',
+        );
 
-        const groupedShippingOrders = _.groupBy(savedPurchaseOrder.itemsBought, "sellerRef_id");
+        const groupedShippingOrders = _.groupBy(
+          savedPurchaseOrder.itemsBought,
+          'sellerRef_id',
+        );
         const arrayOfFinalizedShippingOrders = [];
 
         for (const seller_id in groupedShippingOrders) {
-
           // EXPORT THIS INTO NEW FUNCTION TO CALCULATE PRICING
-          console.log("Calculating sale for user ", seller_id)
-          const bigNumberPrices = groupedShippingOrders[seller_id].map(item => {
-            return { 
-              itemPrice: new BigNumber(item.itemPrice),
-              multipleRequest: new BigNumber(item.numberRequested),
-            }
-          });
+          console.log('Calculating sale for user ', seller_id);
+          const bigNumberPrices = groupedShippingOrders[
+            seller_id
+          ].map((item) => ({
+            itemPrice: new BigNumber(item.itemPrice),
+            multipleRequest: new BigNumber(item.numberRequested),
+          }));
 
-          const buyerName = `${req.body.client.firstName} ${req.body.client.lastName}`
-          const subTotalBigNumber = bigNumberPrices.reduce( (acc, cur) => { 
-          return acc.plus((cur.itemPrice.times(cur.multipleRequest))) }, new BigNumber(0)
-          )
-             
-              const taxRate = new BigNumber(0.07) 
-              const subtotalReal = subTotalBigNumber.toNumber()
-              const subtotalDisplay = subTotalBigNumber.round(2).toNumber()
-              const taxReal = subTotalBigNumber.times(taxRate).toNumber()
-              const taxDisplay = subTotalBigNumber.times(taxRate).round(2).toNumber()
-              const totalReal = subTotalBigNumber.plus(taxReal).toNumber()
-              const totalDisplay = subTotalBigNumber.plus(taxReal).round(2).toNumber()
-        
-                  const receiptObject = Object.assign({
-                    sellerRef_id: seller_id,
-                    buyerName,
-                    buyerRef_id: req.body.client._id,
-                    masterPurchaseOrderRef_id: savedPurchaseOrder._id,
-                    itemsBought: groupedShippingOrders[seller_id], // groupedShippingOrders is an object of arrays, whose keys are _id references of user who posted the items to the marketplace
-                    subtotalReal: subtotalReal,
-                    subtotalDisplay: subtotalDisplay,
-                    taxReal: taxReal,
-                    taxDisplay: taxDisplay,
-                    totalReal: totalReal,
-                    totalDisplay: totalDisplay,
-                  })
+          const buyerName = `${req.body.client.firstName} ${req.body.client.lastName}`;
+          const subTotalBigNumber = bigNumberPrices.reduce(
+            (acc, cur) => acc.plus(cur.itemPrice.times(cur.multipleRequest)),
+            new BigNumber(0),
+          );
 
-                    arrayOfFinalizedShippingOrders.push(receiptObject)
+          const taxRate = new BigNumber(0.07);
+          const subtotalReal = subTotalBigNumber.toNumber();
+          const subtotalDisplay = subTotalBigNumber
+            .round(2)
+            .toNumber();
+          const taxReal = subTotalBigNumber.times(taxRate).toNumber();
+          const taxDisplay = subTotalBigNumber
+            .times(taxRate)
+            .round(2)
+            .toNumber();
+          const totalReal = subTotalBigNumber
+            .plus(taxReal)
+            .toNumber();
+          const totalDisplay = subTotalBigNumber
+            .plus(taxReal)
+            .round(2)
+            .toNumber();
+
+          const receiptObject = {
+            sellerRef_id: seller_id,
+            buyerName,
+            buyerRef_id: req.body.client._id,
+            masterPurchaseOrderRef_id: savedPurchaseOrder._id,
+            itemsBought: groupedShippingOrders[seller_id], // groupedShippingOrders is an object of arrays, whose keys are _id references of user who posted the items to the marketplace
+            subtotalReal,
+            subtotalDisplay,
+            taxReal,
+            taxDisplay,
+            totalReal,
+            totalDisplay,
+          };
+
+          arrayOfFinalizedShippingOrders.push(receiptObject);
         }
 
-                 req.body.validatedPurchaseOrderToProcess.arrayOfFinalizedShippingOrders = arrayOfFinalizedShippingOrders;
-                  
-                  for (const receipt of arrayOfFinalizedShippingOrders) {
-                    
-                    const newSellerSpecificPurchaseOrder = new sellerSpecificPurchaseOrderModel(receipt);
-                    const savedSellerSpecificPurchaseOrder = await newSellerSpecificPurchaseOrder.save()
-                    console.log(savedSellerSpecificPurchaseOrder);
-                  
-                  }
+        req.body.validatedPurchaseOrderToProcess.arrayOfFinalizedShippingOrders = arrayOfFinalizedShippingOrders;
 
-                  res.json(req.body.validatedPurchaseOrderToProcess);
+        for (const receipt of arrayOfFinalizedShippingOrders) {
+          const newSellerSpecificPurchaseOrder = new sellerSpecificPurchaseOrderModel(
+            receipt,
+          );
+          const savedSellerSpecificPurchaseOrder = await newSellerSpecificPurchaseOrder.save();
+          console.log(savedSellerSpecificPurchaseOrder);
+        }
 
-      })
+        res.json(req.body.validatedPurchaseOrderToProcess);
+      });
+  } catch (err) {
+    next(err);
+  }
+};
 
-
-  } catch(err) { next(err) }
-  
-}
-
-module.exports.buildSubscription = async function(req, res, next) {
-  
+module.exports.buildSubscription = async function (req, res, next) {
   const plan = stripe.plans.create({
-    product: { name: "Vantage Point-of-Sale Business Class"},
+    product: { name: 'Vantage Point-of-Sale Business Class' },
     currency: 'usd',
     interval: 'month',
     nickname: 'Basic Monthly',
-    amount: 100
+    amount: 100,
   });
-
-}
+};
 
 /* Example of what a Stripe Token Object sent as req.body looks like:
 
@@ -260,7 +321,7 @@ module.exports.buildSubscription = async function(req, res, next) {
 
   */
 
-  /* Here is a sample charge object which is returned to the Client from Stripe's in-house API
+/* Here is a sample charge object which is returned to the Client from Stripe's in-house API
 
 Object { id: "ch_1BnGGIJGFIfkFzodJRDrKOb1", object: "charge", amount: 1000, amount_refunded: 0, application: null, application_fee: null, balance_transaction: "txn_1BnGGIJGFIfkFzodwhuOiAVW", captured: true, created: 1516669662, currency: "usd", … } payments.js:15
 amount: 1000

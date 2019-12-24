@@ -5,40 +5,37 @@ import Modal from 'react-modal';
 import { modalStyle } from '../config';
 import { hideModal } from '../../actions/modals';
 
-const mapDispatchToProps = dispatch => ({
-	hideModal: () => dispatch(hideModal()),
-})
+const mapDispatchToProps = (dispatch) => ({
+  hideModal: () => dispatch(hideModal()),
+});
 
 const mapStateToProps = (state) => {
-	const { modalType, modalProps } = state.modalReducer
-	return { modalType, modalProps }
-}
+  const { modalType, modalProps } = state.modalReducer;
+  return { modalType, modalProps };
+};
 
-const CartSuccessModal = props => {
-	console.log(props)
-	return(
+const CartSuccessModal = (props) => {
+  console.log(props);
+  return (
+    <div>
+      <Modal
+        isOpen={props.modalType === 'CART_ADDITION_SUCCESS_MODAL'}
+        style={modalStyle}
+        contentLabel="Example Modal"
+        overlayClassName="Overlay"
+        shouldCloseOnOverlayClick
+        onRequestClose={() => this.props.hideModal()}
+      >
+        <div>
+          <h2>{`Successfully Added  ${props.itemName} to cart.`}</h2>
+          <button onClick={() => props.hideModal()}> Okay. </button>
+        </div>
+      </Modal>
+    </div>
+  );
+};
 
-		<div>
-			<Modal
-				isOpen={props.modalType === 'CART_ADDITION_SUCCESS_MODAL'}
-				style={modalStyle}
-				contentLabel="Example Modal"
-				overlayClassName="Overlay"
-				shouldCloseOnOverlayClick={true}
-				onRequestClose={() => this.props.hideModal()}
-				>
-
-				<div>
-					<h2> 
-						{`Successfully Added  ${props.itemName} to cart.`}
-					</h2>
-					<button onClick={() => props.hideModal()}> Okay. </button>
-				</div>
-				
-
-			</Modal>
-		</div>
-	)
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CartSuccessModal)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CartSuccessModal);

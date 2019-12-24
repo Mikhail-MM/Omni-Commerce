@@ -6,6 +6,6 @@ const connection = {
   database: process.env.POSTGRES_DATABASE,
   user: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PW,
-}
+};
 
 module.exports = pgp(connection);

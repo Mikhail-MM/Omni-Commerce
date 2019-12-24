@@ -5,88 +5,106 @@ import Modal from 'react-modal';
 import { modalStyle } from '../config';
 import { hideModal } from '../../actions/modals';
 
-import { updateTransactionWithRequestedAddon } from '../../actions/tickets-transactions'
+import { updateTransactionWithRequestedAddon } from '../../actions/tickets-transactions';
 
-const mapStateToProps = state => {
-	
-	const { modalType, modalProps } = state.modalReducer
-	const { token } = state.authReducer
-	const { activeTicket } = state.ticketTrackingReducer
-	return { token, activeTicket, modalType, modalProps }
+const mapStateToProps = (state) => {
+  const { modalType, modalProps } = state.modalReducer;
+  const { token } = state.authReducer;
+  const { activeTicket } = state.ticketTrackingReducer;
+  return { token, activeTicket, modalType, modalProps };
+};
 
-}
-
-const mapDispatchToProps = dispatch => ({
-	hideModal: () => dispatch(hideModal()),
-	updateTransaction: (event, token, ticketId, addonData) => {
-		event.preventDefault()
-		dispatch(updateTransactionWithRequestedAddon(token, ticketId, addonData))
-	},
-})
+const mapDispatchToProps = (dispatch) => ({
+  hideModal: () => dispatch(hideModal()),
+  updateTransaction: (event, token, ticketId, addonData) => {
+    event.preventDefault();
+    dispatch(
+      updateTransactionWithRequestedAddon(token, ticketId, addonData),
+    );
+  },
+});
 
 class AddCustomAddonForm extends Component {
-	
-	state = {
-		itemName: '',
-		itemPrice: '',
-		category: 'AddOn'		
-	}
+  state = {
+    itemName: '',
+    itemPrice: '',
+    category: 'AddOn',
+  };
 
-	handleChange = (key, value) => {
-    console.log()
-		this.setState({
-			[key]: value
-		})
-	}
-	
-	render() {
+  handleChange = (key, value) => {
+    console.log();
+    this.setState({
+      [key]: value,
+    });
+  };
 
-		const { token, activeTicket } = this.props
-		const { updateTransaction } = this.props
+  render() {
+    const { token, activeTicket } = this.props;
+    const { updateTransaction } = this.props;
 
-		return(
-		<form onSubmit={(event) => updateTransaction(event, token, activeTicket._id, JSON.stringify(this.state))}>
-			<label>
-				Item:
-				<input type='text' value={this.state.itemName} onChange={(e) => this.handleChange('itemName', e.target.value)} />
-			</label>
-			<label>
-				Price:
-				<input type='text' value={this.state.itemPrice} onChange={(e) => this.handleChange('itemPrice', e.target.value)} />
-			</label>
-			<input type="submit" value="Enter new Item" />
-		</form>
-		)
-	}
-
+    return (
+      <form
+        onSubmit={(event) =>
+          updateTransaction(
+            event,
+            token,
+            activeTicket._id,
+            JSON.stringify(this.state),
+          )
+        }
+      >
+        <label>
+          Item:
+          <input
+            type="text"
+            value={this.state.itemName}
+            onChange={(e) =>
+              this.handleChange('itemName', e.target.value)
+            }
+          />
+        </label>
+        <label>
+          Price:
+          <input
+            type="text"
+            value={this.state.itemPrice}
+            onChange={(e) =>
+              this.handleChange('itemPrice', e.target.value)
+            }
+          />
+        </label>
+        <input type="submit" value="Enter new Item" />
+      </form>
+    );
+  }
 }
 
-const CustomAddonModal = props => {
+const CustomAddonModal = (props) => {
+  const { token, activeTicket } = props;
+  const { updateTransaction } = props;
 
-	const { token, activeTicket } = props
-	const { updateTransaction } = props
+  return (
+    <div>
+      <Modal
+        isOpen={props.modalType === 'CUSTOM_ADDON_MODAL'}
+        style={modalStyle}
+        contentLabel="Example Modal"
+        overlayClassName="Overlay"
+        shouldCloseOnOverlayClick={true}
+        onRequestClose={() => props.hideModal()}
+      >
+        <AddCustomAddonForm
+          token={token}
+          activeTicket={activeTicket}
+          updateTransaction={updateTransaction}
+        />
+        <button onClick={() => props.hideModal()}> Cancel </button>
+      </Modal>
+    </div>
+  );
+};
 
-	return(
-		<div>
-			<Modal
-				isOpen={props.modalType === 'CUSTOM_ADDON_MODAL'}
-				style={modalStyle}
-				contentLabel="Example Modal"
-				overlayClassName="Overlay"
-				shouldCloseOnOverlayClick={true}
-				onRequestClose={() => props.hideModal()}
-				>
-
-				<AddCustomAddonForm 
-					token={token}
-					activeTicket={activeTicket}
-					updateTransaction={updateTransaction}
-				/>
-				<button onClick={() => props.hideModal()}> Cancel </button>
-
-			</Modal>
-		</div>
-	)
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CustomAddonModal)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CustomAddonModal);
