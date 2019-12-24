@@ -113,7 +113,7 @@ class TerminalActionMobile extends Component {
     return menuItems[category].map((item) => {
       return (
         <div
-          className="ui-pos-item ripple-btn ripple"
+          className="ui-pos-item ui-pos-ripple"
           key={item._id}
           onClick={() => {
             if (this.props.modify)

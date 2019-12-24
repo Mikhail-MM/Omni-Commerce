@@ -4,12 +4,26 @@ $btn-fadedcrimson: #f96e80;
 $btn-lightcrimson: #D1495B;
 $btn-liteblue: #7bd2ff;
 
-.ripple-btn {
+
+@mixin rippleBackground($color1, $color2) {
     /*
         Ripple Effect Src:
         https://codepen.io/finnhvman/pen/jLXKJw
         Ben Szabo
     */
+    transition: background 0.8s;
+    background: $color1 radial-gradient(circle, transparent 1%, $color1 1%, ) center/15000%;
+    &:hover {
+        background-color: $color2;
+    }
+    &:active {
+        background-color: $color2;
+        background-size: 100%;
+        transition: background 0s;
+    }
+}
+
+.ripple-btn {
     min-width: 150px;
     min-height: 52px;
     padding: 1px 7px 2px;
@@ -24,33 +38,14 @@ $btn-liteblue: #7bd2ff;
     &:hover {
         cursor: pointer;
     }
-    &:active {
-        background-size: 100%;
-        transition: background 0s;
-        
-    }
 }
 
 .ripple {
-    transition: background 0.8s;
-    background: $btn-blue radial-gradient(circle, transparent 1%, $btn-blue 1%, ) center/15000%;
-    &:hover {
-        background-color: $btn-liteblue;
-    }
-    &:active {
-        background-color: $btn-liteblue;
-    }
+    @include rippleBackground($btn-blue, $btn-liteblue);
 }
 
 .alt-ripple {
-    transition: background 0.8s;
-    background: $btn-lightcrimson radial-gradient(circle, transparent 1%, $btn-lightcrimson 1%, ) center/15000%;
-    &:hover {
-        background-color: $btn-fadedcrimson;
-    }
-    &:active {
-        background-color: $btn-fadedcrimson;
-    }
+    @include rippleBackground($btn-lightcrimson, $btn-fadedcrimson);
 }
 
 .terminal-category-buttons {
@@ -95,6 +90,8 @@ $btn-liteblue: #7bd2ff;
 
 */
 
+// POS BUTTONS 
+
 .ui-pos-item_image {
 	position: relative;
 
@@ -123,4 +120,54 @@ $btn-liteblue: #7bd2ff;
 	min-height: 10%;
 	text-align: center;
 	margin-top: -3px;
+}
+
+// ADMIN TERMINAL BUTTONS
+
+.admin-button {
+	display: flex;
+	align-items: center;
+
+	width: 100%;
+	height: 50px;
+
+	padding: 15px 15px;
+	border-left: 2px solid lightseagreen;
+	border-top-left-radius: 2px;
+	border-bottom-left-radius: 2px;
+	transition: padding 0.3s, border 0.3s, color 0.3s ease-out;
+	margin-bottom: 8px;
+	border-top: 1px solid rgba(0,0,0,0.25);
+	border-bottom: 1px solid rgba(0,0,0,0.25);
+	border-right: 1px solid rgba(0,0,0,0.25);
+	border-top-right-radius: 6px !important;
+	border-bottom-right-radius: 6px !important;
+}
+
+.admin-button:hover {
+	padding-left: 20px;
+	border-left-width: 4px;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px; 
+	color: #708FA3;
+}
+.admin-button__active {
+	padding-left: 25px;
+	border-top-left-radius: 6px;
+	border-bottom-left-radius: 6px;
+	border-left-width: 6px;
+	color: #708FA3;
+}
+.admin-button__active:hover {
+	padding-left: 25px;
+	border-top-left-radius: 6px;
+	border-bottom-left-radius: 6px;
+	border-left-width: 6px;
+	color: #708FA3;
+}
+.admin-menu-icon {
+	height: 32px;
+	width: 32px;
+
+	margin-right: 12px;
 }
