@@ -25,13 +25,13 @@ const Jumbotron = ({ showModal, route }) => {
     <div className='hero-header-3' >
       
       <button 
-        className='getting-started-button'
+        className='getting-started-button ripple-btn ripple'
         onClick={showModulePicker}
       >
         Get Started
       </button>
 
-      <button className='sign-in-button' onClick={routeToMarketplace}>
+      <button className='ripple-btn alt-ripple' onClick={routeToMarketplace}>
         View Marketplace
       </button>
 
