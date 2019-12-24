@@ -65,6 +65,7 @@ class TerminalActionMobile extends Component {
     return Object.keys(menuItems).map((category, index) => {
       return (
         <button
+          className="ripple-btn ripple"
           style={{
             backgroundColor: `${
               category === visibleCategory
@@ -112,7 +113,7 @@ class TerminalActionMobile extends Component {
     return menuItems[category].map((item) => {
       return (
         <div
-          className="ui-pos-item"
+          className="ui-pos-item ripple-btn ripple"
           key={item._id}
           onClick={() => {
             if (this.props.modify)

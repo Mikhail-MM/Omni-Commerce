@@ -111,7 +111,7 @@ class OmniTerminal extends Component {
             <div className="mobile-terminal__body">
               <div className="mobile-terminal__button-row-container">
                 <button
-                  className="button"
+                  className="button ripple-btn ripple"
                   onClick={() =>
                     this.props.showModal(
                       'EMPLOYEE_PUNCH_CLOCK_FORM_MODAL',

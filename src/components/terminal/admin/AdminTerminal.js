@@ -291,7 +291,7 @@ class AdminTerminal extends Component {
               <div className="sidebar-column">
                 <div className="menu-box">
                   <div
-                    className={`admin-button${
+                    className={`admin-button ripple-btn ripple${
                       this.state.actionComponent ===
                       'MANAGE_EMPLOYEES'
                         ? ' admin-button__active'

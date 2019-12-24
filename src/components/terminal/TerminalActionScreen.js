@@ -73,6 +73,7 @@ class TerminalActionScreen extends Component {
     return Object.keys(menuItems).map((category, index) => {
       return (
         <button
+          className="ripple-btn ripple terminal-category-buttons"
           style={{
             backgroundColor: `${
               category === visibleCategory
@@ -122,7 +123,7 @@ class TerminalActionScreen extends Component {
     return menuItems[category].map((item) => {
       return (
         <div
-          className="ui-pos-item"
+          className="ui-pos-item ui-pos-ripple"
           key={item._id}
           onClick={() => {
             if (this.props.modify)
