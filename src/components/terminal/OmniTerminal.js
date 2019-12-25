@@ -106,12 +106,11 @@ class OmniTerminal extends Component {
           <div className="mobile-terminal-wrapper">
             <ModalRoot />
             <div className="mobile-terminal__header">
-              <h6> Mobile Terminal Wireframe </h6>
             </div>
             <div className="mobile-terminal__body">
               <div className="mobile-terminal__button-row-container">
                 <button
-                  className="button ripple-btn ripple"
+                  className="mobile-action-btn"
                   onClick={() =>
                     this.props.showModal(
                       'EMPLOYEE_PUNCH_CLOCK_FORM_MODAL',
@@ -123,7 +122,7 @@ class OmniTerminal extends Component {
                   Clock In{' '}
                 </button>
                 <button
-                  className="button"
+                  className="mobile-action-btn"
                   onClick={() =>
                     this.props.showModal(
                       'EMPLOYEE_PUNCH_CLOCK_FORM_MODAL',
@@ -137,7 +136,7 @@ class OmniTerminal extends Component {
               </div>
               <div className="mobile-terminal__button-row-container">
                 <button
-                  className="button"
+                  className="mobile-action-btn"
                   onClick={() =>
                     this.props.showModal(
                       'DISPLAY_ALL_TRANSACTIONS',
@@ -149,7 +148,7 @@ class OmniTerminal extends Component {
                   See All Transactions{' '}
                 </button>
                 <button
-                  className="button"
+                  className="mobile-action-btn"
                   onClick={() =>
                     this.props.routeToNode(
                       '/omni/terminal/modifyItems',
@@ -162,7 +161,7 @@ class OmniTerminal extends Component {
               </div>
               <div className="mobile-terminal__button-row-container">
                 <button
-                  className="button"
+                  className="mobile-action-btn"
                   onClick={() =>
                     this.props.showModal(
                       'SELECT_EMPLOYEE_OPENING_TICKET',
@@ -174,7 +173,7 @@ class OmniTerminal extends Component {
                   New Ticket{' '}
                 </button>
                 <button
-                  className="button"
+                  className="mobile-action-btn"
                   onClick={() =>
                     this.props.showModal(
                       'CONFIRM_END_OF_BUSINESS_DAY',

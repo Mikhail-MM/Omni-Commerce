@@ -72,9 +72,6 @@ const LoadableComponents = {
 }
 
 export default class Root extends Component {
-	componentDidMount() {
-		console.log("This should run AFTER the HOC")
-	}
 	render() {
 		return (
 			<Provider store={store}>

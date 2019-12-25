@@ -173,6 +173,15 @@ $btn-y2: rgb(252, 214, 105);
     }
 }
 
+.mobile-action-btn  {
+    height: 52px;
+    width: 150px;
+    color: white;
+    font-size: 14px;
+    @include btn();
+    @include rippleBackground($btn-blue, $btn-liteblue);
+}
+
 // ADMIN TERMINAL BUTTONS
 
 .admin-button {

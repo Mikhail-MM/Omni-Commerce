@@ -163,7 +163,12 @@
 		font-size: 0.8em;
 	}
 	.centered-rectangle {
-		margin-top: 86px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		margin: 4px;
+		padding: 8px;
 	}
 	.fade-in-text {
 		margin: 16px 0;

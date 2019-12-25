@@ -73,6 +73,7 @@ class TerminalActionMobile extends Component {
                 : 'rgb(66, 64, 244)'
             }`,
             marginRight: 4,
+            marginBottom: 4,
             borderStyle: 'none',
             color: 'white',
             cursor: 'pointer',

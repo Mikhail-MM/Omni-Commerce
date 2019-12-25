@@ -17,8 +17,10 @@ const mapDispatchToProps = (dispatch) => ({
 
 class GlobalAuthProvider extends Component {
   async componentDidMount() {
+    console.log("Validating login token.")
     const cachedAuth = await validateCachedToken();
     if (cachedAuth.token) {
+      console.log("Cached token found.")
       this.props.validateCachedAuth({
         token: cachedAuth.token,
         accountType: cachedAuth.accountType,

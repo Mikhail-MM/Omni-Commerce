@@ -51,13 +51,25 @@ class TerminalActionScreen extends Component {
 
   // Category Selection Screen
 
-  async componentDidMount() {
+  componentDidMount() {
     const { token } = this.props;
-
     this.props.fetchCurrentTicketDetails(
       token,
       this.props.match.params.id,
     );
+  }
+
+  componentDidUpdate(prevProps) {
+    const { token } = this.props;
+    if (
+      this.props.isAuthenticated === !prevProps.isAuthenticated &&
+      this.props.isAuthenticated
+    ) {
+      this.props.fetchCurrentTicketDetails(
+        token,
+        this.props.match.params.id,
+      );
+    }
   }
 
   generateItemCategoryVisibilityMenu = () => {
