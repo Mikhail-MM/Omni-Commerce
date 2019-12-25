@@ -48,7 +48,14 @@ const SalesAggregationSuccessModal = (props) => {
               {' '}
             </h4>
           </div>
-          <button onClick={() => props.hideModal()}> Cancel </button>
+          <button
+            className="btn-back-out"
+            onClick={() => props.hideModal()}
+          >
+            {' '}
+            Cancel
+            {' '}
+          </button>
         </div>
       </Modal>
     </div>

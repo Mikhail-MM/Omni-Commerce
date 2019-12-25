@@ -34,25 +34,31 @@ const ConfirmSalesReportAggregationModal = (props) => (
         </div>
         <div>
           <p>
-              This action will collect all transactions within this
-              sales period. If you have any open tickets, please
-              ensure that they are paid out. All unpaid tickets will
-              be considered void.
+            This action will collect all transactions within this
+            sales period. If you have any open tickets, please ensure
+            that they are paid out. All unpaid tickets will be
+            considered void.
           </p>
           <p>
-              You will not be able to edit these transactions after
-              they have been collected without administrative
-              approval.
+            You will not be able to edit these transactions after they
+            have been collected without administrative approval.
           </p>
           <button
             onClick={() => props.closeOutDailySales(props.token)}
           >
             {' '}
-              Confirm
+            Confirm
             {' '}
           </button>
         </div>
-        <button onClick={() => props.hideModal()}> Cancel </button>
+        <button
+          className="btn-back-out"
+          onClick={() => props.hideModal()}
+        >
+          {' '}
+          Cancel
+          {' '}
+        </button>
       </div>
     </Modal>
   </div>

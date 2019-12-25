@@ -28,7 +28,14 @@ const UploadSuccessModal = (props) => (
         <h2> Item Uploade Success, logging props in console </h2>
         {console.log(props)}
       </div>
-      <button onClick={() => props.hideModal()}> Cancel </button>
+      <button
+        className="btn-back-out"
+        onClick={() => props.hideModal()}
+      >
+        {' '}
+        Cancel
+        {' '}
+      </button>
     </Modal>
   </div>
 );

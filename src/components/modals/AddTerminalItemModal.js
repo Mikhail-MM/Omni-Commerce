@@ -27,7 +27,14 @@ const AddTerminalItemModal = (props) => (
       onRequestClose={() => props.hideModal()}
     >
       <AddTerminalItemForm />
-      <button onClick={() => props.hideModal()}> Cancel </button>
+      <button
+        className="btn-back-out"
+        onClick={() => props.hideModal()}
+      >
+        {' '}
+        Cancel
+        {' '}
+      </button>
     </Modal>
   </div>
 );

@@ -22,7 +22,7 @@ const UserWishlistPreviewPreview = (props) => {
       return (
         <h5>
           {' '}
-This user's
+          This user's
           {arrayType}
           {' '}
 is empty.
@@ -69,7 +69,14 @@ is empty.
             {' '}
           </h4>
           {renderWishlistPreviewToDOM()}
-          <button onClick={() => props.hideModal()}> Cancel </button>
+          <button
+            className="btn-back-out"
+            onClick={() => props.hideModal()}
+          >
+            {' '}
+            Cancel
+            {' '}
+          </button>
         </div>
       </Modal>
     </div>

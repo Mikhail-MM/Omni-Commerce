@@ -27,7 +27,14 @@ const EssosCardPaymentModal = (props) => (
     >
       <div style={{ height: 100, width: 700 }}>
         <Checkout apiStripePath="Essos" />
-        <button onClick={() => props.hideModal()}> Cancel </button>
+        <button
+          className="btn-back-out"
+          onClick={() => props.hideModal()}
+        >
+          {' '}
+          Cancel
+          {' '}
+        </button>
       </div>
     </Modal>
   </div>

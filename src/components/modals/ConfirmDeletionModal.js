@@ -25,7 +25,8 @@ const ConfirmDeletionModal = (props) => {
   const handleDeleteRequest = () => {
     if (module === 'Essos') {
       return props.deleteEssosItem(token, itemData._id);
-    } if (module === 'Omni') {
+    }
+    if (module === 'Omni') {
       return props.deleteOmniItem(token, itemData._id);
     }
   };
@@ -47,7 +48,14 @@ const ConfirmDeletionModal = (props) => {
             Delete Item
             {' '}
           </button>
-          <button onClick={() => props.hideModal()}> Cancel </button>
+          <button
+            className="btn-back-out"
+            onClick={() => props.hideModal()}
+          >
+            {' '}
+            Cancel
+            {' '}
+          </button>
         </div>
       </Modal>
     </div>

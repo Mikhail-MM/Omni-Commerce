@@ -3,8 +3,26 @@ $btn-blue:#007bff;
 $btn-fadedcrimson: #f96e80;
 $btn-lightcrimson: #D1495B;
 $btn-liteblue: #7bd2ff;
+$btn-crimson: rgb(142, 39, 39);
+$btn-darkgreen: #207120;
+$btn-lightgreen: #329e32;
+$btn-y1: rgb(252, 214, 105);
+$btn-y2: rgb(252, 214, 105);
 
-
+@mixin coolBoxShadow {
+    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2),0px 2px 2px 0px rgba(0, 0, 0, 0.14),0px 3px 1px -2px rgba(0, 0, 0, 0.12);
+}
+@mixin btn {
+    min-width: 82px;
+    min-height: 32px;
+    padding: 1px 7px 2px;
+    line-height: 32px;
+    font-weight: 700; 
+    border: none;
+    border-radius: 3px;
+    outline: none;
+    @include coolBoxShadow();
+}
 @mixin rippleBackground($color1, $color2) {
     /*
         Ripple Effect Src:
@@ -15,6 +33,7 @@ $btn-liteblue: #7bd2ff;
     background: $color1 radial-gradient(circle, transparent 1%, $color1 1%, ) center/15000%;
     &:hover {
         background-color: $color2;
+        cursor: pointer;
     }
     &:active {
         background-color: $color2;
@@ -49,7 +68,8 @@ $btn-liteblue: #7bd2ff;
 }
 
 .terminal-category-buttons {
-    height: 32px;
+    @include btn();
+    @include rippleBackground($btn-blue, $btn-liteblue);
 }
 
 .ui-pos-ripple {
@@ -65,18 +85,16 @@ $btn-liteblue: #7bd2ff;
 	margin-bottom: 10px;
     box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
     
+    @include rippleBackground($btn-blue, $btn-liteblue);
     transition: background 0.8s, transform 0.4s, border 0.8s;
-    background: $btn-blue radial-gradient(circle, transparent 1%, $btn-blue 1%, ) center/25000%;
+    background-size: 25000%; /* It needs to be higher for a taller element */
+    
     &:hover {
-        background-color: $btn-liteblue;
-        cursor: pointer;
         transform: translateY(-8px);
     }
     &:active {
-        background-color: $btn-liteblue;
         border-width: 4px;
-        background-size: 100%;
-        transition: background 0s;
+        transition: background 0s, transform 0.4s, border 0.8s;
     }
 }
 
@@ -120,6 +138,39 @@ $btn-liteblue: #7bd2ff;
 	min-height: 10%;
 	text-align: center;
 	margin-top: -3px;
+}
+
+// Terminal 
+
+.checkout-button {
+	width: 100%;
+	height: 50px;
+    @include btn();
+	@include rippleBackground($btn-darkgreen, $btn-lightgreen);
+	color: #C2EFC2;
+	text-align: center;
+}
+
+.action-button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 85px;
+}
+
+.action-button {
+	width: 100px;
+	height: 35px;
+	padding: 8px;
+    text-align: center;
+    @include btn();
+    &.void-btn {
+        @include rippleBackground($btn-crimson, $btn-lightcrimson);
+        margin-bottom: 4px;
+    }
+    &.active-btn {
+        @include rippleBackground($btn-blue, $btn-liteblue);
+    }
 }
 
 // ADMIN TERMINAL BUTTONS
@@ -170,4 +221,31 @@ $btn-liteblue: #7bd2ff;
 	width: 32px;
 
 	margin-right: 12px;
+}
+
+// REGISTRATION BUTTONS
+
+
+.btn-register {
+    @include btn();
+    @include rippleBackground($btn-y1, $btn-y2);
+    margin: 8px 0;
+    font-size: 14px;
+    &:hover {
+        background-color: #FFCA34;
+    }
+}
+
+.btn-back-out {
+    font-size: 14px;
+    border: none;
+    background: none;
+    font-weight: 400;
+    color: #6bc3f3;
+    margin: 8px 0;
+    padding: 0 10px;
+    outline: none;
+    &:hover {
+        cursor: pointer;
+    }
 }

@@ -51,7 +51,14 @@ const PaymentTypeSelectionModal = (props) => (
           <h5> Cash </h5>
         </div>
       </div>
-      <button onClick={() => props.hideModal()}> Cancel </button>
+      <button
+        className="btn-back-out"
+        onClick={() => props.hideModal()}
+      >
+        {' '}
+        Cancel
+        {' '}
+      </button>
     </Modal>
   </div>
 );

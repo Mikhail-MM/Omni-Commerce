@@ -120,7 +120,10 @@ class AddReviewModal extends Component {
                 {' '}
                 Submit Rating{' '}
               </button>
-              <button onClick={() => this.props.hideModal()}>
+              <button
+                className="btn-back-out"
+                onClick={() => this.props.hideModal()}
+              >
                 {' '}
                 Cancel{' '}
               </button>

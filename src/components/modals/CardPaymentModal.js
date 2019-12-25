@@ -29,7 +29,14 @@ const CardPaymentModal = (props) => (
       <div style={{ height: 80, width: 700 }}>
         <Checkout apiStripePath="Omni" />
       </div>
-      <button onClick={() => props.hideModal()}> Cancel </button>
+      <button
+        className="btn-back-out"
+        onClick={() => props.hideModal()}
+      >
+        {' '}
+        Cancel
+        {' '}
+      </button>
     </Modal>
   </div>
 );

@@ -379,7 +379,7 @@ class AuthenticationForm extends Component {
 								/>
 							</div>
 						</div>
-						<input className='splash-button' value={this.props.login ? 'Log In' : 'Register'} type='submit' />
+						<input className='btn-register' value={this.props.login ? 'Log In' : 'Register'} type='submit' />
 					</React.Fragment>
 				)
 			}
@@ -393,7 +393,7 @@ class AuthenticationForm extends Component {
 				{ this.props.regpathEssos && 
 						<form className='essos-profile-edit-form' onSubmit={(e) => this.handleSubmit(e)}>
 							{ this.renderEssosStepper() }
-							<button onClick={() => this.props.hideModal()}> Cancel </button>
+							<button className="btn-back-out" onClick={() => this.props.hideModal()}> Cancel </button>
 						</form>
 				}
 
@@ -479,8 +479,8 @@ class AuthenticationForm extends Component {
 								/>
 							</div>
 						</div>
-						<input className='splash-button' value={this.props.login ? 'Log In' : 'Register'} type='submit' />
-						<button onClick={() => this.props.hideModal()}> Cancel </button>
+						<input className='btn-register' value={this.props.login ? 'Log In' : 'Register'} type='submit' />
+						<button className="btn-back-out" onClick={() => this.props.hideModal()}> Cancel </button>
 					</form>
 				}
 				{ this.props.login &&
@@ -514,8 +514,8 @@ class AuthenticationForm extends Component {
 								/>
 							</div>
 						</div>
-						<input className='splash-button' value={this.props.login ? 'Log In' : 'Register'} type='submit' />
-						<button onClick={() => this.props.hideModal()}> Cancel </button>
+						<input className='btn-register' value={this.props.login ? 'Log In' : 'Register'} type='submit' />
+						<button className="btn-back-out" onClick={() => this.props.hideModal()}> Cancel </button>
 					</form>
 					</React.Fragment>
 				}

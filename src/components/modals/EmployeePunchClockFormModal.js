@@ -35,7 +35,14 @@ const EmployeePunchClockFormModal = (props) => {
           {modalProps.formSelector === 'Clock Out' && (
             <ClockInOutForm option={modalProps.formSelector} />
           )}
-          <button onClick={() => props.hideModal()}> Cancel </button>
+          <button
+            className="btn-back-out"
+            onClick={() => props.hideModal()}
+          >
+            {' '}
+            Cancel
+            {' '}
+          </button>
         </div>
       </Modal>
     </div>

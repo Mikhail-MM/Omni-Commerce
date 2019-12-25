@@ -24,10 +24,10 @@ const ReviewListModal = (props) => {
           <img
             alt=""
             src={
-                  star <= rating
-                    ? '/assets/icons/star-full.svg'
-                    : '/assets/icons/star-empty.svg'
-                }
+              star <= rating
+                ? '/assets/icons/star-full.svg'
+                : '/assets/icons/star-empty.svg'
+            }
           />
         </div>
       ))}
@@ -39,10 +39,9 @@ const ReviewListModal = (props) => {
       return (
         <h5>
           {' '}
-This user has no
+          This user has no
           {arrayType}
           {' '}
-
         </h5>
       );
     }
@@ -106,7 +105,7 @@ This user has no
         shouldCloseOnOverlayClick
         onRequestClose={() => props.hideModal()}
       >
-        <React.Fragment>
+        <>
           <div
             style={{
               textAlign: 'center',
@@ -124,8 +123,15 @@ This user has no
             </h4>
             {renderReviewsToDOM()}
           </div>
-          <button onClick={() => props.hideModal()}> Cancel </button>
-        </React.Fragment>
+          <button
+            className="btn-back-out"
+            onClick={() => props.hideModal()}
+          >
+            {' '}
+            Cancel
+            {' '}
+          </button>
+        </>
       </Modal>
     </div>
   );

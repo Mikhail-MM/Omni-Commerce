@@ -21,10 +21,9 @@ const SocialUserListModal = (props) => {
       return (
         <h5>
           {' '}
-This user has no
+          This user has no
           {arrayUserType}
           {' '}
-
         </h5>
       );
     }
@@ -58,7 +57,7 @@ This user has no
         shouldCloseOnOverlayClick
         onRequestClose={() => props.hideModal()}
       >
-        <React.Fragment>
+        <>
           <div
             style={{
               textAlign: 'center',
@@ -78,8 +77,15 @@ This user has no
               {renderUsersToDOM()}
             </div>
           </div>
-          <button onClick={() => props.hideModal()}> Cancel </button>
-        </React.Fragment>
+          <button
+            className="btn-back-out"
+            onClick={() => props.hideModal()}
+          >
+            {' '}
+            Cancel
+            {' '}
+          </button>
+        </>
       </Modal>
     </div>
   );

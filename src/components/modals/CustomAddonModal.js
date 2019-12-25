@@ -98,7 +98,13 @@ const CustomAddonModal = (props) => {
           activeTicket={activeTicket}
           updateTransaction={updateTransaction}
         />
-        <button onClick={() => props.hideModal()}> Cancel </button>
+        <button
+          className="btn-back-out"
+          onClick={() => props.hideModal()}
+        >
+          {' '}
+          Cancel{' '}
+        </button>
       </Modal>
     </div>
   );

@@ -18,7 +18,10 @@ const mapStateToProps = (state) => {
   const { modalType, modalProps } = state.modalReducer;
 
   return {
-    token, loggedInUsers, modalType, modalProps,
+    token,
+    loggedInUsers,
+    modalType,
+    modalProps,
   };
 };
 
@@ -66,7 +69,11 @@ const WaiterCallScreenModal = (props) => {
           createNewTicket={createNewTicket}
           hideModal={hideModal}
         />
-        <button onClick={() => hideModal()}> Cancel </button>
+        <button className="btn-back-out" onClick={() => hideModal()}>
+          {' '}
+          Cancel
+          {' '}
+        </button>
       </Modal>
     </div>
   );

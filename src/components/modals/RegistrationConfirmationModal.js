@@ -40,7 +40,7 @@ const RegistrationConfirmationModal = (props) => {
       >
         <div>
           {props.mode === 'omni-child' ? (
-            <React.Fragment>
+            <>
               <h3> Employee Added! </h3>
               <p>
                 {' '}
@@ -52,14 +52,14 @@ has been added to the
                 system. They can clock in to work by using their
                 Employee Number (
                 {user.terminalIDNumber}
-). You can
-                check in on employee performance by checking employee
-                statistics generated during sales reports.
+                ). You can check in on employee performance by
+                checking employee statistics generated during sales
+                reports.
                 {' '}
               </p>
-            </React.Fragment>
+            </>
           ) : (
-            <React.Fragment>
+            <>
               <h3> Registration Successful! </h3>
               <p>
                 {' '}
@@ -88,19 +88,22 @@ has been added to the
               <button
                 onClick={() => props.showModal('AUTH_FORM_MODAL', {
                   login: true,
-                  loginEssos: `${
-                    mode === 'essos-user'
-                  }`,
-                  loginOmni: `${
-                    mode === 'omni-child'
-                  }`,
+                  loginEssos: `${mode === 'essos-user'}`,
+                  loginOmni: `${mode === 'omni-child'}`,
                 })}
               >
                 Log In
               </button>
-            </React.Fragment>
+            </>
           )}
-          <button onClick={() => props.hideModal()}> Cancel </button>
+          <button
+            className="btn-back-out"
+            onClick={() => props.hideModal()}
+          >
+            {' '}
+            Cancel
+            {' '}
+          </button>
         </div>
       </Modal>
     </div>

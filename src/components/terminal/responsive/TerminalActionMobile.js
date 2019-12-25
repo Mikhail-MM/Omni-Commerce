@@ -353,11 +353,7 @@ class TerminalActionMobile extends Component {
             <div className="footer-buttons-pricing">
               <div className="action-button-container">
                 <div
-                  style={{
-                    backgroundColor: '#463FC5',
-                    marginBottom: 10,
-                  }}
-                  className="action-button"
+                  className="action-button active-btn"
                   onClick={() =>
                     this.props.updateTicketStatus(
                       token,
@@ -369,8 +365,7 @@ class TerminalActionMobile extends Component {
                   Fire Order
                 </div>
                 <div
-                  style={{ backgroundColor: '#8E2727' }}
-                  className="action-button"
+                  className="action-button void-btn"
                   onClick={() =>
                     this.props.updateTicketStatus(
                       token,
@@ -391,7 +386,7 @@ class TerminalActionMobile extends Component {
             </div>
 
             <div
-              className="checkout-button"
+              className="checkout-button ripple-btn"
               onClick={() =>
                 this.props.showModal('CASH_OR_CARD_MODAL', {})
               }
