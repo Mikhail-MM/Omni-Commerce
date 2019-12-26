@@ -5,7 +5,7 @@ import '../styles/TerminalActionScreen.css';
 import ModalRoot from '../ModalRoot';
 import { showModal } from '../../actions/modals';
 import { routeToNode } from '../../actions/routing';
-
+import { fetchMenuItems } from '../../actions/terminalItems';
 import {
   fetchCurrentTicketDetails,
   setVisibleCategory,
@@ -44,6 +44,7 @@ const mapDispatchToProps = (dispatch) => ({
   routeToNode: (node) => dispatch(routeToNode(node)),
   fetchCurrentTicketDetails: (token, ticketId) =>
     dispatch(fetchCurrentTicketDetails(token, ticketId)),
+  fetchMenuItems: (token) => dispatch(fetchMenuItems(token)),
 });
 
 class TerminalActionScreen extends Component {
@@ -57,6 +58,7 @@ class TerminalActionScreen extends Component {
       token,
       this.props.match.params.id,
     );
+    this.props.fetchMenuItems(token);
   }
 
   componentDidUpdate(prevProps) {
@@ -69,6 +71,7 @@ class TerminalActionScreen extends Component {
         token,
         this.props.match.params.id,
       );
+      this.props.fetchMenuItems(token);
     }
   }
 

@@ -12,7 +12,7 @@ import rootReducer from '../reducers/reducers'
 import MediaQuery from 'react-responsive'
 
 import TerminalActionScreen from './terminal/TerminalActionScreen'
-import TerminalActionMobile from './terminal/responsive/TerminalActionMobile'
+import TerminalActionMobile from './terminal/TerminalActionMobile'
 
 
 import RegistrationPicker from './forms/RegistrationPicker'

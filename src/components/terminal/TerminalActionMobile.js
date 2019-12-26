@@ -2,17 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import ModalRoot from '../../ModalRoot';
-import { showModal } from '../../../actions/modals';
-import { routeToNode } from '../../../actions/routing';
+import ModalRoot from '../ModalRoot';
+import { showModal } from '../../actions/modals';
+import { routeToNode } from '../../actions/routing';
+import { fetchMenuItems } from '../../actions/terminalItems';
 import {
+  fetchCurrentTicketDetails,
   setVisibleCategory,
   updateTransactionWithMenuItem,
   updateTicketStatus,
   updateTransactionWithSubdocRemoval,
-} from '../../../actions/tickets-transactions';
+} from '../../actions/tickets-transactions';
 
-import '../../styles/TerminalActionScreen.css';
+import '../styles/TerminalActionScreen.css';
 
 const mapStateToProps = (state, ownprops) => {
   const { token, isAuthenticated } = state.authReducer;
@@ -41,6 +43,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(
       updateTransactionWithSubdocRemoval(token, subdocId, ticketId),
     ),
+  fetchCurrentTicketDetails: (token, ticketId) =>
+    dispatch(fetchCurrentTicketDetails(token, ticketId)),
+  fetchMenuItems: (token) => dispatch(fetchMenuItems(token)),
   routeToNode: (node) => dispatch(routeToNode(node)),
 });
 
@@ -50,6 +55,29 @@ class TerminalActionMobile extends Component {
     mainContent: 'ledger',
     sidebarContent: 'category',
   };
+
+  componentDidMount() {
+    const { token } = this.props;
+    this.props.fetchCurrentTicketDetails(
+      token,
+      this.props.match.params.id,
+    );
+    this.props.fetchMenuItems(token);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { token } = this.props;
+    if (
+      this.props.isAuthenticated === !prevProps.isAuthenticated &&
+      this.props.isAuthenticated
+    ) {
+      this.props.fetchCurrentTicketDetails(
+        token,
+        this.props.match.params.id,
+      );
+      this.props.fetchMenuItems(token);
+    }
+  }
 
   renderSidebarBody = (sidebarViewState) => {
     if (sidebarViewState === 'category')
