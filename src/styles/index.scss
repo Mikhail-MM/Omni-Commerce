@@ -6,8 +6,8 @@ $btn-liteblue: #7bd2ff;
 $btn-crimson: rgb(142, 39, 39);
 $btn-darkgreen: #207120;
 $btn-lightgreen: #329e32;
-$btn-y1: rgb(252, 214, 105);
-$btn-y2: rgb(252, 214, 105);
+$btn-y1: #fdca38;
+$btn-y2: #f3db97;
 
 @mixin coolBoxShadow {
     box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2),0px 2px 2px 0px rgba(0, 0, 0, 0.14),0px 3px 1px -2px rgba(0, 0, 0, 0.12);
@@ -29,10 +29,9 @@ $btn-y2: rgb(252, 214, 105);
         https://codepen.io/finnhvman/pen/jLXKJw
         Ben Szabo
     */
-    transition: background 0.8s;
+    transition: background 1.2s;
     background: $color1 radial-gradient(circle, transparent 1%, $color1 1%, ) center/15000%;
     &:hover {
-        background-color: $color2;
         cursor: pointer;
     }
     &:active {
@@ -107,6 +106,25 @@ $btn-y2: rgb(252, 214, 105);
 }
 
 */
+
+// Registration Button
+
+.sign-in-button,
+.Button-Yellow {
+    @include btn();
+    @include rippleBackground($btn-y1, $btn-y2);
+}
+
+.Button-Blue {
+    @include btn();
+    @include rippleBackground($btn-blue, $btn-liteblue);
+}
+
+.fileSelect {
+    display: flex;
+    justify-content: center;
+    padding: 18px;
+}
 
 // POS BUTTONS 
 
@@ -257,4 +275,25 @@ $btn-y2: rgb(252, 214, 105);
     &:hover {
         cursor: pointer;
     }
+}
+
+
+
+@media (min-width: 752px) {
+	.registration-picker-wrapper {
+        width: 752px;
+        padding: 32px;
+    }
+}
+
+
+.form-label-input-container {
+    margin-bottom: 16px;
+}
+
+.profile-picture-label {
+    align-self: flex-start;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 4px;
 }

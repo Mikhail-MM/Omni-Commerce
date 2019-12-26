@@ -35,7 +35,6 @@ class RegistrationPicker extends Component {
   render() {
     return (
       <div className="registration-picker-wrapper">
-        <div className="centered-rectangle">
           <div
             className="modal-corner-hide"
             onClick={() => this.props.animateFade()}
@@ -147,7 +146,6 @@ class RegistrationPicker extends Component {
               Begin Registation{' '}
             </button>
           )}
-        </div>
       </div>
     );
   }

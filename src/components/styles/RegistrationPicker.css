@@ -3,10 +3,7 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-
 	height: 100%;
-	width: 100%;
-
 	background-color: #525f7f;
 	color: white;
 }
@@ -16,26 +13,6 @@
 	margin-bottom: 25px;
 }
 
-.centered-rectangle {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-
-	position: relative;
-
-	background-color: #525f7f;
-	width: 1136px;
-	height: 500px;
-
-	max-height: 100%;
-	max-width: 100%;
-
-	padding: 25px 75px;
-	border-radius: 10px;
-
-	overflow: hidden;
-
-}
 
 @keyframes fadeOut {
 	0% {
@@ -43,7 +20,7 @@
 		transform: translateX(0px);
 	}
 	100% {
-		opacity: ;
+		opacity: 0;
 		transform: translateX(50px);
 	}
 } 
@@ -84,7 +61,7 @@
 	width: 80%;
 	height: auto;
 
-	padding: 0px 25px;
+	padding: 20px;
 }
 
 .icon-container {
@@ -162,15 +139,8 @@
 	.reg-selection-header {
 		font-size: 0.8em;
 	}
-	.centered-rectangle {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		margin: 4px;
-		padding: 8px;
-	}
 	.fade-in-text {
 		margin: 16px 0;
 	}
 }
+

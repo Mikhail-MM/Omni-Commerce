@@ -187,17 +187,16 @@ class AuthenticationForm extends Component {
 				return(
 					<React.Fragment>
 					<div className='avatar-selection-container'>
-						<h4> Change Avatar </h4>
 						<div className='essos-avatar-preview-container' >
 							<img alt="" src={this.state.imageSource} />
 						</div>
 							<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
-								<button type='button' onClick={(e) => this.randomizeAvvy(e)}> Randomize Avatar </button>
+								<button className="Button-Yellow" type='button' onClick={(e) => this.randomizeAvvy(e)}> Randomize Avatar </button>
 							</div>
-							<h4> OR </h4>
 							<div className='form-label-input-container' style={{width: '50%', height: 'auto', alignItems:'center', justifyContent: 'center'}}>
-								<label> Select a Profile Picture Instead </label>
+							<label class="profile-picture-label"> Upload Profile Picture </label>
 								<input 
+									className="Button-Blue fileSelect"
 									type='file'
 									name='avatar'
 									onChange={(e) => this.imageSelectedHandler(e)}
@@ -265,7 +264,7 @@ class AuthenticationForm extends Component {
 									/>
 								</div>
 							</div>
-							<button onClick={() => this.setState({registrationPage: 2})}> Next Page </button>
+							<button className="Button-Yellow" onClick={() => this.setState({registrationPage: 2})}> Next Page </button>
 					</React.Fragment>
 				)
 			}
@@ -400,17 +399,16 @@ class AuthenticationForm extends Component {
 				{( this.props.regpathOmniMaster || this.props.regpathOmniChild ) &&
 					<form className='essos-profile-edit-form' onSubmit={(e) => this.handleSubmit(e)}>
 						<div className='avatar-selection-container'>
-							<h4> Change Avatar </h4>
 						<div className='essos-avatar-preview-container' >
 							<img alt="" src={this.state.imageSource} />
 						</div>
 							<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
-								<button type='button' onClick={(e) => this.randomizeAvvy(e)}> Randomize Avatar </button>
+								<button className="Button-Yellow" type='button' onClick={(e) => this.randomizeAvvy(e)}> Randomize Avatar </button>
 							</div>
-							<h4> OR </h4>
 							<div className='form-label-input-container' style={{width: '50%', height: 'auto', alignItems:'center', justifyContent: 'center'}}>
-								<label> Select a Profile Picture Instead </label>
-								<input 
+								<label class="profile-picture-label"> Upload Profile Picture </label>
+								<input
+									className="Button-Blue fileSelect" 
 									type='file'
 									name='avatar'
 									onChange={(e) => this.imageSelectedHandler(e)}

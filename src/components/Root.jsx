@@ -19,8 +19,6 @@ import RegistrationPicker from './forms/RegistrationPicker'
 
 import Marketing from './Marketing'
 
-
-
 // Load CSS from lazy-loaded Components
 import './styles/EssosMarket.css';
 
@@ -91,14 +89,14 @@ export default class Root extends Component {
 							<Route exact path='/omni/terminal/modifyItems' render={(props) => <TerminalActionScreen {...props} modify /> } /> 
 							<Route exact path='/omni/terminal/tickets/:id' component={(props) => {
 								return (
-															<React.Fragment>
-																<MediaQuery minWidth={2} maxWidth={798}>
-																	<TerminalActionMobile {...props}/>
-																</MediaQuery> 
-																<MediaQuery minWidth={799}>
-																	<TerminalActionScreen {...props}/>
-																</MediaQuery>
-															</React.Fragment>
+									<React.Fragment>
+										<MediaQuery minWidth={2} maxWidth={798}>
+											<TerminalActionMobile {...props}/>
+										</MediaQuery> 
+										<MediaQuery minWidth={799}>
+											<TerminalActionScreen {...props}/>
+										</MediaQuery>
+									</React.Fragment>
 								)
 							}} />
 							<Route exact path='/essos/user/:id' component={LoadableComponents.UserPage} />
