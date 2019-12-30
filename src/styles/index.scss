@@ -277,13 +277,13 @@ $btn-y2: #f3db97;
 }
 
 
-	.registration-picker-wrapper {
-        @media (min-width: 752px) 
-        {
-            width: 752px;
-            padding: 32px;
-        }
+.registration-picker-wrapper {
+
+    @media (min-width: 752px) 
+    {
+        width: 752px;
     }
+}
 
 
 

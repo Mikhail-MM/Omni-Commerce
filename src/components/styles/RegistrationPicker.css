@@ -5,15 +5,21 @@
 	align-items: center;
 	justify-content: center;
 	height: 100%;
-	background-color: #525f7f;
+	background-color: hsl(223, 22%, 41%);
 	color: white;
 }
-@media (min-width: 600) {
+
+@media (min-width: 600px) {
 	.registration-picker-wrapper {
 		padding: 36px;
 	}
 }
 
+@media (max-width: 748px) {
+	.registration-picker-wrapper {
+		width: 100%;
+	}
+}
 
 .picker-header-container {
 	text-align: center;
