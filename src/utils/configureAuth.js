@@ -6,7 +6,7 @@ export const validateCachedToken = async () => {
     try {
         const url = `${hostURI}/authorize/cached`
         const response = await fetch(url, {
-            headers:{
+            headers: {
                 'Content-Type': 'application/json',
                 'x-access-token': token
             },
@@ -25,7 +25,7 @@ export const validateCachedToken = async () => {
         } else {
             return false
         }
-    } catch(err) {
+    } catch (err) {
         console.error(err)
         return false;
     }

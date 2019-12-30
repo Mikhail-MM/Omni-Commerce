@@ -147,6 +147,7 @@ module.exports.registerEssosUser = async (req, res, next) => {
     next(err);
   }
 };
+
 module.exports.registerOmniChild = async (req, res, next) => {
   try {
     const masterAccount = await OmniUser.findOne({

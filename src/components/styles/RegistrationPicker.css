@@ -1,4 +1,5 @@
 .registration-picker-wrapper {
+	padding: 8px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -7,13 +8,27 @@
 	background-color: #525f7f;
 	color: white;
 }
+@media (min-width: 600) {
+	.registration-picker-wrapper {
+		padding: 36px;
+	}
+}
+
 
 .picker-header-container {
 	text-align: center;
 	margin-bottom: 25px;
 }
 
+.picker-button-container {
+	display: flex;
+	justify-content: space-around;
 
+	width: 100%;
+	height: auto;
+
+	padding: 20px;
+}
 @keyframes fadeOut {
 	0% {
 		opacity: 1;
@@ -54,15 +69,6 @@
 
 }
 
-.picker-button-container {
-	display: flex;
-	justify-content: space-around;
-
-	width: 80%;
-	height: auto;
-
-	padding: 20px;
-}
 
 .icon-container {
 	display: flex;
@@ -101,6 +107,7 @@
 	animation-fill-mode: forwards;
 }
 .reg-selection-header {
+	font-size: 24px;
 	transition: color 0.8s;
 }
 .activeHeader {
@@ -137,7 +144,7 @@
 		height: 50px;
 	}
 	.reg-selection-header {
-		font-size: 0.8em;
+		font-size: 12px;
 	}
 	.fade-in-text {
 		margin: 16px 0;

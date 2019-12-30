@@ -14,7 +14,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
 	attemptLogin: (credentials) => dispatch(attemptLogIn(credentials)),
-	registerUser: (token, data, imageHandler, mode) =>  dispatch(attemptRegistration(token, data, imageHandler, mode)),
+	registerUser: (token, data, imageHandler, mode) => dispatch(attemptRegistration(token, data, imageHandler, mode)),
 
 })
 
@@ -44,7 +44,7 @@ class AuthenticationForm extends Component {
 		newImageFlag: false,
 		registrationPage: 1,
 	}
-	
+
 	componentDidMount() {
 		console.log("issa form")
 		console.log(this.props)
@@ -52,7 +52,7 @@ class AuthenticationForm extends Component {
 
 	handleChange = (key, value) => {
 		this.setState({
-			[key]:value
+			[key]: value
 		})
 	}
 
@@ -68,14 +68,14 @@ class AuthenticationForm extends Component {
 	validateFormData = () => {
 		// source: (http://emailregex.com/)
 		const emailRegex = RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
-		
+
 		if ((this.props.regpathOmniMaster || this.props.regpathEssos) && (!this.state.email || !this.state.password || !this.state.confpass)) return console.log("Please fill out missing fields")
-		
+
 		if (!emailRegex.test(this.state.email)) return console.log("Error, Enter a valid e-mail.")
-		
-		
+
+
 		if ((this.props.regpathOmniMaster || this.props.regpathEssos) && (this.state.password !== this.state.confpass)) return console.log("Passwords do not match")
-		
+
 		return true
 	}
 
@@ -102,7 +102,7 @@ class AuthenticationForm extends Component {
 				phone,
 				password
 			}
-				return this.props.registerUser(null, data, imageHandler, 'omni-master')
+			return this.props.registerUser(null, data, imageHandler, 'omni-master')
 		}
 		if (this.props.regpathEssos) {
 			const data = {
@@ -111,18 +111,18 @@ class AuthenticationForm extends Component {
 				lastName,
 				phone,
 				password,
-				 billing_address_line1, 
-				 billing_address_line2, 
-				 billing_address_city, 
-				 billing_address_zip, 
-				 billing_address_state, 
-				 shipping_address_line1, 
-				 shipping_address_line2, 
-				 shipping_address_city, 
-				 shipping_address_zip, 
-				 shipping_address_state,
+				billing_address_line1,
+				billing_address_line2,
+				billing_address_city,
+				billing_address_zip,
+				billing_address_state,
+				shipping_address_line1,
+				shipping_address_line2,
+				shipping_address_city,
+				shipping_address_zip,
+				shipping_address_state,
 			}
-				return this.props.registerUser(null, data, imageHandler, 'essos-user') 
+			return this.props.registerUser(null, data, imageHandler, 'essos-user')
 		}
 
 		if (this.props.regpathOmniChild) {
@@ -134,14 +134,14 @@ class AuthenticationForm extends Component {
 				password,
 			}
 			const { token } = this.props
-			this.props.registerUser(token, data, imageHandler, 'omni-child') 
-		} 
+			this.props.registerUser(token, data, imageHandler, 'omni-child')
+		}
 
 	}
 
 	handleLogin = (pathway) => {
 		const credentials = {
-			
+
 			email: this.state.email,
 			password: this.state.password,
 			loginPath: pathway,
@@ -182,89 +182,89 @@ class AuthenticationForm extends Component {
 		})
 	}
 	renderEssosStepper = () => {
-		switch(this.state.registrationPage) {
+		switch (this.state.registrationPage) {
 			case 1: {
-				return(
+				return (
 					<React.Fragment>
-					<div className='avatar-selection-container'>
-						<div className='essos-avatar-preview-container' >
-							<img alt="" src={this.state.imageSource} />
-						</div>
-							<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
+						<div className='avatar-selection-container'>
+							<div className='essos-avatar-preview-container' >
+								<img alt="" src={this.state.imageSource} />
+							</div>
+							<div className='form-label-input-container' style={{ width: '50%', height: 'auto' }}>
 								<button className="Button-Yellow" type='button' onClick={(e) => this.randomizeAvvy(e)}> Randomize Avatar </button>
 							</div>
-							<div className='form-label-input-container' style={{width: '50%', height: 'auto', alignItems:'center', justifyContent: 'center'}}>
-							<label class="profile-picture-label"> Upload Profile Picture </label>
-								<input 
+							<div className='form-label-input-container' style={{ width: '50%', height: 'auto', alignItems: 'center', justifyContent: 'center' }}>
+								<label class="profile-picture-label"> Upload Profile Picture </label>
+								<input
 									className="Button-Blue fileSelect"
 									type='file'
 									name='avatar'
 									onChange={(e) => this.imageSelectedHandler(e)}
 								/>
 							</div>
-					</div>
-					<div className='essos-reg-form-row'>
-						<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
-							<label> First Name </label>
-							<input
-								className='form-input' 
-								type='text'
-								value={this.state.firstName}
-								onChange={(e) => this.handleChange('firstName', e.target.value)}
-							/>
 						</div>
-						<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
-							<label> Last Name </label>
-							<input
-								className='form-input' 
-								type='text'
-								value={this.state.lastName}
-								onChange={(e) => this.handleChange('lastName', e.target.value)}
-							/>
-						</div>
-					</div>
-					<div className='essos-reg-form-row'>
-								<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
-									<label> E-Mail </label>
-									<input
-										className='form-input' 
-										type='text'
-										value={this.state.email}
-										onChange={(e) => this.handleChange('email', e.target.value)}
-									/>
-								</div>
-								<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
-									<label> Phone Number </label>
-									<input
-										className='form-input' 
-										type='text'
-										value={this.state.phone}
-										onChange={(e) => this.handleChange('phone', e.target.value)}
-									/>
-								</div>
+						<div className='essos-reg-form-row'>
+							<div className='form-label-input-container' style={{ width: '50%', height: 'auto' }}>
+								<label> First Name </label>
+								<input
+									className='form-input'
+									type='text'
+									value={this.state.firstName}
+									onChange={(e) => this.handleChange('firstName', e.target.value)}
+								/>
 							</div>
+							<div className='form-label-input-container' style={{ width: '50%', height: 'auto' }}>
+								<label> Last Name </label>
+								<input
+									className='form-input'
+									type='text'
+									value={this.state.lastName}
+									onChange={(e) => this.handleChange('lastName', e.target.value)}
+								/>
+							</div>
+						</div>
+						<div className='essos-reg-form-row'>
+							<div className='form-label-input-container' style={{ width: '50%', height: 'auto' }}>
+								<label> E-Mail </label>
+								<input
+									className='form-input'
+									type='text'
+									value={this.state.email}
+									onChange={(e) => this.handleChange('email', e.target.value)}
+								/>
+							</div>
+							<div className='form-label-input-container' style={{ width: '50%', height: 'auto' }}>
+								<label> Phone Number </label>
+								<input
+									className='form-input'
+									type='text'
+									value={this.state.phone}
+									onChange={(e) => this.handleChange('phone', e.target.value)}
+								/>
+							</div>
+						</div>
 
-							<div className='essos-reg-form-row'>
-								<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
-									<label> Password </label>
-									<input
-										className='form-input' 
-										type='password'
-										value={this.state.password}
-										onChange={(e) => this.handleChange('password', e.target.value)}
-									/>
-								</div>
-								<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
-									<label> Confirm Password </label>
-									<input
-										className='form-input' 
-										type='password'
-										value={this.state.confpass}
-										onChange={(e) => this.handleChange('confpass', e.target.value)}
-									/>
-								</div>
+						<div className='essos-reg-form-row'>
+							<div className='form-label-input-container' style={{ width: '50%', height: 'auto' }}>
+								<label> Password </label>
+								<input
+									className='form-input'
+									type='password'
+									value={this.state.password}
+									onChange={(e) => this.handleChange('password', e.target.value)}
+								/>
 							</div>
-							<button className="Button-Yellow" onClick={() => this.setState({registrationPage: 2})}> Next Page </button>
+							<div className='form-label-input-container' style={{ width: '50%', height: 'auto' }}>
+								<label> Confirm Password </label>
+								<input
+									className='form-input'
+									type='password'
+									value={this.state.confpass}
+									onChange={(e) => this.handleChange('confpass', e.target.value)}
+								/>
+							</div>
+						</div>
+						<button className="Button-Yellow" onClick={() => this.setState({ registrationPage: 2 })}> Next Page </button>
 					</React.Fragment>
 				)
 			}
@@ -278,19 +278,19 @@ class AuthenticationForm extends Component {
 							<h3> {`${this.state.firstName} ${this.state.lastName}`} </h3>
 						</div>
 						<div className='essos-reg-form-row'>
-							<div className='form-label-input-container' style={{width: '70%', height: 'auto'}}>
+							<div className='form-label-input-container' style={{ width: '70%', height: 'auto' }}>
 								<label> Billing Address </label>
 								<input
-									className='form-input' 
+									className='form-input'
 									type='text'
 									value={this.state.billing_address_line1}
 									onChange={(e) => this.handleChange('billing_address_line1', e.target.value)}
 								/>
 							</div>
-							<div className='form-label-input-container' style={{width: '30%', height: 'auto'}}>
+							<div className='form-label-input-container' style={{ width: '30%', height: 'auto' }}>
 								<label> Line 2 </label>
 								<input
-									className='form-input' 
+									className='form-input'
 									type='text'
 									value={this.state.billing_address_line2}
 									onChange={(e) => this.handleChange('billing_address_line2', e.target.value)}
@@ -299,28 +299,28 @@ class AuthenticationForm extends Component {
 						</div>
 
 						<div className='essos-reg-form-row'>
-							<div className='form-label-input-container' style={{width: '55%', height: 'auto'}}>
+							<div className='form-label-input-container' style={{ width: '55%', height: 'auto' }}>
 								<label> City </label>
 								<input
-									className='form-input' 
+									className='form-input'
 									type='text'
 									value={this.state.billing_address_city}
 									onChange={(e) => this.handleChange('billing_address_city', e.target.value)}
 								/>
 							</div>
-							<div className='form-label-input-container' style={{width: '20%', height: 'auto'}}>
+							<div className='form-label-input-container' style={{ width: '20%', height: 'auto' }}>
 								<label> State </label>
 								<input
-									className='form-input' 
+									className='form-input'
 									type='text'
 									value={this.state.billing_address_state}
 									onChange={(e) => this.handleChange('billing_address_state', e.target.value)}
 								/>
 							</div>
-							<div className='form-label-input-container' style={{width: '25%', height: 'auto'}}>
+							<div className='form-label-input-container' style={{ width: '25%', height: 'auto' }}>
 								<label> Zip Code </label>
 								<input
-									className='form-input' 
+									className='form-input'
 									type='text'
 									value={this.state.billing_address_zip}
 									onChange={(e) => this.handleChange('billing_address_zip', e.target.value)}
@@ -329,19 +329,19 @@ class AuthenticationForm extends Component {
 						</div>
 
 						<div className='essos-reg-form-row'>
-							<div className='form-label-input-container' style={{width: '70%', height: 'auto'}}>
+							<div className='form-label-input-container' style={{ width: '70%', height: 'auto' }}>
 								<label> Shipping Address </label>
 								<input
-									className='form-input' 
+									className='form-input'
 									type='text'
 									value={this.state.shipping_address_line1}
 									onChange={(e) => this.handleChange('shipping_address_line1', e.target.value)}
 								/>
 							</div>
-							<div className='form-label-input-container' style={{width: '30%', height: 'auto'}}>
+							<div className='form-label-input-container' style={{ width: '30%', height: 'auto' }}>
 								<label> Line 2 </label>
 								<input
-									className='form-input' 
+									className='form-input'
 									type='text'
 									value={this.state.shipping_address_line2}
 									onChange={(e) => this.handleChange('shipping_address_line2', e.target.value)}
@@ -350,28 +350,28 @@ class AuthenticationForm extends Component {
 						</div>
 
 						<div className='essos-reg-form-row'>
-							<div className='form-label-input-container' style={{width: '55%', height: 'auto'}}>
+							<div className='form-label-input-container' style={{ width: '55%', height: 'auto' }}>
 								<label> City </label>
 								<input
-									className='form-input' 
+									className='form-input'
 									type='text'
 									value={this.state.shipping_address_city}
 									onChange={(e) => this.handleChange('shipping_address_city', e.target.value)}
 								/>
 							</div>
-							<div className='form-label-input-container' style={{width: '20%', height: 'auto'}}>
+							<div className='form-label-input-container' style={{ width: '20%', height: 'auto' }}>
 								<label> State </label>
 								<input
-									className='form-input' 
+									className='form-input'
 									type='text'
 									value={this.state.shipping_address_state}
 									onChange={(e) => this.handleChange('shipping_address_state', e.target.value)}
 								/>
 							</div>
-							<div className='form-label-input-container' style={{width: '25%', height: 'auto'}}>
+							<div className='form-label-input-container' style={{ width: '25%', height: 'auto' }}>
 								<label> Zip Code </label>
 								<input
-									className='form-input' 
+									className='form-input'
 									type='text'
 									value={this.state.shipping_address_zip}
 									onChange={(e) => this.handleChange('shipping_address_zip', e.target.value)}
@@ -387,28 +387,28 @@ class AuthenticationForm extends Component {
 
 	render() {
 		const { registrationPage } = this.state
-		return(
+		return (
 			<div className='registration-form-wrapper'>
-				{ this.props.regpathEssos && 
-						<form className='essos-profile-edit-form' onSubmit={(e) => this.handleSubmit(e)}>
-							{ this.renderEssosStepper() }
-							<button className="btn-back-out" onClick={() => this.props.hideModal()}> Cancel </button>
-						</form>
+				{this.props.regpathEssos &&
+					<form className='essos-profile-edit-form' onSubmit={(e) => this.handleSubmit(e)}>
+						{this.renderEssosStepper()}
+						<button className="btn-back-out" onClick={() => this.props.hideModal()}> Cancel </button>
+					</form>
 				}
 
-				{( this.props.regpathOmniMaster || this.props.regpathOmniChild ) &&
+				{(this.props.regpathOmniMaster || this.props.regpathOmniChild) &&
 					<form className='essos-profile-edit-form' onSubmit={(e) => this.handleSubmit(e)}>
 						<div className='avatar-selection-container'>
-						<div className='essos-avatar-preview-container' >
-							<img alt="" src={this.state.imageSource} />
-						</div>
-							<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
+							<div className='essos-avatar-preview-container' >
+								<img alt="" src={this.state.imageSource} />
+							</div>
+							<div className='form-label-input-container' style={{ width: '50%', height: 'auto' }}>
 								<button className="Button-Yellow" type='button' onClick={(e) => this.randomizeAvvy(e)}> Randomize Avatar </button>
 							</div>
-							<div className='form-label-input-container' style={{width: '50%', height: 'auto', alignItems:'center', justifyContent: 'center'}}>
+							<div className='form-label-input-container' style={{ width: '50%', height: 'auto', alignItems: 'center', justifyContent: 'center' }}>
 								<label class="profile-picture-label"> Upload Profile Picture </label>
 								<input
-									className="Button-Blue fileSelect" 
+									className="Button-Blue fileSelect"
 									type='file'
 									name='avatar'
 									onChange={(e) => this.imageSelectedHandler(e)}
@@ -416,19 +416,19 @@ class AuthenticationForm extends Component {
 							</div>
 						</div>
 						<div className='essos-reg-form-row'>
-							<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
+							<div className='form-label-input-container' style={{ width: '50%', height: 'auto' }}>
 								<label> First Name </label>
 								<input
-									className='form-input' 
+									className='form-input'
 									type='text'
 									value={this.state.firstName}
 									onChange={(e) => this.handleChange('firstName', e.target.value)}
 								/>
 							</div>
-							<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
+							<div className='form-label-input-container' style={{ width: '50%', height: 'auto' }}>
 								<label> Last Name </label>
 								<input
-									className='form-input' 
+									className='form-input'
 									type='text'
 									value={this.state.lastName}
 									onChange={(e) => this.handleChange('lastName', e.target.value)}
@@ -437,19 +437,19 @@ class AuthenticationForm extends Component {
 						</div>
 
 						<div className='essos-reg-form-row'>
-							<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
+							<div className='form-label-input-container' style={{ width: '50%', height: 'auto' }}>
 								<label> E-Mail </label>
 								<input
-									className='form-input' 
+									className='form-input'
 									type='text'
 									value={this.state.email}
 									onChange={(e) => this.handleChange('email', e.target.value)}
 								/>
 							</div>
-							<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
+							<div className='form-label-input-container' style={{ width: '50%', height: 'auto' }}>
 								<label> Phone Number </label>
 								<input
-									className='form-input' 
+									className='form-input'
 									type='text'
 									value={this.state.phone}
 									onChange={(e) => this.handleChange('phone', e.target.value)}
@@ -458,19 +458,19 @@ class AuthenticationForm extends Component {
 						</div>
 
 						<div className='essos-reg-form-row'>
-							<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
+							<div className='form-label-input-container' style={{ width: '50%', height: 'auto' }}>
 								<label> Password </label>
 								<input
-									className='form-input' 
+									className='form-input'
 									type='password'
 									value={this.state.password}
 									onChange={(e) => this.handleChange('password', e.target.value)}
 								/>
 							</div>
-							<div className='form-label-input-container' style={{width: '50%', height: 'auto'}}>
+							<div className='form-label-input-container' style={{ width: '50%', height: 'auto' }}>
 								<label> Confirm Password </label>
 								<input
-									className='form-input' 
+									className='form-input'
 									type='password'
 									value={this.state.confpass}
 									onChange={(e) => this.handleChange('confpass', e.target.value)}
@@ -481,40 +481,40 @@ class AuthenticationForm extends Component {
 						<button className="btn-back-out" onClick={() => this.props.hideModal()}> Cancel </button>
 					</form>
 				}
-				{ this.props.login &&
+				{this.props.login &&
 					<React.Fragment>
-					<div className='avatar-selection-container'>
-						<h3 style={{paddingBottom: '12px'}}> Omni Commerce </h3>
-						<div style={{width: 150, height: 150}}>
-							<img alt="" src={'/assets/TRANSLOGOthin.svg'} />
-						</div>
-					</div>
-					<form className='essos-profile-edit-form' onSubmit={(e) => this.handleSubmit(e)}>
-						<div className='essos-reg-form-row'>
-							<div className='form-label-input-container' style={{width: '100%', height: 'auto'}}>
-								<label> E-Mail </label>
-								<input
-									className='form-input' 
-									type='text'
-									value={this.state.email}
-									onChange={(e) => this.handleChange('email', e.target.value)}
-								/>
+						<div className='avatar-selection-container'>
+							<h3 style={{ paddingBottom: '12px' }}> Omni Commerce </h3>
+							<div style={{ width: 150, height: 150 }}>
+								<img alt="" src={'/assets/TRANSLOGOthin.svg'} />
 							</div>
 						</div>
-						<div className='essos-reg-form-row'>
-							<div className='form-label-input-container' style={{width: '100%', height: 'auto'}}>
-								<label> Password </label>
-								<input
-									className='form-input' 
-									type='password'
-									value={this.state.password}
-									onChange={(e) => this.handleChange('password', e.target.value)}
-								/>
+						<form className='essos-profile-edit-form' onSubmit={(e) => this.handleSubmit(e)}>
+							<div className='essos-reg-form-row'>
+								<div className='form-label-input-container' style={{ width: '100%', height: 'auto' }}>
+									<label> E-Mail </label>
+									<input
+										className='form-input'
+										type='text'
+										value={this.state.email}
+										onChange={(e) => this.handleChange('email', e.target.value)}
+									/>
+								</div>
 							</div>
-						</div>
-						<input className='btn-register' value={this.props.login ? 'Log In' : 'Register'} type='submit' />
-						<button className="btn-back-out" onClick={() => this.props.hideModal()}> Cancel </button>
-					</form>
+							<div className='essos-reg-form-row'>
+								<div className='form-label-input-container' style={{ width: '100%', height: 'auto' }}>
+									<label> Password </label>
+									<input
+										className='form-input'
+										type='password'
+										value={this.state.password}
+										onChange={(e) => this.handleChange('password', e.target.value)}
+									/>
+								</div>
+							</div>
+							<input className='btn-register' value={this.props.login ? 'Log In' : 'Register'} type='submit' />
+							<button className="btn-back-out" onClick={() => this.props.hideModal()}> Cancel </button>
+						</form>
 					</React.Fragment>
 				}
 			</div>

@@ -107,9 +107,9 @@ if (app.get('env') === 'production') {
       );
     } else if (
       req.get('origin') ===
-        'https://h1-loan-visualization.herokuapp.com' ||
+      'https://h1-loan-visualization.herokuapp.com' ||
       req.get('origin') ===
-        'http://h1-loan-visualization.herokuapp.com'
+      'http://h1-loan-visualization.herokuapp.com'
     ) {
       res.header(
         'Access-Control-Allow-Origin',
@@ -611,12 +611,12 @@ router.route('/loans/success').get(async (req, res, next) => {
     const results = await Promise.all([
       pg.any(
         `${valid_loans} LIMIT ${limit} ${
-          offset ? `OFFSET ${offset}` : ''
+        offset ? `OFFSET ${offset}` : ''
         }`,
       ),
       pg.any(
         `${rejected_loans} LIMIT ${limit} ${
-          offset ? `OFFSET ${offset}` : ''
+        offset ? `OFFSET ${offset}` : ''
         }`,
       ),
     ]);
@@ -638,7 +638,7 @@ app.use('/', router);
 //	Error Handling Middleware	//
 ///		404 Handler			  ///
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Response Status: 404; Page Not Found');
   err.status = 404;
   next(err);
@@ -646,7 +646,7 @@ app.use(function(req, res, next) {
 
 // Error Handler
 
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   console.log(err);
   res.status(err.status || 500).send();
 });

@@ -9,4 +9,4 @@ const applyConditionalClassName = (bool, className) => {
   return (bool) ? ` ${className}` : ""
 }
 
- export default applyConditionalClassName
+export default applyConditionalClassName
