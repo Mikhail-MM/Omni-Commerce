@@ -71,9 +71,8 @@ console.log('Loaded express router');
 mongoose.Promise = global.Promise;
 
 console.log('Booting mongoose promise library');
-
 mongoose.connect(
-  `mongodb+srv://${process.env.MLABS_USER}:${process.env.MLABS_PW}@cookie-sync-mainframe.tsvse.mongodb.net/cookie-sync-mainframe?retryWrites=true&w=majority`,
+  `mongodb+srv://${process.env.MLABS_USER}:${process.env.MLABS_PW}@omninova.1ffjz.mongodb.net/omninova?retryWrites=true&w=majority`,
   { useUnifiedTopology: true, useNewUrlParser: true },
 );
 console.log('Mongoose connection establishment');
