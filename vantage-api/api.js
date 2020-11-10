@@ -73,7 +73,7 @@ mongoose.Promise = global.Promise;
 console.log('Booting mongoose promise library');
 
 mongoose.connect(
-  `mongodb://${process.env.MLABS_USER}:${process.env.MLABS_PW}@ds113000.mlab.com:13000/omninova`,
+  `mongodb+srv://${process.env.MLABS_USER}:${process.env.MLABS_PW}@cookie-sync-mainframe.tsvse.mongodb.net/cookie-sync-mainframe?retryWrites=true&w=majority`,
   { useUnifiedTopology: true, useNewUrlParser: true },
 );
 console.log('Mongoose connection establishment');
