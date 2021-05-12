@@ -36,7 +36,7 @@
     "morgan": "^1.9.1",
     "multer": "^1.3.0",
     "node-gyp": "^3.6.2",
-    "nodemailer": "^4.6.0",
+    "nodemailer": "^6.4.16",
     "nopt": "^3.0.6",
     "npmlog": "^4.1.2",
     "osenv": "^0.1.4",
