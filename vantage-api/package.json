@@ -18,7 +18,7 @@
   "author": "Mikhail Maslyuk",
   "license": "UNLICENSED",
   "dependencies": {
-    "aws-sdk": "^2.304.0",
+    "aws-sdk": "^2.814.0",
     "axios": "^0.18.0",
     "bcrypt": "^3.0.6",
     "bignumber.js": "^5.0.0",
